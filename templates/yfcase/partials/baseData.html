@@ -1,0 +1,31 @@
+<style>
+  .basedata__table { border: 3px solid black; }
+  th { width: 10%; background-color: AntiqueWhite; border: 1px solid black; text-align: center;} 
+  td { border: 1px solid black; }
+  td:nth-child(2) { width:35%; }
+  td:nth-child(4) { width:15%; }
+</style>
+
+<!--基本資料-->
+<table class="basedata__table">
+  <tr>
+    <th>案號</th>
+    <td>{{object.yfcaseCaseNumber|default_if_none:"" }}</td>
+    <th>債務人</th>
+    <td>{{ object.yfcaseDebtor|default_if_none:"" }}</td>
+    <th>債權人</th>
+    <td>
+      {% if object.yfcaseCreditor == None %}
+        {{ object.yfcaseCompany }}
+      {% else %}
+        {{ object.yfcaseCreditor|default_if_none:"" }}
+      {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <th>住址</th>
+    <td colspan="5">
+      {{object.fullAddress}}
+    </td>
+  </tr>
+</table>

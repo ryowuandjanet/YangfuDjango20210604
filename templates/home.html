@@ -1,13 +1,89 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
+
+{% block style %}
+  <style>
+    .home_title {
+      color: red;
+      text-align: center;
+    }
+    .home_container{
+      background-color: yellow;
+    }
+    .home_table{
+      border: 3px solid black;
+    }
+    .home_head{
+      background-color: PaleTurquoise;
+    }
+    .home_head > tr > th {
+      border: 1px solid black;
+      border-bottom: 2px double;
+      text-align: center;
+    }
+    th:nth-child(1) { width: 5%; }  
+    th:nth-child(2) { width: 20%; }
+    th:nth-child(3) { width: 15%; }
+    th:nth-child(4) { width: 15%; }
+    th:nth-child(5) { width: 15%; }
+    th:nth-child(6) { width: 15%; }
+    th:nth-child(7) { width: 15%; }
+
+    .home_body > tr > td { border: 1px dotted grey; }
+
+    td:nth-child(1) { text-align: center; }
+    td:nth-child(2) { text-align: left; text-decoration: none;}
+    td:nth-child(2) > a { text-decoration: none;}
+    td:nth-child(3) { text-align: center; }
+    td:nth-child(4) { text-align: center; }
+    td:nth-child(5) { text-align: center; }
+    td:nth-child(6) { text-align: center; }
+    td:nth-child(7) { text-align: center; }
+
+  </style>
+{% endblock style %}
+
 {% block content %}
-  {% if user.is_authenticated %}
-  	Hi {{ user.username }}!
-  	<p><a href="{% url 'logout' %}">logout</a></p>
-  {% else %}
-  	<p>You are not logged in</p>
-  	<a href="{% url 'login' %}">login</a> 
-  	<!--|-->
-  	<!--<a href="{% url 'signup' %}">signup</a>-->
-  {% endif %}
+  <div class="home_title">
+    <h1>案件清單</h1>
+  </div>
+  <div class="home_container">
+    <table class="home_table">
+      <thead class="home_head">
+        <tr>
+          <th>操作</th>
+          <th>案號</th>
+          <th>兩週內<br>提醒</th>
+          <th>負責人</th>
+          <th>最終判定</th>
+          <th>執行結果</th>
+          <th>優購結果</th>
+        </tr>
+      </thead>
+      <tbody class="home_body">
+        {% for yfcase in object_list %}
+        <tr>
+          <td>新增/刪除</td>
+          <td>
+            <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" >
+              {{yfcase.yfcaseCaseNumber}}
+              <br>
+              &emsp;&#10149;{{yfcase.fullAddress}}
+            </a>
+          </td>
+          <td>兩週內(12)</td>
+          <td>{{ yfcase.user }}</td>
+          <td>4拍進場</td>
+          <td>第三人搶標</td>
+          <td>無人優購</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  
+
+
 {% endblock %}
+

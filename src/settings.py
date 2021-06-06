@@ -60,8 +60,9 @@ MIDDLEWARE = [
 AUTH_USER_MODEL = 'users.CustomUser'
 ROOT_URLCONF = 'src.urls'
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_URL='login'
+LOGIN_REDIRECT_URL = 'yfcase:home'
+LOGOUT_REDIRECT_URL = 'yfcase:home'
 
 TEMPLATES = [
     {
