@@ -40,6 +40,31 @@ class YfcaseCreateView(CreateView):
     context['title'] = '新增基本資料'
     return context
 
+class YfcaseUpdateView(UpdateView):
+  model=Yfcase
+  form_class = YfcaseForm
+  template_name='yfcase/yfcase_edit.html'
+    
+  def get_success_url(self, **kwargs):
+    return reverse_lazy("yfcase:yfcase_detail", args=(self.object.id,))
+
+  def form_valid(self, form):
+    if form.cleaned_data['yfcaseCaseNumber'] is None:
+        form.add_error('yfcaseCaseNumber', 'Incident with this email already exist')
+        return self.form_invalid(form)
+    return super(YfcaseUpdateView, self).form_valid(form)
+    
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context["author_id"]=self.request.user.id
+    context['value'] = '更新'
+    context['title'] = '更新基本資料'
+    return context
+
+class YfcaseDeleteView(DeleteView):
+  model=Yfcase
+  template_name="yfcase/yfcase_delete.html"
+  success_url=reverse_lazy('yfcase:home')
 
 
 def load_townships(request):

@@ -63,7 +63,9 @@
       <tbody class="home_body">
         {% for yfcase in object_list %}
         <tr>
-          <td>新增/刪除</td>
+          <td>
+             <a href="{% url 'yfcase:yfcase_delete' yfcase.id %}">刪除</a>
+          </td>
           <td>
             <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" >
               {{yfcase.yfcaseCaseNumber}}

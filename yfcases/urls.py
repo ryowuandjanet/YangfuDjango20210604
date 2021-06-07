@@ -9,5 +9,7 @@ urlpatterns = [
   path('',views.YfcaseListView.as_view(),name="home" ),
   path('yfcase/<int:pk>/',views.YfcaseDetailView.as_view(),name="yfcase_detail" ),
   path('yfcase/new/',views.YfcaseCreateView.as_view(),name="yfcase_new" ),
+  path('yfcase/<int:pk>/edit/',views.YfcaseUpdateView.as_view(),name="yfcase_edit"),
+  path('yfcase/<int:pk>/delete/',views.YfcaseDeleteView.as_view(),name="yfcase_delete"),
   path('ajax/load-townships/', views.load_townships, name='ajax_load_townships'),
 ]
