@@ -71,3 +71,36 @@ class Yfcase(models.Model):
     result = str(city)+str(township)+str(village)+str(neighbor)+str(street)+str(section)+str(lane)+str(alley)+str(number)+str(floor)
     return result
 
+  # 在編輯Land設定
+  # 得到所有地號面積的總和
+  def get_land_holding_point_area_total(self):
+    newlist=[]
+    try:
+      landTotal = 0
+      for land_item in self.lands.exclude(landHoldingPointAll=0):
+        landTotal += land_item.landArea * land_item.landHoldingPointPersonal / land_item.landHoldingPointAll
+      return landTotal
+    except:
+      newlist.append(0)
+
+class Land(models.Model):
+  yfcase=models.ForeignKey(Yfcase,related_name='lands',on_delete=models.CASCADE)
+  landNumber=models.CharField(u'地號',max_length=100,null=True,blank=True)
+  landUrl=models.URLField(u'謄本',max_length=200,null=True,blank=True)
+  landArea=models.DecimalField(u'地坪(平方公尺)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
+  landHoldingPointPersonal=models.DecimalField(u'個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  landHoldingPointAll=models.DecimalField(u'所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  landRemarks=models.CharField(u'備註',max_length=100,null=True,blank=True)
+  landPresentValue=models.CharField(u'土地現值',max_length=100,null=True,blank=True)
+  landTotalArea=models.DecimalField(u'地坪總面積',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
+  landAreaWidth=models.DecimalField(u'土地寬度',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  landAreaDepth=models.DecimalField(u'土地深度',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+
+  def __str__(self):
+    return self.landNumber
+
+  # 計算各個地號持分面積
+  def get_land_holding_point_area(self):
+    return self.landArea * ( self.landHoldingPointPersonal / self.landHoldingPointAll)
+
+
