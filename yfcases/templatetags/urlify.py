@@ -1,7 +1,17 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from urllib.parse import quote
 from decimal import *
-from datetime import datetime
 from django import template
-from django.utils.safestring import mark_safe
+ 
+register=template.Library()
+ 
+# 平方公尺 * 0.3025 = 坪
+# 使用方式 value|m2toping
+@register.filter
+def m2toping(value):
+  newlist=[]
+  try:
+    return value * Decimal(float(0.3025))
+  except:
+    newlist.append(0)
+
+

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # =======縣市=======
 class City(models.Model):
@@ -90,16 +91,10 @@ class Land(models.Model):
   landArea=models.DecimalField(u'地坪(平方公尺)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
   landHoldingPointPersonal=models.DecimalField(u'個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
   landHoldingPointAll=models.DecimalField(u'所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
-  landRemarks=models.CharField(u'備註',max_length=100,null=True,blank=True)
-  landPresentValue=models.CharField(u'土地現值',max_length=100,null=True,blank=True)
-  landTotalArea=models.DecimalField(u'地坪總面積',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
-  landAreaWidth=models.DecimalField(u'土地寬度',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
-  landAreaDepth=models.DecimalField(u'土地深度',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
-
+  
   def __str__(self):
     return self.landNumber
 
-  # 計算各個地號持分面積
   def get_land_holding_point_area(self):
     return self.landArea * ( self.landHoldingPointPersonal / self.landHoldingPointAll)
 

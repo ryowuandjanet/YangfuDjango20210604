@@ -1,20 +1,20 @@
 <style>
   .basedata__table { border: 3px solid black; }
-  th { width: 10%; background-color: AntiqueWhite; border: 1px solid black; text-align: center;} 
-  td { border: 1px solid black; }
-  td:nth-child(2) { width:35%; }
-  td:nth-child(4) { width:15%; }
+  .basedata__th { width: 10%; background-color: AntiqueWhite; border: 1px solid black; text-align: center;} 
+  .basedata__td { border: 1px solid black; }
+  .basedata__td:nth-child(2) { width:35%; }
+  .basedata__td:nth-child(4) { width:15%; }
 </style>
 
 <!--基本資料-->
 <table class="basedata__table">
   <tr>
-    <th>案號</th>
-    <td>{{object.yfcaseCaseNumber|default_if_none:"" }}</td>
-    <th>債務人</th>
-    <td>{{ object.yfcaseDebtor|default_if_none:"" }}</td>
-    <th>債權人</th>
-    <td>
+    <th class="basedata__th">案號</th>
+    <td class="basedata__td">{{object.yfcaseCaseNumber|default_if_none:"" }}</td>
+    <th class="basedata__th">債務人</th>
+    <td class="basedata__td">{{ object.yfcaseDebtor|default_if_none:"" }}</td>
+    <th class="basedata__th">債權人</th>
+    <td class="basedata__td">
       {% if object.yfcaseCreditor == None %}
         {{ object.yfcaseCompany }}
       {% else %}
@@ -23,8 +23,8 @@
     </td>
   </tr>
   <tr>
-    <th>住址</th>
-    <td colspan="5">
+    <th class="basedata__th">住址</th>
+    <td  class="basedata__td" colspan="5">
       {{object.fullAddress}}
     </td>
   </tr>

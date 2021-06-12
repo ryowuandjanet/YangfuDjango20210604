@@ -30,3 +30,9 @@ class YfcaseForm(forms.ModelForm):
           pass  # invalid input from the client; ignore and fallback to empty City queryset
       elif self.instance.pk:
         self.fields['yfcaseTownship'].queryset = self.instance.city.city_set.order_by('name')
+
+class LandForm(forms.ModelForm):
+  yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
+  class Meta:
+    model=Land
+    fields =['yfcase','landNumber','landUrl','landArea','landHoldingPointPersonal','landHoldingPointAll'] 
