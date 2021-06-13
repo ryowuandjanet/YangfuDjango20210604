@@ -11,8 +11,14 @@ urlpatterns = [
   path('yfcase/create/',YfcaseCreateView.as_view(),name="yfcase_create" ),
   path('yfcase/<int:pk>/update/',YfcaseUpdateView.as_view(),name="yfcase_update"),
   path('yfcase/<int:pk>/delete/',YfcaseDeleteView.as_view(),name="yfcase_delete"),
+  # Land
   path('yfcase/<int:yfcase_id>/land/create/',land_create,name="land_create" ),
   path('yfcase/<int:yfcase_id>/land/update/<int:id>/',land_update,name="land_update" ),
   path('yfcase/<int:yfcase_id>/land/delete/<int:id>/',land_delete,name="land_delete" ),
+  # Build
+  path('yfcase/<int:yfcase_id>/build/create/',build_create,name="build_create" ),
+  path('yfcase/<int:yfcase_id>/build/update/<int:id>/',build_update,name="build_update" ),
+  path('yfcase/<int:yfcase_id>/build/delete/<int:id>/',build_delete,name="build_delete" ),
+
   path('ajax/load-townships/', load_townships, name='ajax_load_townships'),
 ]

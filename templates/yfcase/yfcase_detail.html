@@ -72,6 +72,25 @@
         {% include "./partials/land.html" %}
       </div>
 
+      <!-- 建物 -->
+      <div class="yfcase__detail__test">
+        <div class="yfcase__detail__subtitle">
+          建物
+          <a href="{% url 'yfcase:build_create' object.id %}">新增</a>
+        </div>
+        <div class="yfcase__detail__subtitle">
+          {% if object.builds.count > 0 %}
+            合計：{{ object.get_build_holding_point_after_group_total|floatformat:"2" }} m<sup>2</sup> 
+            ({{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }} 坪)
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="row">
+        <!--建物樣版-->
+        {% include "./partials/build.html" %}
+      </div>
+
     </div>
   </div>
 

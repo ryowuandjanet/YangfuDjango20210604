@@ -68,6 +68,7 @@ class YfcaseDeleteView(DeleteView):
   template_name="yfcase/yfcase_delete.html"
   success_url=reverse_lazy('yfcase:home')
 
+# ==========================  Land  =========================
 def land_create(request,yfcase_id=None):
   # 要配合url回傳的yfcase_id，來取得超類的資料
   instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
@@ -77,7 +78,7 @@ def land_create(request,yfcase_id=None):
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
-    messages.success(request,"successfully Created")
+    # messages.success(request,"successfully Created")
     # 把父類的yfcase_id(不可寫成instance.id，回傳到子類的id)回傳給yfcase_detail
     return redirect("yfcase:yfcase_detail", yfcase_id)
   context = {
@@ -94,11 +95,12 @@ def land_update(request,yfcase_id=None,id=None):
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
-    messages.success(request,"successfully Update")
+    # messages.success(request,"successfully Update")
     # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
     return redirect("yfcase:yfcase_detail", instance_yfcase.id)
   context={
     "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
     "form" : form,
     "title": "更新地號",
   }
@@ -109,10 +111,66 @@ def land_delete(request,yfcase_id=None,id=None):
   instance = get_object_or_404(Land, id=id)
   if request.method == "POST":
     instance.delete()
-    messages.success(request, 'Data Deleted.')
+    # messages.success(request, 'Data Deleted.')
     return redirect("yfcase:yfcase_detail", instance_yfcase.id)
-  context = {"instance": instance}
+  context = {
+    "instance": instance,
+    "instance_yfcase": instance_yfcase,
+    "title": "刪除建號"
+  }
   return render(request, "land/land_delete.html", context)
+
+# ==========================  Build  =========================
+def build_create(request,yfcase_id=None):
+  # 要配合url回傳的yfcase_id，來取得超類的資料
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
+  form = BuildForm(request.POST or None)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Created")
+    # 把父類的yfcase_id(不可寫成instance.id，回傳到子類的id)回傳給yfcase_detail
+    return redirect("yfcase:yfcase_detail", yfcase_id)
+  context = {
+    "form" : form, 
+    "instance_yfcase": instance_yfcase,
+    "title": "新增建號",
+  }
+  return render(request, "build/build_form.html",context)
+
+def build_update(request,yfcase_id=None,id=None):
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(Build,id=id)
+  form=BuildForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Update")
+    # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
+    return redirect("yfcase:yfcase_detail", instance_yfcase.id)
+  context={
+    "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
+    "form" : form,
+    "title": "更新建號",
+  }
+  return render(request, "build/build_form.html",context)
+
+def build_delete(request,yfcase_id=None,id=None):
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(Build, id=id)
+  if request.method == "POST":
+    instance.delete()
+    # messages.success(request, 'Data Deleted.')
+    return redirect("yfcase:yfcase_detail", instance_yfcase.id)
+  context = {
+    "instance": instance,
+    "instance_yfcase": instance_yfcase,
+    "title": "刪除建號"
+  }
+  return render(request, "build/build_delete.html", context)
 
 def load_townships(request):
   city_id = request.GET.get('city')
