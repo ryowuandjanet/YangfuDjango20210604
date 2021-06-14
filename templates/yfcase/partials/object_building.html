@@ -1,0 +1,85 @@
+<!-- 參考物件 -->
+{% load humanize %}
+{% load urlify %}
+
+<style>
+  .objectbuild__table { border: 3px solid black; }
+  .objectbuild__th { width: 10%; background-color: Thistle; border: 1px solid black; text-align: center;} 
+  .objectbuild__td { border: 1px solid black; }
+</style>
+
+<table class="objectbuild__table">
+  {% for objectbuild in object.objectbuilds.all %}
+    <tr>
+      <th class="objectbuild__th">
+        狀態
+        <a href="{% url 'yfcase:objectbuild_update' object.id objectbuild.id %}">更新</a>
+        <a href="{% url 'yfcase:objectbuild_delete' object.id objectbuild.id %}">刪除</a>
+      </th>
+      <th class="objectbuild__th">地址(屋齡)(樓高)(成立日期)</th>
+      <th class="objectbuild__th">總價(元)</th>
+      <th class="objectbuild__th">建坪(坪)</th>
+      <th class="objectbuild__th">單價(元)</th>
+      <th class="objectbuild__th">勘查員A</th>
+      <th class="objectbuild__th">加成A</th>
+      <th class="objectbuild__th">加成原因A</th>
+      <th class="objectbuild__th">計算</th>
+    </tr>
+    <tr>
+      <td class="objectbuild__td" rowspan=2>{{objectbuild.objectBuildStatus}}</td>
+      <td class="objectbuild__td" rowspan=5>
+        {{objectbuild.objectBuildAddress}}<br>
+        {% if objectbuild.objectBuildHouseAge %}
+          {{objectbuild.objectBuildHouseAge}}<br>
+        {% endif %}
+        {% if objectbuild.objectBuildFloorHeight %}
+          {{objectbuild.objectBuildFloorHeight}}<br>
+        {% endif %}
+        {% if objectbuild.objectBuildTransactionDate %}
+          {{ objectbuild.objectBuildTransactionDate }}
+        {% endif %}
+      </td>
+      <td class="objectbuild__td" rowspan=5>
+        {{ objectbuild.objectBuildTotalPrice|floatformat:0|intcomma }}
+      </td>
+      <td class="objectbuild__td" rowspan=5>
+        {{ objectbuild.objectBuildBuildArea }}
+      </td>
+      <td class="objectbuild__td" rowspan=5>
+        {{ objectbuild.get_objectbuild_ping_price|floatformat:0|intcomma }}
+      </td>
+      <td class="objectbuild__td">吳小毛</td>
+      <td class="objectbuild__td">1.2</td>
+      <td class="objectbuild__td">臨路面寬8</td>
+      <td class="objectbuild__td" rowspan=5>300000</td>
+    </tr>
+    <tr>
+      <th class="objectbuild__th">勘查員B</th>
+      <th class="objectbuild__th">加成B</th>
+      <th class="objectbuild__th">加成原因B</th>
+    </tr>
+    <tr>
+      <th class="objectbuild__th">現勘</th>
+      <td class="objectbuild__td">蜘蛛人</td>
+      <td class="objectbuild__td">1.23</td>
+      <td class="objectbuild__td">市場旁</td>
+    </tr>
+    <tr>
+      <td class="objectbuild__td" rowspan=2>
+        {% if objectbuild.objectBuildUrl %}
+          <a href="{{ objectbuild.objectBuildUrl }}" target="_blank">
+            <i class="fas fa-camera-retro fa-2x"></i>
+          </a>
+        {% endif %}
+      </td>
+      <th class="objectbuild__th">勘查員C</th>
+      <th class="objectbuild__th">加成C</th>
+      <th class="objectbuild__th">加成原因C</th>
+    </tr>
+    <tr>
+      <td class="objectbuild__td">閃電俠</td>
+      <td class="objectbuild__td">1.24</td>
+      <td class="objectbuild__td">旁邊有廟</td>
+    </tr>
+  {% endfor %}
+</table>

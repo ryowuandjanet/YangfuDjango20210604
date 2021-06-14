@@ -1,0 +1,32 @@
+<!-- 最終判定 -->
+{% load urlify %}
+
+<style>
+  .regionalhead__table { border: 3px solid black; }
+  .regionalhead__th { width: 10%; background-color: DeepSkyBlue; border: 1px solid black; text-align: center;} 
+  .regionalhead__td { border: 1px dotted black; }
+</style>
+
+<table class="regionalhead__table">
+  <tr>
+    <th class="regionalhead__th">結論</th>
+    <th class="regionalhead__th">區域負責人</th>
+    <td class="regionalhead__td"></td>
+  </tr>
+  <tr>
+    <td class="regionalhead__td" rowspan="2"></td>
+    <!-- 副署人員1 -->
+    <!-- 編輯：副署人員1需為空格，且登入者不可為區域負責人、副署人員2 -->
+    <!-- 刪除：副署人員1不可空格，且登入者需為區域負責人或是管理者 -->
+    <th class="regionalhead__th">副署人員1</th>
+    <td class="regionalhead__td"></td>
+  </tr>
+
+  <!-- 副署人員2 -->
+  <!-- 編輯：對應拍數的拍賣金額需大於1000000，且副署人員2需為空格，且登入者不可為區域負責人、副署人員1 -->
+  <!-- 刪除：副署人員2不可空格，且登入者需為區域負責人或是管理者 -->
+  <tr>
+    <th class="regionalhead__th">副署人員2</th>
+    <td class="regionalhead__td"></td>
+  </tr>
+</table>

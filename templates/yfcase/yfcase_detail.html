@@ -126,8 +126,37 @@
         {% include "./partials/survey.html" %}
       </div>
   
-        
+      <!-- 參考物件 -->
+      <div class="yfcase__detail__test">
+        <div class="yfcase__detail__subtitle">
+          參考物件
+          <a href="{% url 'yfcase:objectbuild_create' object.id %}">新建</a>
+        </div>
+        <div class="yfcase__detail__subtitle">
+          {% if object.objectbuilds.count > 0 %}
+            時價：{{object.pbk|floatformat:0|intcomma}}元
+          {% endif %}
+        </div>
+      </div>
+    
+      <div class="row">
+        <!-- 參考物件分離樣版 -->
+        {% include "./partials/object_building.html" %}
+      </div> 
 
+
+      <!-- 最終判定 -->
+      <div class="yfcase__detail__test">
+        <div class="yfcase__detail__subtitle">
+          最終判定
+          <a href="{% url 'yfcase:regionalhead_create' object.id %}">新建</a>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- 最終判定樣版 -->
+        {% include "./partials/finalDecision.html" %}
+      </div>
 
 
     </div>

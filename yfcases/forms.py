@@ -44,6 +44,22 @@ AREA_LIST = [
   ("特定專用區","特定專用區")
 ]
 
+STATUS_LIST= (
+  ("",""),
+  ("自訂","自訂"),
+  ("仲介","仲介"),
+)
+
+JUDGMENT_LIST=[
+  ("",""),
+  ("未判定","未判定"),
+  ("1拍進場","1拍進場"),
+  ("2拍進場","2拍進場"),
+  ("3拍進場","3拍進場"),
+  ("4拍進場","4拍進場"),
+  ("放棄","放棄")
+]
+
 class YfcaseForm(forms.ModelForm):
   # 多加了widget=forms.Select(attrs={'class': 'form-select'})是要欄位在右側出現了向下的箭頭所設定
   yfcaseCompany = forms.ChoiceField(label="所屬公司",choices=COMPANY_LIST, widget=forms.Select(attrs={'class': 'form-select'}),required=False)
@@ -108,6 +124,30 @@ class SurveyForm(forms.ModelForm):
   class Meta:
     model=Survey
     fields =['yfcase','surveyFirstDay','surveySecondDay','surveyForeclosureAnnouncementLink','survey988Link','surveyObjectPhotoLink','surveyForeclosureRecordLink'] 
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+
+class ObjectBuildForm(forms.ModelForm):
+  yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
+  objectBuildStatus = forms.ChoiceField(label="狀態",choices=STATUS_LIST, required=False)
+  objectBuildTransactionDate = forms.CharField(label="成交日期",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
+  class Meta:
+    model=ObjectBuild
+    fields =['yfcase','objectBuildAddress','objectBuildTotalPrice','objectBuildBuildArea','objectBuildHouseAge','objectBuildFloorHeight','objectBuildStatus','objectBuildTransactionDate','objectBuildUrl']
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+
+class RegionalHeadForm(forms.ModelForm):
+  yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
+  regionalHead = forms.CharField(widget=forms.HiddenInput())
+  finalDecision = forms.ChoiceField(label="最終判定",choices=JUDGMENT_LIST, required=False)
+  regionalHeadDate = forms.CharField(label="簽核日期",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
+  # regionalHead = forms.ModelChoiceField(CustomUser.objects.all(), widget=forms.HiddenInput())
+  class Meta:
+    model=FinalDecision
+    fields = ['yfcase','regionalHead','finalDecision','regionalHeadDate']
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)

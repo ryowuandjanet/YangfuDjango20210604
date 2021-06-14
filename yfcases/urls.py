@@ -25,6 +25,14 @@ urlpatterns = [
   # Survey
   path('yfcase/<int:yfcase_id>/survey/create/',survey_create,name="survey_create" ),
   path('yfcase/<int:yfcase_id>/survey/update/<int:id>/',survey_update,name="survey_update" ),
+  # ObjectBuild
+  path('yfcase/<int:yfcase_id>/objectbuild/create/',objectbuild_create,name="objectbuild_create" ),
+  path('yfcase/<int:yfcase_id>/objectbuild/update/<int:id>/',objectbuild_update,name="objectbuild_update" ),
+  path('yfcase/<int:yfcase_id>/objectbuild/delete/<int:id>/',objectbuild_delete,name="objectbuild_delete" ),
+  # FinalDecision
+  path('yfcase/<int:yfcase_id>/regionalhead/create/',regionalhead_create,name="regionalhead_create" ),
+  path('yfcase/<int:yfcase_id>/regionalhead/update/<int:id>/',regionalhead_update,name="regionalhead_update" ),
+  path('yfcase/<int:yfcase_id>/regionalhead/delete/<int:id>/',regionalhead_delete,name="regionalhead_delete" ),
 
   path('ajax/load-townships/', load_townships, name='ajax_load_townships'),
 ]
