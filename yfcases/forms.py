@@ -80,3 +80,34 @@ class BuildForm(forms.ModelForm):
   class Meta:
     model=Build
     fields ='__all__'
+
+class AuctionForm(forms.ModelForm):
+  yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
+  auctionDateFirst = forms.CharField(label="拍賣日(第一拍)",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
+  auctionDateSecond = forms.CharField(label="拍賣日(第二拍)",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
+  auctionDateThird = forms.CharField(label="拍賣日(第三拍)",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
+  auctionDateFourth = forms.CharField(label="拍賣日(第四拍)",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
+
+  class Meta:
+    model=Auction
+    fields ='__all__' 
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+
+  # 下為測試用
+  def clean(self):
+    cleaned_data = super(AuctionForm, self).clean()
+    if not cleaned_data['auctionDateFirst']:
+      cleaned_data['auctionDateFirst'] = None
+
+class SurveyForm(forms.ModelForm):
+  yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
+  surveyFirstDay = forms.CharField(label="初勘日",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
+  surveySecondDay = forms.CharField(label="會勘日",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
+  class Meta:
+    model=Survey
+    fields =['yfcase','surveyFirstDay','surveySecondDay','surveyForeclosureAnnouncementLink','survey988Link','surveyObjectPhotoLink','surveyForeclosureRecordLink'] 
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)

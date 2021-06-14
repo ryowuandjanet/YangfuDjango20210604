@@ -14,4 +14,21 @@ def m2toping(value):
   except:
     newlist.append(0)
 
+# 將兩個數相乘
+# 使用方式 value|multiplication:100
+@register.filter
+def multiplication(value, arg):
+  newlist=[]
+  try:
+    return value * arg
+  except:
+    newlist.append(0)
 
+# 將兩個數相除
+# 使用方式 value|divide:10
+@register.filter
+def divide(value, arg):
+  try:
+    return int(value) / int(arg)
+  except (ValueError, ZeroDivisionError):
+    return None

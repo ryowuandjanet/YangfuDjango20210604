@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load urlify %}
 {% load widget_tweaks %}
+{% load humanize %}
 
 {% block style %} 
   <style>
@@ -90,6 +91,44 @@
         <!--建物樣版-->
         {% include "./partials/build.html" %}
       </div>
+
+      <!-- 拍賣資訊 -->
+      <div class="yfcase__detail__test">
+        <div class="yfcase__detail__subtitle">
+          拍賣資訊
+          {% if object.auctions.count == 0 %}
+            <a href="{% url 'yfcase:auction_create' object.id %}">新增</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="row">
+        <!--拍賣樣版-->
+        {% include "./partials/auction.html" %}
+      </div>
+  
+      <!-- 勘查記錄 -->
+      <div class="yfcase__detail__test">
+        <div class="yfcase__detail__subtitle">
+          勘查記錄
+          {% for survey in object.surveys.all %}
+            {% if survey %}
+              <a href="{% url 'yfcase:survey_update' object.id survey.id %}">更新</a> 
+            {% else %}
+              <a href="{% url 'yfcase:survey_create' object.id %}">新增</a> 
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+  
+      <div class="row">
+        <!--實勘樣版-->
+        {% include "./partials/survey.html" %}
+      </div>
+  
+        
+
+
 
     </div>
   </div>

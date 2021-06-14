@@ -19,6 +19,12 @@ urlpatterns = [
   path('yfcase/<int:yfcase_id>/build/create/',build_create,name="build_create" ),
   path('yfcase/<int:yfcase_id>/build/update/<int:id>/',build_update,name="build_update" ),
   path('yfcase/<int:yfcase_id>/build/delete/<int:id>/',build_delete,name="build_delete" ),
+  # Aucion
+  path('yfcase/<int:yfcase_id>/auction/create/',auction_create,name="auction_create" ),
+  path('yfcase/<int:yfcase_id>/auction/update/<int:id>/',auction_update,name="auction_update" ),
+  # Survey
+  path('yfcase/<int:yfcase_id>/survey/create/',survey_create,name="survey_create" ),
+  path('yfcase/<int:yfcase_id>/survey/update/<int:id>/',survey_update,name="survey_update" ),
 
   path('ajax/load-townships/', load_townships, name='ajax_load_townships'),
 ]

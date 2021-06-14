@@ -172,6 +172,88 @@ def build_delete(request,yfcase_id=None,id=None):
   }
   return render(request, "build/build_delete.html", context)
 
+# ==========================  Auction  =========================
+def auction_create(request,yfcase_id=None):
+  # 要配合url回傳的yfcase_id，來取得超類的資料
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
+  form = AuctionForm(request.POST or None)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Created")
+    # 把父類的yfcase_id(不可寫成instance.id，回傳到子類的id)回傳給yfcase_detail
+    return redirect("yfcase:yfcase_detail", yfcase_id)
+  context = {
+    "form" : form, 
+    "instance_yfcase": instance_yfcase,
+    "title": "新增拍賣資訊",
+  }
+  return render(request, "auction/auction_form.html",context)
+
+def auction_update(request,yfcase_id=None,id=id):
+  # 要配合url回傳的yfcase_id，來取得超類的資料
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(Auction,id=id)
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
+  form = AuctionForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Created")
+    # 把父類的yfcase_id(不可寫成instance.id，回傳到子類的id)回傳給yfcase_detail
+    return redirect("yfcase:yfcase_detail", yfcase_id)
+  context = {
+    "instance" : instance,
+    "form" : form, 
+    "instance_yfcase": instance_yfcase,
+    "title": "更新拍賣資訊",
+  }
+  return render(request, "auction/auction_form.html",context)
+
+# ==========================  Survey  =========================
+def survey_create(request,yfcase_id=None):
+  # 要配合url回傳的yfcase_id，來取得超類的資料
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
+  form = SurveyForm(request.POST or None)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Created")
+    # 把父類的yfcase_id(不可寫成instance.id，回傳到子類的id)回傳給yfcase_detail
+    return redirect("yfcase:yfcase_detail", yfcase_id)
+  context = {
+    "form" : form, 
+    "instance_yfcase": instance_yfcase,
+    "title": "新增拍賣資訊",
+  }
+  return render(request, "survey/survey_form.html",context)
+
+def survey_update(request,yfcase_id=None,id=id):
+  # 要配合url回傳的yfcase_id，來取得超類的資料
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(Survey,id=id)
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
+  form = SurveyForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Created")
+    # 把父類的yfcase_id(不可寫成instance.id，回傳到子類的id)回傳給yfcase_detail
+    return redirect("yfcase:yfcase_detail", yfcase_id)
+  context = {
+    "instance" : instance,
+    "form" : form, 
+    "instance_yfcase": instance_yfcase,
+    "title": "更新拍賣資訊",
+  }
+  return render(request, "survey/survey_form.html",context)
+  
 def load_townships(request):
   city_id = request.GET.get('city')
   townships = Township.objects.filter(city_id=city_id).order_by('name')

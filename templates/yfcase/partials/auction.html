@@ -1,0 +1,344 @@
+{% load urlify %}
+{% load humanize %}
+
+<style>
+  .auction__table { border: 3px solid black; }
+  .auction__th { width: 10%; background-color: Gold; border: 1px solid black; text-align: center;} 
+  .auction__td { border: 1px dotted black; }
+</style>
+
+<table class="auction__table">
+    <tr>
+      <th class="auction__th">操作</th>
+      <th class="auction__th">
+        拍賣日
+      </th>
+      <th class="auction__th" colspan="4">拍別-進場判定<br>
+          <div style="padding:0px;font-size:10pt;color:red;">(可進場CP值)</div>
+      </th>
+      <th class="auction__th">底價<small>(NT)</small><br>
+          <div style="padding:0px;font-size:10pt;color:red;">各拍建議底價</div>
+      </th>
+      <th class="auction__th">坪價<small>(NT)</small></th>
+      <th class="auction__th">時價<small>(NT)</small></th>
+      <th class="auction__th">CP</th>
+      <th class="auction__th">點閱</th>
+      <th class="auction__th">監控</th>
+      <th class="auction__th">建議加價</th>
+      <th class="auction__th">保証金</th>
+    </tr>
+    <!-- 第一拍 -->
+    {% for auction in object.auctions.all %}
+    <tr>
+      <td class="auction__td" rowspan="4">
+        <a href="{% url 'yfcase:auction_update' object.id auction.id %}">更新</a>
+      </td>
+      <!-- 拍別：第一拍 -->
+      <td class="auction__td">{{auction.auctionDateFirst|default_if_none:""}}</td>
+      <td class="auction__td">第一拍<br>
+          <div style="padding:0px;font-size:10pt;color:red;">(CP>0.92)</div>
+      </td>
+      <td class="auction__td" colspan="3">
+        {% if auction.auctionFloorPriceFirst == 0 %}
+          <div>底價未輸入</div>
+        {% elif auction.get_suggestedincreaseFirst_cp >= 0.92 %}
+          <div style="padding:0px;font-size:10pt;color:green;">加價CP(
+          {{ auction.get_suggestedincreaseFirst_cp|floatformat:2 }})<br>建議進場</div>
+        {% elif auction.get_suggestedincreaseFirst_cp < 0.92 %}
+          <div style="padding:0px;font-size:10pt;color:red;">加價CP(
+          {{ auction.get_suggestedincreaseFirst_cp|floatformat:2 }})<br>不可進場</div>
+        {% endif %}
+      </td>
+      <!-- 第一拍：底價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{auction.auctionFloorPriceFirst|floatformat:0|intcomma }}
+        {% endif %}
+      </td>
+      <!-- 第一拍：坪價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFirst != 0 and object.builds.all|length > 0 %}
+          {{auction.get_ping_first_price|floatformat:0|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第一拍：時價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFirst != 0 and object.pbk != 0 %}
+          {{object.pbk|floatformat:0|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第一拍：CP值 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFirst != 0 and auction.get_first_cp != 0 %}
+          {{auction.get_first_cp|floatformat:2|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第一拍：點閱 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{auction.auctionClickFirst }}
+        {% endif %}
+      </td>
+      <!-- 第一拍：監控 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{auction.auctionMonitorFirst }}
+        {% endif %}
+      </td>
+      <!-- 第一拍：建議加價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          (100% + {{auction.get_suggestedincreaseFirst|multiplication:100|floatformat:0 }}%)<br>
+          {{auction.get_suggestedincreaseFirst_floor_price|floatformat:0|intcomma }}
+        {% endif %}
+      </td>
+      <!-- 第一拍：保証金 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{auction.auctionMarginFirst|floatformat:0|intcomma }}
+        {% endif %}
+      </td>
+    </tr>
+
+    <!-- 第二拍 -->
+    <tr>
+      <!-- 拍別：第二拍 -->
+      <td class="auction__td">{{auction.auctionDateSecond|default_if_none:""}}</td>
+      <td  class="auction__td">第二拍<br>
+          <div style="padding:0px;font-size:10pt;color:red;">(CP>1.15)</div>
+      </td>
+      <td class="auction__td" colspan="3">
+        {% if auction.auctionFloorPriceSecond == 0 %}
+          <div>底價未輸入</div>
+        {% elif auction.get_suggestedincreaseSecond_cp >= 1.15 %}
+          <div style="padding:0px;font-size:10pt;color:green;">加價CP(
+          {{ auction.get_suggestedincreaseSecond_cp|floatformat:2 }})<br>建議進場</div>
+        {% elif auction.get_suggestedincreaseSecond_cp < 1.15 %}
+          <div style="padding:0px;font-size:10pt;color:red;">加價CP(
+          {{ auction.get_suggestedincreaseSecond_cp|floatformat:2 }})<br>不可進場</div>
+        {% endif %}
+      </td>
+      <!-- 第二拍：底價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{auction.auctionFloorPriceSecond|floatformat:0|intcomma }}
+        {% endif %}
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          <br>
+          <div style="padding:0px;font-size:10pt;color:red;">
+            {{auction.auctionFloorPriceFirst|multiplication:8|divide:10|floatformat:0|intcomma }}
+          </div>
+        {% endif %}
+      </td>
+      <!-- 第二拍：坪價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceSecond != 0 and object.builds.all|length > 0 %}
+          {{auction.get_ping_second_price|floatformat:0|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第二拍：時價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceSecond != 0 and object.pbk != 0 %}
+          {{object.pbk|floatformat:0|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第二拍：CP值 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceSecond != 0 and auction.get_second_cp != 0 %}
+          {{auction.get_second_cp|floatformat:2|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第二拍：點閱 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{auction.auctionClickSecond }}
+        {% endif %}
+      </td>
+      <!-- 第二拍：監控 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{auction.auctionMonitorSecond }}
+        {% endif %}
+      </td>
+      <!-- 第二拍：建議加價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          (100% + {{auction.get_suggestedincreaseSecond|multiplication:100|floatformat:0 }}%)<br>
+          {{auction.get_suggestedincreaseSecond_floor_price|floatformat:0|intcomma }}
+        {% endif %}
+      </td>
+      <!-- 第二拍：保証金 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{auction.auctionMarginSecond|floatformat:0|intcomma }}
+        {% endif %}
+      </td>
+    </tr>
+
+    <!-- 第三拍 -->
+    <tr>
+      <!-- 拍別：第三拍 -->
+      <td class="auction__td">{{auction.auctionDateThird|default_if_none:""}}</td>
+      <td class="auction__td">第三拍<br>
+          <div style="padding:0px;font-size:10pt;color:red;">(CP>1.44)</div>
+      </td>
+      <td class="auction__td" colspan="3">
+        {% if auction.auctionFloorPriceThird == 0 %}
+          <div>底價未輸入</div>
+        {% elif auction.get_suggestedincreaseThird_cp >= 1.44 %}
+          <div style="padding:0px;font-size:10pt;color:green;">加價CP(
+          {{ auction.get_suggestedincreaseThird_cp|floatformat:2 }})<br>建議進場</div>
+        {% elif auction.get_suggestedincreaseThird_cp < 1.44 %}
+          <div style="padding:0px;font-size:10pt;color:red;">加價CP(
+          {{ auction.get_suggestedincreaseThird_cp|floatformat:2 }})<br>不可進場</div>
+        {% endif %}
+      </td>
+      <!-- 第三拍：底價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{auction.auctionFloorPriceThird|floatformat:0|intcomma }}
+        {% endif %}
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          <br>
+          <div style="padding:0px;font-size:10pt;color:red;">
+            {{auction.auctionFloorPriceFirst|multiplication:64|divide:100|floatformat:0|intcomma }}
+          </div>
+        {% elif auction.auctionFloorPriceSecond != 0 %}
+          <br>
+          <div style="padding:0px;font-size:10pt;color:red;">
+            {{auction.auctionFloorPriceSecond|multiplication:8|divide:10|floatformat:0|intcomma }}
+          </div>
+        {% endif %}
+      </td>
+      <!-- 第三拍：坪價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceThird != 0 and object.builds.all|length > 0 %}
+          {{auction.get_ping_third_price|floatformat:0|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第三拍：時價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceThird != 0 and object.pbk != 0 %}
+          {{object.pbk|floatformat:0|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第三拍：CP值 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceThird != 0 and auction.get_third_cp != 0 %}
+          {{auction.get_third_cp|floatformat:2|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第三拍：點閱 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{auction.auctionClickThird }}
+        {% endif %}
+      </td>
+      <!-- 第三拍：監控 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{auction.auctionMonitorThird }}
+        {% endif %}
+      </td>
+      <!-- 第三拍：建議加價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          (100% + {{auction.get_suggestedincreaseThird|multiplication:100|floatformat:0 }}%)<br>
+          {{auction.get_suggestedincreaseThird_floor_price|floatformat:0|intcomma }}
+        {% endif %}
+      </td>
+      <!-- 第三拍：保証金 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{auction.auctionMarginThird|floatformat:0|intcomma }}
+        {% endif %}
+      </td>
+    </tr>
+
+    <!-- 第四拍 -->
+    <tr>
+      <!-- 拍別：第四拍 -->
+      <td class="auction__td">{{auction.auctionDateFourth|default_if_none:""}}</td>
+      <td class="auction__td">第四拍<br>
+          <div style="padding:0px;font-size:10pt;color:red;">(CP>1.80)</div>
+      </td>
+      <td class="auction__td" colspan="3">
+        {% if auction.auctionFloorPriceFourth == 0 %}
+          <div>底價未輸入</div>
+        {% elif auction.get_suggestedincreaseFourth_cp >= 1.80 %}
+          <div style="padding:0px;font-size:10pt;color:green;">加價CP(
+          {{ auction.get_suggestedincreaseFourth_cp|floatformat:2 }})<br>建議進場</div>
+        {% elif auction.get_suggestedincreaseFourth_cp < 1.80 %}
+          <div style="padding:0px;font-size:10pt;color:red;">加價CP(
+          {{ auction.get_suggestedincreaseFourth_cp|floatformat:2 }})<br>不可進場</div>
+        {% endif %}
+      </td>
+      <!-- 第四拍：底價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{auction.auctionFloorPriceFourth|floatformat:0|intcomma }}
+        {% endif %}
+
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          <br>
+          <div style="padding:0px;font-size:10pt;color:red;">
+            {{auction.auctionFloorPriceFirst|multiplication:512|divide:1000|floatformat:0|intcomma }}
+          </div>
+        {% elif auction.auctionFloorPriceSecond != 0 %}
+          <br>
+          <div style="padding:0px;font-size:10pt;color:red;">
+            {{auction.auctionFloorPriceSecond|multiplication:64|divide:100|floatformat:0|intcomma }}
+          </div>
+        {% elif auction.auctionFloorPriceThird != 0 %}
+          <br>
+          <div style="padding:0px;font-size:10pt;color:red;">
+            {{auction.auctionFloorPriceThird|multiplication:8|divide:10|floatformat:0|intcomma }}
+          </div>
+        {% endif %}
+      </td>
+      <!-- 第四拍：坪價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFourth != 0 and object.builds.all|length > 0 %}
+          {{auction.get_ping_fourth_price|floatformat:0|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第四拍：時價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFourth != 0 and object.pbk != 0 %}
+          {{object.pbk|floatformat:0|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第四拍：CP值 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFourth != 0 and auction.get_fourth_cp != 0 %}
+          {{auction.get_fourth_cp|floatformat:2|intcomma}}
+        {% endif %}
+      </td>
+      <!-- 第四拍：點閱 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{auction.auctionClickFourth }}
+        {% endif %}
+      </td>
+      <!-- 第四拍：監控 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{auction.auctionMonitorFourth }}
+        {% endif %}
+      </td>
+      <!-- 第四拍：建議加價 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          (100% + {{auction.get_suggestedincreaseFouth|multiplication:100|floatformat:0 }}%)<br>
+          {{auction.get_suggestedincreaseFourth_floor_price|floatformat:0|intcomma }}
+        {% endif %}
+      </td>
+      <!-- 第四拍：保証金 -->
+      <td class="auction__td">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{auction.auctionMarginFourth|floatformat:0|intcomma }}
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+</table>
