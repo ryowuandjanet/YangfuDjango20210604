@@ -29,10 +29,20 @@ urlpatterns = [
   path('yfcase/<int:yfcase_id>/objectbuild/create/',objectbuild_create,name="objectbuild_create" ),
   path('yfcase/<int:yfcase_id>/objectbuild/update/<int:id>/',objectbuild_update,name="objectbuild_update" ),
   path('yfcase/<int:yfcase_id>/objectbuild/delete/<int:id>/',objectbuild_delete,name="objectbuild_delete" ),
+  # ScoreA
+  path('yfcase/<int:yfcase_id>/scorea/update/<int:id>/',score_a_adj,name="score_a_update" ),
+  path('yfcase/<int:yfcase_id>/scorea/delete/<int:id>/',score_a_clean,name="score_a_delete" ),
+  # ScoreB
+  path('yfcase/<int:yfcase_id>/scoreb/update/<int:id>/',score_b_adj,name="score_b_update" ),
+  path('yfcase/<int:yfcase_id>/scoreb/delete/<int:id>/',score_b_clean,name="score_b_delete" ),
+  # ScoreC
+  path('yfcase/<int:yfcase_id>/scorec/update/<int:id>/',score_c_adj,name="score_c_update" ),
+  path('yfcase/<int:yfcase_id>/scorec/delete/<int:id>/',score_c_clean,name="score_c_delete" ),
   # FinalDecision
   path('yfcase/<int:yfcase_id>/regionalhead/create/',regionalhead_create,name="regionalhead_create" ),
   path('yfcase/<int:yfcase_id>/regionalhead/update/<int:id>/',regionalhead_update,name="regionalhead_update" ),
   path('yfcase/<int:yfcase_id>/regionalhead/delete/<int:id>/',regionalhead_delete,name="regionalhead_delete" ),
+
 
   path('ajax/load-townships/', load_townships, name='ajax_load_townships'),
 ]

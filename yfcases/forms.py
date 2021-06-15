@@ -67,7 +67,7 @@ class YfcaseForm(forms.ModelForm):
   class Meta:
     model=Yfcase
     # fields =['yfcaseCaseNumber','user'] 
-    fields =['yfcaseCaseNumber','yfcaseCompany','yfcaseCity','yfcaseTownship','yfcaseBigSection','yfcaseSmallSection',"yfcaseVillage","yfcaseNeighbor","yfcaseStreet","yfcaseSection","yfcaseLane","yfcaseAlley","yfcaseNumber","yfcaseFloor",'yfcaseDebtor','yfcaseCreditor','user'] 
+    fields =['yfcaseCaseNumber','yfcaseCompany','yfcaseCity','yfcaseTownship','yfcaseBigSection','yfcaseSmallSection',"yfcaseVillage","yfcaseNeighbor","yfcaseStreet","yfcaseSection","yfcaseLane","yfcaseAlley","yfcaseNumber","yfcaseFloor",'yfcaseDebtor','yfcaseCreditor','yfcaseCreditorMobilePhone','user'] 
     
 
     def __init__(self, *args, **kwargs):
@@ -111,12 +111,6 @@ class AuctionForm(forms.ModelForm):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
 
-  # 下為測試用
-  def clean(self):
-    cleaned_data = super(AuctionForm, self).clean()
-    if not cleaned_data['auctionDateFirst']:
-      cleaned_data['auctionDateFirst'] = None
-
 class SurveyForm(forms.ModelForm):
   yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
   surveyFirstDay = forms.CharField(label="初勘日",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
@@ -139,6 +133,33 @@ class ObjectBuildForm(forms.ModelForm):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
 
+# ======= ScoreAForm =======
+class ScoreAForm(forms.ModelForm):
+  class Meta:
+    model=ObjectBuild
+    fields =['objectBuildScorerA','objectBuildScorRateA','objectBuildScorReasonA','plusItemA1','plusItemA2','plusItemA3','plusItemA4','plusItemA5','plusItemOtherA','plusValueA1','plusValueA2','plusValueA3','plusValueA4','plusValueA5','plusValueOtherA']
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+
+# ======= ScoreBForm =======
+class ScoreBForm(forms.ModelForm):
+  class Meta:
+    model=ObjectBuild
+    fields =['objectBuildScorerB','objectBuildScorRateB','objectBuildScorReasonB','plusItemB1','plusItemB2','plusItemB3','plusItemB4','plusItemB5','plusItemOtherB','plusValueB1','plusValueB2','plusValueB3','plusValueB4','plusValueB5','plusValueOtherB']
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+
+# ======= ScoreCForm =======
+class ScoreCForm(forms.ModelForm):
+  class Meta:
+    model=ObjectBuild
+    fields =['objectBuildScorerC','objectBuildScorRateC','objectBuildScorReasonC','plusItemC1','plusItemC2','plusItemC3','plusItemC4','plusItemC5','plusItemOtherC','plusValueC1','plusValueC2','plusValueC3','plusValueC4','plusValueC5','plusValueOtherC']
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    
 class RegionalHeadForm(forms.ModelForm):
   yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
   regionalHead = forms.CharField(widget=forms.HiddenInput())

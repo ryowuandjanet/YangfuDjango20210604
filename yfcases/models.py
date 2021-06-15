@@ -1,6 +1,8 @@
 from django.db import models
+from decimal import *
 from django.urls import reverse
 from datetime import datetime
+import math
 
 # ======= 縣市 =======
 class City(models.Model):
@@ -43,6 +45,7 @@ class Yfcase(models.Model):
   yfcaseFloor=models.CharField(u'樓(含之幾)',max_length=100,null=True,blank=True)
   yfcaseDebtor=models.CharField(u'債務人',max_length=10,null=True,blank=True)
   yfcaseCreditor=models.CharField(u'債權人',max_length=10,null=True,blank=True)
+  yfcaseCreditorMobilePhone=models.CharField(u'債權人電話',max_length=20,null=True,blank=True)
   user = models.ForeignKey('users.CustomUser',verbose_name = u'區域負責人', on_delete=models.CASCADE)
 
   def __str__(self):
@@ -636,6 +639,7 @@ class ObjectBuild(models.Model):
     except:
       newlist.append(0)
 
+# ======= FinalDecision =======
 class FinalDecision(models.Model):
   yfcase=models.ForeignKey(Yfcase,related_name='finaldecisions',on_delete=models.CASCADE)
   finalDecision = models.CharField(u'最終判定',max_length=10,null=True,blank=True)

@@ -306,6 +306,116 @@ def objectbuild_delete(request,yfcase_id=None,id=None):
   }
   return render(request, "objectbuild/objectbuild_delete.html", context)
 
+# ==========================  ScoreA  =========================
+def score_a_adj(request,yfcase_id=None,id=None):
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(ObjectBuild,id=id)
+  form=ScoreAForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Update")
+    # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
+    return redirect("yfcase:yfcase_detail", instance_yfcase.id)
+  context={
+    "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
+    "form" : form,
+    "title": "調整勘查員A評分",
+  }
+  return render(request, "score/score_a_form.html",context)
+
+def score_a_clean(request,yfcase_id=None,id=None):
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(ObjectBuild,id=id)
+  form=ScoreAForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Update")
+    # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
+    return redirect("yfcase:yfcase_detail", instance_yfcase.id)
+  context={
+    "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
+    "form" : form,
+    "Title": "清除勘查員A評分",
+  }
+  return render(request, "score/score_a_delete.html",context)
+
+# ==========================  ScoreB  =========================
+def score_b_adj(request,yfcase_id=None,id=None):
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(ObjectBuild,id=id)
+  form=ScoreBForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Update")
+    # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
+    return redirect("yfcase:yfcase_detail", instance_yfcase.id)
+  context={
+    "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
+    "form" : form,
+    "title": "調整勘查員B評分",
+  }
+  return render(request, "score/score_b_form.html",context)
+
+def score_b_clean(request,yfcase_id=None,id=None):
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(ObjectBuild,id=id)
+  form=ScoreBForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Update")
+    # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
+    return redirect("yfcase:yfcase_detail", instance_yfcase.id)
+  context={
+    "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
+    "form" : form,
+    "Title": "清除勘查員B評分",
+  }
+  return render(request, "score/score_b_delete.html",context)
+
+# ==========================  ScoreC  =========================
+def score_c_adj(request,yfcase_id=None,id=None):
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(ObjectBuild,id=id)
+  form=ScoreCForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Update")
+    # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
+    return redirect("yfcase:yfcase_detail", instance_yfcase.id)
+  context={
+    "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
+    "form" : form,
+    "title": "調整勘查員C評分",
+  }
+  return render(request, "score/score_c_form.html",context)
+
+def score_c_clean(request,yfcase_id=None,id=None):
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(ObjectBuild,id=id)
+  form=ScoreCForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Update")
+    # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
+    return redirect("yfcase:yfcase_detail", instance_yfcase.id)
+  context={
+    "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
+    "form" : form,
+    "Title": "清除勘查員C評分",
+  }
+  return render(request, "score/score_c_delete.html",context)
 # ==========================  FinalDecision  =========================
 def regionalhead_create(request,yfcase_id=None):
   # 要配合url回傳的yfcase_id，來取得超類的資料

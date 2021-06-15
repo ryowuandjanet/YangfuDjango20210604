@@ -133,9 +133,15 @@
             {{ form.yfcaseCreditorMobilePhone|add_class:'form-control' }}
             <span class="help-block">{{ form.yfcaseCreditorMobilePhone.error }}</span>
           </div>
+
+          <div class="form-group">
+            <label for="{{ form.yfcaseCreditor.id_for_label }}">{{ form.yfcaseCreditorMobilePhone.label }}</label>
+            {{ form.yfcaseCreditorMobilePhone|add_class:'form-control' }}
+            <span class="help-block">{{ form.yfcaseCreditorMobilePhone.error }}</span>
+          </div>
          
         </div>
-{{gid}}
+
         <!-- footer -->
         <div class="modal-footer">
           

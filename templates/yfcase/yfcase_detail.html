@@ -14,11 +14,6 @@
       text-align: center;
       vertical-align: bottom;
     }
-    .yfcase__detail__title {
-      font-size:24pt;
-      padding-left:0px;
-      font-weight: 500;
-    }
     .yfcase__detail__test {
       display: flex;
       justify-content: space-between;
@@ -28,6 +23,15 @@
       flex-direction: row;
       text-align: right;
     }
+    th,td {
+      text-align: center;
+    }
+    .text-left { text-align: left; }
+    .text-right { text-align: right; }
+    .text-red { font-size: 10pt; color: red; font-weight: 700; }
+    .text-blue { font-size: 10pt; color: blue; font-weight: 700; }
+    .text-green { font-size: 10pt; color: green; font-weight: 700; }
+    .text-mark { font-size: 10.5pt; background-color: yellow; font-weight: 700; }
   </style>
 {% endblock style %}
 
@@ -43,8 +47,8 @@
   <div class="col">
     <div class="container col">
       <!--基本資料-->
-      <div class="row">
-        <div class="yfcase__detail__title">
+      <div class="yfcase__detail__test">
+        <div class="yfcase__detail__subtitle">
           基本資料
           <a href="{% url 'yfcase:yfcase_update' object.id %}">編輯</a>
         </div>
@@ -96,8 +100,12 @@
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
           拍賣資訊
-          {% if object.auctions.count == 0 %}
-            <a href="{% url 'yfcase:auction_create' object.id %}">新增</a>
+          {% if object.auctions.all %}
+            {% for auction in object.auctions.all %}
+              <a href="{% url 'yfcase:auction_update' object.id auction.id %}">更新</a> 
+            {% endfor %}
+          {% else %}
+            <a href="{% url 'yfcase:auction_create' object.id %}">新增</a> 
           {% endif %}
         </div>
       </div>
@@ -111,13 +119,13 @@
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
           勘查記錄
-          {% for survey in object.surveys.all %}
-            {% if survey %}
+          {% if object.surveys.all %}
+            {% for survey in object.surveys.all %}
               <a href="{% url 'yfcase:survey_update' object.id survey.id %}">更新</a> 
-            {% else %}
-              <a href="{% url 'yfcase:survey_create' object.id %}">新增</a> 
-            {% endif %}
-          {% endfor %}
+            {% endfor %}
+          {% else %}
+            <a href="{% url 'yfcase:survey_create' object.id %}">新增</a> 
+          {% endif %}
         </div>
       </div>
   

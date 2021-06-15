@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block head_title %}
+  {{ title }}
+{% endblock head_title %}
+
+{% block style %}
+  <style>
+    .help-block {
+      color: red;
+    }
+  </style>
+{% endblock style %}
+
+
+{% block content %}
+  <div class="col">
+    <h1>{{ title }}</h1>
+    <form method="POST" action="" enctype='multipart/form-data'>{% csrf_token %}
+      {{ form.objectBuildScorerA|attr:"type:hidden" }}
+      {{ form.objectBuildScorRateA|attr:"type:hidden" }}
+      {{ form.objectBuildScorReasonA|attr:"type:hidden" }}
+
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label>項目1</label>
+        </div>
+        <div class="form-group col-md-7">
+          {{ form.plusItemA1|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+        <div class="form-group col-md-2">
+          <label>加成係數</label>
+        </div>
+        <div class="form-group col-md-2">
+          {{ form.plusValueA1|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label>項目2</label>
+        </div>
+        <div class="form-group col-md-7">
+          {{ form.plusItemA2|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+        <div class="form-group col-md-2">
+          <label>加成係數</label>
+        </div>
+        <div class="form-group col-md-2">
+          {{ form.plusValueA2|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label>項目3</label>
+        </div>
+        <div class="form-group col-md-7">
+          {{ form.plusItemA3|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+        <div class="form-group col-md-2">
+          <label>加成係數</label>
+        </div>
+        <div class="form-group col-md-2">
+          {{ form.plusValueA3|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label>項目4</label>
+        </div>
+        <div class="form-group col-md-7">
+          {{ form.plusItemA4|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+        <div class="form-group col-md-2">
+          <label>加成係數</label>
+        </div>
+        <div class="form-group col-md-2">
+          {{ form.plusValueA4|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label>項目5</label>
+        </div>
+        <div class="form-group col-md-7">
+          {{ form.plusItemA5|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+        <div class="form-group col-md-2">
+          <label>加成係數</label>
+        </div>
+        <div class="form-group col-md-2">
+          {{ form.plusValueA5|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+      </div>
+      
+      <hr>
+
+      <div class="form-row">
+        <div class="form-group col-md-1">
+          <label>其他</label>
+        </div>
+        <div class="form-group col-md-7">
+          {{ form.plusItemOtherA|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+        <div class="form-group col-md-2">
+          <label>加成係數</label>
+        </div>
+        <div class="form-group col-md-2">
+          {{ form.plusValueOtherA|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+      </div>
+      {{ request.user.userFullName|json_script:"author_fullname" }}
+
+      <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
+      <input type="submit" class="btn btn-secondary" value="調整" onclick="post_score_a_edit_submit()">
+    </form>
+  </div>
+
+  <!-- 為防止在運行jquery程式碼時出錯Uncaught ReferenceError: $ is not defined，所以要將jquery.min.js -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
+  <script>
+    function post_score_a_edit_submit() {
+      const author_fullname = JSON.parse(document.getElementById('author_fullname').textContent);
+      document.getElementById("id_objectBuildScorerA").value = author_fullname;
+    }
+  </script>
+{% endblock %}
