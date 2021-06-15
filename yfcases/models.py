@@ -220,8 +220,8 @@ class Land(models.Model):
   landNumber=models.CharField(u'地號',max_length=100,null=True,blank=True)
   landUrl=models.URLField(u'謄本',max_length=200,null=True,blank=True)
   landArea=models.DecimalField(u'地坪(平方公尺)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
-  landHoldingPointPersonal=models.DecimalField(u'個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
-  landHoldingPointAll=models.DecimalField(u'所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  landHoldingPointPersonal=models.DecimalField(u'個人持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
+  landHoldingPointAll=models.DecimalField(u'所有持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
   
   def __str__(self):
     return self.landNumber
@@ -235,8 +235,8 @@ class Build(models.Model):
   buildNumber=models.CharField(u'建號',max_length=100,null=True,blank=True)
   buildUrl=models.URLField(u'謄本',max_length=200,null=True,blank=True)
   buildArea=models.DecimalField(u'建坪(平方公尺)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
-  buildHoldingPointPersonal=models.DecimalField(u'個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
-  buildHoldingPointAll=models.DecimalField(u'所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  buildHoldingPointPersonal=models.DecimalField(u'個人持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
+  buildHoldingPointAll=models.DecimalField(u'所有持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
   buildTypeUse=models.CharField(u'建物型',max_length=100,null=True,blank=True)
   buildUsePartition=models.CharField(u'使用分區',max_length=100,null=True,blank=True)
 

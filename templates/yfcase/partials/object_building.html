@@ -62,7 +62,13 @@
         {% if objectbuild.plusItemA5 %}({{ objectbuild.plusValueA5 }}){{ objectbuild.plusItemA5 }}<br>{% endif %}
         {% if objectbuild.plusItemOtherA %}({{ objectbuild.plusValueOtherA }}){{ objectbuild.plusItemOtherA }}<br>{% endif %}
       </td>
-      <td class="objectbuild__td" rowspan=5>300000</td>
+      <td class="objectbuild__td" rowspan=5>
+        {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
+          {{ objectbuild.get_objectbuild_ping_price_abc_calculation|floatformat:0 }}
+        {% else %}
+          {{ objectbuild.get_objectbuild_ping_price_ab_calculation|floatformat:0 }}
+        {% endif %}
+      </td>
     </tr>
     <tr>
       <th class="objectbuild__th">勘查員B</th>
@@ -94,25 +100,37 @@
           </a>
         {% endif %}
       </td>
-      <th class="objectbuild__th">勘查員C</th>
-      <th class="objectbuild__th">加成C</th>
-      <th class="objectbuild__th">加成原因C</th>
+      {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
+        <th class="objectbuild__th">勘查員C</th>
+        <th class="objectbuild__th">加成C</th>
+        <th class="objectbuild__th">加成原因C</th>
+      {% else %}
+        <td class="objectbuild__th bg-dark"></td>
+        <td class="objectbuild__th bg-dark"></td>
+        <td class="objectbuild__th bg-dark"></td>
+      {% endif %}
     </tr>
     <tr>
-      <td class="objectbuild__td">
-        <a href="{% url 'yfcase:score_c_update' object.id objectbuild.id %}">更新</a>
-        <a href="{% url 'yfcase:score_c_delete' object.id objectbuild.id %}">刪除</a>
-        {{ objectbuild.objectBuildScorerC|default_if_none:"" }}
-      </td>
-      <td class="objectbuild__td">{% if objectbuild.objectBuildScorerC %}{{ objectbuild.get_c_plus_value|floatformat:"2" }}{% endif %}</td>
-      <td class="objectbuild__td text-left">
-        {% if objectbuild.plusItemC1 %}({{ objectbuild.plusValueC1 }}){{ objectbuild.plusItemC1 }}<br>{% endif %}
-        {% if objectbuild.plusItemC2 %}({{ objectbuild.plusValueC2 }}){{ objectbuild.plusItemC2 }}<br>{% endif %}
-        {% if objectbuild.plusItemC3 %}({{ objectbuild.plusValueC3 }}){{ objectbuild.plusItemC3 }}<br>{% endif %}
-        {% if objectbuild.plusItemC4 %}({{ objectbuild.plusValueC4 }}){{ objectbuild.plusItemC4 }}<br>{% endif %}
-        {% if objectbuild.plusItemC5 %}({{ objectbuild.plusValueC5 }}){{ objectbuild.plusItemC5 }}<br>{% endif %}
-        {% if objectbuild.plusItemOtherC %}({{ objectbuild.plusValueOtherC }}){{ objectbuild.plusItemOtherC }}<br>{% endif %}
-      </td>
+      {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
+        <td class="objectbuild__td">
+          <a href="{% url 'yfcase:score_c_update' object.id objectbuild.id %}">更新</a>
+          <a href="{% url 'yfcase:score_c_delete' object.id objectbuild.id %}">刪除</a>
+          {{ objectbuild.objectBuildScorerC|default_if_none:"" }}
+        </td>
+        <td class="objectbuild__td">{% if objectbuild.objectBuildScorerC %}{{ objectbuild.get_c_plus_value|floatformat:"2" }}{% endif %}</td>
+        <td class="objectbuild__td text-left">
+          {% if objectbuild.plusItemC1 %}({{ objectbuild.plusValueC1 }}){{ objectbuild.plusItemC1 }}<br>{% endif %}
+          {% if objectbuild.plusItemC2 %}({{ objectbuild.plusValueC2 }}){{ objectbuild.plusItemC2 }}<br>{% endif %}
+          {% if objectbuild.plusItemC3 %}({{ objectbuild.plusValueC3 }}){{ objectbuild.plusItemC3 }}<br>{% endif %}
+          {% if objectbuild.plusItemC4 %}({{ objectbuild.plusValueC4 }}){{ objectbuild.plusItemC4 }}<br>{% endif %}
+          {% if objectbuild.plusItemC5 %}({{ objectbuild.plusValueC5 }}){{ objectbuild.plusItemC5 }}<br>{% endif %}
+          {% if objectbuild.plusItemOtherC %}({{ objectbuild.plusValueOtherC }}){{ objectbuild.plusItemOtherC }}<br>{% endif %}
+        </td>
+      {% else %}
+        <td class="objectbuild__td bg-dark"></td>
+        <td class="objectbuild__td bg-dark"></td>
+        <td class="objectbuild__td bg-dark"></td>
+      {% endif %}
     </tr>
   {% endfor %}
 </table>
