@@ -655,11 +655,11 @@ class FinalDecision(models.Model):
   finalDecisionDeterminationThird = models.CharField(u'最終判定(三拍)',max_length=10,null=True,blank=True)
   finalDecisionDeterminationFourth = models.CharField(u'最終判定(四拍)',max_length=10,null=True,blank=True)
   finalDecisionDeterminationGiveUp = models.CharField(u'最終判定(放棄)',max_length=10,null=True,blank=True)
-  finalDecisionRemarkFirst = models.CharField(u'備註(一拍)',max_length=10,null=True,blank=True)
-  finalDecisionRemarkSecond = models.CharField(u'備註(二拍)',max_length=10,null=True,blank=True)
-  finalDecisionRemarkThird = models.CharField(u'備註(三拍)',max_length=10,null=True,blank=True)
-  finalDecisionRemarkFourth = models.CharField(u'備註(四拍)',max_length=10,null=True,blank=True)
-  finalDecisionRemarkGiveUp = models.CharField(u'備註(放棄)',max_length=10,null=True,blank=True)
+  finalDecisionRemarkFirst = models.CharField(u'備註(一拍)',max_length=100,null=True,blank=True)
+  finalDecisionRemarkSecond = models.CharField(u'備註(二拍)',max_length=100,null=True,blank=True)
+  finalDecisionRemarkThird = models.CharField(u'備註(三拍)',max_length=100,null=True,blank=True)
+  finalDecisionRemarkFourth = models.CharField(u'備註(四拍)',max_length=100,null=True,blank=True)
+  finalDecisionRemarkGiveUp = models.CharField(u'備註(放棄)',max_length=100,null=True,blank=True)
   finalDecisionRegionalHeadFirst = models.CharField(u'區域負責人(一拍)',max_length=10,null=True,blank=True)
   finalDecisionRegionalHeadSecond = models.CharField(u'區域負責人(二拍)',max_length=10,null=True,blank=True)
   finalDecisionRegionalHeadThird = models.CharField(u'區域負責人(三拍)',max_length=10,null=True,blank=True)
@@ -706,8 +706,8 @@ class FinalDecision(models.Model):
   finalDecisionSubSigntrueWorkAreaBFourth = models.CharField(u'副署轄區B(四拍)',max_length=10,null=True,blank=True)
   finalDecisionSubSigntrueWorkAreaBGiveUp = models.CharField(u'副署轄區B(放棄)',max_length=10,null=True,blank=True)
 
-  def __str__(self):
-    return self.finalDecision
+  # def __str__(self):
+  #   return self.finalDecisionDeterminationFirst
 
   def other_day_to_today(self):
     # 取得目前的日期，要用form dateteim import datetime,不可用import datetime

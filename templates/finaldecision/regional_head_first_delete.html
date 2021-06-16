@@ -19,17 +19,42 @@
         </div>
         
         <!-- body -->
-        <div class="modal-body">
-         <p>你確定要刪除 "{{instance.finalDecisionDeterminationFirst}}"的相關資料嗎 ?</p>
-        </div>
+        <form method="POST" action="" enctype='multipart/form-data'>{% csrf_token %}
+          <div class="modal-body">
+            {{ form.yfcase|attr:"type:hidden" }}
+            <p>你確定要刪除 "{{instance.finalDecisionDeterminationFirst}}"的相關資料嗎 ?</p>
+            {{ form.finalDecisionDeterminationFirst|attr:"type:hidden" }}
+            {{ form.finalDecisionRemarkFirst|attr:"type:hidden" }}
+            {{ form.finalDecisionRegionalHeadFirst|attr:"type:hidden" }}
+            {{ form.finalDecisionRegionalHeadDateFirst|attr:"type:hidden" }}
+            {{ form.finalDecisionRegionalHeadWorkAreaFirst|attr:"type:hidden" }}
+          </div>
 
-        <!-- footer -->
-        <div class="modal-footer">
-          <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
-          <input class="btn btn-success col-md-3" type="submit" value="刪除" />
-        </div>
-
+          <!-- footer -->
+          <div class="modal-footer">
+            <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
+            <input type="submit" class="btn btn-secondary" value="清除" onclick="set_value_empty()">
+          </div>
+        </form>
       </div>
     </div>
   </form>
+
+  <!-- 為防止在運行jquery程式碼時出錯Uncaught ReferenceError: $ is not defined，所以要將jquery.min.js -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
+  <script>
+    function set_value_empty() {
+      $(function() {
+
+        var url = (window.location.pathname).replace("/yfcase/","").replace("/regionalheadfirst/delete/*","");
+        document.getElementById("id_yfcase").value = url;
+        document.getElementById("id_finalDecisionDeterminationFirst").value = "";
+        document.getElementById("id_finalDecisionRemarkFirst").value = "";
+        document.getElementById("id_finalDecisionRegionalHeadFirst").value = "";
+        document.getElementById("id_finalDecisionRegionalHeadDateFirst").value = "";
+        document.getElementById("id_finalDecisionRegionalHeadWorkAreaFirst").value = "";
+      });
+    }
+  </script>
 {% endblock %}

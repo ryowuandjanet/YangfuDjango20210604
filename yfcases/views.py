@@ -509,17 +509,22 @@ def regionalhead_first_update(request,yfcase_id=None,id=None):
 
 def regionalhead_first_delete(request,yfcase_id=None,id=None):
   instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
-  instance = get_object_or_404(FinalDecision, id=id)
-  if request.method == "POST":
-    instance.delete()
-    # messages.success(request, 'Data Deleted.')
+  instance = get_object_or_404(FinalDecision,id=id)
+  form=RegionalHeadFormFirst(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Update")
+    # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
     return redirect("yfcase:yfcase_detail", instance_yfcase.id)
-  context = {
-    "instance": instance,
-    "instance_yfcase": instance_yfcase,
-    "title": "刪除參考物件"
+    # return reverse_lazy('yfcase:home')
+  context={
+    "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
+    "form" : form,
+    "title": "更新參考物件",
   }
-  return render(request, "finaldecision/regional_head_first_delete.html", context)
+  return render(request, "finaldecision/regional_head_first_delete.html",context)
 
 def load_townships(request):
   city_id = request.GET.get('city')
