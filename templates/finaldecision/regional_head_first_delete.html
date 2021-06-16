@@ -21,19 +21,26 @@
         <!-- body -->
         <form method="POST" action="" enctype='multipart/form-data'>{% csrf_token %}
           <div class="modal-body">
-            {{ form.yfcase|attr:"type:hidden" }}
             <p>你確定要刪除 "{{instance.finalDecisionDeterminationFirst}}"的相關資料嗎 ?</p>
-            {{ form.finalDecisionDeterminationFirst|attr:"type:hidden" }}
+            {{ instance.finalDecisionRemarkFirst }}
+            {{ instance.finalDecisionRegionalHeadFirst }}
+            {{ instance.finalDecisionRegionalHeadDateFirst }}
+            {{ instance.finalDecisionDeterminationFirst }}
+            {{ instance.finalDecisionRegionalHeadWorkAreaFirst }}
+
+
+            {{ form.yfcase|attr:"type:hidden" }} 
             {{ form.finalDecisionRemarkFirst|attr:"type:hidden" }}
+            {{ form.yfcase|attr:"type:hidden" }}
             {{ form.finalDecisionRegionalHeadFirst|attr:"type:hidden" }}
             {{ form.finalDecisionRegionalHeadDateFirst|attr:"type:hidden" }}
+            {{ form.finalDecisionDeterminationFirst|attr:"type:hidden" }}
             {{ form.finalDecisionRegionalHeadWorkAreaFirst|attr:"type:hidden" }}
           </div>
-
           <!-- footer -->
           <div class="modal-footer">
             <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
-            <input type="submit" class="btn btn-secondary" value="清除" onclick="set_value_empty()">
+            <input type="submit" class="btn btn-secondary" value="清除" onclick="set_determination_first_empty()">
           </div>
         </form>
       </div>
@@ -44,16 +51,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    
   <script>
-    function set_value_empty() {
+    function set_determination_first_empty() {
       $(function() {
-
-        var url = (window.location.pathname).replace("/yfcase/","").replace("/regionalheadfirst/delete/*","");
-        document.getElementById("id_yfcase").value = url;
         document.getElementById("id_finalDecisionDeterminationFirst").value = "";
-        document.getElementById("id_finalDecisionRemarkFirst").value = "";
-        document.getElementById("id_finalDecisionRegionalHeadFirst").value = "";
+        document.getElementById("id_finalDecisionRegionalHeadFirst").value = "" ;
         document.getElementById("id_finalDecisionRegionalHeadDateFirst").value = "";
         document.getElementById("id_finalDecisionRegionalHeadWorkAreaFirst").value = "";
+        document.getElementById("id_finalDecisionRemarkFirst").value = "";
       });
     }
   </script>

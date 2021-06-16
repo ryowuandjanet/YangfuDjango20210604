@@ -160,7 +160,8 @@ class ScoreCForm(forms.ModelForm):
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
     
-class RegionalHeadForm(forms.ModelForm):
+# ======= FinalDecisionForm(regionalHead) =======
+class FinalDecisionForm(forms.ModelForm):
   yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
   regionalHead = forms.CharField(widget=forms.HiddenInput())
   finalDecision = forms.ChoiceField(label="最終判定",choices=JUDGMENT_LIST, required=False)
@@ -168,20 +169,25 @@ class RegionalHeadForm(forms.ModelForm):
   # regionalHead = forms.ModelChoiceField(CustomUser.objects.all(), widget=forms.HiddenInput())
   class Meta:
     model=FinalDecision
-    fields = ['yfcase','regionalHead','finalDecision','regionalHeadDate']
+    fields = ['yfcase','finalDecision','finalDecisionRemark','regionalHead','regionalHeadDate','regionalHeadWorkArea']
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
 
-class RegionalHeadFormFirst(forms.ModelForm):
-  yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
-  finalDecisionDeterminationFirst = forms.CharField(widget=forms.HiddenInput())
-  finalDecisionRegionalHeadFirst = forms.CharField(widget=forms.HiddenInput())
-  finalDecisionRegionalHeadDateFirst = forms.CharField(label="簽核日期",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
-  # regionalHead = forms.ModelChoiceField(CustomUser.objects.all(), widget=forms.HiddenInput())
+# ======= FinalDecisionForm(SubSigntrueA) =======
+class SubSigntrueAForm(forms.ModelForm):
   class Meta:
     model=FinalDecision
-    fields = ['yfcase','finalDecisionRegionalHeadFirst','finalDecisionDeterminationFirst','finalDecisionRegionalHeadDateFirst','finalDecisionRemarkFirst','finalDecisionRegionalHeadWorkAreaFirst']
+    fields =['subSigntrueA','subSigntrueDateA','subSigntrueWorkAreaA']
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+
+# ======= FinalDecisionForm(SubSigntrueB) =======
+class SubSigntrueBForm(forms.ModelForm):
+  class Meta:
+    model=FinalDecision
+    fields =['subSigntrueB','subSigntrueDateB','subSigntrueWorkAreaB']
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)

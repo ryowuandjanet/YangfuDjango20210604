@@ -17,6 +17,49 @@
 <!-- 測試樣版1 -->
 <table class="regionalhead__table">
   <tr>
+    <th class="regionalhead__th">操作</th>
+    <th class="regionalhead__th">判定</th>
+    <th class="regionalhead__th">備註</th>
+    <th class="regionalhead__th">區域負責人</th>
+    <th class="regionalhead__th">副署人員1</th>
+    <th class="regionalhead__th">副署人員2</th>
+  </tr>
+  {% for finaldecision in object.finaldecisions.all %}
+    <tr>
+      <th class="regionalhead__th">
+        <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}">新建</a>
+        <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}">刪除</a>
+      </th>
+      <td class="regionalhead__td">{{ finaldecision.finalDecision }}</td>
+      <td class="regionalhead__td">{{ finaldecision.finalDecisionRemark }}</td>
+      <td class="regionalhead__td">
+        <div class="regionalhead__seal">
+          <div class="regionalhead__td__person">{{ finaldecision.regionalHead }}</div>
+          <div class="regionalhead__td__date">{{ finaldecision.regionalHeadDate }}</div>
+          <div class="regionalhead__td__workarea">{{ finaldecision.regionalHeadWorkArea }}</div>
+        </div>
+      </td>
+      <td class="regionalhead__td">
+        <a href="{% url 'yfcase:subsignture_a_adj' object.id finaldecision.id %}">新建</a>
+        <a href="{% url 'yfcase:subsignture_a_clean' object.id finaldecision.id %}">刪除</a>
+          {{ finaldecision.subSigntrueA }}<br>
+          {{ finaldecision.subSigntrueDateA }}<br>
+          {{ finaldecision.subSigntrueWorkAreaA }}
+      </td>
+      <td class="regionalhead__td">
+        <a href="{% url 'yfcase:subsignture_b_adj' object.id finaldecision.id %}">新建</a>
+        <a href="{% url 'yfcase:subsignture_b_clean' object.id finaldecision.id %}">刪除</a>
+        {{ finaldecision.subSigntrueB }}<br>
+        {{ finaldecision.subSigntrueDateB }}<br>
+        {{ finaldecision.subSigntrueWorkAreaB }}
+      </td>
+    </tr>
+  {% endfor %}
+</table>
+
+<!-- 測試樣版1 -->
+<!-- <table class="regionalhead__table">
+  <tr>
     <th class="regionalhead__th" colspan=6>最終判定</th>
     <th class="result__th" colspan=7>執行結果</th>
   </tr>
@@ -41,10 +84,9 @@
   </tr>
   <tr>
     <th class="regionalhead__th">
-      <a href="{% url 'yfcase:regionalhead_first_create' object.id %}">新增</a>
       {% for finaldecision in object.finaldecisions.all %}
-        <a href="{% url 'yfcase:regionalhead_first_update' object.id finaldecision.id %}">更新</a>
-        <a href="{% url 'yfcase:regionalhead_first_delete' object.id finaldecision.id %}">刪除</a>
+        <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}">更新</a>
+        <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}">刪除</a>
       {% endfor %}
       一拍進場
     </th>
@@ -129,7 +171,7 @@
     <td class="regionalhead__td"></td>
     <td class="regionalhead__td"></td>
   </tr>
-</table>
+</table> -->
 
 <!-- 測試樣版2 -->
 <!-- <table class="regionalhead__table">

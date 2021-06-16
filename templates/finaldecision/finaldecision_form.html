@@ -19,6 +19,7 @@
   <form method="POST" action="" enctype='multipart/form-data'>{% csrf_token %}
     {{ form.yfcase|attr:"type:hidden" }}
     {{ form.regionalHead|attr:"type:hidden" }}
+    {{ form.regionalHeadWorkArea|attr:"type:hidden" }}
         
     <div class="form-row">
       <div class="form-group col">
@@ -29,13 +30,20 @@
 
     <div class="form-row">
       <div class="form-group col">
+        <label>{{ form.finalDecisionRemark.label }}</label>
+        {{ form.finalDecisionRemark|add_class:"form-control fieldcolor pt-0" }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
         <label>{{ form.regionalHeadDate.label }}</label>
         {{ form.regionalHeadDate|add_class:"form-control fieldcolor datepicker pt-0" }}
         <small style="color:blue;">*若此欄位為空值，則日期以當天的日期為主</small>
       </div>
     </div>
-    {{ request.user.userFullName|json_script:"author_fullname" }} 
-    {{ request.user.userFullName }} 
+    {{ instance_yfcase.user.userFullName|json_script:"author_fullname" }} 
+    {{ instance_yfcase.user.userWorkArea|json_script:"author_workarea"}} 
 
     <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
     {% if instance.id %}
@@ -60,14 +68,14 @@
   });
     
   function get_regional_yfcase() {
-    var url = (window.location.pathname).replace("/yfcase/","").replace("/regionalhead/create/","");
-    alert(url)
-    // alert(author_fullname)
+    var url = (window.location.pathname).replace("/yfcase/","").replace("/finaldecision/create/","");
     var Today = new Date();
     var addToday = Today.getFullYear()+ "-" + ("0" + (Today.getMonth() + 1)).slice(-2) + "-" + ("0" + Today.getDate()).slice(-2)
     const author_fullname = JSON.parse(document.getElementById('author_fullname').textContent);
+    const author_workarea = JSON.parse(document.getElementById('author_workarea').textContent);
+
     document.getElementById("id_regionalHead").value = author_fullname;
-     alert(author_fullname);
+    document.getElementById("id_regionalHeadWorkArea").value = author_workarea;
     if (document.getElementById("id_regionalHeadDate").value == "") {
       document.getElementById("id_regionalHeadDate").value = addToday;
     } else {

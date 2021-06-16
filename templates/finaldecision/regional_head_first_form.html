@@ -36,8 +36,9 @@
         <small style="color:blue;">*若此欄位為空值，則日期以當天的日期為主</small>
       </div>
     </div>
+    {{ instance_yfcase.user.userFullName}}
     {{ instance_yfcase.user.userFullName|json_script:"author_fullname" }} 
-    {{ instance_yfcase.user.userWorkArea|json_script:"author_workarea" }} 
+    {{ object.user.userWorkArea|json_script:"author_workarea" }} 
 
     <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
     {% if instance.id %}
@@ -63,12 +64,11 @@
     
   function get_regional_first_yfcase() {
     var url = (window.location.pathname).replace("/yfcase/","").replace("/regionalheadfirst/create/","");
-    // alert(url)
-    // alert(author_fullname)
     var Today = new Date();
     var addToday = Today.getFullYear()+ "-" + ("0" + (Today.getMonth() + 1)).slice(-2) + "-" + ("0" + Today.getDate()).slice(-2)
     const author_fullname = JSON.parse(document.getElementById('author_fullname').textContent);
     const author_workarea = JSON.parse(document.getElementById('author_workarea').textContent);
+    alert(Today)
     document.getElementById("id_finalDecisionRegionalHeadFirst").value = author_fullname;
      // alert(author_fullname);
     if (document.getElementById("id_finalDecisionRegionalHeadDateFirst").value == "") {

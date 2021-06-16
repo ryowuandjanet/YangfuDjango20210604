@@ -417,13 +417,13 @@ def score_c_clean(request,yfcase_id=None,id=None):
   }
   return render(request, "score/score_c_delete.html",context)
 
-# ==========================  FinalDecision  =========================
-def regionalhead_create(request,yfcase_id=None):
+# ==========================  FinalDecision(regionalHead)  =========================
+def finaldecision_create(request,yfcase_id=None):
   # 要配合url回傳的yfcase_id，來取得超類的資料
   instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
   if not request.user.is_staff or not request.user.is_superuser:
     raise Http404
-  form = RegionalHeadForm(request.POST or None)
+  form = FinalDecisionForm(request.POST or None)
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
@@ -435,12 +435,13 @@ def regionalhead_create(request,yfcase_id=None):
     "instance_yfcase": instance_yfcase,
     "title": "新增參考物件",
   }
-  return render(request, "finaldecision/regional_head_form.html",context)
+  return render(request, "finaldecision/finaldecision_form.html",context)
 
-def regionalhead_update(request,yfcase_id=None,id=None):
+
+def finaldecision_update(request,yfcase_id=None,id=None):
   instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
   instance = get_object_or_404(FinalDecision,id=id)
-  form=RegionalHeadForm(request.POST or None,instance=instance)
+  form=FinalDecisionForm(request.POST or None,instance=instance)
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
@@ -453,9 +454,9 @@ def regionalhead_update(request,yfcase_id=None,id=None):
     "form" : form,
     "title": "更新參考物件",
   }
-  return render(request, "finaldecision/regional_head_form.html",context)
+  return render(request, "finaldecision/finaldecision_form.html",context)
 
-def regionalhead_delete(request,yfcase_id=None,id=None):
+def finaldecision_delete(request,yfcase_id=None,id=None):
   instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
   instance = get_object_or_404(FinalDecision, id=id)
   if request.method == "POST":
@@ -467,32 +468,13 @@ def regionalhead_delete(request,yfcase_id=None,id=None):
     "instance_yfcase": instance_yfcase,
     "title": "刪除參考物件"
   }
-  return render(request, "finaldecision/regional_head_delete.html", context)
+  return render(request, "finaldecision/finaldecision_delete.html", context)
 
-# ==========================  FinalDecision  =========================
-def regionalhead_first_create(request,yfcase_id=None):
-  # 要配合url回傳的yfcase_id，來取得超類的資料
-  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
-  if not request.user.is_staff or not request.user.is_superuser:
-    raise Http404
-  form = RegionalHeadFormFirst(request.POST or None)
-  if form.is_valid():
-    instance=form.save(commit=False)
-    instance.save()
-    # messages.success(request,"successfully Created")
-    # 把父類的yfcase_id(不可寫成instance.id，回傳到子類的id)回傳給yfcase_detail
-    return redirect("yfcase:yfcase_detail", yfcase_id)
-  context = {
-    "form" : form, 
-    "instance_yfcase": instance_yfcase,
-    "title": "新增參考物件",
-  }
-  return render(request, "finaldecision/regional_head_first_form.html",context)
-
-def regionalhead_first_update(request,yfcase_id=None,id=None):
+# ==========================  SubSigntrueA  =========================
+def subsignture_a_adj(request,yfcase_id=None,id=None):
   instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
   instance = get_object_or_404(FinalDecision,id=id)
-  form=RegionalHeadFormFirst(request.POST or None,instance=instance)
+  form=SubSigntrueAForm(request.POST or None,instance=instance)
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
@@ -503,28 +485,64 @@ def regionalhead_first_update(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "title": "更新參考物件",
+    "title": "調整勘查員C評分",
   }
-  return render(request, "finaldecision/regional_head_first_form.html",context)
+  return render(request, "finaldecision/subsignture_a_form.html",context)
 
-def regionalhead_first_delete(request,yfcase_id=None,id=None):
+def subsignture_a_clean(request,yfcase_id=None,id=None):
   instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
   instance = get_object_or_404(FinalDecision,id=id)
-  form=RegionalHeadFormFirst(request.POST or None,instance=instance)
+  form=SubSigntrueAForm(request.POST or None,instance=instance)
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
     # messages.success(request,"successfully Update")
     # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
     return redirect("yfcase:yfcase_detail", instance_yfcase.id)
-    # return reverse_lazy('yfcase:home')
   context={
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "title": "更新參考物件",
+    "Title": "清除勘查員C評分",
   }
-  return render(request, "finaldecision/regional_head_first_delete.html",context)
+  return render(request, "finaldecision/subsignture_a_delete.html",context)
+
+# ==========================  SubSigntrueB  =========================
+def subsignture_b_adj(request,yfcase_id=None,id=None):
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(FinalDecision,id=id)
+  form=SubSigntrueBForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Update")
+    # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
+    return redirect("yfcase:yfcase_detail", instance_yfcase.id)
+  context={
+    "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
+    "form" : form,
+    "title": "調整勘查員C評分",
+  }
+  return render(request, "finaldecision/subsignture_b_form.html",context)
+
+def subsignture_b_clean(request,yfcase_id=None,id=None):
+  instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
+  instance = get_object_or_404(FinalDecision,id=id)
+  form=SubSigntrueBForm(request.POST or None,instance=instance)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    # messages.success(request,"successfully Update")
+    # 這裡的instance_yfcase.id指的是父類的id(Yfcase)
+    return redirect("yfcase:yfcase_detail", instance_yfcase.id)
+  context={
+    "instance" : instance,
+    "instance_yfcase" : instance_yfcase,
+    "form" : form,
+    "Title": "清除勘查員C評分",
+  }
+  return render(request, "finaldecision/subsignture_b_delete.html",context)
 
 def load_townships(request):
   city_id = request.GET.get('city')

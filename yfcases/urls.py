@@ -39,13 +39,15 @@ urlpatterns = [
   path('yfcase/<int:yfcase_id>/scorec/update/<int:id>/',score_c_adj,name="score_c_update" ),
   path('yfcase/<int:yfcase_id>/scorec/delete/<int:id>/',score_c_clean,name="score_c_delete" ),
   # FinalDecision
-  path('yfcase/<int:yfcase_id>/regionalhead/create/',regionalhead_create,name="regionalhead_create" ),
-  path('yfcase/<int:yfcase_id>/regionalhead/update/<int:id>/',regionalhead_update,name="regionalhead_update" ),
-  path('yfcase/<int:yfcase_id>/regionalhead/delete/<int:id>/',regionalhead_delete,name="regionalhead_delete" ),
-  # FinalDecision(First)
-  path('yfcase/<int:yfcase_id>/regionalheadfirst/create/',regionalhead_first_create,name="regionalhead_first_create" ),
-  path('yfcase/<int:yfcase_id>/regionalheadfirst/update/<int:id>/',regionalhead_first_update,name="regionalhead_first_update" ),
-  path('yfcase/<int:yfcase_id>/regionalheadfirst/delete/<int:id>/',regionalhead_first_delete,name="regionalhead_first_delete" ),
+  path('yfcase/<int:yfcase_id>/finaldecision/create/',finaldecision_create,name="finaldecision_create" ),
+  path('yfcase/<int:yfcase_id>/finaldecision/update/<int:id>/',finaldecision_update,name="finaldecision_update" ),
+  path('yfcase/<int:yfcase_id>/finaldecision/delete/<int:id>/',finaldecision_delete,name="finaldecision_delete" ),
+  # SubSigntrueA
+  path('yfcase/<int:yfcase_id>/subsignturea/update/<int:id>/',subsignture_a_adj,name="subsignture_a_adj" ),
+  path('yfcase/<int:yfcase_id>/subsignturea/delete/<int:id>/',subsignture_a_clean,name="subsignture_a_clean" ),
+  # SubSigntrueB
+  path('yfcase/<int:yfcase_id>/subsigntureb/update/<int:id>/',subsignture_b_adj,name="subsignture_b_adj" ),
+  path('yfcase/<int:yfcase_id>/subsigntureb/delete/<int:id>/',subsignture_b_clean,name="subsignture_b_clean" ),
 
   path('ajax/load-townships/', load_townships, name='ajax_load_townships'),
 ]
