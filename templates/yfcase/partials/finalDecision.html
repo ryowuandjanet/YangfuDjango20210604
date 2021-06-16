@@ -7,6 +7,11 @@
   .result__th { background-color: CornflowerBlue; border: 1px solid black; text-align: center;} 
   .case__th { background-color: Gainsboro; border: 1px solid black; text-align: center;} 
   .regionalhead__td { border: 1px dotted black; }
+
+  .regionalhead__seal { border: 3px solid red; margin:3px; border-radius: 10px; }
+  .regionalhead__td__person { font-size:12pt; color:red; }
+  .regionalhead__td__date { font-size:10pt; color:red; border-top:3px solid red;border-bottom:3px solid red;}
+  .regionalhead__td__workarea { font-size:12pt; color:red; }
 </style>
 
 <!-- 測試樣版1 -->
@@ -35,9 +40,24 @@
     <th class="result__th">無人優購</th>
   </tr>
   <tr>
-    <th class="regionalhead__th">一拍進場</th>
-    <td class="regionalhead__td"></td>
-    <td class="regionalhead__td"></td>
+    <th class="regionalhead__th">
+      <a href="{% url 'yfcase:regionalhead_first_create' object.id %}">新增</a>
+      {% for finaldecision in object.finaldecisions.all %}
+        <a href="{% url 'yfcase:regionalhead_first_update' object.id finaldecision.id %}">更新</a>
+        <a href="{% url 'yfcase:regionalhead_first_delete' object.id finaldecision.id %}">刪除</a>
+      {% endfor %}
+      一拍進場
+    </th>
+    <td class="regionalhead__td">{% for finaldecision in object.finaldecisions.all %} {{ finaldecision.finalDecisionRemarkFirst|default_if_none:"" }} {% endfor %}</td>
+    <td class="regionalhead__td">
+      {% for finaldecision in object.finaldecisions.all %}
+        <div class="regionalhead__seal">
+          <div class="regionalhead__td__person">{{ finaldecision.finalDecisionRegionalHeadFirst|default_if_none:"" }}</div>
+          <div class="regionalhead__td__date">{{ finaldecision.finalDecisionRegionalHeadDateFirst|default_if_none:"" }}</div>
+          <div class="regionalhead__td__workarea">{{ finaldecision.finalDecisionRegionalHeadWorkAreaFirst|default_if_none:"" }}</div> 
+        </div>
+      {% endfor %}
+    </td>
     <td class="regionalhead__td"></td>
     <td class="regionalhead__td"></td>
     <td class="regionalhead__td"></td>

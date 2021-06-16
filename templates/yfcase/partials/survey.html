@@ -84,7 +84,17 @@
       {% endfor %}
     </td>
     <td class="survey__td">
-      待新增
+      <!-- 標的物(現場勘查) -->
+      {% for survey in object.surveys.all %}
+        {% if survey.surveyObjectViewLink %}
+          <a href="{{survey.surveyObjectViewLink}}" target="_blank">
+            <span class="fa-stack fa-2x">
+              <i class="far fa-circle fa-stack-2x"></i>
+              <i class="fas fa-film fa-stack-1x"></i>
+            </span>
+          </a>
+        {% endif %}
+      {% endfor %}
     </td>
   </tr>
 </table>

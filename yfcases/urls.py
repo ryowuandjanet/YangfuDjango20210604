@@ -42,7 +42,10 @@ urlpatterns = [
   path('yfcase/<int:yfcase_id>/regionalhead/create/',regionalhead_create,name="regionalhead_create" ),
   path('yfcase/<int:yfcase_id>/regionalhead/update/<int:id>/',regionalhead_update,name="regionalhead_update" ),
   path('yfcase/<int:yfcase_id>/regionalhead/delete/<int:id>/',regionalhead_delete,name="regionalhead_delete" ),
-
+  # FinalDecision(First)
+  path('yfcase/<int:yfcase_id>/regionalheadfirst/create/',regionalhead_first_create,name="regionalhead_first_create" ),
+  path('yfcase/<int:yfcase_id>/regionalheadfirst/update/<int:id>/',regionalhead_first_update,name="regionalhead_first_update" ),
+  path('yfcase/<int:yfcase_id>/regionalheadfirst/delete/<int:id>/',regionalhead_first_delete,name="regionalhead_first_delete" ),
 
   path('ajax/load-townships/', load_townships, name='ajax_load_townships'),
 ]

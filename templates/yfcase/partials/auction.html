@@ -36,9 +36,9 @@
     <tr>
       <!-- 拍別：第一拍 -->
       <td class="auction__td">{{auction.auctionDateFirst|default_if_none:""}}</td>
-      <td class="auction__td">第一拍<br>
+      <th class="auction__td">第一拍<br>
           <div class="text-mark font-9">(CP>0.92)</div>
-      </td>
+      </th>
       <td class="auction__td" colspan="3">
         {% if auction.auctionFloorPriceFirst == 0 %}
           <div>底價未輸入</div>
@@ -99,9 +99,9 @@
     <tr>
       <!-- 拍別：第二拍 -->
       <td class="auction__td">{{auction.auctionDateSecond|default_if_none:""}}</td>
-      <td  class="auction__td">第二拍<br>
+      <th  class="auction__td">第二拍<br>
         <div class="text-mark font-9">(CP>1.15)</div>
-      </td>
+      </th>
       <td class="auction__td" colspan="3">
         {% if auction.auctionFloorPriceSecond == 0 %}
           <div>底價未輸入</div>
@@ -168,9 +168,9 @@
     <tr>
       <!-- 拍別：第三拍 -->
       <td class="auction__td">{{auction.auctionDateThird|default_if_none:""}}</td>
-      <td class="auction__td">第三拍<br>
+      <th class="auction__td">第三拍<br>
         <div class="text-mark font-9">(CP>1.44)</div>
-      </td>
+      </th>
       <td class="auction__td" colspan="3">
         {% if auction.auctionFloorPriceThird == 0 %}
           <div>底價未輸入</div>
@@ -242,9 +242,9 @@
     <tr>
       <!-- 拍別：第四拍 -->
       <td class="auction__td">{{auction.auctionDateFourth|default_if_none:""}}</td>
-      <td class="auction__td">第四拍<br>
+      <th class="auction__td">第四拍<br>
         <div class="text-mark font-9">(CP>1.80)</div>
-      </td>
+      </th>
       <td class="auction__td" colspan="3">
         {% if auction.auctionFloorPriceFourth == 0 %}
           <div>底價未輸入</div>

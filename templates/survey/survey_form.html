@@ -62,6 +62,13 @@
       </div>
     </div>
 
+    <div class="form-row">
+      <div class="form-group col">
+        <label style="margin-bottom: 2px;">{{ form.surveyObjectViewLink.label }}</label>
+        {{ form.surveyObjectViewLink|add_class:"form-control fieldcolor pt-0" }}
+      </div>
+    </div>
+
     <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
     {% if instance.id %}
       <input type="submit" class="btn btn-secondary" value="更新">

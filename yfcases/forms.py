@@ -117,7 +117,7 @@ class SurveyForm(forms.ModelForm):
   surveySecondDay = forms.CharField(label="會勘日",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
   class Meta:
     model=Survey
-    fields =['yfcase','surveyFirstDay','surveySecondDay','surveyForeclosureAnnouncementLink','survey988Link','surveyObjectPhotoLink','surveyForeclosureRecordLink'] 
+    fields =['yfcase','surveyFirstDay','surveySecondDay','surveyForeclosureAnnouncementLink','survey988Link','surveyObjectPhotoLink','surveyForeclosureRecordLink','surveyObjectViewLink'] 
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
@@ -169,6 +169,19 @@ class RegionalHeadForm(forms.ModelForm):
   class Meta:
     model=FinalDecision
     fields = ['yfcase','regionalHead','finalDecision','regionalHeadDate']
+
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+
+class RegionalHeadFormFirst(forms.ModelForm):
+  yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
+  finalDecisionDeterminationFirst = forms.CharField(widget=forms.HiddenInput())
+  finalDecisionRegionalHeadFirst = forms.CharField(widget=forms.HiddenInput())
+  finalDecisionRegionalHeadDateFirst = forms.CharField(label="簽核日期",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
+  # regionalHead = forms.ModelChoiceField(CustomUser.objects.all(), widget=forms.HiddenInput())
+  class Meta:
+    model=FinalDecision
+    fields = ['yfcase','finalDecisionRegionalHeadFirst','finalDecisionDeterminationFirst','finalDecisionRegionalHeadDateFirst','finalDecisionRemarkFirst','finalDecisionRegionalHeadWorkAreaFirst']
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
