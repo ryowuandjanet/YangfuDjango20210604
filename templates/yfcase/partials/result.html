@@ -3,8 +3,7 @@
 
 <style>
   .result__table { border: 3px solid black; }
-  .result__th { background-color: DeepSkyBlue; border: 1px solid black; text-align: center;} 
-  .result__th { background-color: CornflowerBlue; border: 1px solid black; text-align: center;} 
+  .result__th { background-color: LightSalmon; border: 1px solid black; text-align: center;} 
   .case__th { background-color: Gainsboro; border: 1px solid black; text-align: center;} 
   .result__td { border: 1px dotted black; }
 
@@ -21,6 +20,7 @@
     border-bottom: 3px solid red;
   }
   .result__td__workarea { font-size: 16pt; height: 37px; line-height: 30px; color: red; }
+  .result__checkbox { border: 3px solid black; width:30px; padding: 0px 5px; background-color: white; color: blue;}
 
 </style>
 
@@ -30,7 +30,15 @@
     <th class="result__th" rowspan=2>操作</th>
     <th class="result__th" rowspan=2>一賣止日</th>
     <th class="result__th" rowspan=2>1.撤回</th>
-    <th class="result__th" colspan=2>2.第三人搶標</th>
+    <th class="result__th" colspan=2>
+      {% for result in object.results.all %}
+        {% if result.actionResult == "第三人搶標" %}
+          <span class="result__checkbox">V</span> 2.第三人搶標
+        {% else %}
+          2.第三人搶標
+        {% endif%}
+      {% endfor %}
+    </th>
     <th class="result__th" colspan=3>3.得標</th>
     <th class="case__th" rowspan=2>標的編號</th>
   </tr>

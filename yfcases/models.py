@@ -6,7 +6,7 @@ import math
 
 # ======= 縣市 =======
 class City(models.Model):
-  name = models.CharField(max_length=30)
+  name = models.CharField(u'城市',max_length=30)
 
   def __str__(self):
     return self.name
@@ -18,7 +18,14 @@ class City(models.Model):
 # ======= 鄉鎮 =======
 class Township(models.Model):
   city = models.ForeignKey(City, on_delete=models.CASCADE)
-  name = models.CharField(max_length=30)
+  name = models.CharField(u'鄉鎮',max_length=30)
+  zip_code = models.CharField(u'郵遞區號',max_length=30)
+  district_court = models.CharField(u'地方法院',max_length=30)
+  land_office  = models.CharField(u'地政事務所',max_length=30)
+  finance_and_tax_bureau = models.CharField(u'財政稅務局',max_length=30)
+  police_station = models.CharField(u'警察局',max_length=30)
+  irs = models.CharField(u'國稅局',max_length=30)
+  home_office = models.CharField(u'戶政事務所',max_length=30)
 
   def __str__(self):
     return self.name
