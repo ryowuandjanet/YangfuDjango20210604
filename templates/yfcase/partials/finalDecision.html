@@ -8,10 +8,20 @@
   .case__th { background-color: Gainsboro; border: 1px solid black; text-align: center;} 
   .regionalhead__td { border: 1px dotted black; }
 
-  .regionalhead__seal { border: 3px solid red; margin:3px; border-radius: 10px; }
-  .regionalhead__td__person { font-size:12pt; color:red; }
-  .regionalhead__td__date { font-size:10pt; color:red; border-top:3px solid red;border-bottom:3px solid red;}
-  .regionalhead__td__workarea { font-size:12pt; color:red; }
+  .regionalhead__seal { width:100px;border-radius:50%;border:3px solid red; }
+  .regionalhead__td__person { font-size: 16pt; height: 37px; line-height: 50px; color: red; }
+  .regionalhead__td__date { 
+    color: red;
+    font-size: 10pt;
+    height: 20px;
+    line-height: 16px;
+    font-weight: 700;
+    margin: 0px;
+    border-top: 3px solid red;
+    border-bottom: 3px solid red;
+  }
+  .regionalhead__td__workarea { font-size: 16pt; height: 37px; line-height: 30px; color: red; }
+
 </style>
 
 <!-- 測試樣版1 -->
@@ -33,25 +43,35 @@
       <td class="regionalhead__td">{{ finaldecision.finalDecision }}</td>
       <td class="regionalhead__td">{{ finaldecision.finalDecisionRemark }}</td>
       <td class="regionalhead__td">
-        <div class="regionalhead__seal">
-          <div class="regionalhead__td__person">{{ finaldecision.regionalHead }}</div>
-          <div class="regionalhead__td__date">{{ finaldecision.regionalHeadDate }}</div>
-          <div class="regionalhead__td__workarea">{{ finaldecision.regionalHeadWorkArea }}</div>
-        </div>
+        {% if finaldecision.regionalHead != None %}
+          <div class="regionalhead__seal">
+            <div class="regionalhead__td__person">{{ finaldecision.regionalHead }}</div>
+            <div class="regionalhead__td__date">{{ finaldecision.regionalHeadDate }}</div>
+            <div class="regionalhead__td__workarea">{{ finaldecision.regionalHeadWorkArea }}</div>
+          </div>
+        {% endif %}
       </td>
       <td class="regionalhead__td">
-        <a href="{% url 'yfcase:subsignture_a_adj' object.id finaldecision.id %}">新建</a>
-        <a href="{% url 'yfcase:subsignture_a_clean' object.id finaldecision.id %}">刪除</a>
-          {{ finaldecision.subSigntrueA }}<br>
-          {{ finaldecision.subSigntrueDateA }}<br>
-          {{ finaldecision.subSigntrueWorkAreaA }}
+        <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}">更新</a>
+        <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}">刪除</a>
+        {% if finaldecision.subSigntrueA != None %}
+          <div class="regionalhead__seal">
+            <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
+            <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
+            <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA }}</div>
+          </div>
+        {% endif %}
       </td>
       <td class="regionalhead__td">
-        <a href="{% url 'yfcase:subsignture_b_adj' object.id finaldecision.id %}">新建</a>
-        <a href="{% url 'yfcase:subsignture_b_clean' object.id finaldecision.id %}">刪除</a>
-        {{ finaldecision.subSigntrueB }}<br>
-        {{ finaldecision.subSigntrueDateB }}<br>
-        {{ finaldecision.subSigntrueWorkAreaB }}
+        <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}">更新</a>
+        <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}">刪除</a>
+        {% if finaldecision.subSigntrueB != None %}
+          <div class="regionalhead__seal">
+            <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+            <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+            <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB }}</div>
+          </div>
+        {% endif %}
       </td>
     </tr>
   {% endfor %}

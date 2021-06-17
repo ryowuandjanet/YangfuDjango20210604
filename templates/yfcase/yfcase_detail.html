@@ -167,6 +167,18 @@
         {% include "./partials/finalDecision.html" %}
       </div>
 
+      <!-- 執行結果 -->
+      <div class="yfcase__detail__test">
+        <div class="yfcase__detail__subtitle">
+          執行結果
+          <a href="{% url 'yfcase:result_create' object.id %}">新建</a>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- 執行結果樣版 -->
+        {% include "./partials/result.html" %}
+      </div>
 
     </div>
   </div>

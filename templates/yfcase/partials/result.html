@@ -1,0 +1,59 @@
+<!-- 最終判定 -->
+{% load urlify %}
+
+<style>
+  .result__table { border: 3px solid black; }
+  .result__th { background-color: DeepSkyBlue; border: 1px solid black; text-align: center;} 
+  .result__th { background-color: CornflowerBlue; border: 1px solid black; text-align: center;} 
+  .case__th { background-color: Gainsboro; border: 1px solid black; text-align: center;} 
+  .result__td { border: 1px dotted black; }
+
+  .result__seal { width:100px;border-radius:50%;border:3px solid red; }
+  .result__td__person { font-size: 16pt; height: 37px; line-height: 50px; color: red; }
+  .result__td__date { 
+    color: red;
+    font-size: 10pt;
+    height: 20px;
+    line-height: 16px;
+    font-weight: 700;
+    margin: 0px;
+    border-top: 3px solid red;
+    border-bottom: 3px solid red;
+  }
+  .result__td__workarea { font-size: 16pt; height: 37px; line-height: 30px; color: red; }
+
+</style>
+
+<!-- 測試樣版1 -->
+<table class="result__table">
+  <tr>
+    <th class="result__th" rowspan=2>操作</th>
+    <th class="result__th" rowspan=2>一賣止日</th>
+    <th class="result__th" rowspan=2>1.撤回</th>
+    <th class="result__th" colspan=2>2.第三人搶標</th>
+    <th class="result__th" colspan=3>3.得標</th>
+    <th class="case__th" rowspan=2>標的編號</th>
+  </tr>
+  <tr>
+    <th class="result__th">搶標拍別</th>
+    <th class="result__th">搶標金額</th>
+    <th class="result__th">等待優購</th>
+    <th class="result__th">遭優購</th>
+    <th class="result__th">無人優購</th>
+  </tr>
+  {% for result in object.results.all %}
+  <tr>
+    <td class="result__td"><a href="{% url 'yfcase:result_update' object.id result.id %}">修改</a></td>
+    <td class="result__td">{{ result.stopBuyDate }}</td>
+    <td class="result__td">{% if result.actionResult == "撤回" %} V {% endif %}</td>
+    <td class="result__td">{{ result.bidAuctionTime|default_if_none:"" }}</td>
+    <td class="result__td">{% if result.bidMoney > 0 %}{{ result.bidMoney }}{% endif %}</td>
+    <td class="result__td">{% if result.actionResult == "等待優購" %} V {% endif %}</td>
+    <td class="result__td">{% if result.actionResult == "遭優購" %} V {% endif %}</td>
+    <td class="result__td">{% if result.actionResult == "無人優購" %} V {% endif %}</td>
+    <td class="result__td">{{ result.objectNumber|default_if_none:"" }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+ 

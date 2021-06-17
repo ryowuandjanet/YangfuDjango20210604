@@ -60,6 +60,22 @@ JUDGMENT_LIST=[
   ("放棄","放棄")
 ]
 
+BIDAUCTION_LIST=[
+  ("",""),
+  ("1拍","1拍"),
+  ("2拍","2拍"),
+  ("3拍","3拍"),
+  ("4拍","4拍")
+]
+
+ACTIONRESULT_CHOICES = [
+  ("撤回","撤回"),
+  ("第三人搶標","第三人搶標"),
+  ("等待優購","等待優購"),
+  ("遭優購","遭優購"),
+  ("無人優購","無人優購")
+]
+
 class YfcaseForm(forms.ModelForm):
   # 多加了widget=forms.Select(attrs={'class': 'form-select'})是要欄位在右側出現了向下的箭頭所設定
   yfcaseCompany = forms.ChoiceField(label="所屬公司",choices=COMPANY_LIST, widget=forms.Select(attrs={'class': 'form-select'}),required=False)
@@ -191,3 +207,13 @@ class SubSigntrueBForm(forms.ModelForm):
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
+
+# ======= Result =======
+class ResultForm(forms.ModelForm):
+  yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
+  bidAuctionTime = forms.ChoiceField(label="搶標拍別",choices=BIDAUCTION_LIST, required=False)
+  actionResult = forms.CharField(label="執行結果", widget=forms.RadioSelect(choices=ACTIONRESULT_CHOICES))
+  class Meta:
+    model=Result
+    fields =['yfcase', 'stopBuyDate', 'actionResult', 'bidAuctionTime', 'bidMoney', 'objectNumber']
+    # fields =['yfcase', 'stopBuyDate', 'withdraw', 'bidAuctionTime', 'bidMoney', 'waitBuy', 'otherBuy', 'noOneBuy', 'objectNumber']

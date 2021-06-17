@@ -43,11 +43,14 @@ urlpatterns = [
   path('yfcase/<int:yfcase_id>/finaldecision/update/<int:id>/',finaldecision_update,name="finaldecision_update" ),
   path('yfcase/<int:yfcase_id>/finaldecision/delete/<int:id>/',finaldecision_delete,name="finaldecision_delete" ),
   # SubSigntrueA
-  path('yfcase/<int:yfcase_id>/subsignturea/update/<int:id>/',subsignture_a_adj,name="subsignture_a_adj" ),
-  path('yfcase/<int:yfcase_id>/subsignturea/delete/<int:id>/',subsignture_a_clean,name="subsignture_a_clean" ),
+  path('yfcase/<int:yfcase_id>/subsignturea/update/<int:id>/',subsignture_a_update,name="subsignture_a_update" ),
+  path('yfcase/<int:yfcase_id>/subsignturea/delete/<int:id>/',subsignture_a_delete,name="subsignture_a_delete" ),
   # SubSigntrueB
-  path('yfcase/<int:yfcase_id>/subsigntureb/update/<int:id>/',subsignture_b_adj,name="subsignture_b_adj" ),
-  path('yfcase/<int:yfcase_id>/subsigntureb/delete/<int:id>/',subsignture_b_clean,name="subsignture_b_clean" ),
+  path('yfcase/<int:yfcase_id>/subsigntureb/update/<int:id>/',subsignture_b_update,name="subsignture_b_update" ),
+  path('yfcase/<int:yfcase_id>/subsigntureb/delete/<int:id>/',subsignture_b_delete,name="subsignture_b_delete" ),
+  # Result
+  path('yfcase/<int:yfcase_id>/result/create/',result_create,name="result_create" ),
+  path('yfcase/<int:yfcase_id>/result/update/<int:id>/',result_update,name="result_update" ),
 
   path('ajax/load-townships/', load_townships, name='ajax_load_townships'),
 ]

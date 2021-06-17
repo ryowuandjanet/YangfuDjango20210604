@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block head_title %}
+  {{ title }}
+{% endblock head_title %}
+
+{% block style %}
+  <style>
+    .help-block {
+      color: red;
+    }
+  </style>
+{% endblock style %}
+
+{% block content %}
+<div class="col">
+  <h1>{{ title }}</h1>
+  <form action="" method="post">{% csrf_token %}
+  
+
+    {{ form.yfcase|attr:"type:hidden" }}
+
+    <div class="form-group">
+      <label for="{{ form.stopBuyDate.id_for_label }}">{{ form.stopBuyDate.label }}</label>
+      {{ form.stopBuyDate|add_class:'form-control datepicker'|attr:"autocomplete:off" }}
+      <span class="help-block">{{ form.stopBuyDate.error }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.actionResult.id_for_label }}">{{ form.actionResult.label }}</label>
+      {{ form.actionResult }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.bidAuctionTime.id_for_label }}">{{ form.bidAuctionTime.label }}</label>
+      {{ form.bidAuctionTime|add_class:'form-control'|attr:"autocomplete:off" }}
+      <span class="help-block">{{ form.bidAuctionTime.error }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.bidMoney.id_for_label }}">{{ form.bidMoney.label }}</label>
+      {{ form.bidMoney|add_class:'form-control'|attr:"autocomplete:off" }}
+      <span class="help-block">{{ form.bidMoney.error }}</span>
+    </div>
+
+   
+    <div class="form-group">
+      <label for="{{ form.objectNumber.id_for_label }}">{{ form.objectNumber.label }}</label>
+      {{ form.objectNumber|add_class:'form-control'|attr:"autocomplete:off" }}
+      <span class="help-block">{{ form.objectNumber.error }}</span>
+    </div>
+
+
+
+
+
+    <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
+    {% if instance.id %}
+      <input type="submit" class="btn btn-secondary" value="更新">
+    {% else %}
+      <input type="submit" class="btn btn-secondary" value="新增" onclick="get_result_yfcase()">
+    {% endif %}
+
+  </form>
+</div>
+
+<!-- 為防止在運行jquery程式碼時出錯Uncaught ReferenceError: $ is not defined，所以要將jquery.min.js -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $(function() {
+    $( ".datepicker" ).datepicker({
+      dateFormat: "yy-mm-dd"
+    });
+  });
+
+  function get_result_yfcase() {
+    var url = (window.location.pathname).replace("/yfcase/","").replace("/result/create/",""); 
+    document.getElementById("id_yfcase").value = url;
+  }
+</script>
+{% endblock content %}
+
+
+
+<!-- <tr>
+    <th><label for="id_waitBuy">等待優購:</label></th>
+    <td><input type="checkbox" name="waitBuy" id="id_waitBuy"></td>
+</tr>
+<tr>
+    <th><label for="id_otherBuy">遭優購:</label></th>
+    <td><input type="checkbox" name="otherBuy" id="id_otherBuy"></t d>
+</tr>
+<tr>
+    <th><label for="id_noOneBuy">無人優購:</label></th>
+    <td><input type="checkbox" name="noOneBuy" id="id_noOneBuy">
+        < /td> </tr> <tr>
+    <th><label for="id_objectNumber">標的編號:</label></th>
+    <td><input type="text" name="objectNumber" maxlength="20" id="id_objectNumber"><input type="hidden" name="yfcase" id="id_yfcase"></td>
+</tr>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="waitBuy" id="id_waitBuy">
+  <label class="form-check-label" for="id_waitBuy">
+    等待優購
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="otherBuy" id="id_otherBuy">
+  <label class="form-check-label" for="id_otherBuy">
+    遭優購
+  </label>
+</div> -->
