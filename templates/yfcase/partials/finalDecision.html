@@ -37,7 +37,7 @@
   {% for finaldecision in object.finaldecisions.all %}
     <tr>
       <th class="regionalhead__th">
-        <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}">新建</a>
+        <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}">更新</a>
         <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}">刪除</a>
       </th>
       <td class="regionalhead__td">{{ finaldecision.finalDecision }}</td>

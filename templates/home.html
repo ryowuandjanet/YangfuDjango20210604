@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load urlify %}
 {% block title %}Home{% endblock %}
 
 {% block style %}
@@ -19,14 +20,19 @@
       text-align: center;
     }
     th:nth-child(1) { width: 5%; }  
-    th:nth-child(2) { width: 20%; }
-    th:nth-child(3) { width: 15%; }
-    th:nth-child(4) { width: 15%; }
-    th:nth-child(5) { width: 15%; }
-    th:nth-child(6) { width: 15%; }
-    th:nth-child(7) { width: 15%; }
+    th:nth-child(2) {  }
+    th:nth-child(3) { width: 16%; }
+    th:nth-child(4) { width: 7%; }
+    th:nth-child(5) { width: 9%; }
+    th:nth-child(6) { width: 11%; }
+    th:nth-child(7) { width: 9%; }
+    th:nth-child(8) { width: 9%; }
+    th:nth-child(9) { width: 5%; }
+
 
     .home_body > tr > td { border: 1px dotted grey; }
+    .text-mark { font-size: 10.5pt; background-color: yellow; font-weight: 700; }
+    .text-stopBuyDate { font-size: 9pt; font-weight: 700; }
 
     td:nth-child(1) { text-align: center; }
     td:nth-child(2) { text-align: left; text-decoration: none;}
@@ -36,7 +42,8 @@
     td:nth-child(5) { text-align: center; }
     td:nth-child(6) { text-align: center; }
     td:nth-child(7) { text-align: center; }
-
+    td:nth-child(8) { text-align: center; }
+    td:nth-child(9) { text-align: center; }
   </style>
 {% endblock style %}
 
@@ -50,11 +57,13 @@
         <tr>
           <th>操作</th>
           <th>案號</th>
-          <th>兩週內<br>提醒</th>
+          <th>兩週內<br><div class="text-mark">拍別(一賣止日)</div></th>
           <th>負責人</th>
           <th>最終判定</th>
           <th>執行結果</th>
           <th>優購結果</th>
+          <th>標的編號</th>
+          <th>狀態</th>
         </tr>
       </thead>
       <tbody class="home_body">
@@ -70,13 +79,57 @@
               &emsp;&#10149;{{yfcase.fullAddress}}
             </a>
           </td>
-          <td>兩週內(12)</td>
+          <td>
+            <!-- 兩週內 -->
+            {% if yfcase.get_auction_1st.auctionDateFirst %}
+              1拍{{ yfcase.get_auction_1st.auctionDateFirst|less_two_week }}
+            {% endif %}
+            {% if yfcase.get_auction_2nd.auctionDateSecond %}
+              2拍{{ yfcase.get_auction_2nd.auctionDateSecond|less_two_week }}
+            {% endif %}
+            {% if yfcase.get_auction_3rd.auctionDateThird %}
+              3拍{{ yfcase.get_auction_3rd.auctionDateThird|less_two_week }}
+            {% endif %}
+            {% if yfcase.get_auction_4th.auctionDateFourth %}
+              4拍{{ yfcase.get_auction_4th.auctionDateFourth|less_two_week }}
+            {% endif %}
+            <!-- 買止日 -->
+            {% for result in yfcase.get_result_stopBuyDate %}
+              <div class="text-stopBuyDate">一買止日({{ result.stopBuyDate }})</div>
+            {% endfor %} 
+          </td>
           <td>{{ yfcase.user }}</td>
           <td>
-            
+            {% for finaldecision in yfcase.finaldecisions.all %}
+              {{ finaldecision.finalDecision }}<br>
+            {% endfor %} 
           </td>
-          <td>第三人搶標</td>
-          <td>無人優購</td>
+          <td>
+            {% for result in yfcase.results.all %}
+              {% if result.actionResult == '等待優購' or result.actionResult == '遭優購' or result.actionResult == '無人優購' %}
+                得標
+              {% else %}
+                {{ result.actionResult }}
+              {% endif %}
+            {% endfor %}
+          </td>
+          <td>
+            {% for result in yfcase.results.all %}
+              {% if result.actionResult == '等待優購' or result.actionResult == '遭優購' or result.actionResult == '無人優購' %}
+                {{ result.actionResult }}
+              {% endif %}
+            {% endfor %}
+          </td>
+          <td>
+            {% for result in yfcase.results.all %}
+              {{ result.objectNumber }}
+            {% endfor %}
+          </td>
+          <td>
+            {% for result in yfcase.results.all %}
+              {{ result.caseStatus }}
+            {% endfor %}
+          </td>
         </tr>
         {% endfor %}
       </tbody>

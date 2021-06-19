@@ -29,7 +29,8 @@
 
     <div class="form-group">
       <label for="{{ form.actionResult.id_for_label }}">{{ form.actionResult.label }}</label>
-      {{ form.actionResult }}
+      {{ form.actionResult|add_class:'form-control datepicker'|attr:"autocomplete:off" }}
+      <span class="help-block">{{ form.actionResult.error }}</span>
     </div>
 
     <div class="form-group">
@@ -51,8 +52,11 @@
       <span class="help-block">{{ form.objectNumber.error }}</span>
     </div>
 
-
-
+    <div class="form-group">
+      <label for="{{ form.caseStatus.id_for_label }}">{{ form.caseStatus.label }}</label>
+      {{ form.caseStatus|add_class:'form-control'|attr:"autocomplete:off" }}
+      <span class="help-block">{{ form.caseStatus.error }}</span>
+    </div>
 
 
     <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>

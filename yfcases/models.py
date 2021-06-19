@@ -212,14 +212,34 @@ class Yfcase(models.Model):
     else:
       return ""
 
+  # auction 第一拍底價大於0的資料(get)
+  def get_auction_1st(self):
+    return self.auctions.all().get(auctionFloorPriceFirst__gt=0) 
+
+  # auction 第二拍底價大於0的資料(get)
+  def get_auction_2nd(self):
+    return self.auctions.all().get(auctionFloorPriceSecond__gt=0)  
+
+  # auction 第三拍底價大於0的資料(get)
+  def get_auction_3rd(self):
+    return self.auctions.all().get(auctionFloorPriceThird__gt=0)
+
+  # auction 第四拍底價大於0的資料(get)
+  def get_auction_3rd(self):
+    return self.auctions.all().get(auctionFloorPriceFourth__gt=0)    
+
+  # result 篩選買止日不為空(filter)
+  def get_result_stopBuyDate(self):
+    return self.results.all().filter(stopBuyDate__isnull=False)
+
   # 在編輯finalDecision設定
   # 取得區域負責人的全名
-  def get_regionalHead_username(self):
-      return self.finaldecisions.regionalHead
+  # def get_regionalHead_username(self):
+  #     return self.finaldecisions.regionalHead
 
   # 取得當前登錄人員的全名
-  def get_user_username(self):
-    return self.user.userFullName
+  # def get_user_username(self):
+  #   return self.user.userFullName
 
 # ======= Land =======
 class Land(models.Model):
@@ -681,3 +701,4 @@ class Result(models.Model):
   bidAuctionTime = models.CharField(u'搶標拍別',max_length=20,null=True,blank=True)
   bidMoney = models.DecimalField(u'搶標金額',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
   objectNumber = models.CharField(u'標的編號',max_length=20,null=True,blank=True)
+  caseStatus = models.CharField(u'案件狀態',max_length=10,null=True,blank=True)

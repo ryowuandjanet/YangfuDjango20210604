@@ -70,7 +70,6 @@ class YfcaseDeleteView(DeleteView):
 
 # ==========================  Land  =========================
 def land_create(request,yfcase_id=None):
-  # 要配合url回傳的yfcase_id，來取得超類的資料
   instance_yfcase = get_object_or_404(Yfcase,id=yfcase_id)
   if not request.user.is_staff or not request.user.is_superuser:
     raise Http404
@@ -78,8 +77,6 @@ def land_create(request,yfcase_id=None):
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
-    # messages.success(request,"successfully Created")
-    # 把父類的yfcase_id(不可寫成instance.id，回傳到子類的id)回傳給yfcase_detail
     return redirect("yfcase:yfcase_detail", yfcase_id)
   context = {
     "form" : form, 
