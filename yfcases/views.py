@@ -3,6 +3,8 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse, HttpResponseRedirect,Http404
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.db.models import Q
+from django.core.paginator import Paginator 
 from django.views import View
 from django.views.generic import TemplateView
 from django.views.generic import ListView,DetailView
@@ -12,10 +14,39 @@ from django.urls import reverse_lazy,reverse
 from .models import *
 from .forms import *
 
-@method_decorator(login_required,name='dispatch')   
-class YfcaseListView(ListView):
-  model=Yfcase
-  template_name="home.html"
+# @method_decorator(login_required,name='dispatch')   
+# class YfcaseListView(ListView):
+#   model=Yfcase
+#   template_name="home.html"
+
+@login_required
+def yfcase_list(request):
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
+  # 登入者姓名
+  request_userid=request.user.id
+  queryset_list = Yfcase.objects.filter(user_id=request_userid)
+  query = request.GET.get('q')
+  if query:
+    queryset_list = queryset_list.filter(
+      Q(yfcaseCaseNumber__icontains=query)|
+      Q(yfcaseCityWithTownship__icontains=query)|
+      Q(yfcaseStreet__icontains=query)|
+      Q(yfcaseNumber__icontains=query)|
+      Q(finaldecisions__finalDecision__icontains=query)|
+      Q(finaldecisions__regionalHead__icontains=query)
+    ).distinct()
+  paginator = Paginator(queryset_list, 3) 
+
+  page = request.GET.get('page')
+  queryset = paginator.get_page(page)
+
+  context={
+    "object_list" : queryset,
+    "title": "List"
+    }
+  return render(request, "home.html", context)
+
 
 @method_decorator(login_required,name='dispatch')
 class YfcaseDetailView(DetailView):

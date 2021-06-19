@@ -51,6 +51,10 @@
   <div class="home_title">
     <h1>案件清單</h1>
   </div>
+  <form action="" method="GET">
+    <input type="text" name="q" placeholder="模糊比對(案號、住址、負責人、最終判定...等)" value='{{ request.GET.q }}'>
+    <input type="submit" value="搜尋">
+  </form>
   <div class="home_container">
     <table class="home_table">
       <thead class="home_head">
@@ -134,6 +138,7 @@
         {% endfor %}
       </tbody>
     </table>
+    {% include "pagination.html" %}
   </div>
 {% endblock %}
 

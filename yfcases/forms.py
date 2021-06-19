@@ -89,7 +89,7 @@ class YfcaseForm(forms.ModelForm):
   class Meta:
     model=Yfcase
     # fields =['yfcaseCaseNumber','user'] 
-    fields =['yfcaseCaseNumber','yfcaseCompany','yfcaseCity','yfcaseTownship','yfcaseBigSection','yfcaseSmallSection',"yfcaseVillage","yfcaseNeighbor","yfcaseStreet","yfcaseSection","yfcaseLane","yfcaseAlley","yfcaseNumber","yfcaseFloor",'yfcaseDebtor','yfcaseCreditor','yfcaseCreditorMobilePhone','user'] 
+    fields =['yfcaseCaseNumber','yfcaseCompany','yfcaseCity','yfcaseTownship','yfcaseBigSection','yfcaseSmallSection',"yfcaseVillage","yfcaseNeighbor","yfcaseStreet","yfcaseSection","yfcaseLane","yfcaseAlley","yfcaseNumber","yfcaseFloor",'yfcaseDebtor','yfcaseCreditor','yfcaseCreditorMobilePhone','yfcaseCityWithTownship','user'] 
     
 
     def __init__(self, *args, **kwargs):
