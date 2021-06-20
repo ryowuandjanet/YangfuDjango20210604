@@ -7,6 +7,7 @@
 
 {% block style %}
   <style>
+    .form__container { border-radius: 5px; background-color: #f2f2f2; padding: 20px; margin-top: 20px}
     .help-block {
       color: red;
     }
@@ -14,121 +15,184 @@
 {% endblock style %}
 
 {% block content %}
-<div class="col">
+<div class="form__container">
   <h1>{{ title }}</h1>
   <form action="" method="post" id="buildCreateForm">{% csrf_token %}
-  
     {{ form.yfcase|attr:"type:hidden" }}
 
     <!-- 第一拍 -->
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label>{{ form.auctionDateFirst.label }}</label>
-        {{ form.auctionDateFirst|add_class:"form-control fieldcolor pt-0" }}
+    <div class="row mt-2">
+      <div class="col-md-3 mt-2">
+        <label for="{{ form.auctionDateFirst.id_for_label }}">{{ form.auctionDateFirst.label }}</label>
+        {{ form.auctionDateFirst|add_class:'form-control'|attr:"autocomplete:off" }}
+        <div class="invalid-feedback">
+          {{ form.auctionDateFirst.error }}
+        </div>
       </div>
-      <div class="form-group col-md-3">
-        <label>{{ form.auctionFloorPriceFirst.label }}</label>
-        {{ form.auctionFloorPriceFirst|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-3 mt-2">
+        <label for="{{ form.auctionFloorPriceFirst.id_for_label }}">{{ form.auctionFloorPriceFirst.label }}</label>
+        {{ form.auctionFloorPriceFirst|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionFloorPriceFirst.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionClickFirst.label }}</label>
-        {{ form.auctionClickFirst|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionClickFirst.id_for_label }}">{{ form.auctionClickFirst.label }}</label>
+        {{ form.auctionClickFirst|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionClickFirst.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionMonitorFirst.label }}</label>
-        {{ form.auctionMonitorFirst|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionMonitorFirst.id_for_label }}">{{ form.auctionMonitorFirst.label }}</label>
+        {{ form.auctionMonitorFirst|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionMonitorFirst.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionMarginFirst.label }}</label>
-        {{ form.auctionMarginFirst|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionMarginFirst.id_for_label }}">{{ form.auctionMarginFirst.label }}</label>
+        {{ form.auctionMarginFirst|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionMarginFirst.error }}
+        </div>
       </div>
     </div>
+    
 
-    <hr>
 
     <!-- 第二拍 -->
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label>{{ form.auctionDateSecond.label }}</label>
-        {{ form.auctionDateSecond|add_class:"form-control fieldcolor pt-0" }}
+    <div class="row mt-2">
+      <div class="col-md-3 mt-2">
+        <label for="{{ form.auctionDateSecond.id_for_label }}">{{ form.auctionDateSecond.label }}</label>
+        {{ form.auctionDateSecond|add_class:'form-control'|attr:"autocomplete:off" }}
+        <div class="invalid-feedback">
+          {{ form.auctionDateSecond.error }}
+        </div>
       </div>
-      <div class="form-group col-md-3">
-        <label>{{ form.auctionFloorPriceSecond.label }}</label>
-        {{ form.auctionFloorPriceSecond|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-3 mt-2">
+        <label for="{{ form.auctionFloorPriceSecond.id_for_label }}">{{ form.auctionFloorPriceSecond.label }}</label>
+        {{ form.auctionFloorPriceSecond|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionFloorPriceSecond.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionClickSecond.label }}</label>
-        {{ form.auctionClickSecond|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionClickSecond.id_for_label }}">{{ form.auctionClickSecond.label }}</label>
+        {{ form.auctionClickSecond|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionClickSecond.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionMonitorSecond.label }}</label>
-        {{ form.auctionMonitorSecond|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionMonitorSecond.id_for_label }}">{{ form.auctionMonitorSecond.label }}</label>
+        {{ form.auctionMonitorSecond|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionMonitorSecond.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionMarginSecond.label }}</label>
-        {{ form.auctionMarginSecond|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionMarginSecond.id_for_label }}">{{ form.auctionMarginSecond.label }}</label>
+        {{ form.auctionMarginSecond|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionMarginSecond.error }}
+        </div>
       </div>
     </div>
 
-    <hr>
 
     <!-- 第三拍 -->
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label>{{ form.auctionDateThird.label }}</label>
-        {{ form.auctionDateThird|add_class:"form-control fieldcolor pt-0" }}
+    <div class="row mt-2">
+      <div class="col-md-3 mt-2">
+        <label for="{{ form.auctionDateThird.id_for_label }}">{{ form.auctionDateThird.label }}</label>
+        {{ form.auctionDateThird|add_class:'form-control'|attr:"autocomplete:off" }}
+        <div class="invalid-feedback">
+          {{ form.auctionDateThird.error }}
+        </div>
       </div>
-      <div class="form-group col-md-3">
-        <label>{{ form.auctionFloorPriceThird.label }}</label>
-        {{ form.auctionFloorPriceThird|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-3 mt-2">
+        <label for="{{ form.auctionFloorPriceThird.id_for_label }}">{{ form.auctionFloorPriceThird.label }}</label>
+        {{ form.auctionFloorPriceThird|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionFloorPriceThird.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionClickThird.label }}</label>
-        {{ form.auctionClickThird|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionClickThird.id_for_label }}">{{ form.auctionClickThird.label }}</label>
+        {{ form.auctionClickThird|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionClickThird.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionMonitorThird.label }}</label>
-        {{ form.auctionMonitorThird|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionMonitorThird.id_for_label }}">{{ form.auctionMonitorThird.label }}</label>
+        {{ form.auctionMonitorThird|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionMonitorThird.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionMarginThird.label }}</label>
-        {{ form.auctionMarginThird|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionMarginThird.id_for_label }}">{{ form.auctionMarginThird.label }}</label>
+        {{ form.auctionMarginThird|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionMarginThird.error }}
+        </div>
       </div>
     </div>
 
-    <hr>
 
     <!-- 第四拍 -->
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label>{{ form.auctionDateFourth.label }}</label>
-        {{ form.auctionDateFourth|add_class:"form-control fieldcolor pt-0" }}
+    <div class="row mt-2">
+      <div class="col-md-3 mt-2">
+        <label for="{{ form.auctionDateFourth.id_for_label }}">{{ form.auctionDateFourth.label }}</label>
+        {{ form.auctionDateFourth|add_class:'form-control'|attr:"autocomplete:off" }}
+        <div class="invalid-feedback">
+          {{ form.auctionDateFourth.error }}
+        </div>
       </div>
-      <div class="form-group col-md-3">
-        <label>{{ form.auctionFloorPriceFourth.label }}</label>
-        {{ form.auctionFloorPriceFourth|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-3 mt-2">
+        <label for="{{ form.auctionFloorPriceFourth.id_for_label }}">{{ form.auctionFloorPriceFourth.label }}</label>
+        {{ form.auctionFloorPriceFourth|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionFloorPriceFourth.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionClickFourth.label }}</label>
-        {{ form.auctionClickFourth|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionClickFourth.id_for_label }}">{{ form.auctionClickFourth.label }}</label>
+        {{ form.auctionClickFourth|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionClickFourth.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionMonitorFourth.label }}</label>
-        {{ form.auctionMonitorFourth|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionMonitorFourth.id_for_label }}">{{ form.auctionMonitorFourth.label }}</label>
+        {{ form.auctionMonitorFourth|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionMonitorFourth.error }}
+        </div>
       </div>
-      <div class="form-group col-md-2">
-        <label>{{ form.auctionMarginFourth.label }}</label>
-        {{ form.auctionMarginFourth|add_class:"form-control fieldcolor pt-0" }}
+      <div class="col-md-2 mt-2">
+        <label for="{{ form.auctionMarginFourth.id_for_label }}">{{ form.auctionMarginFourth.label }}</label>
+        {{ form.auctionMarginFourth|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.auctionMarginFourth.error }}
+        </div>
       </div>
     </div>
 
-    <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
-    {% if instance.id %}
-      <input type="submit" class="btn btn-secondary" value="更新">
-    {% else %}
-      <input type="submit" class="btn btn-secondary" value="新增" onclick="get_auction_yfcase()">
-    {% endif %}
-
+    <div class="row mt-3">
+      <div class="col-md-6 mt-3">
+        <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary form-control" >返回</a>
+      </div>
+      <div class="col-md-6 mt-3">
+        {% if instance.id %}
+          <input type="submit" class="btn btn-success form-control" value="更新">
+        {% else %}
+          <input type="submit" class="btn btn-info form-control" value="新增" onclick="get_auction_yfcase()">
+        {% endif %}
+      </div>
+    </div>
+    
   </form>
 </div>
 

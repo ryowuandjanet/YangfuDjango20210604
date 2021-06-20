@@ -54,3 +54,5 @@ def less_two_week(auctionDate,auctionStr):
 def isWordCountOverFour(value):
   if len(value) >= 4 :
     return mark_safe( "<div style='font-size: 11pt; height: 37px; line-height: 30px; color: red;'>" + str(value) +  "</div>")
+  else:
+    return mark_safe( "<div style='font-size: 16pt; height: 37px; line-height: 30px; color: red;'>" + str(value) +  "</div>")

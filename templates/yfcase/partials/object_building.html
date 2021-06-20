@@ -64,9 +64,9 @@
       </td>
       <td class="objectbuild__td" rowspan=5>
         {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
-          {{ objectbuild.get_objectbuild_ping_price_abc_calculation|floatformat:0 }}
+          {{ objectbuild.get_objectbuild_ping_price_abc_calculation|floatformat:0|intcomma }}
         {% else %}
-          {{ objectbuild.get_objectbuild_ping_price_ab_calculation|floatformat:0 }}
+          {{ objectbuild.get_objectbuild_ping_price_ab_calculation|floatformat:0|intcomma }}
         {% endif %}
       </td>
     </tr>

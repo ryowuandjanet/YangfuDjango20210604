@@ -22,101 +22,83 @@
       {{ form.objectBuildScorRateC|attr:"type:hidden" }}
       {{ form.objectBuildScorReasonC|attr:"type:hidden" }}
 
-      <div class="form-row">
-        <div class="form-group col-md-1">
+      <div class="row mt-2">
+        <div class="col-md-9 mt-2">
           <label>項目1</label>
+          {{ form.plusItemC1|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
-        <div class="form-group col-md-7">
-          {{ form.plusItemC1|add_class:"form-control fieldcolor pt-0" }}
-        </div>
-        <div class="form-group col-md-2">
-          <label>加成係數</label>
-        </div>
-        <div class="form-group col-md-2">
-          {{ form.plusValueC1|add_class:"form-control fieldcolor pt-0" }}
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-md-1">
-          <label>項目2</label>
-        </div>
-        <div class="form-group col-md-7">
-          {{ form.plusItemC2|add_class:"form-control fieldcolor pt-0" }}
-        </div>
-        <div class="form-group col-md-2">
-          <label>加成係數</label>
-        </div>
-        <div class="form-group col-md-2">
-          {{ form.plusValueC2|add_class:"form-control fieldcolor pt-0" }}
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-md-1">
-          <label>項目3</label>
-        </div>
-        <div class="form-group col-md-7">
-          {{ form.plusItemC3|add_class:"form-control fieldcolor pt-0" }}
-        </div>
-        <div class="form-group col-md-2">
-          <label>加成係數</label>
-        </div>
-        <div class="form-group col-md-2">
-          {{ form.plusValueC3|add_class:"form-control fieldcolor pt-0" }}
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-md-1">
-          <label>項目4</label>
-        </div>
-        <div class="form-group col-md-7">
-          {{ form.plusItemC4|add_class:"form-control fieldcolor pt-0" }}
-        </div>
-        <div class="form-group col-md-2">
-          <label>加成係數</label>
-        </div>
-        <div class="form-group col-md-2">
-          {{ form.plusValueC4|add_class:"form-control fieldcolor pt-0" }}
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-md-1">
-          <label>項目5</label>
-        </div>
-        <div class="form-group col-md-7">
-          {{ form.plusItemC5|add_class:"form-control fieldcolor pt-0" }}
-        </div>
-        <div class="form-group col-md-2">
-          <label>加成係數</label>
-        </div>
-        <div class="form-group col-md-2">
-          {{ form.plusValueC5|add_class:"form-control fieldcolor pt-0" }}
+        <div class="col-md-3 mt-2">
+          <label>加成係數1</label>
+          {{ form.plusValueC1|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
       </div>
       
-      <hr>
-
-      <div class="form-row">
-        <div class="form-group col-md-1">
-          <label>其他</label>
+      <div class="row mt-2">
+        <div class="col-md-9 mt-2">
+          <label>項目2</label>
+          {{ form.plusItemC2|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
-        <div class="form-group col-md-7">
-          {{ form.plusItemOtherC|add_class:"form-control fieldcolor pt-0" }}
-        </div>
-        <div class="form-group col-md-2">
-          <label>加成係數</label>
-        </div>
-        <div class="form-group col-md-2">
-          {{ form.plusValueOtherC|add_class:"form-control fieldcolor pt-0" }}
+        <div class="col-md-3 mt-2">
+          <label>加成係數2</label>
+          {{ form.plusValueC2|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
       </div>
+    
+      <div class="row mt-2">
+        <div class="col-md-9 mt-2">
+          <label>項目3</label>
+          {{ form.plusItemC3|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
+        <div class="col-md-3 mt-2">
+          <label>加成係數3</label>
+          {{ form.plusValueC3|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-9 mt-2">
+          <label>項目4</label>
+          {{ form.plusItemC4|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
+        <div class="col-md-3 mt-2">
+          <label>加成係數4</label>
+          {{ form.plusValueC4|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-md-9 mt-2">
+          <label>項目5</label>
+          {{ form.plusItemC5|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
+        <div class="col-md-3 mt-2">
+          <label>加成係數5</label>
+          {{ form.plusValueC5|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
+      </div>
+      
+      <div class="row mt-2">
+        <div class="col-md-9 mt-2">
+          <label>其他</label>
+          {{ form.plusItemOtherC|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
+        <div class="col-md-3 mt-2">
+          <label>加成係數(其他)</label>
+          {{ form.plusValueOtherC|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
+      </div>
+
       {{ request.user.userFullName|json_script:"author_fullname" }}
 
-      <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
-      <input type="submit" class="btn btn-secondary" value="調整" onclick="post_score_c_edit_submit()">
+
+      <div class="row mt-2">
+        <div class="col-md-6 mt-2">
+          <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary form-control" >返回</a>
+        </div>
+        <div class="col-md-6 mt-2">
+          <input type="submit" class="btn btn-info form-control" value="調整" onclick="post_score_c_edit_submit()">
+        </div>
+      </div>
     </form>
   </div>
 

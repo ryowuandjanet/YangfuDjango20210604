@@ -7,6 +7,8 @@
 
 {% block style %}
   <style>
+    .form__container { border-radius: 5px; background-color: #f2f2f2; padding: 20px; margin-top: 20px}
+    
     .help-block {
       color: red;
     }
@@ -14,61 +16,81 @@
 {% endblock style %}
 
 {% block content %}
-<div class="col">
+<div class="form__container">
   <h1>{{ title }}</h1>
   <form action="" method="post" id="buildCreateForm">{% csrf_token %}
-  
-
     {{ form.yfcase|attr:"type:hidden" }}
-
-    <div class="form-group">
-      <label for="{{ form.buildNumber.id_for_label }}">{{ form.buildNumber.label }}</label>
-      {{ form.buildNumber|add_class:'form-control'|attr:"autocomplete:off" }}
-      <span class="help-block">{{ form.buildNumber.error }}</span>
+    
+    <div class="row mt-3">
+      <div class="col-md-5 mt-3">
+        <label for="{{ form.buildNumber.id_for_label }}">{{ form.buildNumber.label }}</label>
+        {{ form.buildNumber|add_class:'form-control'|attr:"autocomplete:off" }}
+        <div class="invalid-feedback">
+          {{ form.buildNumber.error }}
+        </div>
+      </div>
+      <div class="col-md-7 mt-3">
+        <label for="{{ form.buildUrl.id_for_label }}">{{ form.buildUrl.label }}</label>
+        {{ form.buildUrl|add_class:'form-control'|attr:"autocomplete:off" }}
+        <div class="invalid-feedback">
+          {{ form.buildUrl.error }}
+        </div>
+      </div>
+    </div>
+    
+    <div class="row mt-3">
+      <div class="col-md-4 mt-3">
+        <label for="{{ form.buildArea.id_for_label }}">{{ form.buildArea.label }}</label>
+        {{ form.buildArea|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.buildArea.error }}
+        </div>
+      </div>
+      <div class="col-md-4 mt-3">
+        <label for="{{ form.buildHoldingPointPersonal.id_for_label }}">{{ form.buildHoldingPointPersonal.label }}</label>
+        {{ form.buildHoldingPointPersonal|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.buildHoldingPointPersonal.error }}
+        </div>
+      </div>
+      <div class="col-md-4 mt-3">
+        <label for="{{ form.buildHoldingPointAll.id_for_label }}">{{ form.buildHoldingPointAll.label }}</label>
+        {{ form.buildHoldingPointAll|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.buildHoldingPointAll.error }}
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="{{ form.buildUrl.id_for_label }}">{{ form.buildUrl.label }}</label>
-      {{ form.buildUrl|add_class:'form-control'|attr:"autocomplete:off" }}
-      <span class="help-block">{{ form.buildUrl.error }}</span>
+    <div class="row mt-3">
+      <div class="col-md-6 mt-3">
+        <label for="{{ form.buildTypeUse.id_for_label }}">{{ form.buildTypeUse.label }}</label>
+        {{ form.buildTypeUse|add_class:'form-control'|attr:"autocomplete:off" }}
+        <div class="invalid-feedback">
+          {{ form.buildTypeUse.error }}
+        </div>
+      </div>
+      <div class="col-md-6 mt-3">
+        <label for="{{ form.buildUsePartition.id_for_label }}">{{ form.buildUsePartition.label }}</label>
+        {{ form.buildUsePartition|add_class:'form-control'|attr:"autocomplete:off" }}
+        <div class="invalid-feedback">
+          {{ form.buildUsePartition.error }}
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="{{ form.buildArea.id_for_label }}">{{ form.buildArea.label }}</label>
-      {{ form.buildArea|add_class:'form-control'|attr:"autocomplete:off" }}
-      <span class="help-block">{{ form.buildArea.error }}</span>
+    <div class="row mt-3">
+      <div class="col-md-6 mt-3">
+        <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary form-control" >返回</a>
+      </div>
+      <div class="col-md-6 mt-3">
+        {% if instance.id %}
+          <input type="submit" class="btn btn-success form-control" value="更新">
+        {% else %}
+          <input type="submit" class="btn btn-info form-control" value="新增" onclick="get_build_yfcase()">
+        {% endif %}
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="{{ form.buildHoldingPointPersonal.id_for_label }}">{{ form.buildHoldingPointPersonal.label }}</label>
-      {{ form.buildHoldingPointPersonal|add_class:'form-control'|attr:"autocomplete:off" }}
-      <span class="help-block">{{ form.buildHoldingPointPersonal.error }}</span>
-    </div>
-
-    <div class="form-group">
-      <label for="{{ form.buildHoldingPointAll.id_for_label }}">{{ form.buildHoldingPointAll.label }}</label>
-      {{ form.buildHoldingPointAll|add_class:'form-control'|attr:"autocomplete:off" }}
-      <span class="help-block">{{ form.buildHoldingPointAll.error }}</span>
-    </div>
-
-    <div class="form-group">
-      <label for="{{ form.buildTypeUse.id_for_label }}">{{ form.buildTypeUse.label }}</label>
-      {{ form.buildTypeUse|add_class:'form-control'|attr:"autocomplete:off" }}
-      <span class="help-block">{{ form.buildTypeUse.error }}</span>
-    </div>
-
-    <div class="form-group">
-      <label for="{{ form.buildUsePartition.id_for_label }}">{{ form.buildUsePartition.label }}</label>
-      {{ form.buildUsePartition|add_class:'form-control'|attr:"autocomplete:off" }}
-      <span class="help-block">{{ form.buildUsePartition.error }}</span>
-    </div>
-
-    <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
-    {% if instance.id %}
-      <input type="submit" class="btn btn-secondary" value="更新">
-    {% else %}
-      <input type="submit" class="btn btn-secondary" value="新增" onclick="get_build_yfcase()">
-    {% endif %}
 
   </form>
 </div>
