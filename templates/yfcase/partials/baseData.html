@@ -3,10 +3,12 @@
 
 <style>
   .basedata__table { border: 3px solid black; }
-  .basedata__th { width: 10%; background-color: AntiqueWhite; border: 1px solid black; text-align: center;} 
+  .basedata__th { width: 8%; background-color: AntiqueWhite; border: 1px solid black; text-align: center;} 
+  .basedata__status__th { width: 8%; background-color: DarkSlateGray; color: white; border: 1px solid black; text-align: center;} 
   .basedata__td { border: 1px solid black; }
   .basedata__td:nth-child(2) { width:35%; }
-  .basedata__td:nth-child(4) { width:15%; }
+  .basedata__td:nth-child(4) { width:10%; }
+  .basedata__td:nth-child(8) { width:5%; }
 </style>
 
 <!--基本資料-->
@@ -26,10 +28,12 @@
         {{ request.user.userMobilePhone|default_if_none:"" }}
       {% endif %}
     </td>
+    <th class="basedata__status__th">案件狀態</th>
+    <td class="basedata__td">{{ object.yfcaseCaseStatus|default_if_none:"" }}</td>
   </tr>
   <tr>
     <th class="basedata__th">住址</th>
-    <td  class="basedata__td text-left" colspan="5">
+    <td  class="basedata__td text-left" colspan="7">
       {{ object.yfcaseTownship.zip_code }} {{object.fullAddress}}
     </td>
   </tr>

@@ -54,6 +54,7 @@ class Yfcase(models.Model):
   yfcaseCreditor=models.CharField(u'債權人',max_length=10,null=True,blank=True)
   yfcaseCreditorMobilePhone=models.CharField(u'債權人電話',max_length=20,null=True,blank=True)
   yfcaseCityWithTownship = models.CharField(u'縣市鄉鎮',max_length=20,null=True,blank=True)
+  yfcaseCaseStatus = models.CharField(u'案件狀態',max_length=10,null=True,blank=True)
   user = models.ForeignKey('users.CustomUser',verbose_name = u'區域負責人', on_delete=models.CASCADE)
 
   def __str__(self):
@@ -702,4 +703,4 @@ class Result(models.Model):
   bidAuctionTime = models.CharField(u'搶標拍別',max_length=20,null=True,blank=True)
   bidMoney = models.DecimalField(u'搶標金額',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
   objectNumber = models.CharField(u'標的編號',max_length=20,null=True,blank=True)
-  caseStatus = models.CharField(u'案件狀態',max_length=10,null=True,blank=True)
+

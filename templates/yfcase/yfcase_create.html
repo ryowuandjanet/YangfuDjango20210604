@@ -133,6 +133,12 @@
             {{ form.yfcaseCreditorMobilePhone|add_class:'form-control' }}
             <span class="help-block">{{ form.yfcaseCreditorMobilePhone.error }}</span>
           </div>
+          
+          <div class="form-group">
+            <label for="{{ form.yfcaseCaseStatus.id_for_label }}">{{ form.yfcaseCaseStatus.label }}</label>
+            {{ form.yfcaseCaseStatus|add_class:'form-control'|attr:"autocomplete:off" }}
+            <span class="help-block">{{ form.yfcaseCaseStatus.error }}</span>
+          </div>
 
           {{ form.yfcaseCityWithTownship|attr:"type:hidden" }}
 
@@ -233,6 +239,7 @@
       const cityString = cities[cityValue];
       const townshipString = townships[townshipValue];
       document.getElementById("id_yfcaseCityWithTownship").value = cityString+townshipString;
+      document.getElementById("id_yfcaseCaseStatus").value = "在途";
     }
   </script>
 {% endblock %}

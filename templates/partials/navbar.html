@@ -1,43 +1,36 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">首頁</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    {% if user.is_authenticated %}
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a href="{% url 'yfcase:yfcase_create' %}">新增評量表</a>
+<style type="text/css">
+  .navbar-nav > li {padding:0px 5px;}
+  .dropdown-item {background-color: lightgrey; color:black;}
+</style>
+
+{% if user.is_authenticated %}
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="collapse navbar-collapse d-flex justify-content-between mx-2" id="navbarsExampleDefault">
+      <ul class="navbar-nav bg-dark text-white mr-auto">
+        <li>
+          <a class="navbar-brand" href="/">首頁</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="{% url 'yfcase:home_all' %}">所有</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="{% url 'yfcase:home' %}">個人</a>
         </li>
       </ul>
-      <ul class="navbar-nav ml-auto">
-        <li>
-          <a>
-            ({{user.userFullName}})
-          </a>
+      <ul class="navbar-nav bg-dark text-white ml-auto">
+        <li class="pt-1">
+          ({{user.userFullName}})
         </li>
         <li>
-          <a class="dropdown-item" href="{% url 'password_change' %}">
-            變更密碼
-          </a>
+          <a class="dropdown-item" href="{% url 'yfcase:yfcase_create' %}">新增評量表</a>
         </li>
         <li>
-          <a class="dropdown-item" href="{% url 'logout' %}">
-            登出
-          </a>
+          <a class="dropdown-item" href="{% url 'logout' %}">登出</a>
         </li>
-        </ul>
-      {% else %}
-        <form class="form-inline ml-auto">
-          <a href="{% url 'login' %}" class="btn btn-outline-secondary">
-            登入
-          </a>
-        </form>
-      {% endif %}
+      </ul>
     </div>
-  </div>
-</nav>
-
+  </nav>
+{% endif %}
 
 <script>
  

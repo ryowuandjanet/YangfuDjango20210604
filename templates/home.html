@@ -9,6 +9,7 @@
       text-align: center;
     }
     .home_table{
+      width: 100%;
       border: 3px solid black;
     }
     .home_head{
@@ -20,7 +21,7 @@
       text-align: center;
     }
     th:nth-child(1) { width: 5%; }  
-    th:nth-child(2) {  }
+    th:nth-child(2) { width: 29%; }
     th:nth-child(3) { width: 16%; }
     th:nth-child(4) { width: 7%; }
     th:nth-child(5) { width: 9%; }
@@ -29,10 +30,13 @@
     th:nth-child(8) { width: 9%; }
     th:nth-child(9) { width: 5%; }
 
-
     .home_body > tr > td { border: 1px dotted grey; }
     .text-mark { font-size: 10.5pt; background-color: yellow; font-weight: 700; }
-    .text-stopBuyDate { font-size: 9pt; font-weight: 700; }
+    .text-address { font-size: 10pt; font-weight: 700; }
+    .text-stopBuyDate { font-size: 9pt; background-color: yellow; font-weight: 700; }
+    .home__input { width:400px; }
+    .home__bg__red { background-color: red; color:white; font-weight: 700; }
+    .home__bg__green { background-color: green; color:white; font-weight: 700; }
 
     td:nth-child(1) { text-align: center; }
     td:nth-child(2) { text-align: left; text-decoration: none;}
@@ -44,17 +48,18 @@
     td:nth-child(7) { text-align: center; }
     td:nth-child(8) { text-align: center; }
     td:nth-child(9) { text-align: center; }
+    
   </style>
 {% endblock style %}
 
 {% block content %}
-  <div class="home_title">
-    <h1>案件清單</h1>
+  <div class="home_title d-flex justify-content-between">
+    <h1 class="mb-0">案件清單</h1>
+    <form action="" method="GET" class="d-flex align-items-end pb-1"  >
+      <input type="text" name="q" placeholder="模糊比對(案號、住址、負責人、最終判定...等)" value='{{ request.GET.q }}' class="home__input">
+      <input type="submit" value="搜尋">
+    </form>
   </div>
-  <form action="" method="GET">
-    <input type="text" name="q" placeholder="模糊比對(案號、住址、負責人、最終判定...等)" value='{{ request.GET.q }}'>
-    <input type="submit" value="搜尋">
-  </form>
   <div class="home_container">
     <table class="home_table">
       <thead class="home_head">
@@ -80,22 +85,22 @@
             <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" >
               {{yfcase.yfcaseCaseNumber}}
               <br>
-              &emsp;&#10149;{{yfcase.fullAddress}}
+              <div class="text-address"> &emsp;&#10149;{{yfcase.fullAddress}}</div>
             </a>
           </td>
           <td>
             <!-- 兩週內 -->
             {% if yfcase.get_auction_1st.auctionDateFirst %}
-              1拍{{ yfcase.get_auction_1st.auctionDateFirst|less_two_week }}
+              {{ yfcase.get_auction_1st.auctionDateFirst|less_two_week:"1拍"|default_if_none:"" }}
             {% endif %}
             {% if yfcase.get_auction_2nd.auctionDateSecond %}
-              2拍{{ yfcase.get_auction_2nd.auctionDateSecond|less_two_week }}
+              {{ yfcase.get_auction_2nd.auctionDateSecond|less_two_week:"2拍"|default_if_none:"" }}
             {% endif %}
             {% if yfcase.get_auction_3rd.auctionDateThird %}
-              3拍{{ yfcase.get_auction_3rd.auctionDateThird|less_two_week }}
+              {{ yfcase.get_auction_3rd.auctionDateThird|less_two_week:"3拍"|default_if_none:"" }}
             {% endif %}
             {% if yfcase.get_auction_4th.auctionDateFourth %}
-              4拍{{ yfcase.get_auction_4th.auctionDateFourth|less_two_week }}
+              {{ yfcase.get_auction_4th.auctionDateFourth|less_two_week:"4拍"|default_if_none:"" }}
             {% endif %}
             <!-- 買止日 -->
             {% for result in yfcase.get_result_stopBuyDate %}
@@ -126,14 +131,14 @@
           </td>
           <td>
             {% for result in yfcase.results.all %}
-              {{ result.objectNumber }}
+              {{ result.objectNumber|default_if_none:"" }}
             {% endfor %}
           </td>
-          <td>
-            {% for result in yfcase.results.all %}
-              {{ result.caseStatus }}
-            {% endfor %}
-          </td>
+          {% if yfcase.yfcaseCaseStatus == "在途" %}
+            <td class="home__bg__green">{{ yfcase.yfcaseCaseStatus }}</td>
+          {% else %}
+            <td class="home__bg__red">{{ yfcase.yfcaseCaseStatus }}</td>
+          {% endif %}
         </tr>
         {% endfor %}
       </tbody>

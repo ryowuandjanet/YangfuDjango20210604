@@ -42,7 +42,6 @@
     </th>
     <th class="result__th" colspan=3>3.得標</th>
     <th class="result__case__th" rowspan=2>標的編號</th>
-    <th class="result__status__th" rowspan=2>案件狀態</th>
   </tr>
   <tr>
     <th class="result__th">搶標拍別</th>
@@ -54,7 +53,7 @@
   {% for result in object.results.all %}
   <tr>
     <td class="result__td"><a href="{% url 'yfcase:result_update' object.id result.id %}">修改</a></td>
-    <td class="result__td">{{ result.stopBuyDate }}</td>
+    <td class="result__td">{{ result.stopBuyDate|default_if_none:"" }}</td>
     <td class="result__td">{% if result.actionResult == "撤回" %} V {% endif %}</td>
     <td class="result__td">{{ result.bidAuctionTime|default_if_none:"" }}</td>
     <td class="result__td">{% if result.bidMoney > 0 %}{{ result.bidMoney }}{% endif %}</td>
@@ -62,7 +61,6 @@
     <td class="result__td">{% if result.actionResult == "遭優購" %} V {% endif %}</td>
     <td class="result__td">{% if result.actionResult == "無人優購" %} V {% endif %}</td>
     <td class="result__td">{{ result.objectNumber|default_if_none:"" }}</td>
-    <td class="result__td">{{ result.caseStatus|default_if_none:"" }}</td>
   </tr>
   {% endfor %}
 </table>

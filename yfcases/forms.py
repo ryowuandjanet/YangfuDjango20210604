@@ -51,7 +51,6 @@ STATUS_LIST= (
 )
 
 JUDGMENT_LIST=[
-  ("",""),
   ("未判定","未判定"),
   ("1拍進場","1拍進場"),
   ("2拍進場","2拍進場"),
@@ -85,11 +84,11 @@ CASESTATUS_CHOICES = [
 class YfcaseForm(forms.ModelForm):
   # 多加了widget=forms.Select(attrs={'class': 'form-select'})是要欄位在右側出現了向下的箭頭所設定
   yfcaseCompany = forms.ChoiceField(label="所屬公司",choices=COMPANY_LIST, widget=forms.Select(attrs={'class': 'form-select'}),required=False)
-
+  yfcaseCaseStatus = forms.ChoiceField(label="案件狀態",choices=CASESTATUS_CHOICES, required=False)
   class Meta:
     model=Yfcase
     # fields =['yfcaseCaseNumber','user'] 
-    fields =['yfcaseCaseNumber','yfcaseCompany','yfcaseCity','yfcaseTownship','yfcaseBigSection','yfcaseSmallSection',"yfcaseVillage","yfcaseNeighbor","yfcaseStreet","yfcaseSection","yfcaseLane","yfcaseAlley","yfcaseNumber","yfcaseFloor",'yfcaseDebtor','yfcaseCreditor','yfcaseCreditorMobilePhone','yfcaseCityWithTownship','user'] 
+    fields =['yfcaseCaseNumber','yfcaseCompany','yfcaseCity','yfcaseTownship','yfcaseBigSection','yfcaseSmallSection',"yfcaseVillage","yfcaseNeighbor","yfcaseStreet","yfcaseSection","yfcaseLane","yfcaseAlley","yfcaseNumber","yfcaseFloor",'yfcaseDebtor','yfcaseCreditor','yfcaseCreditorMobilePhone','yfcaseCityWithTownship','yfcaseCaseStatus','user'] 
     
 
     def __init__(self, *args, **kwargs):
@@ -222,7 +221,7 @@ class ResultForm(forms.ModelForm):
   caseStatus = forms.ChoiceField(label="執行結果",choices=CASESTATUS_CHOICES, required=False)
   class Meta:
     model=Result
-    fields =['yfcase', 'stopBuyDate', 'actionResult', 'bidAuctionTime', 'bidMoney', 'objectNumber', 'caseStatus']
+    fields =['yfcase', 'stopBuyDate', 'actionResult', 'bidAuctionTime', 'bidMoney', 'objectNumber']
     # fields =['yfcase', 'stopBuyDate', 'withdraw', 'bidAuctionTime', 'bidMoney', 'waitBuy', 'otherBuy', 'noOneBuy', 'objectNumber']
 
   # def __init__(self, *args, **kwargs):
