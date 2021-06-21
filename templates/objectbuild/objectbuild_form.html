@@ -24,64 +24,74 @@
   <form method="POST" action="" enctype='multipart/form-data' id="objectBuildCreateForm">{% csrf_token %}
     {{ form.yfcase|attr:"type:hidden" }} 
 
-
-    <div class="form-row">
-      <div class="form-group col">
-        <label style="margin-bottom: 2px;">{{ form.objectBuildStatus.label }}</label>
-        {{ form.objectBuildStatus|add_class:"form-control fieldcolor pt-0" }}
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label style="margin-bottom: 2px;">{{ form.objectBuildStatus.label }}</label>
+          {{ form.objectBuildStatus|add_class:"form-control fieldcolor pt-0" }}
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label style="margin-bottom: 2px;">{{ form.objectBuildAddress.label }} <small style="color:blue;">(*無需輸入縣市/鄉鎮區里)</small> </label>
+          {{ form.objectBuildAddress|add_class:"form-control fieldcolor pt-0" }}
+        </div>
       </div>
     </div>
     
-    <div class="form-row">
-      <div class="form-group col">
-        <label style="margin-bottom: 2px;">{{ form.objectBuildAddress.label }} <small style="color:blue;">(*無需輸入縣市/鄉鎮區里)</small> </label>
-        {{ form.objectBuildAddress|add_class:"form-control fieldcolor pt-0" }}
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-row">
+          <div class="form-group">
+            <label style="margin-bottom: 2px;">{{ form.objectBuildTotalPrice.label }}</label>
+            {{ form.objectBuildTotalPrice|add_class:"form-control fieldcolor pt-0" }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-row">
+          <div class="form-group col">
+            <label style="margin-bottom: 2px;">{{ form.objectBuildBuildArea.label }} </label>
+            {{ form.objectBuildBuildArea|add_class:"form-control fieldcolor pt-0" }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-row">
+          <div class="form-group col">
+            <label style="margin-bottom: 2px;">{{ form.objectBuildHouseAge.label }}</label>
+            {{ form.objectBuildHouseAge|add_class:"form-control fieldcolor pt-0" }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-row">
+          <div class="form-group col">
+            <label style="margin-bottom: 2px;">{{ form.objectBuildFloorHeight.label }}</label>
+            {{ form.objectBuildFloorHeight|add_class:"form-control fieldcolor pt-0" }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-row">
+          <div class="form-group col">
+            <label style="margin-bottom: 2px;">{{ form.objectBuildTransactionDate.label }}</label>
+            {{ form.objectBuildTransactionDate|add_class:"form-control fieldcolor pt-0" }}
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="form-row">
-      <div class="form-group col">
-        <label style="margin-bottom: 2px;">{{ form.objectBuildTotalPrice.label }}</label>
-        {{ form.objectBuildTotalPrice|add_class:"form-control fieldcolor pt-0" }}
+    
+    <div class="row">
+      <div class="col">
+        <div class="form-row">
+          <div class="form-group col">
+            <label style="margin-bottom: 2px;">{{ form.objectBuildUrl.label }}</label>
+            {{ form.objectBuildUrl|add_class:"form-control fieldcolor pt-0" }}
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="form-row">
-      <div class="form-group col">
-        <label style="margin-bottom: 2px;">{{ form.objectBuildBuildArea.label }}</label>
-        {{ form.objectBuildBuildArea|add_class:"form-control fieldcolor pt-0" }}
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col">
-        <label style="margin-bottom: 2px;">{{ form.objectBuildHouseAge.label }}</label>
-        {{ form.objectBuildHouseAge|add_class:"form-control fieldcolor pt-0" }}
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col">
-        <label style="margin-bottom: 2px;">{{ form.objectBuildFloorHeight.label }}</label>
-        {{ form.objectBuildFloorHeight|add_class:"form-control fieldcolor pt-0" }}
-      </div>
-    </div>
-
-
-    <div class="form-row">
-      <div class="form-group col">
-        <label style="margin-bottom: 2px;">{{ form.objectBuildTransactionDate.label }}</label>
-        {{ form.objectBuildTransactionDate|add_class:"form-control fieldcolor pt-0" }}
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col">
-        <label style="margin-bottom: 2px;">{{ form.objectBuildUrl.label }}</label>
-        {{ form.objectBuildUrl|add_class:"form-control fieldcolor pt-0" }}
-      </div>
-    </div>
-      
 
     <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
     {% if instance.id %}
