@@ -56,3 +56,18 @@ def isWordCountOverFour(value):
     return mark_safe( "<div style='font-size: 11pt; height: 37px; line-height: 30px; color: red;'>" + str(value) +  "</div>")
   else:
     return mark_safe( "<div style='font-size: 16pt; height: 37px; line-height: 30px; color: red;'>" + str(value) +  "</div>")
+
+
+# 判定scoreItem是否存在，是：scoreItem連同scoreValue一起出現，否：不顯示(同於參考物件評分)
+# 用法 {% isItem scoreItem scoreValue %}
+@register.simple_tag(name='isItem')
+def isItem(item, value):
+  if item == None :
+    return ""
+  else:
+    if value >= 0:
+      return mark_safe( "<div style='color: blue;text-align: left;'>&#10148" + "(+" + str(value) + ")" + item+ "</div>")
+    elif value < 0:
+      return mark_safe( "<div style='color: red;text-align: left;'>&#10148" + "(" + str(value) + ")" + item + "</div>")
+    else:
+      return ""

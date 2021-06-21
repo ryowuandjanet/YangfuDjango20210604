@@ -11,6 +11,13 @@
     .help-block {
       color: red;
     }
+    label{ font-size: 14pt; font-weight:700; }
+    .item__b__1 { background-color: AntiqueWhite; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
+    .item__b__2 { background-color: Linen; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
+    .item__b__3 { background-color: AntiqueWhite; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
+    .item__b__4 { background-color: Linen; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
+    .item__b__5 { background-color: AntiqueWhite; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
+    .item__b__other { background-color: Linen; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
   </style>
 {% endblock style %}
 
@@ -23,69 +30,69 @@
       {{ form.objectBuildScorRateB|attr:"type:hidden" }}
       {{ form.objectBuildScorReasonB|attr:"type:hidden" }}
 
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>項目1</label>
-          {{ form.plusItemB1|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__b__1">
+        <div class="col-md-2">
           <label>加成係數1</label>
           {{ form.plusValueB1|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
+        <div class="col-md-10">
+          <label>項目1</label>
+          {{ form.plusItemB1|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
       </div>
       
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>項目2</label>
-          {{ form.plusItemB2|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__b__2">
+        <div class="col-md-2">
           <label>加成係數2</label>
           {{ form.plusValueB2|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
+        <div class="col-md-10">
+          <label>項目2</label>
+          {{ form.plusItemB2|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
       </div>
     
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>項目3</label>
-          {{ form.plusItemB3|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__b__3">
+        <div class="col-md-2">
           <label>加成係數3</label>
           {{ form.plusValueB3|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
+        <div class="col-md-10">
+          <label>項目3</label>
+          {{ form.plusItemB3|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
       </div>
 
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>項目4</label>
-          {{ form.plusItemB4|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__b__4">
+        <div class="col-md-2">
           <label>加成係數4</label>
           {{ form.plusValueB4|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
+        <div class="col-md-10">
+          <label>項目4</label>
+          {{ form.plusItemB4|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
       </div>
 
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>項目5</label>
-          {{ form.plusItemB5|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__b__5">
+        <div class="col-md-2">
           <label>加成係數5</label>
           {{ form.plusValueB5|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
+        <div class="col-md-10">
+          <label>項目5</label>
+          {{ form.plusItemB5|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
       </div>
       
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>其他</label>
-          {{ form.plusItemOtherB|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__b__other">
+        <div class="col-md-2">
           <label>加成係數(其他)</label>
           {{ form.plusValueOtherB|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
+        <div class="col-md-10">
+          <label>其他</label>
+          {{ form.plusItemOtherB|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
       </div>
 

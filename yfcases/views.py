@@ -489,7 +489,7 @@ def finaldecision_create(request,yfcase_id=None):
   context = {
     "form" : form, 
     "instance_yfcase": instance_yfcase,
-    "title": "新增參考物件",
+    "title": "新增最終判定",
   }
   return render(request, "finaldecision/finaldecision_form.html",context)
 
@@ -508,7 +508,7 @@ def finaldecision_update(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "title": "更新參考物件",
+    "title": "變更最終判定",
   }
   return render(request, "finaldecision/finaldecision_form.html",context)
 
@@ -522,7 +522,7 @@ def finaldecision_delete(request,yfcase_id=None,id=None):
   context = {
     "instance": instance,
     "instance_yfcase": instance_yfcase,
-    "title": "刪除參考物件"
+    "title": "刪除最終判定"
   }
   return render(request, "finaldecision/finaldecision_delete.html", context)
 
@@ -541,7 +541,7 @@ def subsignture_a_update(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "title": "調整勘查員C評分",
+    "title": "新增/變更副署人員1的簽核",
   }
   return render(request, "finaldecision/subsignture_a_form.html",context)
 
@@ -559,7 +559,7 @@ def subsignture_a_delete(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "Title": "清除勘查員C評分",
+    "Title": "刪除副署人員1的簽核",
   }
   return render(request, "finaldecision/subsignture_a_delete.html",context)
 
@@ -578,7 +578,7 @@ def subsignture_b_update(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "title": "調整勘查員C評分",
+    "title": "新增/變更副署人員2的簽核",
   }
   return render(request, "finaldecision/subsignture_b_form.html",context)
 
@@ -596,7 +596,7 @@ def subsignture_b_delete(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "Title": "清除勘查員C評分",
+    "Title": "刪除副署人員2的簽核",
   }
   return render(request, "finaldecision/subsignture_b_delete.html",context)
 

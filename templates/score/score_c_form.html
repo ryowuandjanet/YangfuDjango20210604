@@ -7,84 +7,92 @@
 
 {% block style %}
   <style>
+    .form__container { border-radius: 5px; background-color: #f2f2f2; padding: 20px; margin-top: 20px}
     .help-block {
       color: red;
     }
+    label{ font-size: 14pt; font-weight:700; }
+    .item__c__1 { background-color: AntiqueWhite; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
+    .item__c__2 { background-color: Linen; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
+    .item__c__3 { background-color: AntiqueWhite; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
+    .item__c__4 { background-color: Linen; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
+    .item__c__5 { background-color: AntiqueWhite; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
+    .item__c__other { background-color: Linen; padding:5px 0px; margin-bottom:5px; border-radius:10px; border: 1px solid lightgrey;}
   </style>
 {% endblock style %}
 
 
 {% block content %}
-  <div class="col">
+  <div class="form__container">
     <h1>{{ title }}</h1>
     <form method="POST" action="" enctype='multipart/form-data'>{% csrf_token %}
       {{ form.objectBuildScorerC|attr:"type:hidden" }}
       {{ form.objectBuildScorRateC|attr:"type:hidden" }}
       {{ form.objectBuildScorReasonC|attr:"type:hidden" }}
-
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>項目1</label>
-          {{ form.plusItemC1|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      
+      <div class="row item__c__1">
+        <div class="col-md-2">
           <label>加成係數1</label>
           {{ form.plusValueC1|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
+        <div class="col-md-10">
+          <label>項目1</label>
+          {{ form.plusItemC1|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
       </div>
       
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>項目2</label>
-          {{ form.plusItemC2|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__c__2">
+        <div class="col-md-2">
           <label>加成係數2</label>
           {{ form.plusValueC2|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
+        <div class="col-md-10">
+          <label>項目2</label>
+          {{ form.plusItemC2|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
       </div>
     
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>項目3</label>
-          {{ form.plusItemC3|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__c__3">
+        <div class="col-md-2">
           <label>加成係數3</label>
           {{ form.plusValueC3|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
+        <div class="col-md-10">
+          <label>項目3</label>
+          {{ form.plusItemC3|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
       </div>
 
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>項目4</label>
-          {{ form.plusItemC4|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__c__4">
+        <div class="col-md-2">
           <label>加成係數4</label>
           {{ form.plusValueC4|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
+        <div class="col-md-10">
+          <label>項目4</label>
+          {{ form.plusItemC4|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
       </div>
 
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>項目5</label>
-          {{ form.plusItemC5|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__c__5">
+        <div class="col-md-2">
           <label>加成係數5</label>
           {{ form.plusValueC5|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
+        <div class="col-md-10">
+          <label>項目5</label>
+          {{ form.plusItemC5|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
       </div>
       
-      <div class="row mt-2">
-        <div class="col-md-9 mt-2">
-          <label>其他</label>
-          {{ form.plusItemOtherC|add_class:"form-control"|attr:"autocomplete:off" }}
-        </div>
-        <div class="col-md-3 mt-2">
+      <div class="row item__c__other">
+        <div class="col-md-2">
           <label>加成係數(其他)</label>
           {{ form.plusValueOtherC|add_class:"form-control"|attr:"autocomplete:off" }}
+        </div>
+        <div class="col-md-10">
+          <label>其他</label>
+          {{ form.plusItemOtherC|add_class:"form-control"|attr:"autocomplete:off" }}
         </div>
       </div>
 

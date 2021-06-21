@@ -55,12 +55,12 @@
       </td>
       <td class="objectbuild__td">{% if objectbuild.objectBuildScorerA %}{{ objectbuild.get_a_plus_value|floatformat:"2" }}{% endif %}</td>
       <td class="objectbuild__td text-left">
-        {% if objectbuild.plusItemA1 %}({{ objectbuild.plusValueA1 }}){{ objectbuild.plusItemA1 }}<br>{% endif %}
-        {% if objectbuild.plusItemA2 %}({{ objectbuild.plusValueA2 }}){{ objectbuild.plusItemA2 }}<br>{% endif %}
-        {% if objectbuild.plusItemA3 %}({{ objectbuild.plusValueA3 }}){{ objectbuild.plusItemA3 }}<br>{% endif %}
-        {% if objectbuild.plusItemA4 %}({{ objectbuild.plusValueA4 }}){{ objectbuild.plusItemA4 }}<br>{% endif %}
-        {% if objectbuild.plusItemA5 %}({{ objectbuild.plusValueA5 }}){{ objectbuild.plusItemA5 }}<br>{% endif %}
-        {% if objectbuild.plusItemOtherA %}({{ objectbuild.plusValueOtherA }}){{ objectbuild.plusItemOtherA }}<br>{% endif %}
+        {% isItem objectbuild.plusItemA1 objectbuild.plusValueA1 %}
+        {% isItem objectbuild.plusItemA2 objectbuild.plusValueA2 %}
+        {% isItem objectbuild.plusItemA3 objectbuild.plusValueA3 %}
+        {% isItem objectbuild.plusItemA4 objectbuild.plusValueA4 %}
+        {% isItem objectbuild.plusItemA5 objectbuild.plusValueA5 %}
+        {% isItem objectbuild.plusItemOtherA objectbuild.plusValueOtherA %}
       </td>
       <td class="objectbuild__td" rowspan=5>
         {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
@@ -84,12 +84,12 @@
       </td>
       <td class="objectbuild__td">{% if objectbuild.objectBuildScorerB %}{{ objectbuild.get_b_plus_value|floatformat:"2" }}{% endif %}      </td>
       <td class="objectbuild__td text-left">
-        {% if objectbuild.plusItemB1 %}({{ objectbuild.plusValueB1 }}){{ objectbuild.plusItemB1 }}<br>{% endif %}
-        {% if objectbuild.plusItemB2 %}({{ objectbuild.plusValueB2 }}){{ objectbuild.plusItemB2 }}<br>{% endif %}
-        {% if objectbuild.plusItemB3 %}({{ objectbuild.plusValueB3 }}){{ objectbuild.plusItemB3 }}<br>{% endif %}
-        {% if objectbuild.plusItemB4 %}({{ objectbuild.plusValueB4 }}){{ objectbuild.plusItemB4 }}<br>{% endif %}
-        {% if objectbuild.plusItemB5 %}({{ objectbuild.plusValueB5 }}){{ objectbuild.plusItemB5 }}<br>{% endif %}
-        {% if objectbuild.plusItemOtherB %}({{ objectbuild.plusValueOtherB }}){{ objectbuild.plusItemOtherB }}<br>{% endif %}
+        {% isItem objectbuild.plusItemB1 objectbuild.plusValueB1 %}
+        {% isItem objectbuild.plusItemB2 objectbuild.plusValueB2 %}
+        {% isItem objectbuild.plusItemB3 objectbuild.plusValueB3 %}
+        {% isItem objectbuild.plusItemB4 objectbuild.plusValueB4 %}
+        {% isItem objectbuild.plusItemB5 objectbuild.plusValueB5 %}
+        {% isItem objectbuild.plusItemOtherB objectbuild.plusValueOtherB %}
       </td>
     </tr>
     <tr>
@@ -119,12 +119,12 @@
         </td>
         <td class="objectbuild__td">{% if objectbuild.objectBuildScorerC %}{{ objectbuild.get_c_plus_value|floatformat:"2" }}{% endif %}</td>
         <td class="objectbuild__td text-left">
-          {% if objectbuild.plusItemC1 %}({{ objectbuild.plusValueC1 }}){{ objectbuild.plusItemC1 }}<br>{% endif %}
-          {% if objectbuild.plusItemC2 %}({{ objectbuild.plusValueC2 }}){{ objectbuild.plusItemC2 }}<br>{% endif %}
-          {% if objectbuild.plusItemC3 %}({{ objectbuild.plusValueC3 }}){{ objectbuild.plusItemC3 }}<br>{% endif %}
-          {% if objectbuild.plusItemC4 %}({{ objectbuild.plusValueC4 }}){{ objectbuild.plusItemC4 }}<br>{% endif %}
-          {% if objectbuild.plusItemC5 %}({{ objectbuild.plusValueC5 }}){{ objectbuild.plusItemC5 }}<br>{% endif %}
-          {% if objectbuild.plusItemOtherC %}({{ objectbuild.plusValueOtherC }}){{ objectbuild.plusItemOtherC }}<br>{% endif %}
+          {% isItem objectbuild.plusItemC1 objectbuild.plusValueC1 %}
+          {% isItem objectbuild.plusItemC2 objectbuild.plusValueC2 %}
+          {% isItem objectbuild.plusItemC3 objectbuild.plusValueC3 %}
+          {% isItem objectbuild.plusItemC4 objectbuild.plusValueC4 %}
+          {% isItem objectbuild.plusItemC5 objectbuild.plusValueC5 %}
+          {% isItem objectbuild.plusItemOtherC objectbuild.plusValueOtherC %}
         </td>
       {% else %}
         <td class="objectbuild__td bg-dark"></td>

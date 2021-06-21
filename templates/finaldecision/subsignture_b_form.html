@@ -7,6 +7,7 @@
 
 {% block style %}
   <style>
+    .form__container { border-radius: 5px; background-color: #f2f2f2; padding: 20px; margin-top: 20px}
     .help-block {
       color: red;
     }
@@ -15,8 +16,9 @@
 
 
 {% block content %}
-  <div class="col">
+  <div class="form__container">
     <h1>{{ title }}</h1>
+    <p>是否同意此最終判定的結論，同意請按"核准"，不同意請按"返回"</p>
     <form method="POST" action="" enctype='multipart/form-data'>{% csrf_token %}
       {{ form.subSigntrueB|attr:"type:hidden" }}
       {{ form.subSigntrueDateB|attr:"type:hidden" }}
@@ -27,7 +29,7 @@
       {{ request.user.userWorkArea|json_script:"author_workarea"}}
 
       <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
-      <input type="submit" class="btn btn-secondary" value="調整" onclick="post_subsignture_b_edit_submit()">
+      <input type="submit" class="btn btn-primary" value="核准" onclick="post_subsignture_b_edit_submit()">
     </form>
   </div>
 
