@@ -141,9 +141,9 @@
             <span class="help-block">{{ form.yfcaseCaseStatus.error }}</span>
           </div>
           
-        </div>
 
         {{ form.yfcaseCityWithTownship|attr:"type:hidden" }}
+        </div>
 
       <!-- footer -->
       <div class="modal-footer">
@@ -158,64 +158,64 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-    // $(document).ready(function(){
-    //   // 此為欄位驗証的JS
-    //   $('#yfcaseCreateForm').bootstrapValidator({
-    //     // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-    //     feedbackIcons: {
-    //       valid: 'glyphicon glyphicon-ok',
-    //       invalid: 'glyphicon glyphicon-remove',
-    //       validating: 'glyphicon glyphicon-refresh'
-    //     },
-    //     fields: {
-    //       yfcaseCaseNumber: {
-    //         validators: {
-    //           notEmpty: {
-    //             message: '此一欄位不得為空'
-    //           },
-    //           stringLength: {
-    //             min: 5,
-    //             max: 50,
-    //             message: '案件名稱必需介於5-50個文字'
-    //           }
-    //         }
-    //       },
-    //       yfcaseCity: {
-    //         validators: {
-    //           notEmpty: {
-    //             message: '此為必要欄位'
-    //           }
-    //         }
-    //       },
-    //       yfcaseTownship: {
-    //         validators: {
-    //           notEmpty: {
-    //             message: '此為必要欄位'
-    //           }
-    //         }
-    //       },
-    //       yfcaseNumber: {
-    //         validators: {
-    //           notEmpty: {
-    //             message: '此為必要欄位'
-    //           }
-    //         }
-    //       },
-    //       yfcaseCompany: {
-    //         validators: {
-    //           notEmpty: {
-    //             message: '必選欄位'
-    //           }
-    //         }
-    //       }
-    //     }
-    //   });
+    $(document).ready(function(){
+      // 此為欄位驗証的JS
+      $('#yfcaseUpdateForm').bootstrapValidator({
+        // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+        feedbackIcons: {
+          valid: 'glyphicon glyphicon-ok',
+          invalid: 'glyphicon glyphicon-remove',
+          validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+          yfcaseCaseNumber: {
+            validators: {
+              notEmpty: {
+                message: '此一欄位不得為空'
+              },
+              stringLength: {
+                min: 5,
+                max: 50,
+                message: '案件名稱必需介於5-50個文字'
+              }
+            }
+          },
+          yfcaseCity: {
+            validators: {
+              notEmpty: {
+                message: '此為必要欄位'
+              }
+            }
+          },
+          yfcaseTownship: {
+            validators: {
+              notEmpty: {
+                message: '此為必要欄位'
+              }
+            }
+          },
+          yfcaseNumber: {
+            validators: {
+              notEmpty: {
+                message: '此為必要欄位'
+              }
+            }
+          },
+          yfcaseCompany: {
+            validators: {
+              notEmpty: {
+                message: '必選欄位'
+              }
+            }
+          }
+        }
+      });
 
-    // });
+    });
 
     // JS觸發事件來使yfcaseCity/yfcaseTownship這兩個欄位動作
     $("#id_yfcaseCity").change(function () {
-      var url = $("#yfcaseCreateForm").attr("data-townships-url");
+      var url = $("#yfcaseUpdateForm").attr("data-townships-url");
       var cityId = $(this).val();
 
       $.ajax({

@@ -116,7 +116,7 @@ class YfcaseUpdateView(UpdateView):
     return super(YfcaseUpdateView, self).form_valid(form)
     
   def get_context_data(self, **kwargs):
-    context = super().get_context_data(**kwargs)
+    context = super(YfcaseUpdateView,self).get_context_data(**kwargs)
     context["author_id"]=self.request.user.id
     context['value'] = '更新'
     context['title'] = '更新基本資料'
