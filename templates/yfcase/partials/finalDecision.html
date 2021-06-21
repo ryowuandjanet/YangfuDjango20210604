@@ -21,7 +21,13 @@
     border-bottom: 3px solid red;
   }
   .regionalhead__td__workarea { font-size: 16pt; height: 37px; line-height: 30px; color: red; }
-
+  .regionalhead__th:nth-child(1) { width: 6%; }
+  .regionalhead__th:nth-child(2) { width: 10%; }
+  .regionalhead__th:nth-child(4) { width: 11%; }
+  .regionalhead__td:nth-child(5) { width: 6%; }
+  .regionalhead__td:nth-child(6) { width: 11%; }
+  .regionalhead__td:nth-child(7) { width: 6%; }
+  .regionalhead__td:nth-child(8) { width: 11%; }
 </style>
 
 <!-- 測試樣版1 -->
@@ -31,14 +37,14 @@
     <th class="regionalhead__th">判定</th>
     <th class="regionalhead__th">備註</th>
     <th class="regionalhead__th">區域負責人</th>
-    <th class="regionalhead__th">副署人員1</th>
-    <th class="regionalhead__th">副署人員2</th>
+    <th class="regionalhead__th" colspan=2>副署人員1</th>
+    <th class="regionalhead__th" colspan=2>副署人員2</th>
   </tr>
   {% for finaldecision in object.finaldecisions.all %}
     <tr>
       <td class="regionalhead__td">
-        <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}">更新</a>
-        <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}">刪除</a>
+        <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}" class="btn__icon__update">改判</a>
+        <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
       </td>
       <td class="regionalhead__td">{{ finaldecision.finalDecision|default_if_none:"" }}</td>
       <td class="regionalhead__td">{{ finaldecision.finalDecisionRemark|default_if_none:"" }}</td>
@@ -52,8 +58,10 @@
         {% endif %}
       </td>
       <td class="regionalhead__td">
-        <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}">更新</a>
-        <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}">刪除</a>
+        <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}" class="btn__icon__update">簽核</a><br>
+        <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
+      </td>
+      <td class="regionalhead__td">
         {% if finaldecision.subSigntrueA != None %}
           <div class="regionalhead__seal">
             <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
@@ -63,8 +71,10 @@
         {% endif %}
       </td>
       <td class="regionalhead__td">
-        <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}">更新</a>
-        <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}">刪除</a>
+        <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn__icon__update">簽核</a><br>
+        <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
+      </td>
+      <td class="regionalhead__td">
         {% if finaldecision.subSigntrueB != None %}
           <div class="regionalhead__seal">
             <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>

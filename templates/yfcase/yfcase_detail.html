@@ -23,6 +23,10 @@
       flex-direction: row;
       text-align: right;
     }
+    .yfcase__detail__subtitle > label {
+      font-size:16pt;
+      font-weight: 700;
+    }
     th,td {
       text-align: center;
     }
@@ -37,6 +41,10 @@
     .text-blue-12 { font-size: 12pt; color: blue; font-weight: 700; }
     .text-green-12 { font-size: 12pt; color: green; font-weight: 700; }
     .text-mark { font-size: 10.5pt; background-color: yellow; font-weight: 700; }
+    .btn__icon__create { background-color: MediumBlue; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
+    .btn__icon__update { background-color: DarkGreen; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
+    .btn__icon__delete { background-color: DarkRed; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
+    
   </style>
 {% endblock style %}
 
@@ -54,8 +62,8 @@
       <!--基本資料-->
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
-          基本資料
-          <a href="{% url 'yfcase:yfcase_update' object.id %}">編輯</a>
+          <label>基本資料</label>
+          <a href="{% url 'yfcase:yfcase_update' object.id %}" class="btn__icon__update">變更</a>
         </div>
       </div>
       <div class="row">
@@ -66,8 +74,8 @@
       <!-- 土地 -->
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
-          土地
-          <a href="{% url 'yfcase:land_create' object.id %}">新增</a>
+          <label>土地</label>
+          <a href="{% url 'yfcase:land_create' object.id %}" class="btn__icon__create">新增</a>
         </div>
         <div class="yfcase__detail__subtitle">
           {% if object.lands.count > 0 %}
@@ -85,8 +93,8 @@
       <!-- 建物 -->
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
-          建物
-          <a href="{% url 'yfcase:build_create' object.id %}">新增</a>
+          <label>建物</label>
+          <a href="{% url 'yfcase:build_create' object.id %}" class="btn__icon__create">新增</a>
         </div>
         <div class="yfcase__detail__subtitle">
           {% if object.builds.count > 0 %}
@@ -104,13 +112,13 @@
       <!-- 拍賣資訊 -->
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
-          拍賣資訊
+          <label>拍賣資訊</label>
           {% if object.auctions.all %}
             {% for auction in object.auctions.all %}
-              <a href="{% url 'yfcase:auction_update' object.id auction.id %}">更新</a> 
+              <a href="{% url 'yfcase:auction_update' object.id auction.id %}" class="btn__icon__update">變更</a> 
             {% endfor %}
           {% else %}
-            <a href="{% url 'yfcase:auction_create' object.id %}">新增</a> 
+            <a href="{% url 'yfcase:auction_create' object.id %}" class="btn__icon__create">新增</a> 
           {% endif %}
         </div>
       </div>
@@ -123,13 +131,13 @@
       <!-- 勘查記錄 -->
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
-          勘查記錄
+          <label>勘查記錄</label>
           {% if object.surveys.all %}
             {% for survey in object.surveys.all %}
-              <a href="{% url 'yfcase:survey_update' object.id survey.id %}">更新</a> 
+              <a href="{% url 'yfcase:survey_update' object.id survey.id %}" class="btn__icon__update">變更</a> 
             {% endfor %}
           {% else %}
-            <a href="{% url 'yfcase:survey_create' object.id %}">新增</a> 
+            <a href="{% url 'yfcase:survey_create' object.id %}" class="btn__icon__create">新增</a> 
           {% endif %}
         </div>
       </div>
@@ -142,8 +150,8 @@
       <!-- 參考物件 -->
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
-          參考物件
-          <a href="{% url 'yfcase:objectbuild_create' object.id %}">新建</a>
+          <label>參考物件</label>
+          <a href="{% url 'yfcase:objectbuild_create' object.id %}" class="btn__icon__create">新增</a>
         </div>
         <div class="yfcase__detail__subtitle">
           {% if object.objectbuilds.count > 0 %}
@@ -160,8 +168,8 @@
       <!-- 最終判定 -->
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
-          最終判定
-          <a href="{% url 'yfcase:finaldecision_create' object.id %}">新建</a>
+          <label>最終判定</label>
+          <a href="{% url 'yfcase:finaldecision_create' object.id %}" class="btn__icon__create">新增</a>
         </div>
       </div>
       
@@ -173,8 +181,10 @@
       <!-- 執行結果 -->
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
-          執行結果
-          <a href="{% url 'yfcase:result_create' object.id %}">新建</a>
+          <label>執行結果</label>
+          {% if object.results.count == 0 %}
+            <a href="{% url 'yfcase:result_create' object.id %}" class="btn__icon__create">新增</a>
+          {% endif %}
         </div>
       </div>
       

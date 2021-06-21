@@ -6,26 +6,35 @@
   .objectbuild__table { border: 3px solid black; }
   .objectbuild__th { width: 10%; background-color: Thistle; border: 1px solid black; text-align: center;} 
   .objectbuild__td { border: 1px solid black; }
+  
+  .objectbuild__th:nth-child(1) { width: 6%; }
+  .objectbuild__th:nth-child(2) { width: 8%; }
+  .objectbuild__th:nth-child(4) { width: 8%; }
+  .objectbuild__th:nth-child(5) { width: 5%; }
+  .objectbuild__th:nth-child(6) { width: 7%; }
+  .objectbuild__th:nth-child(10) { width: 7%; }
+  .objectbuild__th__plus { width: 5%;}
 </style>
 
 <table class="objectbuild__table">
   {% for objectbuild in object.objectbuilds.all %}
     <tr>
-      <th class="objectbuild__th">
-        狀態
-        <a href="{% url 'yfcase:objectbuild_update' object.id objectbuild.id %}">更新</a>
-        <a href="{% url 'yfcase:objectbuild_delete' object.id objectbuild.id %}">刪除</a>
-      </th>
+      <th class="objectbuild__th">操作</th>
+      <th class="objectbuild__th">狀態</th>
       <th class="objectbuild__th">地址(屋齡)(樓高)(成立日期)</th>
       <th class="objectbuild__th">總價(元)</th>
       <th class="objectbuild__th">建坪(坪)</th>
       <th class="objectbuild__th">單價(元)</th>
       <th class="objectbuild__th">勘查員A</th>
-      <th class="objectbuild__th">加成A</th>
+      <th class="objectbuild__th objectbuild__th__plus">加成A</th>
       <th class="objectbuild__th">加成原因A</th>
       <th class="objectbuild__th">計算</th>
     </tr>
     <tr>
+      <td class="objectbuild__td" rowspan=5>
+        <a href="{% url 'yfcase:objectbuild_update' object.id objectbuild.id %}" class="btn__icon__update">變更</a><br>
+        <a href="{% url 'yfcase:objectbuild_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+      </td>
       <td class="objectbuild__td" rowspan=2>{{objectbuild.objectBuildStatus}}</td>
       <td class="objectbuild__td" rowspan=5>
         {{objectbuild.objectBuildAddress}}<br>
@@ -49,8 +58,8 @@
         {{ objectbuild.get_objectbuild_ping_price|floatformat:0|intcomma }}
       </td>
       <td class="objectbuild__td">
-        <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}">更新</a>
-        <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}">刪除</a>
+        <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+        <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
         {{ objectbuild.objectBuildScorerA|default_if_none:"" }}
       </td>
       <td class="objectbuild__td">{% if objectbuild.objectBuildScorerA %}{{ objectbuild.get_a_plus_value|floatformat:"2" }}{% endif %}</td>
@@ -72,14 +81,14 @@
     </tr>
     <tr>
       <th class="objectbuild__th">勘查員B</th>
-      <th class="objectbuild__th">加成B</th>
+      <th class="objectbuild__th objectbuild__th__plus">加成B</th>
       <th class="objectbuild__th">加成原因B</th>
     </tr>
     <tr>
       <th class="objectbuild__th">現勘</th>
       <td class="objectbuild__td">
-        <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}">更新</a>
-        <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}">刪除</a>
+        <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+        <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
         {{ objectbuild.objectBuildScorerB|default_if_none:"" }}
       </td>
       <td class="objectbuild__td">{% if objectbuild.objectBuildScorerB %}{{ objectbuild.get_b_plus_value|floatformat:"2" }}{% endif %}      </td>
@@ -102,7 +111,7 @@
       </td>
       {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
         <th class="objectbuild__th">勘查員C</th>
-        <th class="objectbuild__th">加成C</th>
+        <th class="objectbuild__th objectbuild__th__plus">加成C</th>
         <th class="objectbuild__th">加成原因C</th>
       {% else %}
         <td class="objectbuild__th bg-dark"></td>
@@ -113,8 +122,8 @@
     <tr>
       {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
         <td class="objectbuild__td">
-          <a href="{% url 'yfcase:score_c_update' object.id objectbuild.id %}">更新</a>
-          <a href="{% url 'yfcase:score_c_delete' object.id objectbuild.id %}">刪除</a>
+          <a href="{% url 'yfcase:score_c_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+          <a href="{% url 'yfcase:score_c_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
           {{ objectbuild.objectBuildScorerC|default_if_none:"" }}
         </td>
         <td class="objectbuild__td">{% if objectbuild.objectBuildScorerC %}{{ objectbuild.get_c_plus_value|floatformat:"2" }}{% endif %}</td>

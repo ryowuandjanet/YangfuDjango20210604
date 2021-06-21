@@ -2,9 +2,17 @@
 {% load urlify %}
 
 <style>
-  .build__table { border: 3px solid black; }
+  .build__table { border: 3px solid black;}
   .build__th { width: 10%; background-color: DeepSkyBlue; border: 1px solid black; text-align: center;} 
   .build__td { border: 1px dotted black; }
+  .build__th:nth-child(1) { width: 5%; }
+  .build__th:nth-child(3) { width: 5%; }
+  .build__th:nth-child(4) { width: 12%; }
+  .build__th:nth-child(5) { width: 8%; }
+  .build__th:nth-child(7) { width: 14%; }
+  .build__td:nth-child(2) { width: 18%; }
+  .build__td:nth-child(6) { width: 8%; }
+  .build__td:nth-child(7) { width: 8%; }
 </style>
 
 <table class="build__table">
@@ -25,14 +33,14 @@
     </th>
   </tr>
   <tr>
-    <th class="build__th">(原)</th>
-    <th class="build__th">(計算後)</th>
+    <th class="build__th build__th__a">(原)</th>
+    <th class="build__th build__th__b">(計算後)</th>
   </tr>
   {% for build in object.builds.all %}
     <tr>
       <td class="build__td">  
-        <a href="{% url 'yfcase:build_update' object.id build.id %}">更新</a>/
-        <a href="{% url 'yfcase:build_delete' object.id build.id %}">刪除</a>
+        <a href="{% url 'yfcase:build_update' object.id build.id %}" class="btn__icon__update">變更</a><br>
+        <a href="{% url 'yfcase:build_delete' object.id build.id %}" class="btn__icon__delete">刪除</a>
       </td>
       <td class="build__td text-left">
         <div style="font-size:12pt;"> 

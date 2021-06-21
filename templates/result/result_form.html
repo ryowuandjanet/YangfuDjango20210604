@@ -26,7 +26,7 @@
     <div class="row mt-2">
       <div class="col-md mt-2">
         <label for="{{ form.stopBuyDate.id_for_label }}">{{ form.stopBuyDate.label }}</label>
-        {{ form.stopBuyDate|add_class:'form-control'|attr:"autocomplete:off" }}
+        {{ form.stopBuyDate|add_class:'form-control datepicker'|attr:"autocomplete:off" }}
         <div class="invalid-feedback">
           {{ form.stopBuyDate.error }}
         </div>
@@ -94,7 +94,7 @@
 
 <script>
   $(function() {
-     var bidAuctionTime = document.getElementById("myBidAuctionTime");
+    var bidAuctionTime = document.getElementById("myBidAuctionTime");
     var bidMoney = document.getElementById("myBidMoney");
     var objectNumber = document.getElementById("myObjectNumber");
     

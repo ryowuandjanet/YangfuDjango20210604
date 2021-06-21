@@ -11,6 +11,10 @@
     .help-block {
       color: red;
     }
+    .form-row {
+      padding-bottom:10px;
+    }
+    label{ font-size: 14pt; font-weight:700; }
   </style>
 {% endblock style %}
 
@@ -19,86 +23,72 @@
   <h1>{{ title }}</h1>
   <form method="POST" action="" enctype='multipart/form-data' id="objectBuildCreateForm">{% csrf_token %}
     {{ form.yfcase|attr:"type:hidden" }} 
-    
-    <div class="row mt-2">
-      <div class="col-md-3 mt-2">
-        <label for="{{ form.objectBuildStatus.id_for_label }}">{{ form.objectBuildStatus.label }}</label>
-        {{ form.objectBuildStatus|add_class:'form-control'|attr:"autocomplete:off" }}
-        <div class="invalid-feedback">
-          {{ form.objectBuildStatus.error }}
-        </div>
-      </div>
-      <div class="col-md-9 mt-2">
-        <label for="{{ form.objectBuildAddress.id_for_label }}">{{ form.objectBuildAddress.label }} <small style="color:blue;">(*無需輸入縣市/鄉鎮區里)</small> </label>
-        {{ form.objectBuildAddress|add_class:'form-control'|attr:"autocomplete:off" }}
-        <div class="invalid-feedback">
-          {{ form.objectBuildAddress.error }}
-        </div>
+
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label style="margin-bottom: 2px;">{{ form.objectBuildStatus.label }}</label>
+        {{ form.objectBuildStatus|add_class:"form-control fieldcolor pt-0" }}
       </div>
     </div>
     
-    
-    <div class="row mt-2">
-      <div class="col-md-3 mt-2">
-        <label for="{{ form.objectBuildTotalPrice.id_for_label }}">{{ form.objectBuildTotalPrice.label }}</label>
-        {{ form.objectBuildTotalPrice|add_class:'form-control'|attr:"autocomplete:off" }}
-        <div class="invalid-feedback">
-          {{ form.objectBuildTotalPrice.error }}
-        </div>
-      </div>
-      <div class="col-md-2 mt-2">
-        <label for="{{ form.objectBuildBuildArea.id_for_label }}">{{ form.objectBuildBuildArea.label }}</label>
-        {{ form.objectBuildBuildArea|add_class:'form-control' }}
-        <div class="invalid-feedback">
-          {{ form.objectBuildBuildArea.error }}
-        </div>
-      </div>
-      <div class="col-md-2 mt-2">
-        <label for="{{ form.objectBuildHouseAge.id_for_label }}">{{ form.objectBuildHouseAge.label }}</label>
-        {{ form.objectBuildHouseAge|add_class:'form-control' }}
-        <div class="invalid-feedback">
-          {{ form.objectBuildHouseAge.error }}
-        </div>
-      </div>
-      <div class="col-md-2 mt-2">
-        <label for="{{ form.objectBuildFloorHeight.id_for_label }}">{{ form.objectBuildFloorHeight.label }}</label>
-        {{ form.objectBuildFloorHeight|add_class:'form-control' }}
-        <div class="invalid-feedback">
-          {{ form.objectBuildFloorHeight.error }}
-        </div>
-      </div>
-      <div class="col-md-3 mt-2">
-        <label for="{{ form.objectBuildTransactionDate.id_for_label }}">{{ form.objectBuildTransactionDate.label }}</label>
-        {{ form.objectBuildTransactionDate|add_class:'form-control' }}
-        <div class="invalid-feedback">
-          {{ form.objectBuildTransactionDate.error }}
-        </div>
-      </div>
-    </div>
-    
-    <div class="row mt-2">
-      <div class="col-md mt-2">
-        <label for="{{ form.objectBuildUrl.id_for_label }}">{{ form.objectBuildUrl.label }}</label>
-        {{ form.objectBuildUrl|add_class:'form-control'|attr:"autocomplete:off" }}
-        <div class="invalid-feedback">
-          {{ form.objectBuildUrl.error }}
-        </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <label style="margin-bottom: 2px;">{{ form.objectBuildAddress.label }} <small style="color:blue;">(*無需輸入縣市/鄉鎮區里)</small> </label>
+        {{ form.objectBuildAddress|add_class:"form-control fieldcolor pt-0" }}
       </div>
     </div>
 
-    <div class="row mt-2">
-      <div class="col-md-6 mt-2">
-        <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary form-control" >返回</a>
-      </div>
-      <div class="col-md-6 mt-2">
-        {% if instance.id %}
-          <input type="submit" class="btn btn-success form-control" value="更新">
-        {% else %}
-          <input type="submit" class="btn btn-info form-control" value="新增" onclick="get_objectbuild_yfcase()">
-        {% endif %}
+    <div class="form-row">
+      <div class="form-group col">
+        <label style="margin-bottom: 2px;">{{ form.objectBuildTotalPrice.label }}</label>
+        {{ form.objectBuildTotalPrice|add_class:"form-control fieldcolor pt-0" }}
       </div>
     </div>
 
+    <div class="form-row">
+      <div class="form-group col">
+        <label style="margin-bottom: 2px;">{{ form.objectBuildBuildArea.label }}</label>
+        {{ form.objectBuildBuildArea|add_class:"form-control fieldcolor pt-0" }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label style="margin-bottom: 2px;">{{ form.objectBuildHouseAge.label }}</label>
+        {{ form.objectBuildHouseAge|add_class:"form-control fieldcolor pt-0" }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label style="margin-bottom: 2px;">{{ form.objectBuildFloorHeight.label }}</label>
+        {{ form.objectBuildFloorHeight|add_class:"form-control fieldcolor pt-0" }}
+      </div>
+    </div>
+
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label style="margin-bottom: 2px;">{{ form.objectBuildTransactionDate.label }}</label>
+        {{ form.objectBuildTransactionDate|add_class:"form-control fieldcolor pt-0" }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label style="margin-bottom: 2px;">{{ form.objectBuildUrl.label }}</label>
+        {{ form.objectBuildUrl|add_class:"form-control fieldcolor pt-0" }}
+      </div>
+    </div>
+      
+
+    <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary" >返回</a>
+    {% if instance.id %}
+      <input type="submit" class="btn btn-secondary" value="更新">
+    {% else %}
+      <input type="submit" class="btn btn-secondary" value="新增" onclick="get_objectbuild_yfcase()">
+    {% endif %}
   </form>
 </div>
 
@@ -168,6 +158,7 @@
     $( ".datepicker" ).datepicker({
       dateFormat: "yy-mm-dd"
     });
+    
   });
     
   function get_objectbuild_yfcase() {

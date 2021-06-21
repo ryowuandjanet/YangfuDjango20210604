@@ -53,7 +53,7 @@
   </tr>
   {% for result in object.results.all %}
   <tr>
-    <td class="result__td"><a href="{% url 'yfcase:result_update' object.id result.id %}">修改</a></td>
+    <td class="result__td"><a href="{% url 'yfcase:result_update' object.id result.id %}" class="btn__icon__update">修改</a></td>
     <td class="result__td">{{ result.stopBuyDate|default_if_none:"" }}</td>
     <td class="result__td">{% if result.actionResult == "撤回" %} V {% endif %}</td>
     <td class="result__td">{{ result.bidAuctionTime|default_if_none:"" }}</td>
