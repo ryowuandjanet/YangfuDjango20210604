@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'users',
     'yfcases',
+    'import_export',
 ]
 
 
@@ -132,7 +133,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
