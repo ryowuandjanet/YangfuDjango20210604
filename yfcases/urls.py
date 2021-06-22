@@ -55,4 +55,5 @@ urlpatterns = [
   path('yfcase/<int:yfcase_id>/result/update/<int:id>/',result_update,name="result_update" ),
 
   path('ajax/load-townships/', load_townships, name='ajax_load_townships'),
+  path('export-excel/',export_yfcase,name='export'),
 ]

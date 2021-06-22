@@ -13,6 +13,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy,reverse
 from .models import *
 from .forms import *
+from .resources import *
+
+
+def export_yfcase(reauest):
+  yfcase_resource = YfcaseResource()
+  yfcase = yfcase_resource.export()
+  response = HttpResponse(yfcase.xlsx,content_type='application/vnd.ms-excel')
+  response['Content-Disposition'] = 'attachment; filename="member.xlsx"'
+  return response
+
+
 
 # @method_decorator(login_required,name='dispatch')   
 # class YfcaseListView(ListView):
