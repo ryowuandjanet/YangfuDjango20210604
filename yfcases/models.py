@@ -55,6 +55,7 @@ class Yfcase(models.Model):
   yfcaseCreditorMobilePhone=models.CharField(u'債權人電話',max_length=20,null=True,blank=True)
   yfcaseCityWithTownship = models.CharField(u'縣市鄉鎮',max_length=20,null=True,blank=True)
   yfcaseCaseStatus = models.CharField(u'案件狀態',max_length=10,null=True,blank=True)
+  yfcaseSealUrl = models.URLField(max_length=255,null=True,blank=True)
   user = models.ForeignKey('users.CustomUser',verbose_name = u'區域負責人', on_delete=models.CASCADE)
 
   def __str__(self):

@@ -640,7 +640,7 @@
             {% endif %}
           </td>
           <td class="regionalhead__td">
-            <img src="{% static 'img/seal.png' %}" />
+            <img src={{ yfcase.yfcaseSealUrl }} alt="">
             {% if finaldecision.subSigntrueA != None %}
               <div class="regionalhead__seal">
                 <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
@@ -702,6 +702,7 @@
       {% endfor %}
     </table>
   </div>
+  
 {% endblock content %}
 
 
