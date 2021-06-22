@@ -48,6 +48,14 @@
     td:nth-child(7) { text-align: center; }
     td:nth-child(8) { text-align: center; }
     td:nth-child(9) { text-align: center; }
+
+    .pdf__view__scale {
+      background-color: red;
+      color:white;
+      height:30px;
+      width: 30px;
+      padding:0px;
+    }
     
   </style>
 {% endblock style %}
@@ -85,7 +93,10 @@
             <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" >
               {{yfcase.yfcaseCaseNumber}}
               <br>
-              <div class="text-address"> &emsp;&#10149;{{yfcase.fullAddress}}</div>
+              <div class="text-address">
+                 &emsp;&#10149;{{yfcase.fullAddress}}
+              </div>
+              <a href="{% url 'yfcase:yfratingscale_pdf_view' yfcase.pk %}" class="pdf__view__scale">評</a>
             </a>
           </td>
           <td>

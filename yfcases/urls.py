@@ -55,5 +55,10 @@ urlpatterns = [
   path('yfcase/<int:yfcase_id>/result/update/<int:id>/',result_update,name="result_update" ),
 
   path('ajax/load-townships/', load_townships, name='ajax_load_townships'),
+  
+  # 匯出資料
   path('export-excel/',export_yfcase,name='export'),
+
+  #PDF轉檔
+  path('yfratingscalePDF/<int:pk>/', yfratingscale_pdf_view, name='yfratingscale_pdf_view'),
 ]

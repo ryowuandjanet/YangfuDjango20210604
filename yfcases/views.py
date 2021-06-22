@@ -1,3 +1,5 @@
+# encoding: utf-8
+from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse, HttpResponseRedirect,Http404
@@ -11,6 +13,12 @@ from django.views.generic import ListView,DetailView
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy,reverse
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase import pdfmetrics
+from xhtml2pdf.default import DEFAULT_FONT
 from .models import *
 from .forms import *
 from .resources import *
@@ -652,4 +660,27 @@ def result_update(request,yfcase_id=None,id=None):
     "title": "更新執行結果",
   }
   return render(request, "result/result_form.html",context)
+
+# ==========================  PDF  =========================
+def font_path():
+  pdfmetrics.registerFont(TTFont('yh', '{}/fonts/TaipeiSansTCBeta-Regular.ttf'.format(settings.STATICFILES_DIRS[0])))
+  DEFAULT_FONT['helvetica'] = 'yh'
+
+def yfratingscale_pdf_view(request, *args, **kwargs):
+  pk = kwargs.get('pk')
+  yfcase = get_object_or_404(Yfcase,pk=pk)
+  font_path()
+  template_path = 'pdf/yfratingscale_pdf.html'
+  context = {'yfcase': yfcase}
+  response = HttpResponse(content_type='application/pdf')
+  # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+  response['Content-Disposition'] = 'filename="report.pdf"'
+  template = get_template(template_path)
+  html = template.render(context)
+
+  # create a pdf
+  pisa_status = pisa.CreatePDF(html, dest=response)
+  if pisa_status.err:
+    return HttpResponse('We had some errors <pre>' + html + '</pre>')
+  return response
 
