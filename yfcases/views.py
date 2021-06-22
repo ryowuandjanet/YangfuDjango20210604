@@ -671,7 +671,7 @@ def yfratingscale_pdf_view(request, *args, **kwargs):
   yfcase = get_object_or_404(Yfcase,pk=pk)
   font_path()
   template_path = 'pdf/yfratingscale_pdf.html'
-  context = {'yfcase': yfcase}
+  context = {'yfcase': yfcase, 'title': '評量表'}
   response = HttpResponse(content_type='application/pdf')
   # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
   response['Content-Disposition'] = 'filename="report.pdf"'
