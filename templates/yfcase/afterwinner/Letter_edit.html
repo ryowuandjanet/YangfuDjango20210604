@@ -1,0 +1,111 @@
+{% load widget_tweaks %}
+
+<style type="text/css">
+  .help-block{
+    color:red;
+  }
+</style>
+
+
+<!-- 程式主題的部份 -->
+<form action="{% url 'yfcase:letter_edit' yfcase.id %}" method="post" id="editAfterWinnerModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" >{% csrf_token %}
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <!-- body -->
+      <div class="modal-body">
+        存證信函 - 案號：{{ yfcase.yfcaseCaseNumber }}
+        <!--基本資料欄位-->
+        <div class="form-group">
+          <label for="{{ form.yfcaseLetterAgent.id_for_label }}">{{ form.yfcaseLetterAgent.label }}</label>
+          {{ form.yfcaseLetterAgent|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseLetterAgent.error }}</span>
+        </div>
+
+      </div>
+
+      <!-- footer -->
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-secondary col" data-dismiss="modal">返回</button>
+        <input class="btn btn-primary col-md-3" type="submit" value="建立" />
+        
+      </div>
+
+    </div>
+  </div>
+</form>
+
+{% block javascript %}
+<script>
+  // $(document).ready(function(){
+  
+  //   // 此為欄位驗証的JS
+  //   $('#yfcaseCreateForm').bootstrapValidator({
+  //     // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+  //     feedbackIcons: {
+  //         valid: 'glyphicon glyphicon-ok',
+  //         invalid: 'glyphicon glyphicon-remove',
+  //         validating: 'glyphicon glyphicon-refresh'
+  //     },
+  //     fields: {
+  //         yfcaseCaseNumber: {
+  //           validators: {
+  //             notEmpty: {
+  //               message: '此一欄位不得為空'
+  //             },
+  //             stringLength: {
+  //               min: 5,
+  //               max: 50,
+  //               message: '案件名稱必需介於5-50個文字'
+  //             }
+  //           }
+  //         },
+  //         yfcaseCity: {
+  //           validators: {
+  //             notEmpty: {
+  //               message: '此為必要欄位'
+  //             }
+  //           }
+  //         },
+  //         yfcaseTownship: {
+  //           validators: {
+  //             notEmpty: {
+  //               message: '此為必要欄位'
+  //             }
+  //           }
+  //         },
+  //         yfcaseOtherAddress: {
+  //           validators: {
+  //             notEmpty: {
+  //               message: '此為必要欄位'
+  //             }
+  //           }
+  //         },
+  //         yfcaseCompany: {
+  //           validators: {
+  //             notEmpty: {
+  //               message: '必選欄位'
+  //             }
+  //           }
+  //         }
+  //     }
+  //   });
+
+  // });
+  $(function() {
+    $(".datepicker").datepicker({
+      dateFormat: "yy-mm-dd"
+    });
+  });
+
+</script>
+{% endblock javascript %}

@@ -69,7 +69,7 @@
     .result__status__th { background-color: DarkSlateGray; color: white; border: 1px solid black; text-align: center;} 
     .result__td { border: 1px dotted black; margin: 0px 5px; text-align: center;}
 
-    .result__seal { height:66px;background-color:pink; }
+    .result__seal { height:66px;background-color:pink;padding:0px; }
     .result__td__person { font-size: 16pt; height: 37px; line-height: 50px; color: red; }
     .result__td__date { 
       color: red;
@@ -622,9 +622,9 @@
       <tr>
         <th class="regionalhead__th" style="width:120px;">判定</th>
         <th class="regionalhead__th">備註</th>
-        <th class="regionalhead__th" style="width:80px;">區域負責人</th>
-        <th class="regionalhead__th" style="width:80px;">副署人員1</th>
-        <th class="regionalhead__th" style="width:80px;">副署人員2</th>
+        <th class="regionalhead__th" style="width:84px;">區域負責人</th>
+        <th class="regionalhead__th" style="width:84px;">副署人員1</th>
+        <th class="regionalhead__th" style="width:84px;">副署人員2</th>
       </tr>
       {% for finaldecision in yfcase.finaldecisions.all %}
         <tr>
@@ -632,15 +632,15 @@
           <td class="regionalhead__td">{{ finaldecision.finalDecisionRemark|default_if_none:"" }}</td>
           <td class="regionalhead__td">
             {% if finaldecision.regionalHead != None %}
-              <div style="width:50px;background-color: pink; border: 1px solid red;border-radius: 20px;">
-                <div style="width: 50px">{{ finaldecision.regionalHead }}</div>
-                <div style="width: 50px">{{ finaldecision.regionalHeadDate }}</div>
-                <div style="width: 50px">{{ finaldecision.regionalHeadWorkArea }}</div>
+              <div class="regionalhead__seal">
+                <div class="regionalhead__td__person">{{ finaldecision.regionalHead }}</div>
+                <div class="regionalhead__td__date">{{ finaldecision.regionalHeadDate }}</div>
+                <div class="regionalhead__td__workarea">{{ finaldecision.regionalHeadWorkArea }}</div>
               </div>
             {% endif %}
           </td>
           <td class="regionalhead__td">
-            <img src={{ yfcase.yfcaseSealUrl }} alt="">
+            
             {% if finaldecision.subSigntrueA != None %}
               <div class="regionalhead__seal">
                 <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
@@ -702,7 +702,7 @@
       {% endfor %}
     </table>
   </div>
-  
+ <img src={{ yfcase.yfcaseSealUrl }} width=75 >
 {% endblock content %}
 
 

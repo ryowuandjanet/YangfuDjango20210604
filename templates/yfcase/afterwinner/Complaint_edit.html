@@ -1,0 +1,190 @@
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+
+
+<style type="text/css">
+  .help-block{
+    color:red;
+  }
+</style>
+
+
+<!-- 程式主題的部份 -->
+<form action="{% url 'yfcase:complaint_edit' yfcase.id %}" method="post" id="editAfterWinnerModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}">{% csrf_token %}
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <!-- header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <!-- body -->
+      <div class="modal-body">
+
+        訢訟狀
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintComplaintDate.id_for_label }}">{{ form.yfcaseComplaintComplaintDate.label }}</label>
+          {{ form.yfcaseComplaintComplaintDate|add_class:'form-control datepicker fieldcolor pt-0' }}
+          <span class="help-block">{{ form.yfcaseComplaintComplaintDate.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintLitigationAgent.id_for_label }}">{{ form.yfcaseComplaintLitigationAgent.label }}</label>
+          {{ form.yfcaseComplaintLitigationAgent|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseComplaintLitigationAgent.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintPresentValueOfLandAnnouncement.id_for_label }}">{{ form.yfcaseComplaintPresentValueOfLandAnnouncement.label }}</label>
+          {{ form.yfcaseComplaintPresentValueOfLandAnnouncement|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseComplaintPresentValueOfLandAnnouncement.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintPresentValueOfHouseTax.id_for_label }}">{{ form.yfcaseComplaintPresentValueOfHouseTax.label }}</label>
+          {{ form.yfcaseComplaintPresentValueOfHouseTax|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseComplaintPresentValueOfHouseTax.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintRefereeFee.id_for_label }}">{{ form.yfcaseComplaintRefereeFee.label }}</label>
+          {{ form.yfcaseComplaintRefereeFee|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseComplaintRefereeFee.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintUnsuccessfulDate.id_for_label }}">{{ form.yfcaseComplaintUnsuccessfulDate.label }}</label>
+          {{ form.yfcaseComplaintUnsuccessfulDate|add_class:'form-control datepicker fieldcolor pt-0' }}
+          <span class="help-block">{{ form.yfcaseComplaintUnsuccessfulDate.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintLandWidth.id_for_label }}">{{ form.yfcaseComplaintLandWidth.label }}</label>
+          {{ form.yfcaseComplaintLandWidth|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseComplaintLandWidth.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintLandDepth.id_for_label }}">{{ form.yfcaseComplaintLandDepth.label }}</label>
+          {{ form.yfcaseComplaintLandDepth|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseComplaintLandDepth.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintExhibit1.id_for_label }}">{{ form.yfcaseComplaintExhibit1.label }}</label>
+          {{ form.yfcaseComplaintExhibit1|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseComplaintExhibit1.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintExhibit2.id_for_label }}">{{ form.yfcaseComplaintExhibit2.label }}</label>
+          {{ form.yfcaseComplaintExhibit2|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseComplaintExhibit2.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintExhibit3.id_for_label }}">{{ form.yfcaseComplaintExhibit3.label }}</label>
+          {{ form.yfcaseComplaintExhibit3|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseComplaintExhibit3.error }}</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="{{ form.yfcaseComplaintExhibit4.id_for_label }}">{{ form.yfcaseComplaintExhibit4.label }}</label>
+          {{ form.yfcaseComplaintExhibit4|add_class:'form-control' }}
+          <span class="help-block">{{ form.yfcaseComplaintExhibit4.error }}</span>
+        </div>
+        
+        <div class="card-body">
+             {% crispy form %}
+        </div>
+        
+
+      </div>
+
+      <!-- footer -->
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-secondary col" data-dismiss="modal">返回</button>
+        <input class="btn btn-primary col-md-3" type="submit" value="建立" />
+        
+      </div>
+
+    </div>
+  </div>
+</form>
+
+{% block javascript %}
+<script>
+ $(function() {
+    $( ".datepicker" ).datepicker({
+      dateFormat: "yy-mm-dd"
+    });
+  });
+  // $(document).ready(function(){
+  
+  //   // 此為欄位驗証的JS
+  //   $('#yfcaseCreateForm').bootstrapValidator({
+  //     // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+  //     feedbackIcons: {
+  //         valid: 'glyphicon glyphicon-ok',
+  //         invalid: 'glyphicon glyphicon-remove',
+  //         validating: 'glyphicon glyphicon-refresh'
+  //     },
+  //     fields: {
+  //         yfcaseCaseNumber: {
+  //           validators: {
+  //             notEmpty: {
+  //               message: '此一欄位不得為空'
+  //             },
+  //             stringLength: {
+  //               min: 5,
+  //               max: 50,
+  //               message: '案件名稱必需介於5-50個文字'
+  //             }
+  //           }
+  //         },
+  //         yfcaseCity: {
+  //           validators: {
+  //             notEmpty: {
+  //               message: '此為必要欄位'
+  //             }
+  //           }
+  //         },
+  //         yfcaseTownship: {
+  //           validators: {
+  //             notEmpty: {
+  //               message: '此為必要欄位'
+  //             }
+  //           }
+  //         },
+  //         yfcaseOtherAddress: {
+  //           validators: {
+  //             notEmpty: {
+  //               message: '此為必要欄位'
+  //             }
+  //           }
+  //         },
+  //         yfcaseCompany: {
+  //           validators: {
+  //             notEmpty: {
+  //               message: '必選欄位'
+  //             }
+  //           }
+  //         }
+  //     }
+  //   });
+
+  // });
+  // $(function() {
+  //   $(".datepicker").datepicker({
+  //     dateFormat: "yy-mm-dd"
+  //   });
+  // });
+
+</script>
+{% endblock javascript %}

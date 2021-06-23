@@ -34,18 +34,19 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.humanize',
-    'widget_tweaks',
-    'crispy_forms',
-    'users',
-    'yfcases',
-    'import_export',
+  'django.contrib.admin',
+  'django.contrib.auth',
+  'django.contrib.contenttypes',
+  'django.contrib.sessions',
+  'django.contrib.messages',
+  'django.contrib.staticfiles',
+  'django.contrib.humanize',
+  'widget_tweaks',
+  'crispy_forms',
+  'users',
+  'yfcases',
+  'import_export',
+  'wkhtmltopdf',
 ]
 
 
@@ -67,6 +68,10 @@ ROOT_URLCONF = 'src.urls'
 LOGIN_URL='/login/'
 LOGIN_REDIRECT_URL = 'yfcase:home'
 LOGOUT_REDIRECT_URL = 'yfcase:home'
+
+# 設定WKHTMLTOPDF的路徑
+WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+
 
 TEMPLATES = [
     {

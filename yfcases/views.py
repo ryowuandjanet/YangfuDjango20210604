@@ -19,9 +19,12 @@ from xhtml2pdf import pisa
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfbase import pdfmetrics
 from xhtml2pdf.default import DEFAULT_FONT
+from django_pdfkit import PDFView
+from users.models import *
 from .models import *
 from .forms import *
 from .resources import *
+from django.db import transaction
 
 
 def export_yfcase(reauest):
@@ -661,7 +664,21 @@ def result_update(request,yfcase_id=None,id=None):
   }
   return render(request, "result/result_form.html",context)
 
-# ==========================  PDF  =========================
+# ==========================  PDF(After Winner)  =========================
+class AfterWinnerUpdateView(UpdateView):
+  model=Yfcase
+  form_class = AfterWinnerForm
+  template_name="yfcase/afterwinner/AfterWinner_edit.html"
+  success_url = reverse_lazy('yfcase:home')
+
+  def get_context_data(self, **kwargs):
+    context = super(AfterWinnerUpdateView,self).get_context_data(**kwargs)
+    context["author_id"]=self.request.user.id
+    context['value'] = '編輯'
+    context['title'] = '編輯得標後相關資料'
+    return context
+
+# ==========================  PDF(評量表)  =========================
 def font_path():
   pdfmetrics.registerFont(TTFont('yh', '{}/fonts/TaipeiSansTCBeta-Regular.ttf'.format(settings.STATICFILES_DIRS[0])))
   DEFAULT_FONT['helvetica'] = 'yh'
@@ -684,3 +701,138 @@ def yfratingscale_pdf_view(request, *args, **kwargs):
     return HttpResponse('We had some errors <pre>' + html + '</pre>')
   return response
 
+# ==========================  PDF(契稅申請書)  =========================
+def deedtax_pdf_view(request, *args, **kwargs):
+  pk = kwargs.get('pk')
+  yfcase = get_object_or_404(Yfcase,pk=pk)
+  if yfcase.yfcaseDeedtaxClient:
+    customuser = CustomUser.objects.get(userFullName=yfcase.yfcaseDeedtaxClient)
+  else:
+    customuser = None
+  
+  font_path()
+  
+  template_path = 'pdf/deedtax_pdf.html'
+  context = {
+    'yfcase': yfcase, 
+    'customuser': customuser
+  }
+  # Create a Django response object, and specify content_type as pdf
+  response = HttpResponse(content_type='application/pdf')
+  # 如果要把yfcase_pdf.html下載後再手動打開的話
+  # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+  # 如果要把yfcase_pdf.html直接顥示的話
+  response['Content-Disposition'] = 'filename="report.pdf"'
+  # find the template and render it.
+  template = get_template(template_path)
+  html = template.render(context)
+
+  # create a pdf
+  pisa_status = pisa.CreatePDF(html.encode('UTF-8'), encoding="UTF-8", dest=response)
+  # pisa_status = pisa.CreatePDF(html, dest=response)
+  # if error then show some funy view
+  if pisa_status.err:
+    return HttpResponse('We had some errors <pre>' + html + '</pre>')
+  return response
+
+# 不動產登記清冊-Modal(Form)  
+class RealestateregistrationUpdateView(UpdateView):
+  model=Yfcase
+  form_class = RealestateregistrationForm
+  template_name="yfcase/afterwinner/Realestateregistration_edit.html"
+  success_url = reverse_lazy('yfcase:home')
+
+  def get_context_data(self, **kwargs):
+    context = super(RealestateregistrationUpdateView,self).get_context_data(**kwargs)
+    context["author_id"]=self.request.user.id
+    context['value'] = '編輯'
+    context['title'] = '編輯得標後相關資料'
+    return context
+
+# PDFkit-不動產土地登記申請書
+class realestateregistrationPDFView(PDFView):
+  template_name = './pdf/realestateregistration_pdf.html'
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    pk = kwargs.get('pk')
+    yfcase = Yfcase.objects.get(pk=pk)
+    users = CustomUser.objects.all()
+    context.update({
+        'yfcase': yfcase,
+        'users': users,
+    })
+    return context
+
+# 訴訟狀-Modal(Form)    
+class ComplaintUpdateView(UpdateView):
+  model=Yfcase
+  form_class = ComplaintForm
+  template_name="yfcase/afterwinner/Complaint_edit.html"
+  success_url = reverse_lazy('yfcase:home')
+
+  def get_context_data(self, **kwargs):
+    data = super(ComplaintUpdateView,self).get_context_data(**kwargs)
+    if self.request.POST:
+      data['titles'] = CoOwnerInfoFormSet(self.request.POST,instance=self.object)
+    else:
+      data['titles'] = CoOwnerInfoFormSet(instance=self.object)
+    data["author_id"]=self.request.user.id
+    data['value'] = '編輯'
+    data['title'] = '編輯得標後相關資料'
+    return data 
+  
+  def form_valid(self, form):
+    context = self.get_context_data()
+    titles = context['titles']
+    with transaction.atomic():
+      form.instance.created_by = self.request.user
+      self.object = form.save()
+      if titles.is_valid():
+        titles.instance = self.object
+        titles.save()
+    return super(ComplaintUpdateView, self).form_valid(form)
+
+# PDFkit-訴訟狀
+class complaintPDFView(PDFView):
+  template_name = './pdf/complaint_pdf.html'
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    pk = kwargs.get('pk')
+    yfcase = Yfcase.objects.get(pk=pk)
+    users = CustomUser.objects.all()
+    context.update({
+        'yfcase': yfcase,
+        'users': users,
+    })
+    return context
+
+# 存證信函-Modal(Form)
+class LetterUpdateView(UpdateView):
+  model=Yfcase
+  form_class = LetterForm
+  template_name="yfcase/afterwinner/Letter_edit.html"
+  success_url = reverse_lazy('yfcase:home')
+
+  def get_context_data(self, **kwargs):
+    context = super(LetterUpdateView,self).get_context_data(**kwargs)
+    context["author_id"]=self.request.user.id
+    context['value'] = '編輯'
+    context['title'] = '編輯得標後相關資料'
+    return context
+
+# PDFkit-存證信函
+class letterPDFView(PDFView):
+  template_name = './pdf/letter_pdf.html'
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    pk = kwargs.get('pk')
+    yfcase = Yfcase.objects.get(pk=pk)
+    users = CustomUser.objects.all()
+    context.update({
+        'yfcase': yfcase,
+        'users': users,
+    })
+    return context
