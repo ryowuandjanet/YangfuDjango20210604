@@ -96,7 +96,8 @@
               <div class="text-address">
                  &emsp;&#10149;{{yfcase.fullAddress}}
               </div>
-              <a href="{% url 'yfcase:yfratingscale_pdf_view' yfcase.pk %}" class="pdf__view__scale">評</a>
+              
+              <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="pdf__view__scale">評</a>
             </a>
           </td>
           <td>
@@ -124,13 +125,14 @@
               {{ finaldecision.finalDecision }}<br>
             {% endfor %} 
             <a href="{% url 'yfcase:afterwinner_edit' yfcase.pk %}" class="pdf__view__scale">契(表)</a> / 
-            <a href="{% url 'yfcase:deedtax_pdf_view' yfcase.pk %}" class="pdf__view__scale">契(PDF)</a>
+            <a href="{% url 'yfcase:deedtax_pdf_view' yfcase.pk %}?inline=" class="pdf__view__scale">契(PDF)</a>
             <a href="{% url 'yfcase:realestateregistration_edit' yfcase.pk %}" class="pdf__view__scale">動(表)</a> / 
-            <a href="{% url 'yfcase:realestateregistrationPDF_View' yfcase.pk %}" class="pdf__view__scale">動(PDF)</a>
+            <a href="{% url 'yfcase:realestateregistrationPDF_View' yfcase.pk %}?inline=" class="pdf__view__scale">動(PDF)</a>
             <a href="{% url 'yfcase:complaint_edit' yfcase.pk %}" class="pdf__view__scale">訴(表)</a> / 
-            <a href="{% url 'yfcase:complaintPDF_View' yfcase.pk %}" class="pdf__view__scale">訴(PDF)</a>
+            <a href="{% url 'yfcase:complaintPDF_View' yfcase.pk %}?inline=" class="pdf__view__scale">訴(PDF)</a>
             <a href="{% url 'yfcase:letter_edit' yfcase.pk %}" class="pdf__view__scale">信(表)</a> / 
-            <a href="{% url 'yfcase:letterPDF_View' yfcase.pk %}" class="pdf__view__scale">信(PDF)</a>
+            <a href="{% url 'yfcase:letterPDF_View' yfcase.pk %}?inline=" class="pdf__view__scale">信(PDF)</a>
+
           </td>
           <td>
             {% for result in yfcase.results.all %}

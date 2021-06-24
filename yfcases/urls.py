@@ -1,4 +1,4 @@
-from django.urls import path,include
+from django.urls import path,include,re_path
 from django.contrib.auth import views as auth_views
 from .views import *
 
@@ -60,7 +60,8 @@ urlpatterns = [
   path('export-excel/',export_yfcase,name='export'),
 
   #PDF轉檔
-  path('yfratingscalePDF/<int:pk>/', yfratingscale_pdf_view, name='yfratingscale_pdf_view'),
+  
+  path('yfratingscalePDFView/<int:pk>/', yfratingscalePDFView.as_view(),name="yfratingscalePDF_View"),
   path('afterwinner/<int:pk>/edit/', AfterWinnerUpdateView.as_view(), name='afterwinner_edit'),
   path('deedTaxPDF/<int:pk>/', deedtax_pdf_view, name='deedtax_pdf_view'),
   path('realestateregistration/<int:pk>/edit/', RealestateregistrationUpdateView.as_view(), name='realestateregistration_edit'),

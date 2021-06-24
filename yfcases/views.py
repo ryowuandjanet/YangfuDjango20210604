@@ -683,25 +683,21 @@ def font_path():
   pdfmetrics.registerFont(TTFont('yh', '{}/fonts/TaipeiSansTCBeta-Regular.ttf'.format(settings.STATICFILES_DIRS[0])))
   DEFAULT_FONT['helvetica'] = 'yh'
 
-def yfratingscale_pdf_view(request, *args, **kwargs):
-  pk = kwargs.get('pk')
-  yfcase = get_object_or_404(Yfcase,pk=pk)
-  font_path()
-  template_path = 'pdf/yfratingscale_pdf.html'
-  context = {'yfcase': yfcase, 'title': '評量表'}
-  response = HttpResponse(content_type='application/pdf')
-  # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
-  response['Content-Disposition'] = 'filename="report.pdf"'
-  template = get_template(template_path)
-  html = template.render(context)
 
-  # create a pdf
-  pisa_status = pisa.CreatePDF(html, dest=response)
-  if pisa_status.err:
-    return HttpResponse('We had some errors <pre>' + html + '</pre>')
-  return response
+# PDFkit-評量表
+class yfratingscalePDFView(PDFView):
+  template_name = './pdf/yfratingscale_pdf.html'
 
-# ==========================  PDF(契稅申請書)  =========================
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    pk = kwargs.get('pk')
+    yfcase = Yfcase.objects.get(pk=pk)
+    context.update({
+        'yfcase': yfcase,
+    })
+    return context
+
+# PDFkit-契稅申請書
 def deedtax_pdf_view(request, *args, **kwargs):
   pk = kwargs.get('pk')
   yfcase = get_object_or_404(Yfcase,pk=pk)
@@ -735,7 +731,7 @@ def deedtax_pdf_view(request, *args, **kwargs):
     return HttpResponse('We had some errors <pre>' + html + '</pre>')
   return response
 
-# 不動產登記清冊-Modal(Form)  
+# Form(Edit)-不動產登記清冊  
 class RealestateregistrationUpdateView(UpdateView):
   model=Yfcase
   form_class = RealestateregistrationForm
@@ -764,7 +760,7 @@ class realestateregistrationPDFView(PDFView):
     })
     return context
 
-# 訴訟狀-Modal(Form)    
+# Form(Edit)-訴訟狀
 class ComplaintUpdateView(UpdateView):
   model=Yfcase
   form_class = ComplaintForm
@@ -808,7 +804,7 @@ class complaintPDFView(PDFView):
     })
     return context
 
-# 存證信函-Modal(Form)
+# Form(Edit)-存證信函
 class LetterUpdateView(UpdateView):
   model=Yfcase
   form_class = LetterForm

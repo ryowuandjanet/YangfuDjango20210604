@@ -2,708 +2,934 @@
 {% load urlify %}
 {% load humanize %}
 
-
-{% block style %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
+  <title>評量表</title>
   <style type="text/css">
-    body {padding-top: 2px;}
-    .yfratingscalePDFTitle {font-size: 26pt;font-weight: bolder;text-align: center;}
-    br { font-size:4px; }
-    .text-left { text-align: left; }
-    .text-right { text-align: right; }
-    .text-red { font-size: 10pt; color: red; font-weight: 700; }
-    .text-blue { font-size: 10pt; color: blue; font-weight: 700; }
-    .text-green { font-size: 10pt; color: green; font-weight: 700; }
-    .text-red-12 { font-size: 12pt; color: red; font-weight: 700; }
-    .text-blue-12 { font-size: 12pt; color: blue; font-weight: 700; }
-    .text-green-12 { font-size: 12pt; color: green; font-weight: 700; }
-    .text-mark { font-size: 8pt; background-color: yellow; font-weight: 700; }
-    .btn__icon__create { background-color: MediumBlue; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
-    .btn__icon__update { background-color: DarkGreen; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
-    .btn__icon__delete { background-color: DarkRed; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
-
-    /*==== basedata ====*/
-    .basedata__table { border: 1px solid black; font-size: 10pt;}
-    .basedata__th { width: 8%; background-color: AntiqueWhite; border: 1px solid black; text-align: center;} 
-    .basedata__status__th { width: 8%; background-color: DarkSlateGray; color: white; border: 1px solid black; text-align: center;} 
-    .basedata__td { border: 1px solid black; margin: 0px 5px;}
-    .basedata__td:nth-child(2) { width:35%; }
-    .basedata__td:nth-child(4) { width:10%; }
-    .basedata__td:nth-child(8) { width:5%; }
-
-    /*==== land ====*/
-    .land__table { border: 1px solid black; font-size: 10pt;}
-    .land__th { background-color: Aquamarine; border: 1px solid black; text-align: center;} 
-    .land__td { border: 1px dotted black; text-align: center; }
-
-    /*==== build ====*/
-    .build__table { border: 1px solid black; font-size: 10pt; }
-    .build__th { width: 10%; background-color: DeepSkyBlue; border: 1px solid black; text-align: center;} 
-    .build__td { border: 1px dotted black; margin: 0px 5px;}
-
-
-    /*==== auction ====*/
-    .auction__table { border: 1px solid black; font-size: 10pt; }
-    .auction__th { width: 10%; background-color: Gainsboro; border: 1px solid black; text-align: center;} 
-    .auction__td { border: 1px dotted black; margin: 0px 5px; text-align: center;}
-    .font-9 {font-size:9pt;}
-
-
-    /*==== survey ====*/
-    .survey__table { border: 1px solid black; font-size: 10pt;}
-    .survey__th { width: 10%; background-color: Khaki; border: 1px solid black; text-align: center;} 
-    .survey__td { border: 1px dotted black; margin: 0px 5px; text-align: center;}
-
-    /*==== finalDecision ====*/
-    .regionalhead__table { border: 1px solid black; font-size: 10pt;}
-    .regionalhead__th { background-color: LightSteelBlue; border: 1px solid black; text-align: center;} 
-    .result__th { background-color: CornflowerBlue; border: 1px solid black; text-align: center;} 
-    .case__th { background-color: Gainsboro; border: 1px solid black; text-align: center;} 
-    .regionalhead__td { border: 1px dotted black; margin: 0px 5px;}
-
-
-
-    /*===== result ====*/
-    .result__table { border: 1px solid black;font-size: 10pt; }
-    .result__th { background-color: LightSalmon; border: 1px solid black; text-align: center;} 
-    .result__case__th { background-color: Gainsboro; border: 1px solid black; text-align: center;} 
-    .result__status__th { background-color: DarkSlateGray; color: white; border: 1px solid black; text-align: center;} 
-    .result__td { border: 1px dotted black; margin: 0px 5px; text-align: center;}
-
-    .result__seal { height:66px;background-color:pink;padding:0px; }
-    .result__td__person { font-size: 16pt; height: 37px; line-height: 50px; color: red; }
-    .result__td__date { 
-      color: red;
-      font-size: 10pt;
-      height: 20px;
-      line-height: 16px;
-      font-weight: 700;
-      margin: 0px;
-      border-top: 3px solid red;
-      border-bottom: 3px solid red;
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
     }
-    .result__td__workarea { font-size: 16pt; height: 37px; line-height: 30px; color: red; }
-    .result__checkbox { border: 3px solid black; width:30px; padding: 0px 5px; background-color: white; color: blue;}
-  </style>
-{% endblock style %}
+    
+    th, 
+    td {
+      font-size: 12pt;
+      padding: 0px 2px;
+      margin: 0px;
+      border: 1px solid black;
+    }
+    .yfratingscalePDFTitle {
+      font-size: 20pt;
+      font-weight: bolder;
+      text-align: center;
+    }
+    .yfratingscalePDFBaseData, 
+    .yfratingscalePDFLand, 
+    .yfratingscalePDFBuild, 
+    .yfratingscalePDFAction, 
+    .yfratingscalePDFAttachment, 
+    .yfratingscalePDFBuildCheckList, 
+    .yfratingscalePDFFinaldecision, 
+    .yfratingscalePDFObjectBuild {
+      border-collapse:collapse;
+      margin-bottom:5px;
+      width:100%;
+    }
+    
+    /* 基本資料-th選擇器的特有屬性:值 */
+    .yfratingscalePDFBaseData th {
+      background-color: AntiqueWhite;
+    }
+    
+    /* 基本資料-td選擇器的特有屬性:值 */
+    .yfratingscalePDFBaseData td {
+      text-align:left;
+      color:blue;
+    }
+    
+    /* 土地-th選擇器的特有屬性:值 */
+    .yfratingscalePDFLand th {
+      background-color: Aquamarine;
+    }
+    
+    /* 建物-th選擇器的特有屬性:值 */
+    .yfratingscalePDFBuild th {
+      background-color: DeepSkyBlue;
+    }
+    
+    /* 拍賣-th選擇器的特有屬性:值 */
+    .yfratingscalePDFAction th {
+      background-color: Gainsboro;
+    }
+    
+    /* 勘查-th選擇器的特有屬性:值 */
+    .yfratingscalePDFAttachment th {
+      background-color: Khaki;
+    }
+    
+    /* 查檢表-th選擇器(標頭)的特有屬性:值 */
+    .yfratingscalePDFBuildCheckList th {
+      background-color: LightSteelBlue;
+    }
+    
+    
+    /* 查檢表-th選擇器(內文)的特有屬性:值 */
+    .yfratingscalePDFBuildCheckList .yfratingscalePDFBuildCheckListItem {
+      background-color: LightCyan;
+      text-align:left;
+    }
+    
+    /* 參考物件-th選擇器的特有屬性:值 */
+    table.yfratingscalePDFObjectBuild th{
+      background-color: Thistle;
+      color:black;
+    }
+    
+    /* 最終判定-th選擇器的特有屬性:值 */
+    .yfratingscalePDFFinaldecision th {
+      background-color: YellowGreen;
+    }
+    
+    .yfratingscalePDFLand td, 
+    .yfratingscalePDFBuild td, 
+    .yfratingscalePDFBuildCheckList td,
+    .yfratingscalePDFAction td,
+    .yfratingscalePDFAttachment td,
+    .yfratingscalePDFFinaldecision td {
+      text-align:center;
+      color:blue;
+    }
 
-{% block content %}
+    td.landEmpty {
+      border:hidden;
+    }
+    
+    .black_font {
+      color:black;
+    }
+    
+    .small_red {
+      color:red;
+      font-size:9pt;
+    }
+    
+    .small_green {
+      color: green;
+      font-size: 9pt;
+    }
+   
+  </style>
+</head>
+<body>
   <!--標頭-->
   <div class="yfratingscalePDFTitle">
-    {{ yfcase.yfcaseCaseNumber }} YF評量表
+   {{yfcase.yfcaseCaseNumber}} YF評量表
   </div>
 
+  <!--基本資料-->
   <div class="row">
-    <!--基本資料-->
-    <table class="basedata__table">
+    <table class="yfratingscalePDFBaseData">
       <tr>
-        <th class="basedata__th">案號</th>
-        <td class="basedata__td text-left">{{yfcase.yfcaseCaseNumber|default_if_none:"" }}</td>
-        <th class="basedata__th">債務人</th>
-        <td class="basedata__td">{{ yfcase.yfcaseDebtor|default_if_none:"" }}</td>
-        <th class="basedata__th">債權人</th>
-        <td class="basedata__td">
-          {% if yfcase.yfcaseCreditor %}
-            {{ yfcase.yfcaseCreditor|default_if_none:"" }}<br>
-            {{ yfcase.yfcaseCreditorMobilePhone|default_if_none:"" }}
+        <th style="width:10%;">案號</th>
+        <td style="width:40%;">
+          {{yfcase.yfcaseCaseNumber}}
+        </td>
+        <th style="width:8%;">債務人</th>
+        <td style="width:15%;">
+          {{yfcase.yfcaseDebtor|default_if_none:""}}
+        </td>
+        <th style="width:8%;">債權人</th>
+        <td>
+          {% if yfcase.yfcaseCreditor == None %}
+            {{yfcase.yfcaseCompany}}
           {% else %}
-            {{ yfcase.yfcaseCompany }}<br>
-            {{ request.user.userMobilePhone|default_if_none:"" }}
+            {{yfcase.yfcaseCreditor|default_if_none:""}}
           {% endif %}
         </td>
       </tr>
       <tr>
-        <th class="basedata__th">住址</th>
-        <td  class="basedata__td text-left" colspan="5">
-          {{ yfcase.yfcaseTownship.zip_code }} {{yfcase.fullAddress}}
+        <th>住址</th>
+        <td colspan="5">
+          {{yfcase.yfcaseCity|default_if_none:""}}{{yfcase.yfcaseTownship|default_if_none:""}}{{yfcase.yfcaseVillage|default_if_none:""}}{{yfcase.yfcaseNeighbor|default_if_none:""}}{{yfcase.yfcaseStreet|default_if_none:""}}{{yfcase.yfcaseSection|default_if_none:""}}{{yfcase.yfcaseLane|default_if_none:""}}{{yfcase.yfcaseAlley|default_if_none:""}}{{yfcase.yfcaseNumber|default_if_none:""}}{{yfcase.yfcaseFloor|default_if_none:""}}
         </td>
       </tr>
     </table>
   </div>
-  <br>
+  
   <!-- 土地 -->
   <div class="row">
-    <table class="land__table">
+    <table class="yfratingscalePDFLand col">
       <tr>
-        <th class="land__th" style="width:30%;">地號</th>
-        <th class="land__th" style="width:10%;">謄本</th>
-        <th class="land__th" style="width:20%;">地坪<small> 平方公尺(坪)</small></th>
-        <th class="land__th" style="width:20%;">持分</th>
-        <th class="land__th" style="width:20%;">地坪持分<small> 平方公尺(坪)</small></th>
+        <th style="width:15%;">地號</th>
+        <th style="width:5%;">地號<br>謄本</th>
+        <th style="width:19%;">地坪面積<br>(平方公尺/坪)</th>
+        <th style="width:12%;">持分</th>
+        <th style="width:15%;">地坪(持分)<br>(平方公尺/坪)</th>
+        <td class="landEmpty" style="width:2%;"></td>
+        <th style="width:15%;">地坪總面積<br>(平方公尺/坪)</th>
+        <td class="landEmpty" style="width:2%;"></td>
+        <th style="background-color:DeepSkyBlue;">建坪總面積<br>(平方公尺/坪)</th>
       </tr>
-      {% for land in yfcase.lands.all %}
+
         <tr>
-          <td class="land__td text-left">
-            <div>
-              {{ yfcase.yfcaseBigSection }}{{ land.landNumber }}
-            </div>
+          <td style="text-align:left;">
+            {% for land in yfcase.lands.all %}
+              {{yfcase.yfcaseBigSection}}{{land.landNumber}}<br>
+            {% endfor %}
           </td>
-          <td class="land__td">
-            {% if land.landUrl != None %}
-              <a href="{{ land.landUrl }}" target="_blank">
-                <i class="fas fa-paperclip"></i>
-              </a>
-            {% endif %}
+          <td>
+            {% for land in yfcase.lands.all %}
+              {% if land.landUrl != None %}
+                ☀<br>
+              {% else %}
+                <br>
+              {% endif %}
+            {% endfor %}
           </td>
-          <td class="land__td">
-            {% if land.landArea != 0 %}
-              {{ land.landArea }}({{ land.landArea|m2toping|floatformat:"2" }})
-            {% endif %}
+          <td>
+            {% for land in yfcase.lands.all %}
+              {{ land.landArea|floatformat:"2" }} / {{ land.landArea|m2toping|floatformat:"2" }}<br>
+            {% endfor %}
           </td>
-          <td class="land__td">
-            {% if land.landHoldingPointPersonal > 0 and land.landHoldingPointAll > 0 %}
-              {{ land.landHoldingPointPersonal }}/{{ land.landHoldingPointAll }}
-            {% endif %}
+          <td>
+            {% for land in yfcase.lands.all %}
+              {{land.landHoldingPointPersonal}} / {{land.landHoldingPointAll}}<br>
+            {% endfor %}
           </td>
-          <td class="land__td">
-            {% if land.landHoldingPointPersonal > 0 and land.landHoldingPointAll > 0 %}
-              {{ land.get_land_holding_point_area|floatformat:"2" }}({{ land.get_land_holding_point_area|m2toping|floatformat:"2" }})
-            {% endif %}
+          <td>
+            {% for land in yfcase.lands.all %}
+              {{ land.get_land_holding_point_area|floatformat:"2" }} / {{ land.get_land_holding_point_area|m2toping|floatformat:"2" }}<br>
+            {% endfor %}
+          </td>
+          <td class="landEmpty"></td>
+          <td>
+            {{ yfcase.get_land_holding_point_area_total|floatformat:"2" }} / {{ yfcase.get_land_holding_point_area_total|m2toping|floatformat:"2" }}
+          </td>
+          <td class="landEmpty"></td>
+          <td>
+            {{ yfcase.get_build_holding_point_after_group_total|floatformat:"2" }} / {{ yfcase.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
           </td>
         </tr>
-      {% endfor %}
     </table>
   </div>
-  <br>
-  <!-- 建物 -->
-  <div class="row">
-    <table class="build__table">
+  
+   <!-- 建物 -->
+  <div>
+    <table class="yfratingscalePDFBuild">
       <tr>
-        <th class="build__th" rowspan="2" style="width: 120px;">建號</th>
-        <th class="build__th" rowspan="2" style="width: 50px;">謄本</th>
-        <th class="build__th" rowspan="2" style="width: 120px;">建坪(面積)<br>平方公尺(坪)</th>
-        <th class="build__th" rowspan="2" style="width: 100px;">持分</th>  
-        <th class="build__th" colspan="2">建坪持分 - 平方公尺(坪)</th>
-        <th class="build__th" rowspan="2" style="width: 130px;">
-          <div style="font-size:8pt;color: red;background-color:Cornsilk;text-align:center;">
+        <th rowspan="2" style="width:15%">建號</th>
+        <th rowspan="2" style="width:5%">建號<br>謄本</th>
+        <th rowspan="2" style="width:19%">建坪(面積)<br>平方公尺(坪)</th>
+        <th rowspan="2" style="width:12%">持分</th>  
+        <th colspan="2">建坪持分 - 平方公尺(坪)</th>
+        <th rowspan="2" style="width:23%">
+          <div style="font-size:12pt;color:red;background-color:Cornsilk;text-align:center;">
            使用分區：{{ yfcase.builds.first.buildUsePartition|default_if_none:"" }}
           </div>
           建物型/使用
         </th>
       </tr>
+       
       <tr>
-        <th class="build__th build__th__a" style="width: 100px;">(原)</th>
-        <th class="build__th build__th__b" style="width: 100px;">(計算後)</th>
+        <th>(原)</th>
+        <th>(計算後)</th>
       </tr>
-      {% for build in yfcase.builds.all %}
         <tr>
-          <td class="build__td text-left">
-            <div > 
-              {{ yfcase.yfcaseBigSection }}{{ build.buildNumber }}
-            </div>
+          <td style="text-align:left;">
+            {% for build in yfcase.builds.all %}
+              {{yfcase.yfcaseBigSection}}{{build.buildNumber}}<br>
+            {% endfor %}
           </td>
-          <td class="build__td">
-            {% if build.buildUrl != None %}
-              <a href="{{ build.buildUrl }}" target="_blank">
-                <i class="fas fa-paperclip"></i>
-              </a>
-            {% endif %}
+          <td>
+            {% for build in yfcase.builds.all %}
+              {% if build.buildUrl != None %}
+                ☀<br>
+              {% else %}
+                <br>
+              {% endif %}
+            {% endfor %}
           </td>
-          <td class="build__td">
-            {% if build.buildArea != 0 %}
-              {{ build.buildArea }} 
-              ({{ build.buildArea|m2toping|floatformat:"2" }}) 
-            {% endif %}
+          <td>
+            {% for build in yfcase.builds.all %}
+              {{ build.buildArea|floatformat:"2" }} / {{ build.buildArea|m2toping|floatformat:"2" }}<br>
+            {% endfor %}
           </td>
-          <td class="build__td">
-            {% if build.buildHoldingPointPersonal > 0 and build.buildHoldingPointAll > 0 %}
-              {{ build.buildHoldingPointPersonal }}/{{ build.buildHoldingPointAll }}
-            {% endif %}
+          <td>
+            {% for build in yfcase.builds.all %}
+              {{build.buildHoldingPointPersonal}} / {{build.buildHoldingPointAll}}<br>
+            {% endfor %}
           </td>
-          <td class="build__td">
-            {% if build.buildHoldingPointPersonal > 0 and build.buildHoldingPointAll > 0 %}
-              {{ build.get_build_holding_point_area|floatformat:"2" }} 
-              ({{ build.get_build_holding_point_area|m2toping|floatformat:"2" }}) 
-            {% endif %}
+          <td>
+            {% for build in yfcase.builds.all %}
+              {{ build.get_build_holding_point_area|floatformat:"2" }} / {{ build.get_build_holding_point_area|m2toping|floatformat:"2" }}<br>
+            {% endfor %}
           </td>
-          <td class="build__td">
-            {% if build.buildTypeUse == "公設" %}
-              {{ build.get_build_first_not_add_and_not_public_holding_point_area|floatformat:"2" }} 
-              ({{ build.get_build_first_not_add_and_not_public_holding_point_area|m2toping|floatformat:"2" }})
-            {% elif build.buildTypeUse == "增建-持分後坪數打對折" %}
-              {{ build.get_after_add_holding_point_area|floatformat:"2" }} 
-              ({{ build.get_after_add_holding_point_area|m2toping|floatformat:"2" }})
-            {% else %}
-              {{ build.get_build_holding_point_area|floatformat:"2" }}
-              ({{ build.get_build_holding_point_area|m2toping|floatformat:"2" }})
-            {% endif %}
+          <td>
+                         
           </td>
-          <td class="build__td">
-            {{ build.buildTypeUse|default_if_none:"" }}
+          <td style="text-align:left;">
+            {% for build in yfcase.builds.all %}
+              {{ build.buildTypeUse|default_if_none:"" }}<br>
+            {% endfor %}
           </td>
         </tr>
-      {% endfor %}
     </table>
-  </div>
-  <br>
+  </div> 
+
   <!-- 拍賣結果 -->
-  <div class="row">
-    <table class="auction__table">
+  <div class="auction">
+    <table class="yfratingscalePDFAction">
       <tr>
-        <th class="auction__th" style="width:80px;">
-          拍賣日
+        <th style="width:11%;">拍賣日</th>
+        <th colspan="4">拍別-進場判定<br>
+          <div class="small_red">(可進場CP值)</div>
         </th>
-        <th class="auction__th" colspan="4">拍別-進場判定<br>
-          <div class="text-mark">(可進場CP值)</div>
+        <th style="width:12%;">底價<small>(NT)</small><br>
+          <div class="small_red">各拍建議底價</div>
         </th>
-        <th class="auction__th" style="width:100px;">底價<small>(NT)</small><br>
-          <div class="text-mark">各拍建議底價</div>
-        </th>
-        <th class="auction__th" style="width:100px;">
-          坪價<small>(NT)</small><br>
-          <div class="text-mark">
-            時價：{{yfcase.pbk|floatformat:0|intcomma}}元
-          </div>
-        </th>
-        <th class="auction__th" style="width:45px;">CP</th>
-        <th class="auction__th" style="width:40px;">點閱</th>
-        <th class="auction__th" style="width:40px;">監控</th>
-        <th class="auction__th" style="width:80px;">建議加價</th>
-        <th class="auction__th" style="width:65px;">保証金</th>
+        <th style="width:10%;">坪價<small>(NT)</small></th>
+        <th style="width:10%;">時價<small>(NT)</small></th>
+        <th style="width:6%;">CP</th>
+        <th style="width:5%;">點閱</th>
+        <th style="width:5%;">監控</th>
+        <th style="width:14%;">建議加價</th>
+        <th style="width:9%;">保証金</th>
       </tr>
       <!-- 第一拍 -->
-      {% for auction in yfcase.auctions.all %}
-        <tr>
-          <!-- 拍別：第一拍 -->
-          <td class="auction__td">{{auction.auctionDateFirst|default_if_none:""}}</td>
-          <th class="auction__td" style="width:70px;">第一拍<br>
-              <div class="text-mark font-9">(CP>0.92)</div>
-          </th>
-          <td class="auction__td" colspan="3">
-            {% if auction.auctionFloorPriceFirst == 0 %}
-              <div>底價未輸入</div>
-            {% elif auction.get_suggestedincreaseFirst_cp >= 0.92 %}
-              <div class="text-green">加價CP(
-              {{ auction.get_suggestedincreaseFirst_cp|floatformat:2 }})<br>建議進場</div>
-            {% elif auction.get_suggestedincreaseFirst_cp < 0.92 %}
-              <div class="text-red">加價CP(
-              {{ auction.get_suggestedincreaseFirst_cp|floatformat:2 }})<br>不可進場</div>
+      <tr>
+        <!-- 拍別：第一拍 -->
+        <td>
+          {{yfcase.auctions.first.auctionDateFirst|default_if_none:""}}
+        </td>
+        <td style="width:8%;padding-top:6px;color:black;">
+          第一拍<br>
+          <span class="small_red">(CP>0.92)</span>
+        </td>
+        <td colspan="3">
+          {% if yfcase.auctions.first.auctionFloorPriceFirst == 0 %}
+            <div class="black_font">底價未輸入</div>
+          {% elif yfcase.auctions.first.get_suggestedincreaseFirst_cp >= 0.92 %}
+            <small class="small_green">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseFirst_cp|floatformat:2 }})<br>建議進場
+            </small>
+          {% elif yfcase.auctions.first.get_suggestedincreaseFirst_cp < 0.92 %}
+            <small class="small_red">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseFirst_cp|floatformat:2 }})<br>不可進場
+            </small>
+          {% endif %}
+        </td>
+        <!-- 第一拍：底價 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+            {{yfcase.auctions.first.auctionFloorPriceFirst|floatformat:0|intcomma }}
+          {% endif %}
+        </td>
+        <!-- 第一拍：坪價 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 and yfcase.builds.all|length > 0 %}
+            {{yfcase.auctions.first.get_ping_first_price|floatformat:0|intcomma}}
+          {% endif %}
+        </td>
+        <!-- 第一拍：時價 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 and yfcase.pbk != 0 %}
+            {{yfcase.pbk|floatformat:0|intcomma}}
+          {% endif %}
+        </td>
+        <!-- 第一拍：CP值 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 and yfcase.auctions.first.get_first_cp != 0 %}
+            {{yfcase.auctions.first.get_first_cp|floatformat:2|intcomma}}
+          {% endif %}
+        </td>
+        <!-- 第一拍：點閱 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+            {{yfcase.auctions.first.auctionClickFirst }}
+          {% endif %}
+        </td>
+        <!-- 第一拍：監控 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+            {{yfcase.auctions.first.auctionMonitorFirst }}
+          {% endif %}
+        </td>
+        <!-- 第一拍：建議加價 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+            (100% + {{yfcase.auctions.first.get_suggestedincreaseFirst|multiplication:100|floatformat:0 }}%)<br>
+            {{yfcase.auctions.first.get_suggestedincreaseFirst_floor_price|floatformat:0|intcomma }}
+          {% endif %}
+        </td>
+        <!-- 第一拍：保証金 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+            {{yfcase.auctions.first.auctionMarginFirst|floatformat:0|intcomma }}
+          {% endif %}
+        </td>
+      </tr>
+      <!-- 第二拍 -->
+      <tr>
+        <!-- 拍別：第二拍 -->
+        <td>
+          {{yfcase.auctions.first.auctionDateSecond|default_if_none:""}}
+        </td>
+        <td style="color:black;">
+          第二拍
+          <br>
+          <span class="small_red">(CP>1.15)</span>
+        </td>
+        <td colspan="3">
+          {% if yfcase.auctions.first.auctionFloorPriceSecond == 0 %}
+            <div class="black_font">底價未輸入</div>
+          {% elif yfcase.auctions.first.get_suggestedincreaseSecond_cp >= 1.15 %}
+            <small class="small_red">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseSecond_cp|floatformat:2 }})<br>建議進場
+            </small>
+          {% elif yfcase.auctions.first.get_suggestedincreaseSecond_cp < 1.15 %}
+            <small class="small_red">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseSecond_cp|floatformat:2 }})<br>不可進場
+            </small>
+          {% endif %}
+        </td>
+        <!-- 第二拍：底價 -->
+        <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              {{yfcase.auctions.first.auctionFloorPriceSecond|floatformat:0|intcomma }}
             {% endif %}
-          </td>
-          <!-- 第一拍：底價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFirst != 0 %}
-              {{auction.auctionFloorPriceFirst|floatformat:0|intcomma }}
-            {% endif %}
-          </td>
-          <!-- 第一拍：坪價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFirst != 0 and object.builds.all|length > 0 %}
-              {{auction.get_ping_first_price|floatformat:0|intcomma}}
-            {% endif %}
-          </td>
-          <!-- 第一拍：CP值 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFirst != 0 and auction.get_first_cp != 0 %}
-              {{auction.get_first_cp|floatformat:2|intcomma}}
-            {% endif %}
-          </td>
-          <!-- 第一拍：點閱 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFirst != 0 %}
-              {{auction.auctionClickFirst }}
-            {% endif %}
-          </td>
-          <!-- 第一拍：監控 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFirst != 0 %}
-              {{auction.auctionMonitorFirst }}
-            {% endif %}
-          </td>
-          <!-- 第一拍：建議加價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFirst != 0 %}
-              <div style="font-size:7.5pt;">
-                (100% + {{auction.get_suggestedincreaseFirst|multiplication:100|floatformat:0 }}%)
-              </div>
-              {{auction.get_suggestedincreaseFirst_floor_price|floatformat:0|intcomma }}
-            {% endif %}
-          </td>
-          <!-- 第一拍：保証金 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFirst != 0 %}
-              {{auction.auctionMarginFirst|floatformat:0|intcomma }}
-            {% endif %}
-          </td>
-        </tr>
-
-        <!-- 第二拍 -->
-        <tr>
-          <!-- 拍別：第二拍 -->
-          <td class="auction__td">{{auction.auctionDateSecond|default_if_none:""}}</td>
-          <th  class="auction__td">第二拍<br>
-            <div class="text-mark font-9">(CP>1.15)</div>
-          </th>
-          <td class="auction__td" colspan="3">
-            {% if auction.auctionFloorPriceSecond == 0 %}
-              <div>底價未輸入</div>
-            {% elif auction.get_suggestedincreaseSecond_cp >= 1.15 %}
-              <div class="text-green">加價CP(
-              {{ auction.get_suggestedincreaseSecond_cp|floatformat:2 }})<br>建議進場</div>
-            {% elif auction.get_suggestedincreaseSecond_cp < 1.15 %}
-              <div class="text-red">加價CP(
-              {{ auction.get_suggestedincreaseSecond_cp|floatformat:2 }})<br>不可進場</div>
-            {% endif %}
-          </td>
-          <!-- 第二拍：底價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceSecond != 0 %}
-              {{auction.auctionFloorPriceSecond|floatformat:0|intcomma }}
-            {% endif %}
-            {% if auction.auctionFloorPriceFirst != 0 %}
+            {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
               <br>
-              <div class="text-red">
-                {{auction.auctionFloorPriceFirst|multiplication:8|divide:10|floatformat:0|intcomma }}
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceFirst|multiplication:8|divide:10|floatformat:0|intcomma }}
               </div>
             {% endif %}
           </td>
           <!-- 第二拍：坪價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceSecond != 0 and object.builds.all|length > 0 %}
-              {{auction.get_ping_second_price|floatformat:0|intcomma}}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 and yfcase.builds.all|length > 0 %}
+              {{yfcase.auctions.first.get_ping_second_price|floatformat:0|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第二拍：時價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 and yfcase.pbk != 0 %}
+              {{yfcase.pbk|floatformat:0|intcomma}}
             {% endif %}
           </td>
           <!-- 第二拍：CP值 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceSecond != 0 and auction.get_second_cp != 0 %}
-              {{auction.get_second_cp|floatformat:2|intcomma}}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 and yfcase.auctions.first.get_second_cp != 0 %}
+              {{yfcase.auctions.first.get_second_cp|floatformat:2|intcomma}}
             {% endif %}
           </td>
           <!-- 第二拍：點閱 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceSecond != 0 %}
-              {{auction.auctionClickSecond }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              {{yfcase.auctions.first.auctionClickSecond }}
             {% endif %}
           </td>
           <!-- 第二拍：監控 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceSecond != 0 %}
-              {{auction.auctionMonitorSecond }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              {{yfcase.auctions.first.auctionMonitorSecond }}
             {% endif %}
           </td>
           <!-- 第二拍：建議加價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceSecond != 0 %}
-              <div style="font-size:7.5pt;">
-                (100% + {{auction.get_suggestedincreaseSecond|multiplication:100|floatformat:0 }}%)
-              </div>
-              {{auction.get_suggestedincreaseSecond_floor_price|floatformat:0|intcomma }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              (100% + {{yfcase.auctions.first.get_suggestedincreaseSecond|multiplication:100|floatformat:0 }}%)<br>
+              {{yfcase.auctions.first.get_suggestedincreaseSecond_floor_price|floatformat:0|intcomma }}
             {% endif %}
           </td>
           <!-- 第二拍：保証金 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceSecond != 0 %}
-              {{auction.auctionMarginSecond|floatformat:0|intcomma }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              {{yfcase.auctions.first.auctionMarginSecond|floatformat:0|intcomma }}
             {% endif %}
           </td>
-        </tr>
-
-        <!-- 第三拍 -->
-        <tr>
-          <!-- 拍別：第三拍 -->
-          <td class="auction__td">{{auction.auctionDateThird|default_if_none:""}}</td>
-          <th class="auction__td">第三拍<br>
-            <div class="text-mark font-9">(CP>1.44)</div>
-          </th>
-          <td class="auction__td" colspan="3">
-            {% if auction.auctionFloorPriceThird == 0 %}
-              <div>底價未輸入</div>
-            {% elif auction.get_suggestedincreaseThird_cp >= 1.44 %}
-              <div class="text-green">加價CP(
-              {{ auction.get_suggestedincreaseThird_cp|floatformat:2 }})<br>建議進場</div>
-            {% elif auction.get_suggestedincreaseThird_cp < 1.44 %}
-              <div class="text-red">加價CP(
-              {{ auction.get_suggestedincreaseThird_cp|floatformat:2 }})<br>不可進場</div>
+      </tr>
+      <!-- 第三拍 -->
+      <tr>
+        <!-- 拍別：第三拍 -->
+        <td>
+          {{yfcase.auctions.first.auctionDateThird|default_if_none:""}}  
+        </td>
+        <td style="color:black;">
+          第三拍
+          <br>
+          <span class="small_red">(CP>1.44)</span>
+        </td>
+        <td colspan="3">
+          {% if yfcase.auctions.first.auctionFloorPriceThird == 0 %}
+            <div class="black_font">底價未輸入</div>
+          {% elif yfcase.auctions.first.get_suggestedincreaseThird_cp >= 1.44 %}
+            <small class="small_green">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseThird_cp|floatformat:2 }})<br>建議進場
+            </small>
+          {% elif yfcase.auctions.first.get_suggestedincreaseThird_cp < 1.44 %}
+            <small class="small_red">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseThird_cp|floatformat:2 }})<br>不可進場
+            </small>
+          {% endif %} 
+        </td>
+        <!-- 第三拍：底價 -->
+        <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              {{yfcase.auctions.first.auctionFloorPriceThird|floatformat:0|intcomma }}
             {% endif %}
-          </td>
-          <!-- 第三拍：底價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceThird != 0 %}
-              {{auction.auctionFloorPriceThird|floatformat:0|intcomma }}
-            {% endif %}
-            {% if auction.auctionFloorPriceFirst != 0 %}
+            {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
               <br>
-              <div class="text-red">
-                {{auction.auctionFloorPriceFirst|multiplication:64|divide:100|floatformat:0|intcomma }}
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceFirst|multiplication:64|divide:100|floatformat:0|intcomma }}
               </div>
-            {% elif auction.auctionFloorPriceSecond != 0 %}
+            {% elif yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
               <br>
-              <div class="text-red">
-                {{auction.auctionFloorPriceSecond|multiplication:8|divide:10|floatformat:0|intcomma }}
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceSecond|multiplication:8|divide:10|floatformat:0|intcomma }}
               </div>
             {% endif %}
           </td>
           <!-- 第三拍：坪價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceThird != 0 and object.builds.all|length > 0 %}
-              {{auction.get_ping_third_price|floatformat:0|intcomma}}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 and yfcase.builds.all|length > 0 %}
+              {{yfcase.auctions.first.get_ping_third_price|floatformat:0|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第三拍：時價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 and yfcase.pbk != 0 %}
+              {{yfcase.pbk|floatformat:0|intcomma}}
             {% endif %}
           </td>
           <!-- 第三拍：CP值 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceThird != 0 and auction.get_third_cp != 0 %}
-              {{auction.get_third_cp|floatformat:2|intcomma}}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 and yfcase.auctions.first.get_third_cp != 0 %}
+              {{yfcase.auctions.first.get_third_cp|floatformat:2|intcomma}}
             {% endif %}
           </td>
           <!-- 第三拍：點閱 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceThird != 0 %}
-              {{auction.auctionClickThird }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              {{yfcase.auctions.first.auctionClickThird }}
             {% endif %}
           </td>
           <!-- 第三拍：監控 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceThird != 0 %}
-              {{auction.auctionMonitorThird }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              {{yfcase.auctions.first.auctionMonitorThird }}
             {% endif %}
           </td>
           <!-- 第三拍：建議加價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceThird != 0 %}
-              <div style="font-size:7.5pt;">
-                (100% + {{auction.get_suggestedincreaseThird|multiplication:100|floatformat:0 }}%)
-              </div>
-              {{auction.get_suggestedincreaseThird_floor_price|floatformat:0|intcomma }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              (100% + {{yfcase.auctions.first.get_suggestedincreaseThird|multiplication:100|floatformat:0 }}%)<br>
+              {{yfcase.auctions.first.get_suggestedincreaseThird_floor_price|floatformat:0|intcomma }}
             {% endif %}
           </td>
           <!-- 第三拍：保証金 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceThird != 0 %}
-              {{auction.auctionMarginThird|floatformat:0|intcomma }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              {{yfcase.auctions.first.auctionMarginThird|floatformat:0|intcomma }}
             {% endif %}
           </td>
-        </tr>
-
-        <!-- 第四拍 -->
-        <tr>
-          <!-- 拍別：第四拍 -->
-          <td class="auction__td">{{auction.auctionDateFourth|default_if_none:""}}</td>
-          <th class="auction__td">第四拍<br>
-            <div class="text-mark font-9">(CP>1.80)</div>
-          </th>
-          <td class="auction__td" colspan="3">
-            {% if auction.auctionFloorPriceFourth == 0 %}
-              <div>底價未輸入</div>
-            {% elif auction.get_suggestedincreaseFourth_cp >= 1.80 %}
-              <div class="text-green">加價CP(
-              {{ auction.get_suggestedincreaseFourth_cp|floatformat:2 }})<br>建議進場</div>
-            {% elif auction.get_suggestedincreaseFourth_cp < 1.80 %}
-              <div class="text-red">加價CP(
-              {{ auction.get_suggestedincreaseFourth_cp|floatformat:2 }})<br>不可進場</div>
+      </tr>
+      <!-- 第四拍 -->
+      <tr>
+        <!-- 拍別：第四拍 -->
+        <td>
+          {{yfcase.auctions.first.auctionDateFourth|default_if_none:""}} 
+        </td>
+        <td style="color:black;">
+          第四拍
+          <br>
+          <span class="small_red">(CP>1.80)</span>
+        </td>
+        <td colspan="3">
+          {% if yfcase.auctions.first.auctionFloorPriceFourth == 0 %}
+            <div class="black_font">底價未輸入</div>
+          {% elif yfcase.auctions.first.get_suggestedincreaseFourth_cp >= 1.80 %}
+            <small class="small_green">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseFourth_cp|floatformat:2 }})<br>建議進場
+            </small>
+          {% elif yfcase.auctions.first.get_suggestedincreaseFourth_cp < 1.80 %}
+            <small class="small_red">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseFourth_cp|floatformat:2 }})<br>不可進場
+            </small>
+          {% endif %}
+        </td>
+        <!-- 第四拍：底價 -->
+        <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 %}
+              {{yfcase.auctions.first.auctionFloorPriceFourth|floatformat:0|intcomma }}
             {% endif %}
-          </td>
-          <!-- 第四拍：底價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFourth != 0 %}
-              {{auction.auctionFloorPriceFourth|floatformat:0|intcomma }}
-            {% endif %}
 
-            {% if auction.auctionFloorPriceFirst != 0 %}
+            {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
               <br>
-              <div class="text-red">
-                {{auction.auctionFloorPriceFirst|multiplication:512|divide:1000|floatformat:0|intcomma }}
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceFirst|multiplication:512|divide:1000|floatformat:0|intcomma }}
               </div>
-            {% elif auction.auctionFloorPriceSecond != 0 %}
+            {% elif yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
               <br>
-              <div class="text-red">
-                {{auction.auctionFloorPriceSecond|multiplication:64|divide:100|floatformat:0|intcomma }}
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceSecond|multiplication:64|divide:100|floatformat:0|intcomma }}
               </div>
-            {% elif auction.auctionFloorPriceThird != 0 %}
+            {% elif yfcase.auctions.first.auctionFloorPriceThird != 0 %}
               <br>
-              <div class="text-red">
-                {{auction.auctionFloorPriceThird|multiplication:8|divide:10|floatformat:0|intcomma }}
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceThird|multiplication:8|divide:10|floatformat:0|intcomma }}
               </div>
             {% endif %}
           </td>
           <!-- 第四拍：坪價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFourth != 0 and object.builds.all|length > 0 %}
-              {{auction.get_ping_fourth_price|floatformat:0|intcomma}}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 and yfcase.builds.all|length > 0 %}
+              {{yfcase.auctions.first.get_ping_fourth_price|floatformat:0|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第四拍：時價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 and yfcase.pbk != 0 %}
+              {{yfcase.pbk|floatformat:0|intcomma}}
             {% endif %}
           </td>
           <!-- 第四拍：CP值 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFourth != 0 and auction.get_fourth_cp != 0 %}
-              {{auction.get_fourth_cp|floatformat:2|intcomma}}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 and yfcase.auctions.first.get_fourth_cp != 0 %}
+              {{yfcase.auctions.first.get_fourth_cp|floatformat:2|intcomma}}
             {% endif %}
           </td>
           <!-- 第四拍：點閱 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFourth != 0 %}
-              {{auction.auctionClickFourth }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 %}
+              {{yfcase.auctions.first.auctionClickFourth }}
             {% endif %}
           </td>
           <!-- 第四拍：監控 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFourth != 0 %}
-              {{auction.auctionMonitorFourth }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 %}
+              {{yfcase.auctions.first.auctionMonitorFourth }}
             {% endif %}
           </td>
           <!-- 第四拍：建議加價 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFourth != 0 %}
-              <div style="font-size:7.5pt;">
-                (100% + {{auction.get_suggestedincreaseFouth|multiplication:100|floatformat:0 }}%)
-              </div>
-              {{auction.get_suggestedincreaseFourth_floor_price|floatformat:0|intcomma }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 %}
+              (100% + {{yfcase.auctions.first.get_suggestedincreaseFouth|multiplication:100|floatformat:0 }}%)<br>
+              {{yfcase.auctions.first.get_suggestedincreaseFourth_floor_price|floatformat:0|intcomma }}
             {% endif %}
           </td>
           <!-- 第四拍：保証金 -->
-          <td class="auction__td">
-            {% if auction.auctionFloorPriceFourth != 0 %}
-              {{auction.auctionMarginFourth|floatformat:0|intcomma }}
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 %}
+              {{yfcase.auctions.first.auctionMarginFourth|floatformat:0|intcomma }}
             {% endif %}
           </td>
-        </tr>
-      {% endfor %}
+      </tr>
     </table>
   </div>
-  <br>
+
   <!-- 勘查結果 -->
-  <div class="row">
-    <table class="survey__table">
+  <div>
+    <table class="yfratingscalePDFAttachment">
       <tr>
-        <th class="survey__th" style="width:120 px;">初勘日</th>
-        <th class="survey__th" style="width:120 px;">會勘日</th>
-        <th class="survey__th" style="width:100 px;">法拍公告<small>(證物三)</small></th>
-        <th class="survey__th" style="width:100 px;">998連結</th>
-        <th class="survey__th" style="width:100 px;">物件照片<small>(證物四)</small></th>
-        <th class="survey__th" style="width:100 px;">法拍記錄<small>(證物七)</small></th>
-        <th class="survey__th" style="width:100 px;">標的物<small>(現場勘查)</small></th>
+        <th style="width:16%">初勘日</th>
+        <td class="yfratingscalePDFAttachmentContent" style="width:18%">
+          {{yfcase.surveys.first.surveyFirstDay}}
+        </td>
+        <th style="width:16%">會勘日</th>
+        <td class="yfratingscalePDFAttachmentContent" style="width:18%">
+          {{yfcase.surveys.first.surveySecondDay}}
+        </td>
+        <th style="width:16%">998連結</th>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.survey988Link %}
+            <a href="{{yfcase.surveys.first.survey988Link}}" target="_blank">998連結</a>
+          {% endif %}
+        </td>
       </tr>
       <tr>
-        <td class="survey__td">
-          {% for survey in yfcase.surveys.all %}
-            {{survey.surveyFirstDay}}
-          {% endfor %}
+        <th>法拍公告<small>(證物三)</small></th>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.surveyForeclosureAnnouncementLink %}
+            <a href="{{yfcase.surveys.first.surveyForeclosureAnnouncementLink}}" target="_blank">法拍公告</a>
+          {% endif %}
         </td>
-        <td class="survey__td">
-          {% for survey in yfcase.surveys.all %}
-            {{survey.surveySecondDay}}
-          {% endfor %}
+        <th>物件照片<small>(證物四)</small></th>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.surveyObjectPhotoLink %}
+            <a href="{{yfcase.surveys.first.surveyObjectPhotoLink}}" target="_blank">物件照片</a>
+          {% endif %}
         </td>
-        <td class="survey__td">
-          <!-- 法拍公告 -->
-          {% for survey in yfcase.surveys.all %}
-            {% if survey.surveyForeclosureAnnouncementLink %} V {% else %} X {% endif %}
-            <img src={{survey.surveyForeclosureAnnouncementLink}} alt="">
-          {% endfor %}
-        </td>
-        <td class="survey__td">
-          <!-- 998連結 -->
-          {% for survey in yfcase.surveys.all %}
-            {% if survey.survey988Link %} V {% else %} X {% endif %}
-          {% endfor %}
-        </td>
-        <td class="survey__td">
-          <!-- 物件照片(證物四) -->
-          {% for survey in yfcase.surveys.all %}
-            {% if survey.surveyObjectPhotoLink %} V {% else %} X {% endif %}
-          {% endfor %}
-        </td>
-        <td class="survey__td">
-          <!-- 法拍記錄 -->
-          {% for survey in yfcase.surveys.all %}
-            {% if survey.surveyForeclosureRecordLink %} V {% else %} X {% endif %}
-          {% endfor %}
-        </td>
-        <td class="survey__td">
-          <!-- 標的物(現場勘查) -->
-          {% for survey in yfcase.surveys.all %}
-            {% if survey.surveyObjectViewLink %} V {% else %} X {% endif %}
-          {% endfor %}
+        <th>法拍記錄<small>(證物七)</small></th>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.surveyForeclosureRecordLink %}
+            <a href="{{yfcase.surveys.first.surveyForeclosureRecordLink}}" target="_blank">法拍記錄</a>
+          {% endif %}
         </td>
       </tr>
-    </table>
-  </div>
-  <br>
-  <!-- 最終判定 -->
-  <div class="row">
-    <table class="regionalhead__table">
-      <tr>
-        <th class="regionalhead__th" style="width:120px;">判定</th>
-        <th class="regionalhead__th">備註</th>
-        <th class="regionalhead__th" style="width:84px;">區域負責人</th>
-        <th class="regionalhead__th" style="width:84px;">副署人員1</th>
-        <th class="regionalhead__th" style="width:84px;">副署人員2</th>
-      </tr>
-      {% for finaldecision in yfcase.finaldecisions.all %}
         <tr>
-          <td class="regionalhead__td">{{ finaldecision.finalDecision|default_if_none:"" }}</td>
-          <td class="regionalhead__td">{{ finaldecision.finalDecisionRemark|default_if_none:"" }}</td>
-          <td class="regionalhead__td">
-            {% if finaldecision.regionalHead != None %}
-              <div class="regionalhead__seal">
-                <div class="regionalhead__td__person">{{ finaldecision.regionalHead }}</div>
-                <div class="regionalhead__td__date">{{ finaldecision.regionalHeadDate }}</div>
-                <div class="regionalhead__td__workarea">{{ finaldecision.regionalHeadWorkArea }}</div>
-              </div>
-            {% endif %}
-          </td>
-          <td class="regionalhead__td">
-            
-            {% if finaldecision.subSigntrueA != None %}
-              <div class="regionalhead__seal">
-                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
-                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
-                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour }}</div>
-              </div>
-            {% endif %}
-          </td>
-          <td class="regionalhead__td">
-            {% if finaldecision.subSigntrueB != None %}
-              <div class="regionalhead__seal">
-                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
-                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
-                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB }}</div>
-              </div>
-            {% endif %}
+          <th colspan="6">實價登錄市價</th>
+        </tr>
+        <tr>
+          <td colspan="6" class="yfratingscalePDFAttachmentContent">
+            {% for objectbuild in yfcase.objectbuilds.all %}    
+              <table class="yfratingscalePDFObjectBuild">
+                <tr>
+                  <th style="width:5%;">狀態</th>
+                  <th>地址(屋齡)(樓高)(成交日期)</th>
+                  <th style="width:11%;">總價(元)</th>
+                  <th style="width:9%;">建坪(坪)</th>
+                  <th style="width:11%;">單價(元)</th>
+                  <th style="width:9%;">勘查員A</th>
+                  <th style="width:18%;">加成原因A</th>
+                  <th style="width:11%;">計算</th>
+                </tr>
+                <tr>
+                  <!--輸入狀態-->
+                  <td>
+                    {{objectbuild.objectBuildStatus}}
+                  </td>
+                  <!--輸入地址(屋齡)(樓高)-->
+                  <td rowspan="3">
+                    {{objectbuild.objectBuildAddress|default_if_none:""}}<br>
+                    {{objectbuild.objectBuildHouseAge|default_if_none:""}}<br>
+                    {{objectbuild.objectBuildFloorHeight|default_if_none:""}}<br>
+                    {{ objectbuild.objectBuildTransactionDate|default_if_none:"" }}
+                  </td>
+                  <!--輸入總價(元)-->
+                  <td rowspan="3">
+                    {{ objectbuild.objectBuildTotalPrice|floatformat:0|intcomma }}
+                  </td>
+                  <!--輸入建坪(坪)-->
+                  <td rowspan="3">
+                    {{ objectbuild.objectBuildBuildArea }} 
+                  </td>
+                  <!--輸入單價(元)-->
+                  <td rowspan="3">
+                    {{ objectbuild.get_objectbuild_ping_price|floatformat:0|intcomma }}
+                  </td>
+                  <!--輸入勘查員A-->
+                  <td>
+                    {{ objectbuild.objectBuildScorerA|default_if_none:"" }}  
+                  </td>
+                  <!--輸入加成原因A * 加成A-->
+                  <td>
+                    {% if objectbuild.plusItemA1 %}({{ objectbuild.plusValueA1|floatformat:2 }}){{ objectbuild.plusItemA1 }}<br>{% endif %} 
+
+                  </td>
+                  <!--輸入計算-->
+                  <td rowspan="3">
+                    {{objectbuild.get_a_plus_value_total|floatformat:0|intcomma}} 
+                  </td>
+                </tr>
+                <tr>
+                  <th>附件</th>
+                  <th>勘查員B</th>
+                  <th>加成原因B</th>
+                </tr>
+                <tr>
+                  <!--輸入附件-->
+                  <td>
+                      
+                  </td>
+                  <!--輸入勘查員B-->
+                  <td>
+                    {{ objectbuild.objectBuildScorerB|default_if_none:"" }}  
+                  </td>
+                  <!--輸入加成原因B-->
+                  <td>
+                    {% if objectbuild.plusItemB1 %}({{ objectbuild.plusValueB1|floatformat:2 }}){{ objectbuild.plusItemB1 }}<br>{% endif %} 
+                  </td>
+                </tr>
+              </table>
+            {% endfor %}
+            <p style="margin:2px;padding:2px;">
           </td>
         </tr>
-      {% endfor %}
+
     </table>
   </div>
-  <br>
-  <!-- 執行結果 -->
+  
+  <!-- 建物查檢表 -->
   <div class="row">
-    <table class="result__table">
+    <table class="yfratingscalePDFBuildCheckList">
       <tr>
-        <th class="result__th" rowspan=2>一賣止日</th>
-        <th class="result__th" rowspan=2>1.撤回</th>
-        <th class="result__th" colspan=2>
-          {% for result in yfcase.results.all %}
-            {% if result.actionResult == "第三人搶標" %}
-              <span class="result__checkbox">V</span> 2.第三人搶標
-            {% else %}
-              2.第三人搶標
-            {% endif%}
-          {% endfor %}
-        </th>
-        <th class="result__th" colspan=3>3.得標</th>
-        <th class="result__case__th" rowspan=2>標的編號</th>
+        <th style="width:6%;">結果</th>
+        <th style="width:21%;">查檢內容</th>
+        <th style="width:6%;">結果</th>
+        <th style="width:21%;">查檢內容</th>
+        <th style="width:6%;">結果</th>
+        <th style="width:16%;">查檢內容</th>
+        <th style="width:6%;">結果</th>
+        <th>查檢內容</th>
+      </tr>
+      
+      <!-- 第一行 -->
+      <tr>
+        <td>
+          {% if yfcase.clicklists.first.clicklistOccupy %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">01.占用鄰地？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistRent %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">05.出租/出借/佔用？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistVegetableMarket %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">09.鄰近菜市場？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistPostOffice %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">13.鄰近郵局/機關？</th>
+      </tr>
+      
+      <!-- 第二行 -->
+      <tr>
+        <td>
+          {% if yfcase.clicklists.first.clicklistEegister %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">02.無未保存登記建物？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistLeak %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">06.無嚴重漏水現象？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistSupermarket %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">10.鄰近大賣場？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistMainRoad %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">14.鄰近幹道？</th>
+      </tr>
+      <!-- 第三行 -->
+      <tr>
+        <td>
+          {% if yfcase.clicklists.first.clicklistParkingSpace %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">03.停車位(機車/汽車)？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistEasyParking %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">07.停車方便？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistSchool %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">11.鄰近學校？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistWaterAndPowerFailure %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">15.斷水斷電？</th>
+      </tr>
+      <!-- 第四行 -->
+      <tr>
+        <td>
+          {% if yfcase.clicklists.first.clicklistManagementFee %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">04.積欠管理費？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistRailway %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">08.鄰近捷運站/台鐵站？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistPark %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">12.鄰近公園？</th>
+        <td>
+          {% if yfcase.clicklists.first.clicklistGoodVision %}
+            V
+          {% endif %}
+        </td>
+        <th class="yfratingscalePDFBuildCheckListItem">16.採光視野良好？</th>
+      </tr>
+
+      <!-- 備註 -->
+      <tr>
+        <th>備註</th>
+        <td colspan="7"></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 最終判定 -->
+  <div class="finaldecision" >
+    <table class="yfratingscalePDFFinaldecision">
+      {% for finaldecision in yfcase.finaldecisions.all %} 
+      <tr>
+        <th style="width:28%;">結論</th>
+        <th style="width:18%;">區域負責人</th>
+        <th style="width:18%;">副署人員1</th>
+        <th style="width:18%;">副署人員2</th>
+        <th>副署人員3</th>
       </tr>
       <tr>
-        <th class="result__th">搶標拍別</th>
-        <th class="result__th">搶標金額</th>
-        <th class="result__th">等待優購</th>
-        <th class="result__th">遭優購</th>
-        <th class="result__th">無人優購</th>
-      </tr>
-      {% for result in yfcase.results.all %}
-      <tr>
-        <td class="result__td">{{ result.stopBuyDate|default_if_none:"" }}</td>
-        <td class="result__td">{% if result.actionResult == "撤回" %} V {% endif %}</td>
-        <td class="result__td">{{ result.bidAuctionTime|default_if_none:"" }}</td>
-        <td class="result__td">{% if result.bidMoney > 0 %}{{ result.bidMoney|floatformat:0|intcomma }}{% endif %}</td>
-        <td class="result__td">{% if result.actionResult == "等待優購" %} V {% endif %}</td>
-        <td class="result__td">{% if result.actionResult == "遭優購" %} V {% endif %}</td>
-        <td class="result__td">{% if result.actionResult == "無人優購" %} V {% endif %}</td>
-        <td class="result__td">{{ result.objectNumber|default_if_none:"" }}</td>
+        <td>
+          {{ finaldecision.finalDecision|default_if_none:"" }}
+        </td>
+          
+        <td class="yfratingscalePDFPerson">
+          {{ finaldecision.regionalHead|default_if_none:"" }}<br>
+          {{ finaldecision.regionalHeadDate|default_if_none:"" }}<br>
+          {{ finaldecision.regionalHeadWorkArea|default_if_none:"" }}<br>
+        </td>
+          
+          
+        <td class="yfratingscalePDFPerson">
+          {{ finaldecision.subSigntrueA|default_if_none:"" }}<br>
+          {{ finaldecision.subSigntrueDateA|default_if_none:"" }}<br>
+          {{ finaldecision.subSigntrueWorkAreaA|default_if_none:"" }}
+        </td>
+        
+        
+        <td class="yfratingscalePDFPerson">
+          {{ finaldecision.subSigntrueB|default_if_none:"" }}<br>
+          {{ finaldecision.subSigntrueDateB|default_if_none:"" }}<br>
+          {{ finaldecision.subSigntrueWorkAreaB|default_if_none:"" }}
+        </td>
+          
+        <td class="yfratingscalePDFPerson">
+        
+        </td>
+            
       </tr>
       {% endfor %}
     </table>
   </div>
- <img src={{ yfcase.yfcaseSealUrl }} width=75 >
-{% endblock content %}
-
-
+  
+</body>
 </html>
