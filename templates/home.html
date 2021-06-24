@@ -37,6 +37,7 @@
     .home__input { width:400px; }
     .home__bg__red { background-color: red; color:white; font-weight: 700; }
     .home__bg__green { background-color: green; color:white; font-weight: 700; }
+    /*.home__casenumber__td { width:14.2%; }*/
 
     td:nth-child(1) { text-align: center; }
     td:nth-child(2) { text-align: left; text-decoration: none;}
@@ -49,8 +50,15 @@
     td:nth-child(8) { text-align: center; }
     td:nth-child(9) { text-align: center; }
 
-    .icon__pdf { font-size:16pt; font-weight:700; width:30px; line-height: 30px;  border:3px solid DarkBlue;  border-radius:50%;  text-align:center;}
-    .icon__yfratingscale { background-color: CornflowerBlue; color: white; }
+    .icon__pdf { font-size:12pt; font-weight:700;  line-height: 30px;  border:3px double DarkBlue;  border-radius:50%;  text-align:center;padding: 0px 2px; margin: 0px; color: white;text-decoration: none;}
+    .icon__view { font-size:12pt; font-weight:700;  line-height: 30px;  border:3px double DarkBlue;  border-radius:5px;  text-align:center;padding: 0px 2px; margin: 0px; color: white;text-decoration: none;}
+    .icon__yfratingscale { background-color: blue; }
+    .icon__deedtax { background-color: red; }
+    .icon__realestateregistration { background-color: green; }
+    .icon__complaint { background-color: black; }
+    .icon__letter { background-color: purple; }
+    .icon__coowner { background-color: DarkOrange; }
+    .icon__view__grey {background-color: lightgrey; color: black;}
     
   </style>
 {% endblock style %}
@@ -91,9 +99,47 @@
               <div class="text-address">
                  &emsp;&#10149;{{yfcase.fullAddress}}
               </div>
-              
-              <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__yfratingscale">評</a>
             </a>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-2">
+                  <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__yfratingscale">評</a>
+                </div>
+                <div class="col-md-2">
+                  <a href="{% url 'yfcase:deedtax_pdf_view' yfcase.pk %}?inline=" class="icon__pdf icon__deedtax">契</a>
+                </div>
+                <div class="col-md-2">
+                  <a href="{% url 'yfcase:realestateregistrationPDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__realestateregistration">動</a>
+                </div>
+                <div class="col-md-2">
+                  <a href="{% url 'yfcase:complaintPDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__complaint">訴</a>
+                </div>
+                <div class="col-md-2">
+                  <a href="{% url 'yfcase:letterPDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__letter">函</a>
+                </div>
+                <div class="col-md-2">
+                  <a href="#" class="icon__pdf icon__coowner">共</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                  <a href="{% url 'yfcase:afterwinner_edit' yfcase.pk %}" class="icon__view icon__view__grey">契</a>
+                </div>
+                <div class="col-md-2">
+                  <a href="{% url 'yfcase:realestateregistration_edit' yfcase.pk %}" class="icon__view icon__view__grey">動</a>
+                </div>
+                <div class="col-md-2">
+                  <a href="{% url 'yfcase:complaint_edit' yfcase.pk %}" class="icon__view icon__view__grey">訴</a>
+                </div>
+                <div class="col-md-2">
+                  <a href="{% url 'yfcase:letter_edit' yfcase.pk %}" class="icon__view icon__view__grey">函</a>
+                </div>
+                <div class="col-md-2">
+                  <a href="#" class="icon__view icon__view__grey">共</a>
+                </div>
+              </div>
+            </div>
           </td>
           <td>
             <!-- 兩週內 -->
@@ -118,16 +164,7 @@
           <td>
             {% for finaldecision in yfcase.finaldecisions.all %}
               {{ finaldecision.finalDecision }}<br>
-            {% endfor %} 
-            <a href="{% url 'yfcase:afterwinner_edit' yfcase.pk %}" class="pdf__view__scale">契(表)</a> / 
-            <a href="{% url 'yfcase:deedtax_pdf_view' yfcase.pk %}?inline=" class="pdf__view__scale">契(PDF)</a>
-            <a href="{% url 'yfcase:realestateregistration_edit' yfcase.pk %}" class="pdf__view__scale">動(表)</a> / 
-            <a href="{% url 'yfcase:realestateregistrationPDF_View' yfcase.pk %}?inline=" class="pdf__view__scale">動(PDF)</a>
-            <a href="{% url 'yfcase:complaint_edit' yfcase.pk %}" class="pdf__view__scale">訴(表)</a> / 
-            <a href="{% url 'yfcase:complaintPDF_View' yfcase.pk %}?inline=" class="pdf__view__scale">訴(PDF)</a>
-            <a href="{% url 'yfcase:letter_edit' yfcase.pk %}" class="pdf__view__scale">信(表)</a> / 
-            <a href="{% url 'yfcase:letterPDF_View' yfcase.pk %}?inline=" class="pdf__view__scale">信(PDF)</a>
-
+            {% endfor %}             
           </td>
           <td>
             {% for result in yfcase.results.all %}
