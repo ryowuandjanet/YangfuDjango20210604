@@ -49,13 +49,8 @@
     td:nth-child(8) { text-align: center; }
     td:nth-child(9) { text-align: center; }
 
-    .pdf__view__scale {
-      background-color: red;
-      color:white;
-      height:30px;
-      width: 30px;
-      padding:0px;
-    }
+    .icon__pdf { font-size:16pt; font-weight:700; width:30px; line-height: 30px;  border:3px solid DarkBlue;  border-radius:50%;  text-align:center;}
+    .icon__yfratingscale { background-color: CornflowerBlue; color: white; }
     
   </style>
 {% endblock style %}
@@ -97,7 +92,7 @@
                  &emsp;&#10149;{{yfcase.fullAddress}}
               </div>
               
-              <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="pdf__view__scale">評</a>
+              <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__yfratingscale">評</a>
             </a>
           </td>
           <td>
