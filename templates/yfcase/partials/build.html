@@ -85,8 +85,10 @@
         {% endif %}
       </td>
       <td class="build__td">
-        {{ build.buildTypeUse|default_if_none:"" }}
+        {{ build.buildTypeUse|isWordCount:9|default_if_none:"" }}
       </td>
     </tr>
   {% endfor %}
 </table>
+
+  

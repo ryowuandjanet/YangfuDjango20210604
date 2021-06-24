@@ -128,3 +128,13 @@ def num2cn2(number, traditional=False):
     prev_num = tmp 
   num_cn = ''.join(num_cn) 
   return num_cn
+
+# 計算轄區字數是否超過3個字元(例如：住宅大樓-11層含以上有電梯)
+# 用法 {{ build.buildTypeUse|isWordCount:5 }}
+@register.filter
+def isWordCount(value,wordCount):
+  if len(value) >= wordCount:
+    return mark_safe( "<div style='font-size: 9pt;margin:3px 0px;'>" + str(value) +  "</div>")
+  else:
+    return mark_safe( "<div style='font-size: 12pt;'>" + str(value) +  "</div>")
+

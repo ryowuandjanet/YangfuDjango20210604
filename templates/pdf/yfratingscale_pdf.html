@@ -35,7 +35,8 @@
     .yfratingscalePDFAttachment, 
     .yfratingscalePDFBuildCheckList, 
     .yfratingscalePDFFinaldecision, 
-    .yfratingscalePDFObjectBuild {
+    .yfratingscalePDFObjectBuild,
+    .yfratingscalePDFResult {
       border-collapse:collapse;
       margin-bottom:5px;
       width:100%;
@@ -72,16 +73,15 @@
       background-color: Khaki;
     }
     
-    /* 查檢表-th選擇器(標頭)的特有屬性:值 */
-    .yfratingscalePDFBuildCheckList th {
-      background-color: LightSteelBlue;
+    /* 執行結果-th選擇器(標頭)的特有屬性:值 */
+    .yfratingscalePDFResult th {
+      background-color: LightSalmon;
     }
     
     
-    /* 查檢表-th選擇器(內文)的特有屬性:值 */
-    .yfratingscalePDFBuildCheckList .yfratingscalePDFBuildCheckListItem {
-      background-color: LightCyan;
-      text-align:left;
+    /* 標的編號-th選擇器(內文)的特有屬性:值 */
+    th.yfratingscalePDFObjectNumber {
+      background-color: Gainsboro;
     }
     
     /* 參考物件-th選擇器的特有屬性:值 */
@@ -100,7 +100,9 @@
     .yfratingscalePDFBuildCheckList td,
     .yfratingscalePDFAction td,
     .yfratingscalePDFAttachment td,
-    .yfratingscalePDFFinaldecision td {
+    .yfratingscalePDFFinaldecision td,
+    .yfratingscalePDFResult td,
+     table.yfratingscalePDFObjectBuild td {
       text-align:center;
       color:blue;
     }
@@ -122,7 +124,20 @@
       color: green;
       font-size: 9pt;
     }
-   
+
+    .regionalhead__seal { width:100px;border-radius:50%;border:3px solid red; }
+    .regionalhead__td__person { font-size: 16pt; height: 37px; line-height: 50px; color: red; }
+    .regionalhead__td__date { 
+      color: red;
+      font-size: 10pt;
+      height: 20px;
+      line-height: 16px;
+      font-weight: 700;
+      margin: 0px;
+      border-top: 3px solid red;
+      border-bottom: 3px solid red;
+    }
+    .regionalhead__td__workarea { font-size: 16pt; height: 37px; line-height: 25px; color: red; }
   </style>
 </head>
 <body>
@@ -270,11 +285,22 @@
             {% endfor %}
           </td>
           <td>
-                         
+            {% for build in yfcase.builds.all %}
+              {% if build.buildTypeUse == "公設" %}
+                {{ build.get_build_first_not_add_and_not_public_holding_point_area|floatformat:"2" }} / 
+                {{ build.get_build_first_not_add_and_not_public_holding_point_area|m2toping|floatformat:"2" }}<br>
+              {% elif build.buildTypeUse == "增建-持分後坪數打對折" %}
+                {{ build.get_after_add_holding_point_area|floatformat:"2" }} / 
+                {{ build.get_after_add_holding_point_area|m2toping|floatformat:"2" }}<br>
+              {% else %}
+                {{ build.get_build_holding_point_area|floatformat:"2" }} / 
+                {{ build.get_build_holding_point_area|m2toping|floatformat:"2" }}<br>
+              {% endif %}
+            {% endfor %}
           </td>
           <td style="text-align:left;">
             {% for build in yfcase.builds.all %}
-              {{ build.buildTypeUse|default_if_none:"" }}<br>
+              {{ build.buildTypeUse|isWordCount:9|default_if_none:"" }}
             {% endfor %}
           </td>
         </tr>
@@ -636,254 +662,124 @@
   <div>
     <table class="yfratingscalePDFAttachment">
       <tr>
-        <th style="width:16%">初勘日</th>
-        <td class="yfratingscalePDFAttachmentContent" style="width:18%">
+        <th style="width:11%">初勘日</th>
+        <th style="width:11%">會勘日</th>
+        <th style="width:15%">法拍公告<small>(證物三)</small></th>
+        <th style="width:15%">998連結</th>
+        <th style="width:15%">物件照片<small>(證物四)</small></th>
+        <th style="width:15%">法拍記錄<small>(證物七)</small></th>
+        <th style="width:18%">標的物<small>(現場勘)</th>
+      </tr>
+      <tr>
+        <td class="yfratingscalePDFAttachmentContent">
           {{yfcase.surveys.first.surveyFirstDay}}
         </td>
-        <th style="width:16%">會勘日</th>
-        <td class="yfratingscalePDFAttachmentContent" style="width:18%">
+        <td class="yfratingscalePDFAttachmentContent">
           {{yfcase.surveys.first.surveySecondDay}}
         </td>
-        <th style="width:16%">998連結</th>
-        <td class="yfratingscalePDFAttachmentContent">
-          {% if yfcase.surveys.first.survey988Link %}
-            <a href="{{yfcase.surveys.first.survey988Link}}" target="_blank">998連結</a>
-          {% endif %}
-        </td>
-      </tr>
-      <tr>
-        <th>法拍公告<small>(證物三)</small></th>
         <td class="yfratingscalePDFAttachmentContent">
           {% if yfcase.surveys.first.surveyForeclosureAnnouncementLink %}
-            <a href="{{yfcase.surveys.first.surveyForeclosureAnnouncementLink}}" target="_blank">法拍公告</a>
+            <a href="{{yfcase.surveys.first.surveyForeclosureAnnouncementLink}}" target="_blank">V</a>
           {% endif %}
         </td>
-        <th>物件照片<small>(證物四)</small></th>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.survey988Link %}
+            <a href="{{yfcase.surveys.first.survey988Link}}" target="_blank">V</a>
+          {% endif %}
+        </td>
         <td class="yfratingscalePDFAttachmentContent">
           {% if yfcase.surveys.first.surveyObjectPhotoLink %}
-            <a href="{{yfcase.surveys.first.surveyObjectPhotoLink}}" target="_blank">物件照片</a>
+            <a href="{{yfcase.surveys.first.surveyObjectPhotoLink}}" target="_blank">V</a>
           {% endif %}
         </td>
-        <th>法拍記錄<small>(證物七)</small></th>
         <td class="yfratingscalePDFAttachmentContent">
           {% if yfcase.surveys.first.surveyForeclosureRecordLink %}
-            <a href="{{yfcase.surveys.first.surveyForeclosureRecordLink}}" target="_blank">法拍記錄</a>
+            <a href="{{yfcase.surveys.first.surveyForeclosureRecordLink}}" target="_blank">V</a>
+          {% endif %}
+        </td>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.surveyObjectViewLink %}
+            <a href="{{yfcase.surveys.first.surveyObjectViewLink}}" target="_blank">V</a>
           {% endif %}
         </td>
       </tr>
-        <tr>
-          <th colspan="6">實價登錄市價</th>
-        </tr>
-        <tr>
-          <td colspan="6" class="yfratingscalePDFAttachmentContent">
-            {% for objectbuild in yfcase.objectbuilds.all %}    
-              <table class="yfratingscalePDFObjectBuild">
-                <tr>
-                  <th style="width:5%;">狀態</th>
-                  <th>地址(屋齡)(樓高)(成交日期)</th>
-                  <th style="width:11%;">總價(元)</th>
-                  <th style="width:9%;">建坪(坪)</th>
-                  <th style="width:11%;">單價(元)</th>
-                  <th style="width:9%;">勘查員A</th>
-                  <th style="width:18%;">加成原因A</th>
-                  <th style="width:11%;">計算</th>
-                </tr>
-                <tr>
-                  <!--輸入狀態-->
-                  <td>
-                    {{objectbuild.objectBuildStatus}}
-                  </td>
-                  <!--輸入地址(屋齡)(樓高)-->
-                  <td rowspan="3">
-                    {{objectbuild.objectBuildAddress|default_if_none:""}}<br>
-                    {{objectbuild.objectBuildHouseAge|default_if_none:""}}<br>
-                    {{objectbuild.objectBuildFloorHeight|default_if_none:""}}<br>
-                    {{ objectbuild.objectBuildTransactionDate|default_if_none:"" }}
-                  </td>
-                  <!--輸入總價(元)-->
-                  <td rowspan="3">
-                    {{ objectbuild.objectBuildTotalPrice|floatformat:0|intcomma }}
-                  </td>
-                  <!--輸入建坪(坪)-->
-                  <td rowspan="3">
-                    {{ objectbuild.objectBuildBuildArea }} 
-                  </td>
-                  <!--輸入單價(元)-->
-                  <td rowspan="3">
-                    {{ objectbuild.get_objectbuild_ping_price|floatformat:0|intcomma }}
-                  </td>
-                  <!--輸入勘查員A-->
-                  <td>
-                    {{ objectbuild.objectBuildScorerA|default_if_none:"" }}  
-                  </td>
-                  <!--輸入加成原因A * 加成A-->
-                  <td>
-                    {% if objectbuild.plusItemA1 %}({{ objectbuild.plusValueA1|floatformat:2 }}){{ objectbuild.plusItemA1 }}<br>{% endif %} 
-
-                  </td>
-                  <!--輸入計算-->
-                  <td rowspan="3">
-                    {{objectbuild.get_a_plus_value_total|floatformat:0|intcomma}} 
-                  </td>
-                </tr>
-                <tr>
-                  <th>附件</th>
-                  <th>勘查員B</th>
-                  <th>加成原因B</th>
-                </tr>
-                <tr>
-                  <!--輸入附件-->
-                  <td>
-                      
-                  </td>
-                  <!--輸入勘查員B-->
-                  <td>
-                    {{ objectbuild.objectBuildScorerB|default_if_none:"" }}  
-                  </td>
-                  <!--輸入加成原因B-->
-                  <td>
-                    {% if objectbuild.plusItemB1 %}({{ objectbuild.plusValueB1|floatformat:2 }}){{ objectbuild.plusItemB1 }}<br>{% endif %} 
-                  </td>
-                </tr>
-              </table>
-            {% endfor %}
-            <p style="margin:2px;padding:2px;">
-          </td>
-        </tr>
-
     </table>
   </div>
-  
-  <!-- 建物查檢表 -->
-  <div class="row">
-    <table class="yfratingscalePDFBuildCheckList">
-      <tr>
-        <th style="width:6%;">結果</th>
-        <th style="width:21%;">查檢內容</th>
-        <th style="width:6%;">結果</th>
-        <th style="width:21%;">查檢內容</th>
-        <th style="width:6%;">結果</th>
-        <th style="width:16%;">查檢內容</th>
-        <th style="width:6%;">結果</th>
-        <th>查檢內容</th>
-      </tr>
-      
-      <!-- 第一行 -->
-      <tr>
-        <td>
-          {% if yfcase.clicklists.first.clicklistOccupy %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">01.占用鄰地？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistRent %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">05.出租/出借/佔用？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistVegetableMarket %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">09.鄰近菜市場？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistPostOffice %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">13.鄰近郵局/機關？</th>
-      </tr>
-      
-      <!-- 第二行 -->
-      <tr>
-        <td>
-          {% if yfcase.clicklists.first.clicklistEegister %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">02.無未保存登記建物？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistLeak %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">06.無嚴重漏水現象？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistSupermarket %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">10.鄰近大賣場？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistMainRoad %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">14.鄰近幹道？</th>
-      </tr>
-      <!-- 第三行 -->
-      <tr>
-        <td>
-          {% if yfcase.clicklists.first.clicklistParkingSpace %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">03.停車位(機車/汽車)？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistEasyParking %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">07.停車方便？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistSchool %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">11.鄰近學校？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistWaterAndPowerFailure %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">15.斷水斷電？</th>
-      </tr>
-      <!-- 第四行 -->
-      <tr>
-        <td>
-          {% if yfcase.clicklists.first.clicklistManagementFee %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">04.積欠管理費？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistRailway %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">08.鄰近捷運站/台鐵站？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistPark %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">12.鄰近公園？</th>
-        <td>
-          {% if yfcase.clicklists.first.clicklistGoodVision %}
-            V
-          {% endif %}
-        </td>
-        <th class="yfratingscalePDFBuildCheckListItem">16.採光視野良好？</th>
-      </tr>
 
-      <!-- 備註 -->
-      <tr>
-        <th>備註</th>
-        <td colspan="7"></td>
-      </tr>
-    </table>
+  <!-- 參考物件 -->
+  <div class="objectbuild">
+    {% for objectbuild in yfcase.objectbuilds.all %}    
+      <table class="yfratingscalePDFObjectBuild">
+        <tr>
+          <th style="width:5%;">狀態</th>
+          <th>地址(屋齡)(樓高)(成交日期)</th>
+          <th style="width:11%;">總價(元)</th>
+          <th style="width:9%;">建坪(坪)</th>
+          <th style="width:11%;">單價(元)</th>
+          <th style="width:9%;">勘查員A</th>
+          <th style="width:18%;">加成原因A</th>
+          <th style="width:11%;">計算</th>
+        </tr>
+        <tr>
+          <!--輸入狀態-->
+          <td>
+            {{objectbuild.objectBuildStatus}}
+          </td>
+          <!--輸入地址(屋齡)(樓高)-->
+          <td rowspan="3">
+            {{objectbuild.objectBuildAddress|default_if_none:""}}<br>
+            {{objectbuild.objectBuildHouseAge|default_if_none:""}}<br>
+            {{objectbuild.objectBuildFloorHeight|default_if_none:""}}<br>
+            {{ objectbuild.objectBuildTransactionDate|default_if_none:"" }}
+          </td>
+          <!--輸入總價(元)-->
+          <td rowspan="3">
+            {{ objectbuild.objectBuildTotalPrice|floatformat:0|intcomma }}
+          </td>
+          <!--輸入建坪(坪)-->
+          <td rowspan="3">
+            {{ objectbuild.objectBuildBuildArea }} 
+          </td>
+          <!--輸入單價(元)-->
+          <td rowspan="3">
+            {{ objectbuild.get_objectbuild_ping_price|floatformat:0|intcomma }}
+          </td>
+          <!--輸入勘查員A-->
+          <td>
+            {{ objectbuild.objectBuildScorerA|default_if_none:"" }}  
+          </td>
+          <!--輸入加成原因A * 加成A-->
+          <td>
+            {% if objectbuild.plusItemA1 %}({{ objectbuild.plusValueA1|floatformat:2 }}){{ objectbuild.plusItemA1 }}<br>{% endif %} 
+
+          </td>
+          <!--輸入計算-->
+          <td rowspan="3">
+            {{objectbuild.get_a_plus_value_total|floatformat:0|intcomma}} 
+          </td>
+        </tr>
+        <tr>
+          <th>附件</th>
+          <th>勘查員B</th>
+          <th>加成原因B</th>
+        </tr>
+        <tr>
+          <!--輸入附件-->
+          <td>
+              
+          </td>
+          <!--輸入勘查員B-->
+          <td>
+            {{ objectbuild.objectBuildScorerB|default_if_none:"" }}  
+          </td>
+          <!--輸入加成原因B-->
+          <td>
+            {% if objectbuild.plusItemB1 %}({{ objectbuild.plusValueB1|floatformat:2 }}){{ objectbuild.plusItemB1 }}<br>{% endif %} 
+          </td>
+        </tr>
+      </table>
+    {% endfor %}
+    <p style="margin:2px;padding:2px;">
   </div>
 
   <!-- 最終判定 -->
@@ -891,11 +787,11 @@
     <table class="yfratingscalePDFFinaldecision">
       {% for finaldecision in yfcase.finaldecisions.all %} 
       <tr>
-        <th style="width:28%;">結論</th>
-        <th style="width:18%;">區域負責人</th>
-        <th style="width:18%;">副署人員1</th>
-        <th style="width:18%;">副署人員2</th>
-        <th>副署人員3</th>
+        <th style="width:20%;">結論</th>
+        <th>備註</th>
+        <th style="width:14%;">區域負責人</th>
+        <th style="width:14%;">副署人員1</th>
+        <th style="width:14%;">副署人員2</th>
       </tr>
       <tr>
         <td>
@@ -903,9 +799,17 @@
         </td>
           
         <td class="yfratingscalePDFPerson">
-          {{ finaldecision.regionalHead|default_if_none:"" }}<br>
-          {{ finaldecision.regionalHeadDate|default_if_none:"" }}<br>
-          {{ finaldecision.regionalHeadWorkArea|default_if_none:"" }}<br>
+          {{ finaldecision.finalDecisionRemark|default_if_none:"" }}
+        </td>
+
+        <td class="yfratingscalePDFPerson">
+          {% if finaldecision.regionalHead != None %}
+            <div class="regionalhead__seal">
+              <div class="regionalhead__td__person">{{ finaldecision.regionalHead }}</div>
+              <div class="regionalhead__td__date">{{ finaldecision.regionalHeadDate }}</div>
+              <div class="regionalhead__td__workarea">{{ finaldecision.regionalHeadWorkArea }}</div>
+            </div>
+          {% endif %}
         </td>
           
           
@@ -915,17 +819,52 @@
           {{ finaldecision.subSigntrueWorkAreaA|default_if_none:"" }}
         </td>
         
-        
         <td class="yfratingscalePDFPerson">
           {{ finaldecision.subSigntrueB|default_if_none:"" }}<br>
           {{ finaldecision.subSigntrueDateB|default_if_none:"" }}<br>
           {{ finaldecision.subSigntrueWorkAreaB|default_if_none:"" }}
         </td>
           
-        <td class="yfratingscalePDFPerson">
-        
-        </td>
-            
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <!-- 執行結果 -->
+  <div class="result">
+    <table class="yfratingscalePDFResult">
+      <tr>
+        <th rowspan=2>一賣止日</th>
+        <th rowspan=2>1.撤回</th>
+        <th colspan=2>
+          {% for result in yfcase.results.all %}
+            {% if result.actionResult == "第三人搶標" %}
+              <span class="result__checkbox">V</span> 2.第三人搶標
+            {% else %}
+              2.第三人搶標
+            {% endif%}
+          {% endfor %}
+        </th>
+        <th colspan=3>3.得標</th>
+        <th rowspan=2 class="yfratingscalePDFObjectNumber">標的編號</th>
+      </tr>
+      <tr>
+        <th>搶標拍別</th>
+        <th>搶標金額</th>
+        <th>等待優購</th>
+        <th>遭優購</th>
+        <th>無人優購</th>
+      </tr>
+      {% for result in yfcase.results.all %}
+      <tr>
+        <td>{{ result.stopBuyDate|default_if_none:"" }}</td>
+        <td>{% if result.actionResult == "撤回" %} V {% endif %}</td>
+        <td>{{ result.bidAuctionTime|default_if_none:"" }}</td>
+        <td>{% if result.bidMoney > 0 %}{{ result.bidMoney|floatformat:0|intcomma }}{% endif %}</td>
+        <td>{% if result.actionResult == "等待優購" %} V {% endif %}</td>
+        <td>{% if result.actionResult == "遭優購" %} V {% endif %}</td>
+        <td>{% if result.actionResult == "無人優購" %} V {% endif %}</td>
+        <td>{{ result.objectNumber|default_if_none:"" }}</td>
       </tr>
       {% endfor %}
     </table>
