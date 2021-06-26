@@ -94,7 +94,7 @@
     .yfratingscalePDFFinaldecision th {
       background-color: YellowGreen;
     }
-    
+
     .yfratingscalePDFLand td, 
     .yfratingscalePDFBuild td, 
     .yfratingscalePDFBuildCheckList td,
@@ -108,7 +108,14 @@
     }
 
     td.landEmpty {
-      border:hidden;
+      border-top:hidden;
+      border-bottom:hidden;
+      border-left:1px solid black;
+      border-right:1px solid black;
+    }
+
+    .yfratingscalePDFPerson {
+      padding: 0px 5px;
     }
     
     .black_font {
@@ -125,19 +132,37 @@
       font-size: 9pt;
     }
 
-    .regionalhead__seal { width:100px;border-radius:50%;border:3px solid red; }
-    .regionalhead__td__person { font-size: 16pt; height: 37px; line-height: 50px; color: red; }
+    .objectbuild__td__table
+    .objectbuild__td__table tr,
+    .objectbuild__td__table td,
+    .objectbuild__td__table th { border: none; background-color: white;}
+    .yfratingscalePDFObjectBuild > .objectbuild__td__address, 
+    .yfratingscalePDFObjectBuild > .objectbuild__td__scorer { font-size: 11pt; vertical-align:text-top; text-align: right;width: 250px;}
+    .yfratingscalePDFObjectBuild > .yfratingscalePDFObjectBuild > .objectbuild__td__note, 
+    .yfratingscalePDFObjectBuild > .objectbuild__td__plus { font-size: 11pt; vertical-align:text-top; text-align: left;width: 500px; }
+    
+    .regionalhead__seal { width:86px;border-radius:50%;border:3px solid red; }
+    .regionalhead__td__person { font-size: 14pt; height: 30px; line-height: 36px; color: red; }
     .regionalhead__td__date { 
       color: red;
-      font-size: 10pt;
+      font-size: 10pt;  
       height: 20px;
-      line-height: 16px;
+      line-height: 18px;
       font-weight: 700;
       margin: 0px;
       border-top: 3px solid red;
       border-bottom: 3px solid red;
     }
-    .regionalhead__td__workarea { font-size: 16pt; height: 37px; line-height: 25px; color: red; }
+    .regionalhead__td__workarea { font-size: 14pt; height: 30px; line-height: 22px; color: red; }
+
+    td.text-left { text-align: left; margin:0px 5px; }
+
+    .finaldecision__td { padding:10px 5px; border-radius: 10px; font-size: 18pt;margin: 10px;}
+    .finaldecision__first { color:brown;border:5px solid brown; }
+    .finaldecision__second { color:purple;border:5px solid purple; }
+    .finaldecision__third { color:blue;border:5px solid blue; }
+    .finaldecision__fourth { color:green;border:5px solid green; }
+    .finaldecision__giveup { color:red;border:5px solid red; }
   </style>
 </head>
 <body>
@@ -711,121 +736,164 @@
     {% for objectbuild in yfcase.objectbuilds.all %}    
       <table class="yfratingscalePDFObjectBuild">
         <tr>
-          <th style="width:5%;">狀態</th>
-          <th>地址(屋齡)(樓高)(成交日期)</th>
-          <th style="width:11%;">總價(元)</th>
-          <th style="width:9%;">建坪(坪)</th>
-          <th style="width:11%;">單價(元)</th>
-          <th style="width:9%;">勘查員A</th>
-          <th style="width:18%;">加成原因A</th>
-          <th style="width:11%;">計算</th>
+          <th style="width:90%;">參考物件</th>
+          <th style="width:10%;">計算</th>
         </tr>
         <tr>
           <!--輸入狀態-->
           <td>
-            {{objectbuild.objectBuildStatus}}
-          </td>
-          <!--輸入地址(屋齡)(樓高)-->
-          <td rowspan="3">
-            {{objectbuild.objectBuildAddress|default_if_none:""}}<br>
-            {{objectbuild.objectBuildHouseAge|default_if_none:""}}<br>
-            {{objectbuild.objectBuildFloorHeight|default_if_none:""}}<br>
-            {{ objectbuild.objectBuildTransactionDate|default_if_none:"" }}
-          </td>
-          <!--輸入總價(元)-->
-          <td rowspan="3">
-            {{ objectbuild.objectBuildTotalPrice|floatformat:0|intcomma }}
-          </td>
-          <!--輸入建坪(坪)-->
-          <td rowspan="3">
-            {{ objectbuild.objectBuildBuildArea }} 
-          </td>
-          <!--輸入單價(元)-->
-          <td rowspan="3">
-            {{ objectbuild.get_objectbuild_ping_price|floatformat:0|intcomma }}
-          </td>
-          <!--輸入勘查員A-->
-          <td>
-            {{ objectbuild.objectBuildScorerA|default_if_none:"" }}  
-          </td>
-          <!--輸入加成原因A * 加成A-->
-          <td>
-            {% if objectbuild.plusItemA1 %}({{ objectbuild.plusValueA1|floatformat:2 }}){{ objectbuild.plusItemA1 }}<br>{% endif %} 
+            <table class="objectbuild__td__table">
+
+              <!-- 參考物件--物件資訊 -->
+              <tr>
+                <td class="objectbuild__td__address" style="font-size: 11pt; vertical-align:text-top; text-align: right;width: 230px;" style="font-size: 11pt; vertical-align:text-top; text-align: right;">
+                  {% if objectbuild.objectBuildStatus %}
+                    ({{objectbuild.objectBuildStatus}})
+                  {% endif %}
+                  {% if objectbuild.objectBuildAddress %}
+                    {{objectbuild.objectBuildAddress}}
+                  {% endif %}
+                </td>
+                <td class="objectbuild__td__note" style="font-size: 11pt; vertical-align:text-top; text-align: left;">
+                  {% if objectbuild.objectBuildHouseAge or objectbuild.objectBuildFloorHeight or objectbuild.objectBuildTransactionDate %}
+                    {% if objectbuild.objectBuildHouseAge %}| 屋齡={{ objectbuild.objectBuildHouseAge }}年{% endif %}
+                    {% if objectbuild.objectBuildFloorHeight %}| 樓高={{ objectbuild.objectBuildFloorHeight }}{% endif %}
+                    {% if objectbuild.objectBuildTransactionDate %}| 成交日期={{ objectbuild.objectBuildTransactionDate }}{% endif %}
+                    <br>
+                  {% endif %}
+                  {% if objectbuild.objectBuildTotalPrice %}| 總價={{ objectbuild.objectBuildTotalPrice|floatformat:0|intcomma }}元{% endif %}
+                  {% if objectbuild.objectBuildBuildArea %}| 建坪={{ objectbuild.objectBuildBuildArea }}元{% endif %}
+                  {% if objectbuild.get_objectbuild_ping_price %}| 單價={{ objectbuild.get_objectbuild_ping_price|floatformat:0|intcomma }}元{% endif %}
+                </td>
+              </tr>
+
+              <!-- 參考物件--勘查員A -->
+              {% if objectbuild.objectBuildScorerA %}
+                <tr>
+                  <td class="objectbuild__td__scorer" style="font-size: 11pt; vertical-align:text-top; text-align: right;">
+                    勘查員A：{{ objectbuild.objectBuildScorerA }}
+                  </td>
+                  <td class="objectbuild__td__plus" style="font-size: 11pt; vertical-align:text-top; text-align: left;">
+                    {% if objectbuild.plusItemA1 %}| {% isItem2 objectbuild.plusItemA1 objectbuild.plusValueA1 %} {% endif %} 
+                    {% if objectbuild.plusItemA2 %}| {% isItem2 objectbuild.plusItemA2 objectbuild.plusValueA2 %} {% endif %} 
+                    {% if objectbuild.plusItemA3 %}| {% isItem2 objectbuild.plusItemA3 objectbuild.plusValueA3 %}<br> {% endif %} 
+                    {% if objectbuild.plusItemA4 %}| {% isItem2 objectbuild.plusItemA4 objectbuild.plusValueA4 %} {% endif %} 
+                    {% if objectbuild.plusItemA5 %}| {% isItem2 objectbuild.plusItemA5 objectbuild.plusValueA5 %} {% endif %} 
+                    {% if objectbuild.plusItemOtherA %}| {% isItem2 objectbuild.plusItemOtherA objectbuild.plusValueOtherA %} {% endif %} 
+                  </td>
+                </tr>
+              {% endif %}
+
+              <!-- 參考物件--勘查員B -->
+              {% if objectbuild.objectBuildScorerB %}
+                <tr>
+                  <td class="objectbuild__td__scorer" style="font-size: 11pt; vertical-align:text-top; text-align: right;">
+                    勘查員B：{{ objectbuild.objectBuildScorerB }}
+                  </td>
+                  <td class="objectbuild__td__plus" style="font-size: 11pt; vertical-align:text-top; text-align: left;">
+                    {% if objectbuild.plusItemB1 %}| {% isItem2 objectbuild.plusItemB1 objectbuild.plusValueB1 %} {% endif %} 
+                    {% if objectbuild.plusItemB2 %}| {% isItem2 objectbuild.plusItemB2 objectbuild.plusValueB2 %} {% endif %} 
+                    {% if objectbuild.plusItemB3 %}| {% isItem2 objectbuild.plusItemB3 objectbuild.plusValueB3 %}<br> {% endif %} 
+                    {% if objectbuild.plusItemB4 %}| {% isItem2 objectbuild.plusItemB4 objectbuild.plusValueB4 %} {% endif %} 
+                    {% if objectbuild.plusItemB5 %}| {% isItem2 objectbuild.plusItemB5 objectbuild.plusValueB5 %} {% endif %} 
+                    {% if objectbuild.plusItemOtherB %}| {% isItem2 objectbuild.plusItemOtherB objectbuild.plusValueOtherB %} {% endif %} 
+                  </td>
+                </tr>
+              {% endif %}
+
+              <!-- 參考物件--勘查員C -->
+              {% if objectbuild.objectBuildScorerC %}
+                <tr>
+                  <td class="objectbuild__td__scorer" style="font-size: 11pt; vertical-align:text-top; text-align: right;">
+                    勘查員C：{{ objectbuild.objectBuildScorerC }}
+                  </td>
+                  <td class="objectbuild__td__plus" style="font-size: 11pt; vertical-align:text-top; text-align: left;">
+                    {% if objectbuild.plusItemC1 %}| {% isItem2 objectbuild.plusItemC1 objectbuild.plusValueC1 %} {% endif %} 
+                    {% if objectbuild.plusItemC2 %}| {% isItem2 objectbuild.plusItemC2 objectbuild.plusValueC2 %} {% endif %} 
+                    {% if objectbuild.plusItemC3 %}| {% isItem2 objectbuild.plusItemC3 objectbuild.plusValueC3 %}<br> {% endif %} 
+                    {% if objectbuild.plusItemC4 %}| {% isItem2 objectbuild.plusItemC4 objectbuild.plusValueC4 %} {% endif %} 
+                    {% if objectbuild.plusItemC5 %}| {% isItem2 objectbuild.plusItemC5 objectbuild.plusValueC5 %} {% endif %} 
+                    {% if objectbuild.plusItemOtherC %}| {% isItem2 objectbuild.plusItemOtherC objectbuild.plusValueOtherC %} {% endif %} 
+                  </td>
+                </tr>
+              {% endif %}
+
+            </table>
 
           </td>
           <!--輸入計算-->
-          <td rowspan="3">
+          <td>
             {{objectbuild.get_a_plus_value_total|floatformat:0|intcomma}} 
           </td>
         </tr>
-        <tr>
-          <th>附件</th>
-          <th>勘查員B</th>
-          <th>加成原因B</th>
-        </tr>
-        <tr>
-          <!--輸入附件-->
-          <td>
-              
-          </td>
-          <!--輸入勘查員B-->
-          <td>
-            {{ objectbuild.objectBuildScorerB|default_if_none:"" }}  
-          </td>
-          <!--輸入加成原因B-->
-          <td>
-            {% if objectbuild.plusItemB1 %}({{ objectbuild.plusValueB1|floatformat:2 }}){{ objectbuild.plusItemB1 }}<br>{% endif %} 
-          </td>
         </tr>
       </table>
     {% endfor %}
-    <p style="margin:2px;padding:2px;">
   </div>
 
   <!-- 最終判定 -->
   <div class="finaldecision" >
     <table class="yfratingscalePDFFinaldecision">
-      {% for finaldecision in yfcase.finaldecisions.all %} 
       <tr>
         <th style="width:20%;">結論</th>
         <th>備註</th>
-        <th style="width:14%;">區域負責人</th>
-        <th style="width:14%;">副署人員1</th>
-        <th style="width:14%;">副署人員2</th>
+        <th style="width:12%;">區域負責人</th>
+        <th style="width:12%;">副署人員1</th>
+        <th style="width:12%;">副署人員2</th>
       </tr>
-      <tr>
-        <td>
-          {{ finaldecision.finalDecision|default_if_none:"" }}
-        </td>
-          
-        <td class="yfratingscalePDFPerson">
-          {{ finaldecision.finalDecisionRemark|default_if_none:"" }}
-        </td>
+      {% for finaldecision in yfcase.finaldecisions.all %} 
+        <tr>
+          <td>
+            {% if finaldecision.finalDecision == "1拍進場" %}
+              <div class="finaldecision__td finaldecision__first">{{ finaldecision.finalDecision }}</div>
+            {% elif finaldecision.finalDecision == "2拍進場" %}
+              <div class="finaldecision__td finaldecision__second">{{ finaldecision.finalDecision }}</div>
+            {% elif finaldecision.finalDecision == "3拍進場" %}
+              <div class="finaldecision__td finaldecision__third">{{ finaldecision.finalDecision }}</div>
+            {% elif finaldecision.finalDecision == "4拍進場" %}
+              <div class="finaldecision__td finaldecision__fourth">{{ finaldecision.finalDecision }}</div>
+            {% elif finaldecision.finalDecision == "放棄" %}
+              <div class="finaldecision__td finaldecision__giveup">{{ finaldecision.finalDecision }}</div>
+            {% else %}
+              ""
+            {% endif %}
+          </td>
+            
+          <td class="yfratingscalePDFPerson text-left">
+            {{ finaldecision.finalDecisionRemark|default_if_none:"" }}
+          </td>
 
-        <td class="yfratingscalePDFPerson">
-          {% if finaldecision.regionalHead != None %}
-            <div class="regionalhead__seal">
-              <div class="regionalhead__td__person">{{ finaldecision.regionalHead }}</div>
-              <div class="regionalhead__td__date">{{ finaldecision.regionalHeadDate }}</div>
-              <div class="regionalhead__td__workarea">{{ finaldecision.regionalHeadWorkArea }}</div>
-            </div>
-          {% endif %}
-        </td>
+          <td class="yfratingscalePDFPerson">
+            {% if finaldecision.regionalHead != None %}
+              <div class="regionalhead__seal">
+                <div class="regionalhead__td__person">{{ finaldecision.regionalHead }}</div>
+                <div class="regionalhead__td__date">{{ finaldecision.regionalHeadDate }}</div>
+                <div class="regionalhead__td__workarea">{{ finaldecision.regionalHeadWorkArea|isWordCountOverFour2 }}</div>
+              </div>
+            {% endif %}
+          </td>
+            
+            
+          <td class="yfratingscalePDFPerson">
+            {% if finaldecision.subSigntrueA != None %}
+              <div class="regionalhead__seal">
+                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
+                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
+                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour2 }}</div>
+              </div>
+            {% endif %}
+          </td>
           
-          
-        <td class="yfratingscalePDFPerson">
-          {{ finaldecision.subSigntrueA|default_if_none:"" }}<br>
-          {{ finaldecision.subSigntrueDateA|default_if_none:"" }}<br>
-          {{ finaldecision.subSigntrueWorkAreaA|default_if_none:"" }}
-        </td>
-        
-        <td class="yfratingscalePDFPerson">
-          {{ finaldecision.subSigntrueB|default_if_none:"" }}<br>
-          {{ finaldecision.subSigntrueDateB|default_if_none:"" }}<br>
-          {{ finaldecision.subSigntrueWorkAreaB|default_if_none:"" }}
-        </td>
-          
-      </tr>
+          <td class="yfratingscalePDFPerson">
+            {% if finaldecision.subSigntrueB != None %}
+              <div class="regionalhead__seal">
+                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour2 }}</div>
+              </div>
+            {% endif %}
+          </td>
+        </tr>
       {% endfor %}
     </table>
   </div>
@@ -869,6 +937,6 @@
       {% endfor %}
     </table>
   </div>
-  
+
 </body>
 </html>

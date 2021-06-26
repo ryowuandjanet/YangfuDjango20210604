@@ -28,6 +28,13 @@
   .regionalhead__td:nth-child(6) { width: 11%; }
   .regionalhead__td:nth-child(7) { width: 6%; }
   .regionalhead__td:nth-child(8) { width: 11%; }
+
+  .finaldecision__td { padding:10px 5px; border-radius: 10px; }
+  .finaldecision__first { color:brown;border:5px solid brown; }
+  .finaldecision__second { color:purple;border:5px solid purple; }
+  .finaldecision__third { color:blue;border:5px solid blue; }
+  .finaldecision__fourth { color:green;border:5px solid green; }
+  .finaldecision__giveup { color:red;border:5px solid red; }
 </style>
 
 <!-- 測試樣版1 -->
@@ -46,7 +53,21 @@
         <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}" class="btn__icon__update">改判</a>
         <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
       </td>
-      <td class="regionalhead__td">{{ finaldecision.finalDecision|default_if_none:"" }}</td>
+      <td class="regionalhead__td">
+        {% if finaldecision.finalDecision == "1拍進場" %}
+          <div class="finaldecision__td finaldecision__first">{{ finaldecision.finalDecision }}</div>
+        {% elif finaldecision.finalDecision == "2拍進場" %}
+          <div class="finaldecision__td finaldecision__second">{{ finaldecision.finalDecision }}</div>
+        {% elif finaldecision.finalDecision == "3拍進場" %}
+          <div class="finaldecision__td finaldecision__third">{{ finaldecision.finalDecision }}</div>
+        {% elif finaldecision.finalDecision == "4拍進場" %}
+          <div class="finaldecision__td finaldecision__fourth">{{ finaldecision.finalDecision }}</div>
+        {% elif finaldecision.finalDecision == "放棄" %}
+          <div class="finaldecision__td finaldecision__giveup">{{ finaldecision.finalDecision }}</div>
+        {% else %}
+          ""
+        {% endif %}
+      </td>
       <td class="regionalhead__td">{{ finaldecision.finalDecisionRemark|default_if_none:"" }}</td>
       <td class="regionalhead__td">
         {% if finaldecision.regionalHead != None %}
@@ -79,7 +100,7 @@
           <div class="regionalhead__seal">
             <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
             <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
-            <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB }}</div>
+            <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
           </div>
         {% endif %}
       </td>
