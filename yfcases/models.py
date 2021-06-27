@@ -424,6 +424,29 @@ class Yfcase(models.Model):
     BuildHP = self.get_first_not_add_and_not_public_holding_point_personnal_rate() / self.get_first_not_add_and_not_public_holding_point_all_rate()
     return (PresentValueOfLandAnnouncement * LandHPTotalArea) + (PresentValueOfHouseTax * BuildHP)
 
+    # ⺠事起訴狀（裁判分割共有物）
+  # 共有人+債權人土地持分合計
+  def get_coownerinfo_land_holding_point_total(self):
+    newlist=[]
+    try:
+      getCoOwnerInfosLandHPPersonnalTotal=0
+      for getCoOwnerLandHP in self.coownerinfos.filter(coOwnerLandHPPersonnal__gt=0).filter(coOwnerLandHPAll__gt=0):
+        getCoOwnerInfosLandHPPersonnalTotal = getCoOwnerInfosLandHPPersonnalTotal + ( getCoOwnerLandHP.coOwnerLandHPPersonnal / getCoOwnerLandHP.coOwnerLandHPAll )
+      return getCoOwnerInfosLandHPPersonnalTotal + self.get_first_land_holding_point_value()
+    except:
+      newlist.append(0)
+    
+  # 共有人+債權人建物持分合計
+  def get_coownerinfo_build_holding_point_total(self):
+    newlist=[]
+    try:
+      getCoOwnerInfosBuildHPPersonnalTotal=0
+      for getCoOwnerBuildHP in self.coownerinfos.filter(coOwnerBuildHPPersonnal__gt=0).filter(coOwnerBuildHPAll__gt=0):
+        getCoOwnerInfosBuildHPPersonnalTotal = getCoOwnerInfosBuildHPPersonnalTotal + ( getCoOwnerBuildHP.coOwnerBuildHPPersonnal / getCoOwnerBuildHP.coOwnerBuildHPAll )
+      return getCoOwnerInfosBuildHPPersonnalTotal + self.get_first_not_add_and_not_public_holding_point_rate()
+    except:
+      newlist.append(0)
+
 # ======= Land =======
 class Land(models.Model):
   yfcase=models.ForeignKey(Yfcase,related_name='lands',on_delete=models.CASCADE)
@@ -475,6 +498,7 @@ class Build(models.Model):
       return self.buildArea * (self.buildHoldingPointPersonal / self.buildHoldingPointAll) * self.yfcase.get_first_not_add_and_not_public_holding_point_rate()
     except ZeroDivisionError:
       return 0
+
 
 # ======= Auction =======
 class Auction(models.Model):
@@ -897,4 +921,3 @@ class Result(models.Model):
   bidAuctionTime = models.CharField(u'搶標拍別',max_length=20,null=True,blank=True)
   bidMoney = models.DecimalField(u'搶標金額',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
   objectNumber = models.CharField(u'標的編號',max_length=20,null=True,blank=True)
-

@@ -6,163 +6,103 @@
 <html lang="en">
 <head>
   <meta http-equiv="content-type" content="text/html;charset=utf-8">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}" />
   <title>契稅申請書</title>
   <style type="text/css">
-    body {
-      font-family: 'Noto Sans TC', sans-serif;
-    }
-    
-    .deedtaxHeader{
-      border-collapse:collapse;
-      border:1px solid black;
-      width:100%;
-    }
-    
-    .deedtax123,
-    .deedtax45,
-    .deedtax6,
-    .deedtax7,
-    .deedtax8910,
-    .deedtax11,
-    .deedtax12,
-    .deedtax13To19,
-    .deedtaxFooter,
-    .deedtaxNotWrite {
-      border-collapse:collapse;
-      border:1px solid black;
-      width:100%;
-      border-top:hidden;
-    }
-    
 
-    
-    .deedtaxHeader th,
-    .deedtax123 th,
-    .deedtax45 th,
-    .deedtax6 th,
-    .deedtax7 th,
-    .deedtax8910 th,
-    .deedtax11 th,
-    .deedtax12 th,
-    .deedtax13To19 th,
-    .deedtaxFooter th,
-    .deedtaxNotWrite th {
-      border-collapse:collapse;
-      border:1px solid black;
-      margin:0px;
-      padding-left:5px;
-      text-align:left;
-      font-size: 10.5pt;
-      line-height: 18px;　
-    }
+    body {font-family: 'TaipeiSansTCBeta-Regular', sans-serif; }
+    /*前導資料*/
+    .deedtaxHeader { border-collapse: collapse; width:100%;border-bottom: hidden; }
+    td.deedtaxHeader__td { border:1px solid black; }
+    .header__title {width:62.5%;font-size:30pt;padding-left:300px;font-weight: 700;}
+    .header__person { width:2.5%; line-height: 12pt;}
+    .header__notenumber { width:4%;}
+    .header__date   { width:2.5%;}
+    .header__year__month__day { font-size: 14pt; padding-left:50px; }
 
-    .deedtaxHeader tr {
-      height:40px;
-    }
-    
-    .deedtaxHeader td {
-      font-size: 10pt;
-      border-collapse:collapse;
-      border:1px solid black;
-      padding:0px;
-      margin:0px;
-      text-align:center;
-      line-height: 15px;
-    }
+    /*(1)房屋稅籍編號/(2)建號/(3)移轉房屋坐落*/
+    .deedtax123 { border-collapse: collapse; width:100%; font-size: 11.5pt;}
+    .deedtax123 th, .deedtax123 td { border:1px solid black; }
+    .deedtax123 th:nth-child(1) { width:13%; text-align: left; }
+    .deedtax123 th:nth-child(2) { line-height: 10pt; font-size: 10pt; }
+    .deedtax123 th:nth-child(6) { width:8%; }
+    .deedtax123__buildnumber { width:15.8%;}
+    .deedtax123 th:nth-child(8) { width:12%; }
+    .deedtax123__number { width: 2.2%; height:18px; color: blue;text-align: center;}
+    .item__single { padding-left: 21px;}
+    .bluefont {color: blue;}
 
-    .deedtax123 td,
-    .deedtax45 td,
-    .deedtax6 td,
-    .deedtax7 td,
-    .deedtax8910 td,
-    .deedtax11 td,
-    .deedtax12 td,
-    .deedtax13To19 td,
-    .deedtaxFooter td,
-    .deedtaxNotWrite td {
-      border-collapse:collapse;
-      border:1px solid black;
-      padding:0px 2px;
-      margin:0px;
-      font-size:10.5pt;
-      height:18px;
-      text-align:center;
-      line-height: 18px;　　
-    }
-    
-    .deedtaxNotWrite td{
-      padding:2px 5px;
-    }
-    
-    .bluefont{
-      color:blue;
-      font-weight:bolder;
-    }
-    
+    /*(4)立契日期或使用執照核發日期（限房屋建造完成前取得所有權案件）/(5)申報日期*/
+    .deedtax45 { border-collapse: collapse; width:100%; font-size: 11.5pt;border-top: hidden;}
+    .deedtax45 th, .deedtax45 td { border:1px solid black; }
+    .deedtax45 th:nth-child(1) { width:33%;text-align: left; }
+    .deedtax45 td:nth-child(2) { width:13.5%; color:blue; text-align: center;}
+    .deedtax45 th:nth-child(3) { width:30%;text-align:left; }
+    .deedtax45 th:nth-child(4) { width:11%; }
+    .deedtax45 td:nth-child(5) { color:blue; }
+
   </style>
 </head>
 <body>
   <!-- 前導資料 -->
   <table class="deedtaxHeader">
     <tr>
-      <td rowspan="2" style="width:62.5%;border-top:hidden;border-left:hidden;font-size:30pt;padding-left:300px;">契稅申報書</td>
-      <td rowspan="2" style="width:2.5%;border-top:1px solid black;">申報人免填</td>
-      <td rowspan="2" style="width:4%;border-top:1px solid black;">(總收收件文號)</td>
-      <td style="width:3%;border-top:1px solid black;">日期</td>
-      <td style="font-size:14pt;border-top:1px solid black;">年　　月　　日</td>
+      <td rowspan="2" class="header__title">契稅申報書</td>
+      <td rowspan="2" class="deedtaxHeader__td header__person">申報人免填</td>
+      <td rowspan="2" class="deedtaxHeader__td header__notenumber">(總收收件文號)</td>
+      <td class="deedtaxHeader__td header__date">日期</td>
+      <td class="deedtaxHeader__td header__year__month__day">年　　月　　日</td>
     </tr>
     <tr>
-      <td>字號</td>
-      <td></td>
+      <td class="deedtaxHeader__td">字號</td>
+      <td class="deedtaxHeader__td"></td>
     </tr>
   </table>
 
   <!-- (1)房屋稅籍編號/(2)建號/(3)移轉房屋坐落 -->
   <table class="deedtax123">
     <tr>
-      <th rowspan="2" style="width:13%">(1)房　　屋<br>&nbsp;&emsp;稅籍編號</th>
-      <th colspan="2" style="font-size:10pt;">鄉鎮<br>市區</th>
-      <th colspan="2" style="font-size:10pt;">村里</th>
+      <th rowspan="2">(1)房&emsp;&emsp;屋<br> <span class="item__single">稅籍編號</span></th>
+      <th colspan="2">鄉鎮<br>市區</th>
+      <th colspan="2">村里</th>
       <th colspan="4">冊頁(棟)</th>
       <th colspan="3">分戶號</th>
-      <th rowspan="2" style="width:8%">(2)建號</th>
-      <td rowspan="2" style="width:17.8%" class="bluefont">
+      <th rowspan="2">(2)建號</th>
+      <td rowspan="2" class="deedtax123__buildnumber bluefont">
         {{ yfcase.yfcaseBigSection|default_if_none:"" }}{{ yfcase.builds.first.buildNumber|default_if_none:"" }}     
       </td>
-      <th rowspan="2" style="width:11%">(3)移　　轉<br>&nbsp;&emsp;房屋坐落</th>
+      <th rowspan="2">(3)移&emsp;&emsp;轉<br><span class="item__single">房屋坐落</span></th>
       <td rowspan="2" class="bluefont">
         {{yfcase.yfcaseCity|default_if_none:""}}{{yfcase.yfcaseTownship|default_if_none:""}}{{yfcase.yfcaseVillage|default_if_none:""}}{{yfcase.yfcaseNeighbor|default_if_none:""}}{{yfcase.yfcaseStreet|default_if_none:""}}{{yfcase.yfcaseSection|default_if_none:""}}{{yfcase.yfcaseLane|default_if_none:""}}{{yfcase.yfcaseAlley|default_if_none:""}}{{ yfcase.yfcaseNumber|default_if_none:"" }}{{ yfcase.yfcaseFloor|default_if_none:"" }}
       </td>
     </tr>
     <tr>
-      <td style="width:2.2%;height:24px;" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"0:1"|default_if_none:"" }}</td>
-      <td style="width:2.2%" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"1:2"|default_if_none:"" }}</td>
-      <td style="width:2.2%" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"2:3"|default_if_none:"" }}</td>
-      <td style="width:2.2%" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"3:4"|default_if_none:"" }}</td>
-      <td style="width:2.2%" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"4:5"|default_if_none:"" }}</td>
-      <td style="width:2.2%" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"5:6"|default_if_none:"" }}</td>
-      <td style="width:2.2%" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"6:7"|default_if_none:"" }}</td>
-      <td style="width:2.2%" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"7:8"|default_if_none:"" }}</td>
-      <td style="width:2.2%" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"8:9"|default_if_none:"" }}</td>
-      <td style="width:2.2%" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"9:10"|default_if_none:"" }}</td>
-      <td style="width:2.2%" class="bluefont">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"10:11"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"0:1"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"1:2"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"2:3"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"3:4"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"4:5"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"5:6"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"6:7"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"7:8"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"8:9"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"9:10"|default_if_none:"" }}</td>
+      <td class="deedtax123__number">{{ yfcase.yfcaseDeedtaxHouseTaxRegistrationNumber|slice:"10:11"|default_if_none:"" }}</td>
     </tr>
   </table>
 
   <!-- (4)立契日期或使用執照核發日期（限房屋建造完成前取得所有權案件）/(5)申報日期 -->
   <table class="deedtax45">
     <tr>
-      <th style="width:33.5%;">(4)立契日期或使用執照核發日期（限房<br>&thinsp;&thinsp;&thinsp;&thinsp;&ensp;屋建造完成前取得所有權案件）</th>
-      <td style="width:11.4%;font-size:10pt;" class="bluefont">
+      <th>(4)立契日期或使用執照核發日期（限房<br><span class="item__single">屋建造完成前取得所有權案件）</span></th>
+      <td>
         {{ yfcase.yfcaseDeedtaxEstablishmentDate|chinese_year|default_if_none:"" }}年
         {{ yfcase.yfcaseDeedtaxEstablishmentDate|date:"m" }}月
         {{ yfcase.yfcaseDeedtaxEstablishmentDate|date:"d" }}日
       </td>
-      <th style="width:30%;text-align:left;">■ 1.一般申報案件<br> □ 2.房屋建造完成前取得所有權案件</th>
-      <th style="width:12%;">(5)申報日期</th>
-      <td style="font-size:10pt;" class="bluefont">
+      <th>■ 1.一般申報案件<br> □ 2.房屋建造完成前取得所有權案件</th>
+      <th>(5)申報日期</th>
+      <td>
         {{ yfcase.yfcaseDeedtaxDeclarationDate|chinese_year|default_if_none:"" }}年
 {{ yfcase.yfcaseDeedtaxDeclarationDate|date:"m" }}月
         {{ yfcase.yfcaseDeedtaxDeclarationDate|date:"d" }}日

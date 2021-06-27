@@ -14,51 +14,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
   <title style="text-align:left;">訴訟狀</title>
   <style type="text/css">
-    body {
-      font-family: 'Noto Sans TC', sans-serif;
-      font-size: 16.5pt;
-    }
-    .page-break {
-      page-break-before: always;
-    }
-    .table {
-      padding-left:20px;
-    }
-    .table tr td{
-      padding:10px 0px 10px 0px;
-      vertical-align:text-top;
-    }
-    .spaceLine {
-      margin:10px;
-    }
-
-    
+    body {font-family: 'Noto Sans TC', sans-serif; font-size: 16.5pt; }
+    .page-break {page-break-before: always; } 
+    .table {padding-left:20px; } 
+    .table tr td{padding:10px 0px 10px 0px; vertical-align:text-top; }
+    .spaceLine {margin:10px; }
     /*以下為新格式運用*/
-    .letterPDFAttachment{
-      border-collapse: collapse;
-      width:100%;
-      font-size:14.5pt;
-    }
-    
-    .letterPDFAttachment td{
-      padding:5px;
-      font-size:14.5pt;
-    }
-    .complaintTable{
-      border-collapse:collapse;
-      border:none;
-      width:100%;
-    }
-    .complaintTable td{
-      padding:10px;
-      border:none;
-      vertical-align: baseline;
-    }
-    .bluefont{
-      color:blue;
-      font-weight:bolder;
-    }
-    
+    .letterPDFAttachment{border-collapse: collapse; width:100%;font-size:14.5pt; }
+    .letterPDFAttachment td{padding:5px; font-size:14.5pt; } 
+    .complaintTable{border-collapse:collapse; border:none; width:100%; } 
+    .complaintTable td{padding:10px; border:none; vertical-align: baseline; }
+    .bluefont{color:blue; font-weight:bolder; }
   </style>
 </head>
 
@@ -72,13 +38,13 @@
   <table class="complaintTable" style="padding: 0px; margin: 20px 0px;">
     <!--原告-->
     <tr>
-      <td style="width: 30%;">原告：<span class="bluefont">揚富開發有限公司</span></td>
+      <td style="width: 35%;">原告：<span class="bluefont"> 揚富開發有限公司</span></td>
       <td>住址：<span class="bluefont">臺中市大里區新仁路三段49號1樓</span></td>
     </tr>
   
     <!--法定代理人-->
     <tr>
-      <td>法定代理人：<span class="bluefont">陳美純</span></td>
+      <td>法定代理人：<span class="bluefont"> 陳美純</span></td>
       <td>住址：<span class="bluefont">臺中市大里區新仁路三段49號1樓</span></td>
     </tr>
   
@@ -365,6 +331,7 @@
       <tr>
         <th style="border: 1px solid black;">合計</th>
         <th style="border: 1px solid black;">
+          {{ yfcase.get_coownerinfo_land_holding_point_total}}
           {% if yfcase.get_coownerinfo_land_holding_point_total == 1 %}
             <span class="bluefont">全部</span>
           {% else %}

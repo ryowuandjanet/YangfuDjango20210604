@@ -1,17 +1,29 @@
-/*@font-face { */
-/*  font-family: 'Noto Sans TC'; */
-/*  src: url('../fonts/NotoSansTC-Medium.otf') format("opentype"), */
-/*  local('Noto Sans TC'); */
-/*} */
+@font-face { 
+  font-family: 'Noto Sans TC'; 
+  src: url('../fonts/NotoSansTC-Medium.otf') format("opentype"), 
+  local('Noto Sans TC'); 
+} 
 
-/*@font-face { */
-/*  font-family: 'Roboto-Medium'; */
-/*  src: url('../fonts/Roboto-Medium.ttf') format("truetype"), */
-/*  local('Roboto-Medium'); */
-/*}*/
+@font-face { 
+  font-family: 'Roboto-Medium'; 
+  src: url('../fonts/Roboto-Medium.ttf') format("truetype"), 
+  local('Roboto-Medium'); 
+}
+
+@font-face { 
+  font-family: 'TaipeiSansTCBeta-Regular'; 
+  src: url('../fonts/TaipeiSansTCBeta-Regular.ttf') format("truetype"), 
+  local('TaipeiSansTCBeta-Regular'); 
+}
+
+@font-face { 
+  font-family: 'kaiu'; 
+  src: url('../fonts/kaiu.ttf') format("truetype"), 
+  local('kaiu'); 
+}
 
 body {
-  font-family: 'Roboto','Noto Sans TC', sans-serif;
+  font-family: 'Roboto-Medium','Noto Sans TC', sans-serif;
 }
 
 h1 {
