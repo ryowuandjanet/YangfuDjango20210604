@@ -65,14 +65,14 @@
           <span class="help-block">{{ form.yfcaseAcceptingAuthorityTownship.error }}</span>
         </div>
 
+        {{ realestateregistration_user_id|json_script:"realestateregistration_clent_id" }}
+
       </div>
 
       <!-- footer -->
       <div class="modal-footer">
-        
-        <button type="button" class="btn btn-secondary col" data-dismiss="modal">返回</button>
+        <a href="{% url 'yfcase:home' %}" class="btn btn-secondary col">返回</a>
         <input class="btn btn-primary col-md-3" type="submit" value="建立" />
-        
       </div>
 
     </div>
@@ -83,7 +83,8 @@
 
 <script>
   $(document).ready(function(){
-  
+    const realestateregistration_clent_id = JSON.parse(document.getElementById('realestateregistration_clent_id').textContent);
+    document.getElementById("id_yfcaseRealEstateRegistrationRegisteredAgent").value = realestateregistration_clent_id;
     // 此為欄位驗証的JS
     $('#yfcaseCreateForm').bootstrapValidator({
       // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later

@@ -62,12 +62,12 @@ urlpatterns = [
   #PDF轉檔
   
   path('yfratingscalePDFView/<int:pk>/', yfratingscalePDFView.as_view(),name="yfratingscalePDF_View"),
-  path('afterwinner/<int:pk>/edit/', AfterWinnerUpdateView.as_view(), name='afterwinner_edit'),
-  path('deedTaxPDF/<int:pk>/', deedtax_pdf_view, name='deedtax_pdf_view'),
+  path('deedtax/<int:pk>/edit/', DeedtaxUpdateView.as_view(), name='deedtax_edit'),
   path('realestateregistration/<int:pk>/edit/', RealestateregistrationUpdateView.as_view(), name='realestateregistration_edit'),
-  path('realestateregistrationPDFView/<int:pk>/', realestateregistrationPDFView.as_view(),name="realestateregistrationPDF_View"),
   path('complaint/<int:pk>/edit/', ComplaintUpdateView.as_view(), name='complaint_edit'),
-  path('complaintPDFView/<int:pk>/', complaintPDFView.as_view(),name="complaintPDF_View"),
   path('letter/<int:pk>/edit/', LetterUpdateView.as_view(), name='letter_edit'),
+  path('deedTaxPDFView/<int:pk>/', deedtaxPDFView.as_view(), name='deedtax_pdf_view'),
+  path('realestateregistrationPDFView/<int:pk>/', realestateregistrationPDFView.as_view(),name="realestateregistrationPDF_View"),
+  path('complaintPDFView/<int:pk>/', complaintPDFView.as_view(),name="complaintPDF_View"),
   path('letterPDFView/<int:pk>/', letterPDFView.as_view(),name="letterPDF_View"),
 ]

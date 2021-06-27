@@ -643,10 +643,11 @@ CoOwnerInfoFormSet = inlineformset_factory(
   )
 
 # ======= 契稅申請書 =======
-class AfterWinnerForm(forms.ModelForm):
+class DeedtaxForm(forms.ModelForm):
   yfcaseDeedtaxReclaimMethod = forms.ChoiceField(label="契稅領回方式",choices=DEED_TAX_RECLAIM_METHOD_LIST, required=False)
   yfcaseDeedtaxClosingNewsletter = forms.ChoiceField(label="契稅結案簡訊",choices=DEED_TAX_CLOSING_NEWSLETTER_LIST, required=False)
   yfcaseDeedtaxReportAttached = forms.ChoiceField(label="契稅報附聯",choices=DEED_TAX_REPORT_ATTACHED_LIST, required=False)
+  yfcaseDeedtaxClient = forms.ModelChoiceField(label="契稅委託人",queryset=CustomUser.objects.filter(userRole=0), required=False)
   class Meta:
     model=Yfcase
     fields =[

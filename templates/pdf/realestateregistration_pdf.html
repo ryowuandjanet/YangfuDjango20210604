@@ -124,7 +124,7 @@
 
   </style>
 </head>
-{{yfcase.cityLastJudgment}}
+<body>
   <!-- 前導資料 -->
   <div id="firstdata">
     <table style="width:100%;">
@@ -197,31 +197,40 @@
     <tr>
       <td rowspan=2 style="border-top:none;width:9%;height:90px;">(1)<br>受理<br>機關</td>
       <td style="border:none;text-align:right;width:10%;padding-top:20px;">
-        {% if yfcase.yfcaseAcceptingAuthorityTownship_city_last_word == "縣" and yfcase.yfcaseApplyAcrossInstitutions %}
-          <sanp class="bluefont">{{ yfcase.yfcaseAcceptingAuthorityTownship_city }}</sanp><br>
-        {% elif yfcase.cityLastJudgment == "縣" %}
-          <sanp class="bluefont">{{ yfcase.yfcaseCity.name }}</sanp><br>
+        {% if yfcase.yfcaseApplyAcrossInstitutions %}
+          {% if yfcaseAcceptingAuthorityTownship_city_lastWord == "縣" %}
+            <sanp class="bluefont">{{ yfcaseAcceptingAuthorityTownship_city }}</sanp><br>
+          {% else %}
+            <sanp class="bluefont"></sanp>縣<br>
+          {% endif %}
         {% else %}
-          <sanp class="bluefont"></sanp>縣<br>
+          {% if cityLastJudgment == "縣" %}
+            <sanp class="bluefont">{{ yfcase.yfcaseCity.name }}</sanp><br>
+          {% else %}
+            <sanp class="bluefont"></sanp>縣<br>
+          {% endif %}
         {% endif %}
       </td>
       <td style="border:none;text-align:right;width:17%;">
-        {% if yfcase.yfcaseAcceptingAuthorityTownship and yfcase.yfcaseApplyAcrossInstitutions %}
-          <sanp class="bluefont">{{ yfcase.yfcaseAcceptingAuthorityTownship }}</sanp><br>
-        {% elif yfcase.yfcaseTownship.land_office %}
-          <sanp  class="bluefont">{{ yfcase.yfcaseTownship.land_office }}</sanp>地政事務所<br>
+        {% if yfcase.yfcaseApplyAcrossInstitutions %}
+          <sanp class="bluefont">{{ yfcaseAcceptingAuthorityTownship_land_office }}</sanp>
         {% else %}
-          <sanp  class="bluefont"></sanp>地政事務所
+          <sanp class="bluefont">{{ yfcase.yfcaseTownship.land_office }}</sanp>
         {% endif %}
+        地政事務所<br>
       </td>
       <td rowspan=2 style="border-top:none;width:6%;">資料管<br>轄機關</td>
       <td rowspan=2 style="border-top:none;width:21%;text-align:right;">
-        {% if yfcase.cityLastJudgment == "縣" %}
+        {% if cityLastJudgment == "縣" %}
           <sanp class="bluefont">{{ yfcase.yfcaseCity.name }}</sanp><br>
-          <sanp class="bluefont"></sanp>市<br>
-        {% elif yfcase.cityLastJudgment == "市" %}
-          <sanp class="bluefont"></sanp>縣<br>
+        {% else %}
+          縣<br>
+        {% endif %}
+
+        {% if cityLastJudgment == "市" %}
           <sanp class="bluefont">{{ yfcase.yfcaseCity.name }}</sanp><br>
+        {% else %}
+          市<br>
         {% endif %}
         <sanp class="bluefont">{{ yfcase.yfcaseTownship.land_office }}</sanp>地政事務所
       </td>
@@ -232,12 +241,18 @@
     </tr>
     <tr style="height:28px;">
       <td style="border-top:none;border-right:none;border-left:none;text-align:right;">
-        {% if yfcase.yfcaseAcceptingAuthorityTownship_city_last_word == "市" and yfcase.yfcaseApplyAcrossInstitutions %}
-          <sanp class="bluefont">{{ yfcase.yfcaseAcceptingAuthorityTownship_city }}</sanp><br>
-        {% elif yfcase.cityLastJudgment == "市" %}
-          <sanp class="bluefont">{{ yfcase.yfcaseCity.name }}</sanp><br>
+        {% if yfcase.yfcaseApplyAcrossInstitutions %}
+          {% if yfcaseAcceptingAuthorityTownship_city_lastWord == "市" %}
+            <sanp class="bluefont">{{ yfcaseAcceptingAuthorityTownship_city }}</sanp><br>
+          {% else %}
+            <sanp class="bluefont"></sanp>市<br>
+          {% endif %}
         {% else %}
-          <sanp class="bluefont"></sanp>市<br>
+          {% if cityLastJudgment == "市" %}
+            <sanp class="bluefont">{{ yfcase.yfcaseCity.name }}</sanp><br>
+          {% else %}
+            <sanp class="bluefont"></sanp>市<br>
+          {% endif %}
         {% endif %}
       </td>
       <td style="border-top:none;border-right:none;border-left:none;text-align:right;">
@@ -467,7 +482,7 @@
           {% if yfcase.yfcaseCreditor %}
             {{ yfcase.yfcaseDeedtaxCreditorMobilePhone|default_if_none:"" }}
           {% elif yfcase.yfcaseCompany %}
-            待KEY
+            {{ yfcaseCreditor_phone|default_if_none:"" }}
           {% endif %}
         </sanp>
       </td>
@@ -494,7 +509,7 @@
     </tr>
     <tr>
       <td rowspan=4 style="widht:5%;">(9)<br>備<br><br>註</td>
-      <td rowspan=4 style="widht:63%;"></td>
+      <td rowspan=4 style="widht:63%;text-align: left;" class="bluefont">{{ yfcase.yfcaseRealEstateRegistrationRegistrationNote|default_if_none:"" }}</td>
       <td style="height:28px;">傳真電話</td>
       <td></td>
     </tr>

@@ -11,7 +11,7 @@
 
 {% block content %}
 <!-- 程式主題的部份 -->
-<form action="{% url 'yfcase:afterwinner_edit' yfcase.id %}" method="post" id="editAfterWinnerModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" >{% csrf_token %}
+<form action="{% url 'yfcase:deedtax_edit' yfcase.id %}" method="post" id="editAfterWinnerModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" >{% csrf_token %}
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -23,7 +23,6 @@
       <!-- body -->
       <div class="modal-body">
         契稅申請書基本資料 - 案號：{{ yfcase.yfcaseCaseNumber }}
-
         <div class="accordion" id="accordionExample">
 
           <!-- 契稅申請書 - 基本資料 -->
@@ -473,6 +472,8 @@
                   {% render_field form.yfcaseDeedtaxCoOwnerMatch|attr:"multiple:multiple"|attr:"data-plugin-multiselect" %} <span style="color:red;">土地 / 建物共有人是否一致</span>
                   <span class="help-block">{{ form.yfcaseDeedtaxCoOwnerMatch.error }}</span>
                 </div>
+                {{ deedtax_clent_id|json_script:"deedtax_clent_id" }}
+
               </div>
             </div>
           </div>
@@ -483,7 +484,7 @@
 
       <!-- footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary col" data-dismiss="modal">返回</button>
+        <a href="{% url 'yfcase:home' %}" class="btn btn-secondary col">返回</a>
         <input class="btn btn-primary col-md-3" type="submit" value="建立" />
       </div>
 
@@ -495,7 +496,8 @@
 
 <script>
   $(document).ready(function(){
-  
+    const deedtax_clent_id = JSON.parse(document.getElementById('deedtax_clent_id').textContent);
+    document.getElementById("id_yfcaseDeedtaxClient").value = deedtax_clent_id;
     // 此為欄位驗証的JS
     $('#editAfterWinnerModal').bootstrapValidator({
       // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later

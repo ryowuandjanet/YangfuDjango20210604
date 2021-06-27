@@ -343,6 +343,87 @@ class Yfcase(models.Model):
   # def get_user_username(self):
   #   return self.user.userFullName
 
+  # 在編輯Build設定
+  # 第一筆建物(非公設、非增建)各別面積
+  def get_build_first_not_add_and_not_public_area(self):
+    return self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first().get_build_holding_point_area()
+    
+  # 取得第一筆非公設、非增建的個人持分
+  def get_first_not_add_and_not_public_holding_point_personnal_rate(self):
+    try:
+      if self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first():
+        getFirstNotAddAndNotPublicHoldingPointPersonnal = self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first().buildHoldingPointPersonal
+        return getFirstNotAddAndNotPublicHoldingPointPersonnal
+    except ZeroDivisionError:
+      return 0
+      
+  # 取得第一筆非公設、非增建的所有持分
+  def get_first_not_add_and_not_public_holding_point_all_rate(self):
+    try:
+      if self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first():
+        getFirstNotAddAndNotPublicHoldingPointAll = self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first().buildHoldingPointAll
+        return getFirstNotAddAndNotPublicHoldingPointAll
+    except ZeroDivisionError:
+      return 0
+
+  # 取得第一筆非公設、非增建的持分比
+  def get_first_not_add_and_not_public_holding_point_rate(self):
+    try:
+      if self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first():
+        getFirstNotAddAndNotPublicHoldingPointPersonnal = self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first().buildHoldingPointPersonal
+        getFirstNotAddAndNotPublicHoldingPointAll = self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first().buildHoldingPointAll
+        return getFirstNotAddAndNotPublicHoldingPointPersonnal / getFirstNotAddAndNotPublicHoldingPointAll
+    except ZeroDivisionError:
+      return 0
+      
+  # (1)建物(非公設、非增建)持分後總面積
+  def get_build_holding_point_area_group_total(self):
+    newlist=[]
+    try:
+      getBuildHoldingPointAreaGroupTotal=0
+      for getBuildHoldingPointAreaGroup in self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設"):
+        getBuildHoldingPointAreaGroupTotal = getBuildHoldingPointAreaGroupTotal + getBuildHoldingPointAreaGroup.get_build_holding_point_area()
+      return getBuildHoldingPointAreaGroupTotal
+    except:
+      newlist.append(0)
+
+  # (2)建物(公設)持分後總面積
+  def get_build_holding_point_public_group_total(self):
+    getBuildHoldingPointPublicGroupTotal=0
+    for getBuildHoldingPointPublicGroup in self.builds.filter(buildTypeUse="公設"):
+      getBuildHoldingPointPublicGroupTotal = getBuildHoldingPointPublicGroupTotal + getBuildHoldingPointPublicGroup.get_build_first_not_add_and_not_public_holding_point_area()
+    return getBuildHoldingPointPublicGroupTotal
+
+  # (3)建物(增建)持分後總面積
+  def get_build_holding_point_add_group_total(self):
+    try:
+      getBuildHoldingPointAddGroupTotal=0
+      for getBuildHoldingPointAddGroup in self.builds.filter(buildTypeUse="增建-持分後坪數打對折"):
+        getBuildHoldingPointAddGroupTotal = getBuildHoldingPointAddGroupTotal + getBuildHoldingPointAddGroup.get_after_add_holding_point_area()
+      return getBuildHoldingPointAddGroupTotal
+    except ZeroDivisionError:
+      return 0
+
+  # 上述(1)+(2)+(3)
+  def get_build_holding_point_after_group_total(self):
+    newlist=[]
+    try:
+      return self.get_build_holding_point_area_group_total() + self.get_build_holding_point_public_group_total() + self.get_build_holding_point_add_group_total()
+    except:
+      newlist.append(0)
+      
+  # 訴訟標的價額  
+  def get_litigation_subject_price(self):
+    # 土地公告現值
+    PresentValueOfLandAnnouncement = self.yfcaseComplaintPresentValueOfLandAnnouncement
+    # 土地總面積 * 土地原告應有持分
+    LandHPTotalArea = self.get_land_holding_point_area_total()
+    # 系爭房屋課稅現值
+    PresentValueOfHouseTax = self.yfcaseComplaintPresentValueOfHouseTax
+    # 房屋原告應有持分
+    BuildHP = self.get_first_not_add_and_not_public_holding_point_personnal_rate() / self.get_first_not_add_and_not_public_holding_point_all_rate()
+    return (PresentValueOfLandAnnouncement * LandHPTotalArea) + (PresentValueOfHouseTax * BuildHP)
+
 # ======= Land =======
 class Land(models.Model):
   yfcase=models.ForeignKey(Yfcase,related_name='lands',on_delete=models.CASCADE)

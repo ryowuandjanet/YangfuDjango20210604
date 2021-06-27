@@ -1,12 +1,15 @@
+{% extends "base.html" %}
 {% load widget_tweaks %}
 
-<style type="text/css">
-  .help-block{
-    color:red;
-  }
-</style>
+{% block style %}
+  <style type="text/css">
+    .help-block{
+      color:red;
+    }
+  </style>
+{% endblock style %}
 
-
+{% block content %}
 <!-- 程式主題的部份 -->
 <form action="{% url 'yfcase:letter_edit' yfcase.id %}" method="post" id="editAfterWinnerModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" >{% csrf_token %}
   <div class="modal-dialog">
@@ -44,7 +47,7 @@
   </div>
 </form>
 
-{% block javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
   // $(document).ready(function(){
   
@@ -108,4 +111,4 @@
   });
 
 </script>
-{% endblock javascript %}
+{% endblock %}

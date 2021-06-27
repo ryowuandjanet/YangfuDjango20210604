@@ -664,20 +664,6 @@ def result_update(request,yfcase_id=None,id=None):
   }
   return render(request, "result/result_form.html",context)
 
-# ==========================  PDF(After Winner)  =========================
-class AfterWinnerUpdateView(UpdateView):
-  model=Yfcase
-  form_class = AfterWinnerForm
-  template_name="yfcase/afterwinner/AfterWinner_edit.html"
-  success_url = reverse_lazy('yfcase:home')
-
-  def get_context_data(self, **kwargs):
-    context = super(AfterWinnerUpdateView,self).get_context_data(**kwargs)
-    context["author_id"]=self.request.user.id
-    context['value'] = '編輯'
-    context['title'] = '編輯得標後相關資料'
-    return context
-
 # ==========================  PDF(評量表)  =========================
 def font_path():
   pdfmetrics.registerFont(TTFont('yh', '{}/fonts/TaipeiSansTCBeta-Regular.ttf'.format(settings.STATICFILES_DIRS[0])))
@@ -697,39 +683,36 @@ class yfratingscalePDFView(PDFView):
     })
     return context
 
-# PDFkit-契稅申請書
-def deedtax_pdf_view(request, *args, **kwargs):
-  pk = kwargs.get('pk')
-  yfcase = get_object_or_404(Yfcase,pk=pk)
-  if yfcase.yfcaseDeedtaxClient:
-    customuser = CustomUser.objects.get(userFullName=yfcase.yfcaseDeedtaxClient)
-  else:
-    customuser = None
-  
-  font_path()
-  
-  template_path = 'pdf/deedtax_pdf.html'
-  context = {
-    'yfcase': yfcase, 
-    'customuser': customuser
-  }
-  # Create a Django response object, and specify content_type as pdf
-  response = HttpResponse(content_type='application/pdf')
-  # 如果要把yfcase_pdf.html下載後再手動打開的話
-  # response['Content-Disposition'] = 'attachment; filename="report.pdf"'
-  # 如果要把yfcase_pdf.html直接顥示的話
-  response['Content-Disposition'] = 'filename="report.pdf"'
-  # find the template and render it.
-  template = get_template(template_path)
-  html = template.render(context)
+# 契稅申請單-Modal(Form)
+class DeedtaxUpdateView(UpdateView):
+  model=Yfcase
+  form_class = DeedtaxForm
+  template_name="yfcase/afterwinner/Deedtax_edit.html"
+  success_url = reverse_lazy('yfcase:home')
 
-  # create a pdf
-  pisa_status = pisa.CreatePDF(html.encode('UTF-8'), encoding="UTF-8", dest=response)
-  # pisa_status = pisa.CreatePDF(html, dest=response)
-  # if error then show some funy view
-  if pisa_status.err:
-    return HttpResponse('We had some errors <pre>' + html + '</pre>')
-  return response
+  def get_context_data(self, **kwargs):
+    context = super(DeedtaxUpdateView,self).get_context_data(**kwargs)
+    deedtax_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseDeedtaxClient
+    context['deedtax_clent_id'] =CustomUser.objects.get(userFullName=deedtax_user_id).id
+    context["author_id"]=self.request.user.id
+    context['value'] = '編輯'
+    context['title'] = '編輯得標後相關資料'
+    return context
+
+# PDFkit-契稅申請書
+class deedtaxPDFView(PDFView):
+  template_name = './pdf/deedtax_pdf.html'
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    pk = kwargs.get('pk')
+    yfcase = Yfcase.objects.get(pk=pk)
+    users = CustomUser.objects.all()
+    context.update({
+        'yfcase': yfcase,
+        'users': users,
+    })
+    return context
 
 # Form(Edit)-不動產登記清冊  
 class RealestateregistrationUpdateView(UpdateView):
@@ -740,6 +723,8 @@ class RealestateregistrationUpdateView(UpdateView):
 
   def get_context_data(self, **kwargs):
     context = super(RealestateregistrationUpdateView,self).get_context_data(**kwargs)
+    realestateregistration_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseRealEstateRegistrationRegisteredAgent
+    context['realestateregistration_user_id'] =CustomUser.objects.get(userFullName=realestateregistration_user_id).id
     context["author_id"]=self.request.user.id
     context['value'] = '編輯'
     context['title'] = '編輯得標後相關資料'
@@ -753,10 +738,99 @@ class realestateregistrationPDFView(PDFView):
     context = super().get_context_data(**kwargs)
     pk = kwargs.get('pk')
     yfcase = Yfcase.objects.get(pk=pk)
+    yfcaseCreditor_phone =CustomUser.objects.get(userFullName=yfcase.yfcaseCompany).userMobilePhone
     users = CustomUser.objects.all()
+
+    # landRecord1
+    try:
+      landRecord1 = yfcase.lands.order_by('id').filter(id__gt=0)[0]
+    except:
+      landRecord1 = None
+
+    # landRecord2
+    try:
+      landRecord2 = yfcase.lands.order_by('id').filter(id__gt=0)[1]
+    except:
+      landRecord2 = None
+
+    # landRecord3
+    try:
+      landRecord3 = yfcase.lands.order_by('id').filter(id__gt=0)[2]
+    except:
+      landRecord3 = None
+
+    # landRecord4
+    try:
+      landRecord4 = yfcase.lands.order_by('id').filter(id__gt=0)[3]
+    except:
+      landRecord4 = None
+
+
+    # buildRecord1
+    try:
+      buildRecord1 = yfcase.builds.order_by('id').filter(id__gt=0)[0]
+    except:
+      buildRecord1 = None
+
+    # buildRecord2
+    try:
+      buildRecord2 = yfcase.builds.order_by('id').filter(id__gt=0)[1]
+    except:
+      buildRecord2 = None
+
+    # buildRecord3
+    try:
+      buildRecord3 = yfcase.builds.order_by('id').filter(id__gt=0)[2]
+    except:
+      buildRecord3 = None
+
+    # buildRecord4
+    try:
+      buildRecord4 = yfcase.builds.order_by('id').filter(id__gt=0)[3]
+    except:
+      buildRecord4 = None
+
+    # 合計
+    buildRecordTotal = yfcase.yfcaseDeedtaxBuildingTransferArea1+yfcase.yfcaseDeedtaxBuildingTransferArea2+yfcase.yfcaseDeedtaxBuildingTransferArea3+yfcase.yfcaseDeedtaxBuildingTransferArea4+yfcase.yfcaseDeedtaxBuildingTransferArea4
+
+    # 縣市後面一碼判定為"市"或是"縣"
+    cityLastJudgment = yfcase.yfcaseCity.name[2]
+
+    # 跨區申請-鄉鎮對應到縣市
+    try:
+      yfcaseAcceptingAuthorityTownship_city = Township.objects.get(name=yfcase.yfcaseAcceptingAuthorityTownship).city.name
+    except:
+      yfcaseAcceptingAuthorityTownship_city = None
+
+    # 跨區申請-鄉鎮對應到地政事務所
+    try:
+      yfcaseAcceptingAuthorityTownship_land_office = Township.objects.get(name=yfcase.yfcaseAcceptingAuthorityTownship).land_office
+    except:
+      yfcaseAcceptingAuthorityTownship_land_office = None
+
+    # 跨區申請-鄉鎮對應到縣市(判斷最後一個字是"縣"還是"市")
+    try:
+      yfcaseAcceptingAuthorityTownship_city_lastWord = yfcaseAcceptingAuthorityTownship_city[2]
+    except:
+      yfcaseAcceptingAuthorityTownship_city_lastWord = None
+
     context.update({
-        'yfcase': yfcase,
-        'users': users,
+      'yfcase': yfcase,
+      'users': users,
+      'yfcaseCreditor_phone': yfcaseCreditor_phone,
+      'landRecord1': landRecord1,
+      'landRecord2': landRecord2,
+      'landRecord3': landRecord3,
+      'landRecord4': landRecord4,
+      'buildRecord1': buildRecord1,
+      'buildRecord2': buildRecord2,
+      'buildRecord3': buildRecord3,
+      'buildRecord4': buildRecord4,
+      'buildRecordTotal': buildRecordTotal,
+      'cityLastJudgment': cityLastJudgment,
+      'yfcaseAcceptingAuthorityTownship_city':yfcaseAcceptingAuthorityTownship_city,
+      'yfcaseAcceptingAuthorityTownship_land_office':yfcaseAcceptingAuthorityTownship_land_office,
+      'yfcaseAcceptingAuthorityTownship_city_lastWord':yfcaseAcceptingAuthorityTownship_city_lastWord,
     })
     return context
 

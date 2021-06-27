@@ -1,14 +1,16 @@
+{% extends "base.html" %}
 {% load widget_tweaks %}
 {% load crispy_forms_tags %}
 
+{% block style %}
+  <style type="text/css">
+    .help-block{
+      color:red;
+    }
+  </style>
+{% endblock style %}
 
-<style type="text/css">
-  .help-block{
-    color:red;
-  }
-</style>
-
-
+{% block content %}
 <!-- 程式主題的部份 -->
 <form action="{% url 'yfcase:complaint_edit' yfcase.id %}" method="post" id="editAfterWinnerModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}">{% csrf_token %}
   <div class="modal-dialog modal-xl">
@@ -118,7 +120,8 @@
   </div>
 </form>
 
-{% block javascript %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
  $(function() {
     $( ".datepicker" ).datepicker({
@@ -187,4 +190,4 @@
   // });
 
 </script>
-{% endblock javascript %}
+{% endblock content %}
