@@ -11,7 +11,7 @@
 
 {% block content %}
 <!-- 程式主題的部份 -->
-<form action="{% url 'yfcase:letter_edit' yfcase.id %}" method="post" id="editAfterWinnerModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" >{% csrf_token %}
+<form action="{% url 'yfcase:letter_edit' yfcase.id %}" method="post" id="letter_edit_form" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" >{% csrf_token %}
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -32,6 +32,7 @@
           {{ form.yfcaseLetterAgent|add_class:'form-control' }}
           <span class="help-block">{{ form.yfcaseLetterAgent.error }}</span>
         </div>
+        {{ letter_clent_id|json_script:"letter_clent_id" }}
 
       </div>
 
@@ -48,62 +49,25 @@
 </form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-  // $(document).ready(function(){
-  
-  //   // 此為欄位驗証的JS
-  //   $('#yfcaseCreateForm').bootstrapValidator({
-  //     // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-  //     feedbackIcons: {
-  //         valid: 'glyphicon glyphicon-ok',
-  //         invalid: 'glyphicon glyphicon-remove',
-  //         validating: 'glyphicon glyphicon-refresh'
-  //     },
-  //     fields: {
-  //         yfcaseCaseNumber: {
-  //           validators: {
-  //             notEmpty: {
-  //               message: '此一欄位不得為空'
-  //             },
-  //             stringLength: {
-  //               min: 5,
-  //               max: 50,
-  //               message: '案件名稱必需介於5-50個文字'
-  //             }
-  //           }
-  //         },
-  //         yfcaseCity: {
-  //           validators: {
-  //             notEmpty: {
-  //               message: '此為必要欄位'
-  //             }
-  //           }
-  //         },
-  //         yfcaseTownship: {
-  //           validators: {
-  //             notEmpty: {
-  //               message: '此為必要欄位'
-  //             }
-  //           }
-  //         },
-  //         yfcaseOtherAddress: {
-  //           validators: {
-  //             notEmpty: {
-  //               message: '此為必要欄位'
-  //             }
-  //           }
-  //         },
-  //         yfcaseCompany: {
-  //           validators: {
-  //             notEmpty: {
-  //               message: '必選欄位'
-  //             }
-  //           }
-  //         }
-  //     }
-  //   });
 
-  // });
+<script>
+  $(document).ready(function(){
+    const letter_clent_id = JSON.parse(document.getElementById('letter_clent_id').textContent);
+    document.getElementById("id_yfcaseLetterAgent").value = letter_clent_id; 
+    // 此為欄位驗証的JS
+    $('#letter_edit_form').bootstrapValidator({
+      // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+      feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+      },
+      fields: {
+      }
+    });
+
+  });
+
   $(function() {
     $(".datepicker").datepicker({
       dateFormat: "yy-mm-dd"

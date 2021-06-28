@@ -843,6 +843,8 @@ class ComplaintUpdateView(UpdateView):
 
   def get_context_data(self, **kwargs):
     data = super(ComplaintUpdateView,self).get_context_data(**kwargs)
+    complaint_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseComplaintLitigationAgent
+    data['complaint_clent_id'] =CustomUser.objects.get(userFullName=complaint_user_id).id
     if self.request.POST:
       data['titles'] = CoOwnerInfoFormSet(self.request.POST,instance=self.object)
     else:
@@ -887,6 +889,8 @@ class LetterUpdateView(UpdateView):
 
   def get_context_data(self, **kwargs):
     context = super(LetterUpdateView,self).get_context_data(**kwargs)
+    letter_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseLetterAgent
+    context['letter_clent_id'] =CustomUser.objects.get(userFullName=letter_user_id).id
     context["author_id"]=self.request.user.id
     context['value'] = '編輯'
     context['title'] = '編輯得標後相關資料'

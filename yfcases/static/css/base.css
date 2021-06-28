@@ -11,9 +11,9 @@
 }
 
 @font-face { 
-  font-family: 'TaipeiSansTCBeta-Regular'; 
-  src: url('../fonts/TaipeiSansTCBeta-Regular.ttf') format("truetype"), 
-  local('TaipeiSansTCBeta-Regular'); 
+  font-family: 'NotoSansTC-Regular'; 
+  src: url('../fonts/NotoSansTC-Regular.otf') format("truetype"), 
+  local('NotoSansTC-Regular'); 
 }
 
 @font-face { 

@@ -12,7 +12,7 @@
 
 {% block content %}
 <!-- 程式主題的部份 -->
-<form action="{% url 'yfcase:complaint_edit' yfcase.id %}" method="post" id="editAfterWinnerModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}">{% csrf_token %}
+<form action="{% url 'yfcase:complaint_edit' yfcase.id %}" method="post" id="Complaint_edit_form" data-townships-url="{% url 'yfcase:ajax_load_townships' %}">{% csrf_token %}
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
 
@@ -100,6 +100,7 @@
           {{ form.yfcaseComplaintExhibit4|add_class:'form-control' }}
           <span class="help-block">{{ form.yfcaseComplaintExhibit4.error }}</span>
         </div>
+        {{ complaint_clent_id|json_script:"complaint_clent_id" }}
         
         <div class="card-body">
              {% crispy form %}
@@ -123,71 +124,28 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
- $(function() {
-    $( ".datepicker" ).datepicker({
+  $(document).ready(function(){
+    const complaint_clent_id = JSON.parse(document.getElementById('complaint_clent_id').textContent);
+    document.getElementById("id_yfcaseComplaintLitigationAgent").value = complaint_clent_id; 
+    // 此為欄位驗証的JS
+    $('#Complaint_edit_form').bootstrapValidator({
+      // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+      feedbackIcons: {
+          valid: 'glyphicon glyphicon-ok',
+          invalid: 'glyphicon glyphicon-remove',
+          validating: 'glyphicon glyphicon-refresh'
+      },
+      fields: {
+      }
+    });
+
+  });
+
+  $(function() {
+    $(".datepicker").datepicker({
       dateFormat: "yy-mm-dd"
     });
   });
-  // $(document).ready(function(){
-  
-  //   // 此為欄位驗証的JS
-  //   $('#yfcaseCreateForm').bootstrapValidator({
-  //     // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-  //     feedbackIcons: {
-  //         valid: 'glyphicon glyphicon-ok',
-  //         invalid: 'glyphicon glyphicon-remove',
-  //         validating: 'glyphicon glyphicon-refresh'
-  //     },
-  //     fields: {
-  //         yfcaseCaseNumber: {
-  //           validators: {
-  //             notEmpty: {
-  //               message: '此一欄位不得為空'
-  //             },
-  //             stringLength: {
-  //               min: 5,
-  //               max: 50,
-  //               message: '案件名稱必需介於5-50個文字'
-  //             }
-  //           }
-  //         },
-  //         yfcaseCity: {
-  //           validators: {
-  //             notEmpty: {
-  //               message: '此為必要欄位'
-  //             }
-  //           }
-  //         },
-  //         yfcaseTownship: {
-  //           validators: {
-  //             notEmpty: {
-  //               message: '此為必要欄位'
-  //             }
-  //           }
-  //         },
-  //         yfcaseOtherAddress: {
-  //           validators: {
-  //             notEmpty: {
-  //               message: '此為必要欄位'
-  //             }
-  //           }
-  //         },
-  //         yfcaseCompany: {
-  //           validators: {
-  //             notEmpty: {
-  //               message: '必選欄位'
-  //             }
-  //           }
-  //         }
-  //     }
-  //   });
-
-  // });
-  // $(function() {
-  //   $(".datepicker").datepicker({
-  //     dateFormat: "yy-mm-dd"
-  //   });
-  // });
 
 </script>
 {% endblock content %}
