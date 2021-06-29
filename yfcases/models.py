@@ -455,6 +455,7 @@ class Land(models.Model):
   landArea=models.DecimalField(u'地坪(平方公尺)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
   landHoldingPointPersonal=models.DecimalField(u'個人持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
   landHoldingPointAll=models.DecimalField(u'所有持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
+  landRemark=models.CharField(u'備註',max_length=100,null=True,blank=True)
   
   def __str__(self):
     return self.landNumber
@@ -472,6 +473,9 @@ class Build(models.Model):
   buildHoldingPointAll=models.DecimalField(u'所有持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
   buildTypeUse=models.CharField(u'建物型',max_length=100,null=True,blank=True)
   buildUsePartition=models.CharField(u'使用分區',max_length=100,null=True,blank=True)
+  buildRemark=models.CharField(u'備註',max_length=100,null=True,blank=True)
+  buildAncillaryBuildingUseBy=models.CharField(u'附屬建物用途',max_length=100,null=True,blank=True)
+  buildAncillaryBuildingArea=models.DecimalField(u'附屬建物面積',default=0,max_digits=6,decimal_places=2,null=True,blank=True)
 
   def __str__(self):
     return self.buildNumber

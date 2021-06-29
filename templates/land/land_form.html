@@ -12,6 +12,11 @@
     .help-block {
       color: red;
     }
+    
+    .bluefont {
+      color:blue;
+      font-size:12pt;
+    }
   </style>
 {% endblock style %}
 
@@ -57,6 +62,19 @@
         {{ form.landHoldingPointAll|add_class:'form-control' }}
         <div class="invalid-feedback">
           {{ form.landHoldingPointAll.error }}
+        </div>
+      </div>
+      
+      <div class="row mt-3">
+        <div class="col-md-12 mt-3">
+          <label for="{{ form.landRemark.id_for_label }}">
+            {{ form.landRemark.label }}
+            <span class="bluefont"> (此欄會出現在不動產登記的地號備註欄)</span>
+          </label>
+          {{ form.landRemark|add_class:'form-control'|attr:"autocomplete:off" }}
+          <div class="invalid-feedback">
+            {{ form.landRemark.error }}
+          </div>
         </div>
       </div>
     </div>

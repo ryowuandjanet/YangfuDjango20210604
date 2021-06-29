@@ -122,6 +122,12 @@
       color: blue;
       font-weight: bolder;
     }
+    .bottom__space {
+      color:red;
+      border:3px solid red;
+      border-radius: 10px;
+      margin:5px;
+    }
 
   </style>
 </head>
@@ -872,21 +878,21 @@
           {% if landRecord1 and landRecord2 %}
             {{ yfcase.yfcaseTownship|default_if_none:"" }}
           {% elif landRecord1 and landRecord2 == None %}
-            以下空白
+            <div class="bottom__space">以下空白</div>
           {% endif %}
         </td>
         <td class="bluefont">
           {% if landRecord2 and landRecord3 %}
             {{ yfcase.yfcaseTownship|default_if_none:"" }}
           {% elif landRecord2 and landRecord3 == None %}
-            以下空白
+            <div class="bottom__space">以下空白</div>
           {% endif %}
         </td>
         <td class="bluefont">
           {% if landRecord3 and landRecord4 %}
             {{ yfcase.yfcaseTownship|default_if_none:"" }}
           {% elif landRecord3 and landRecord4 == None %}
-            以下空白
+            <div class="bottom__space">以下空白</div>
           {% endif %}
         </td>
         <td></td>
@@ -1016,10 +1022,18 @@
       <!--第八行-->
       <tr>
         <th colspan=2 style="height:100px;">(5)備 註</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td class="bluefont">
+          {{ landRecord1.landRemark|default_if_none:"" }}
+        </td>
+        <td class="bluefont">
+          {{ landRecord2.landRemark|default_if_none:"" }}
+        </td>
+        <td class="bluefont">
+          {{ landRecord3.landRemark|default_if_none:"" }}
+        </td>
+        <td class="bluefont">
+          {{ landRecord4.landRemark|default_if_none:"" }}
+        </td>
         <td></td>
         <td></td>
         <td></td>
@@ -1041,21 +1055,21 @@
           {% if buildRecord1 and buildRecord2 %}
             {{ yfcase.yfcaseBigSection|default_if_none:"" }}{{ buildRecord2.buildNumber|default_if_none:"" }}
           {% elif buildRecord1 and buildRecord2 == None %}
-            以下空白
+            <div class="bottom__space">以下空白</div>
           {% endif %}
         </td>
         <td class="bluefont">
           {% if buildRecord2 and buildRecord3 %}
             {{ yfcase.yfcaseBigSection|default_if_none:"" }}{{ buildRecord3.buildNumber|default_if_none:"" }}
           {% elif buildRecord2 and buildRecord3 == None %}
-            以下空白
+            <div class="bottom__space">以下空白</div>
           {% endif %}
         </td>
         <td class="bluefont">
           {% if buildRecord3 and buildRecord4 %}
             {{ yfcase.yfcaseBigSection|default_if_none:"" }}{{ buildRecord4.buildNumber|default_if_none:"" }}
           {% elif buildRecord3 and buildRecord4 == None %}
-            以下空白
+            <div class="bottom__space">以下空白</div>
           {% endif %}
         </td>
       </tr>
@@ -1272,17 +1286,33 @@
       <tr>
         <th rowspan=2>(10)<br>附 屬<br>建 物</th>
         <th>用途</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ buildRecord1.buildAncillaryBuildingUseBy|default_if_none:"" }}</td>
+        <td>{{ buildRecord2.buildAncillaryBuildingUseBy|default_if_none:"" }}</td>
+        <td>{{ buildRecord3.buildAncillaryBuildingUseBy|default_if_none:"" }}</td>
+        <td>{{ buildRecord4.buildAncillaryBuildingUseBy|default_if_none:"" }}</td>
       </tr>
       <tr>
         <th>面 積<br>(平方公尺)</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>
+          {% if buildRecord1.buildAncillaryBuildingArea %}
+            {{ buildRecord1.buildAncillaryBuildingArea }}
+          {% endif %}
+        </td>
+        <td>
+          {% if buildRecord2.buildAncillaryBuildingArea %}
+            {{ buildRecord2.buildAncillaryBuildingArea }}
+          {% endif %}
+        </td>
+        <td>
+          {% if buildRecord3.buildAncillaryBuildingArea %}
+            {{ buildRecord3.buildAncillaryBuildingArea }}
+          {% endif %}
+        </td>
+        <td>
+          {% if buildRecord4.buildAncillaryBuildingArea %}
+            {{ buildRecord4.buildAncillaryBuildingArea }}
+          {% endif %}
+        </td>
       </tr>
       <tr>
         <th colspan=2>(11)權 利 範 圍</th>
@@ -1309,10 +1339,10 @@
       </tr>
       <tr>
         <th colspan=2>(12)備 註</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{{ buildRecord1.buildRemark|default_if_none:"" }}</td>
+        <td>{{ buildRecord2.buildRemark|default_if_none:"" }}</td>
+        <td>{{ buildRecord3.buildRemark|default_if_none:"" }}</td>
+        <td>{{ buildRecord4.buildRemark|default_if_none:"" }}</td>
       </tr>
     </table>
     </div>

@@ -12,6 +12,11 @@
     .help-block {
       color: red;
     }
+    
+    .bluefont {
+      color:blue;
+      font-size:12pt;
+    }
   </style>
 {% endblock style %}
 
@@ -79,6 +84,42 @@
       </div>
     </div>
 
+    <div class="row mt-3">
+      <div class="col-md-12 mt-3">
+        <label for="{{ form.buildRemark.id_for_label }}">
+          {{ form.buildRemark.label }}
+          <span class="bluefont"> (此欄會出現在不動產登記的建號備註欄)</span>
+        </label>
+        {{ form.buildRemark|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.buildRemark.error }}
+        </div>
+      </div>
+    </div>
+    
+    <div class="row mt-3">
+      <div class="col-md-6 mt-3">
+        <label for="{{ form.buildAncillaryBuildingArea.id_for_label }}">
+          {{ form.buildAncillaryBuildingArea.label }}
+          <span class="bluefont"> (此欄會出現在不動產登記的建號附屬建物面積欄)</span>
+        </label>
+        {{ form.buildAncillaryBuildingArea|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.buildAncillaryBuildingArea.error }}
+        </div>
+      </div>
+      <div class="col-md-6 mt-3">
+        <label for="{{ form.buildAncillaryBuildingUseBy.id_for_label }}">
+          {{ form.buildAncillaryBuildingUseBy.label }}
+          <span class="bluefont"> (此欄會出現在不動產登記的建號附屬建物用途欄)</span>
+        </label>
+        {{ form.buildAncillaryBuildingUseBy|add_class:'form-control' }}
+        <div class="invalid-feedback">
+          {{ form.buildAncillaryBuildingUseBy.error }}
+        </div>
+      </div>
+    </div>
+    
     <div class="row mt-3">
       <div class="col-md-6 mt-3">
         <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary form-control" >返回</a>

@@ -132,14 +132,14 @@
       font-size: 9pt;
     }
 
-    .objectbuild__td__table
+    .objectbuild__td__table {width:100%;}
     .objectbuild__td__table tr,
     .objectbuild__td__table td,
-    .objectbuild__td__table th { border: none; background-color: white;}
-    .yfratingscalePDFObjectBuild > .objectbuild__td__address, 
-    .yfratingscalePDFObjectBuild > .objectbuild__td__scorer { font-size: 11pt; vertical-align:text-top; text-align: right;width: 250px;}
-    .yfratingscalePDFObjectBuild > .yfratingscalePDFObjectBuild > .objectbuild__td__note, 
-    .yfratingscalePDFObjectBuild > .objectbuild__td__plus { font-size: 11pt; vertical-align:text-top; text-align: left;width: 500px; }
+    .objectbuild__td__table th { border: none; background-color: white;width:100%;}
+    .objectbuild__td__table .objectbuild__td__address, 
+    .objectbuild__td__table .objectbuild__td__scorer { font-size: 11pt; vertical-align:text-top; text-align: right; width:30%; }
+    .objectbuild__td__table .objectbuild__td__note, 
+    .objectbuild__td__table .objectbuild__td__plus { font-size: 11pt; vertical-align:text-top; text-align: left; }
     
     .regionalhead__seal { width:86px;border-radius:50%;border:3px solid red; }
     .regionalhead__td__person { font-size: 14pt; height: 30px; line-height: 36px; color: red; }
@@ -746,7 +746,7 @@
 
               <!-- 參考物件--物件資訊 -->
               <tr>
-                <td class="objectbuild__td__address" style="font-size: 11pt; vertical-align:text-top; text-align: right;width: 230px;" style="font-size: 11pt; vertical-align:text-top; text-align: right;">
+                <td class="objectbuild__td__address">
                   {% if objectbuild.objectBuildStatus %}
                     ({{objectbuild.objectBuildStatus}})
                   {% endif %}
@@ -754,7 +754,7 @@
                     {{objectbuild.objectBuildAddress}}
                   {% endif %}
                 </td>
-                <td class="objectbuild__td__note" style="font-size: 11pt; vertical-align:text-top; text-align: left;">
+                <td class="objectbuild__td__note">
                   {% if objectbuild.objectBuildHouseAge or objectbuild.objectBuildFloorHeight or objectbuild.objectBuildTransactionDate %}
                     {% if objectbuild.objectBuildHouseAge %}| 屋齡={{ objectbuild.objectBuildHouseAge }}年{% endif %}
                     {% if objectbuild.objectBuildFloorHeight %}| 樓高={{ objectbuild.objectBuildFloorHeight }}{% endif %}
@@ -770,10 +770,10 @@
               <!-- 參考物件--勘查員A -->
               {% if objectbuild.objectBuildScorerA %}
                 <tr>
-                  <td class="objectbuild__td__scorer" style="font-size: 11pt; vertical-align:text-top; text-align: right;">
+                  <td class="objectbuild__td__scorer">
                     勘查員A：{{ objectbuild.objectBuildScorerA }}
                   </td>
-                  <td class="objectbuild__td__plus" style="font-size: 11pt; vertical-align:text-top; text-align: left;">
+                  <td class="objectbuild__td__plus">
                     {% if objectbuild.plusItemA1 %}| {% isItem2 objectbuild.plusItemA1 objectbuild.plusValueA1 %} {% endif %} 
                     {% if objectbuild.plusItemA2 %}| {% isItem2 objectbuild.plusItemA2 objectbuild.plusValueA2 %} {% endif %} 
                     {% if objectbuild.plusItemA3 %}| {% isItem2 objectbuild.plusItemA3 objectbuild.plusValueA3 %}<br> {% endif %} 
@@ -787,10 +787,10 @@
               <!-- 參考物件--勘查員B -->
               {% if objectbuild.objectBuildScorerB %}
                 <tr>
-                  <td class="objectbuild__td__scorer" style="font-size: 11pt; vertical-align:text-top; text-align: right;">
+                  <td class="objectbuild__td__scorer">
                     勘查員B：{{ objectbuild.objectBuildScorerB }}
                   </td>
-                  <td class="objectbuild__td__plus" style="font-size: 11pt; vertical-align:text-top; text-align: left;">
+                  <td class="objectbuild__td__plus">
                     {% if objectbuild.plusItemB1 %}| {% isItem2 objectbuild.plusItemB1 objectbuild.plusValueB1 %} {% endif %} 
                     {% if objectbuild.plusItemB2 %}| {% isItem2 objectbuild.plusItemB2 objectbuild.plusValueB2 %} {% endif %} 
                     {% if objectbuild.plusItemB3 %}| {% isItem2 objectbuild.plusItemB3 objectbuild.plusValueB3 %}<br> {% endif %} 
@@ -804,10 +804,10 @@
               <!-- 參考物件--勘查員C -->
               {% if objectbuild.objectBuildScorerC %}
                 <tr>
-                  <td class="objectbuild__td__scorer" style="font-size: 11pt; vertical-align:text-top; text-align: right;">
+                  <td class="objectbuild__td__scorer">
                     勘查員C：{{ objectbuild.objectBuildScorerC }}
                   </td>
-                  <td class="objectbuild__td__plus" style="font-size: 11pt; vertical-align:text-top; text-align: left;">
+                  <td class="objectbuild__td__plus">
                     {% if objectbuild.plusItemC1 %}| {% isItem2 objectbuild.plusItemC1 objectbuild.plusValueC1 %} {% endif %} 
                     {% if objectbuild.plusItemC2 %}| {% isItem2 objectbuild.plusItemC2 objectbuild.plusValueC2 %} {% endif %} 
                     {% if objectbuild.plusItemC3 %}| {% isItem2 objectbuild.plusItemC3 objectbuild.plusValueC3 %}<br> {% endif %} 
