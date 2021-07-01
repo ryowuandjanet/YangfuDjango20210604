@@ -714,6 +714,7 @@ class ObjectBuild(models.Model):
   objectBuildAddress = models.CharField(u'地址',max_length=100,null=True,blank=True)
   objectBuildTotalPrice=models.DecimalField(u'總價(NT)',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
   objectBuildBuildArea=models.DecimalField(u'建坪(坪)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
+  objectBuildSubBuildArea=models.DecimalField(u'增建坪數(坪)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
   objectBuildHouseAge=models.DecimalField(u'屋齡(年)',default=0,max_digits=5,decimal_places=2,null=True,blank=True)
   objectBuildFloorHeight = models.CharField(u'樓高',max_length=100,null=True,blank=True)
   objectBuildStatus = models.CharField(u'狀態',max_length=100,null=True,blank=True)
@@ -769,7 +770,7 @@ class ObjectBuild(models.Model):
   def get_objectbuild_ping_price(self):
     newlist=[]
     try:
-      return self.objectBuildTotalPrice / self.objectBuildBuildArea
+      return self.objectBuildTotalPrice / (self.objectBuildBuildArea + (self.objectBuildSubBuildArea / 2))
     except:
       newlist.append(0)
 

@@ -552,7 +552,7 @@ class ObjectBuildForm(forms.ModelForm):
   objectBuildTransactionDate = forms.CharField(label="成交日期",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
   class Meta:
     model=ObjectBuild
-    fields =['yfcase','objectBuildAddress','objectBuildTotalPrice','objectBuildBuildArea','objectBuildHouseAge','objectBuildFloorHeight','objectBuildStatus','objectBuildTransactionDate','objectBuildUrl']
+    fields =['yfcase','objectBuildAddress','objectBuildTotalPrice','objectBuildBuildArea','objectBuildHouseAge','objectBuildFloorHeight','objectBuildStatus','objectBuildTransactionDate','objectBuildUrl','objectBuildSubBuildArea']
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)

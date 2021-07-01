@@ -25,13 +25,13 @@
     {{ form.yfcase|attr:"type:hidden" }} 
 
     <div class="row">
-      <div class="col">
+      <div class="col-md-4">
         <div class="form-group">
           <label style="margin-bottom: 2px;">{{ form.objectBuildStatus.label }}</label>
           {{ form.objectBuildStatus|add_class:"form-control fieldcolor pt-0" }}
         </div>
       </div>
-      <div class="col">
+      <div class="col-md-8">
         <div class="form-group">
           <label style="margin-bottom: 2px;">{{ form.objectBuildAddress.label }} <small style="color:blue;">(*無需輸入縣市/鄉鎮區里)</small> </label>
           {{ form.objectBuildAddress|add_class:"form-control fieldcolor pt-0" }}
@@ -40,7 +40,7 @@
     </div>
     
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-2">
         <div class="form-row">
           <div class="form-group">
             <label style="margin-bottom: 2px;">{{ form.objectBuildTotalPrice.label }}</label>
@@ -53,6 +53,14 @@
           <div class="form-group col">
             <label style="margin-bottom: 2px;">{{ form.objectBuildBuildArea.label }} </label>
             {{ form.objectBuildBuildArea|add_class:"form-control fieldcolor pt-0" }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="form-row">
+          <div class="form-group col">
+            <label style="margin-bottom: 2px;">{{ form.objectBuildSubBuildArea.label }} </label>
+            {{ form.objectBuildSubBuildArea|add_class:"form-control fieldcolor pt-0" }}
           </div>
         </div>
       </div>
@@ -72,7 +80,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <div class="form-row">
           <div class="form-group col">
             <label style="margin-bottom: 2px;">{{ form.objectBuildTransactionDate.label }}</label>
@@ -80,6 +88,7 @@
           </div>
         </div>
       </div>
+      
     </div>
     
     <div class="row">
