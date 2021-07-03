@@ -1,0 +1,27 @@
+{% load static %}
+{% load urlify %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Roboto&display=swap" rel="stylesheet">
+  <title>共有人清單</title>
+  <style type="text/css">
+    body {
+      font-family: 'Noto Sans TC', 'Roboto',sans-serif;
+      font-size:11pt;
+    }
+  </style>
+</head>
+<body>
+  <h1>共有人清單</h1>
+  {% for coowner in object.coownerinfos.all %}
+    {{coowner.coOwnerName}}
+  {% endfor %}
+
+</body>
+</html>

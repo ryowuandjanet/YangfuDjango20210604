@@ -989,3 +989,22 @@ class letterPDFView(PDFView):
         'users': users,
     })
     return context
+
+# PDFkit-存證信函
+class coownerPDFView(PDFView):
+  template_name = './pdf/coowner_pdf.html'
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    pk = kwargs.get('pk')
+    yfcase = Yfcase.objects.get(pk=pk)
+    coowner = CoOwnerInfo.objects.all()
+    coownerheir = CoOwnerHeir.objects.all()
+    users = CustomUser.objects.all()
+    context.update({
+        'yfcase': yfcase,
+        'coowner': coowner,
+        'coownerheir': coownerheir,
+        'users': users,
+    })
+    return context

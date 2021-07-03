@@ -79,4 +79,5 @@ urlpatterns = [
   path('realestateregistrationPDFView/<int:pk>/', realestateregistrationPDFView.as_view(),name="realestateregistrationPDF_View"),
   path('complaintPDFView/<int:pk>/', complaintPDFView.as_view(),name="complaintPDF_View"),
   path('letterPDFView/<int:pk>/', letterPDFView.as_view(),name="letterPDF_View"),
+  path('coownerPDFView/<int:pk>/', coownerPDFView.as_view(),name="coownerPDF_View"),
 ]
