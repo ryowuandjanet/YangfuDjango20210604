@@ -888,9 +888,25 @@ class CoOwnerInfo(models.Model):
   coOwnerLandHPAll=models.DecimalField(u'土地所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
   coOwnerBuildHPPersonnal=models.DecimalField(u'建物個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
   coOwnerBuildHPAll=models.DecimalField(u'建物所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  coOwnerLifeOrDie = models.CharField(u'存/殁',max_length=4,null=True,blank=True)
   
   def __str__(self):
     return self.coOwnerName
+
+# ======= 共有人之繼承人資訊 =======
+class CoOwnerHeir(models.Model):
+  coowner=models.ForeignKey(CoOwnerInfo,related_name='coownerheirs',on_delete=models.CASCADE)
+  coOwnerHeirName = models.CharField(u'姓名',max_length=10,null=True,blank=True)
+  coOwnerHeirSerial=models.DecimalField(u'順位',default=1,max_digits=82,decimal_places=0,null=True,blank=True)
+  coOwnerHeirAddress = models.CharField(u'住址',max_length=50,null=True,blank=True)
+  coOwnerHeirLandHPPersonnal=models.DecimalField(u'土地個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  coOwnerHeirLandHPAll=models.DecimalField(u'土地所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  coOwnerHeirBuildHPPersonnal=models.DecimalField(u'建物個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  coOwnerHeirBuildHPAll=models.DecimalField(u'建物所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  coOwnerHeirLifeOrDie = models.CharField(u'存/殁',max_length=4,null=True,blank=True)
+  
+  def __str__(self):
+    return self.coOwnerHeirName
 
 # ======= FinalDecision =======
 class FinalDecision(models.Model):

@@ -7,6 +7,18 @@
     .help-block{
       color:red;
     }
+    .coowner__table { border-collapse: collapse;}
+    .coowner__table th { border: 1px solid black; background-color: yellow;padding: 0px;text-align: center;}
+    .coowner__table .coowner__td{ border: 1px solid black;text-align: center; }
+
+    .coownerheir__table  { border-collapse: collapse;width: 100%;}
+    .coownerheir__table th {border: 1px solid black; background-color: lightgreen;padding: 0px;text-align: center;font-size: 10pt;}
+    .coownerheir__table td { border: 1px solid black; font-size: 10pt;text-align: center;}
+    .coowner__table td.text-left { text-align: left; }
+
+    .btn__icon__create { background-color: MediumBlue; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
+    .btn__icon__update { background-color: DarkGreen; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
+    .btn__icon__delete { background-color: DarkRed; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
   </style>
 {% endblock style %}
 
@@ -102,20 +114,101 @@
         </div>
         {{ complaint_clent_id|json_script:"complaint_clent_id" }}
         
-        <div class="card-body">
-             {% crispy form %}
-        </div>
-        
-
       </div>
 
+      <div>
+        <a href="{% url 'yfcase:coowner_create' object.id %}" class="btn__icon__create">新增共有人</a>
+      </div>
+
+      {% if object.coownerinfos.count > 0 %} 
+        <table class="coowner__table">
+          <tr>
+            <th rowspan="2">操作</th>
+            <th rowspan="2">姓名</th>
+            <th rowspan="2">住址</th>
+            <th colspan="2">地號持分</th>
+            <th colspan="2">建號持分</th>
+            <th rowspan="2">存/殁</th>
+            <th rowspan="2">繼承人</th>
+          </tr>
+          <tr>
+            <th>個人</th>
+            <th>所有</th>
+            <th>個人</th>
+            <th>所有</th>
+          </tr>
+          {% for coownerinfo in object.coownerinfos.all %}
+            <tr>
+              <td class="coowner__td">
+                <a href="{% url 'yfcase:coowner_update' object.id coownerinfo.id %}" class="btn__icon__update">更新</a>
+                <a href="{% url 'yfcase:coowner_delete' object.id coownerinfo.id %}" class="btn__icon__delete">刪除</a>
+              </td>
+              <td class="coowner__td">{{coownerinfo.coOwnerName}}</td>
+              <td class="coowner__td text-left">{{coownerinfo.coOwnerAddress|default_if_none:""}}</td>
+              <td class="coowner__td">{{coownerinfo.coOwnerLandHPPersonnal}}</td>
+              <td class="coowner__td">{{coownerinfo.coOwnerLandHPAll}}</td>
+              <td class="coowner__td">{{coownerinfo.coOwnerBuildHPPersonnal}}</td>
+              <td class="coowner__td">{{coownerinfo.coOwnerBuildHPAll}}</td>
+              <td class="coowner__td">{{coownerinfo.coOwnerLifeOrDie|default_if_none:""}}</td>
+              <td class="coowner__td">
+                <a href="{% url 'yfcase:coowner_heir_create' coownerinfo.id %}" class="btn__icon__create">新增</a>
+              </td>
+            </tr>
+            {% if coownerinfo.coownerheirs.count > 0 %}
+              <tr>
+                <td colspan=2></td>
+                <td colspan=7>
+                  <table class="coownerheir__table">
+                    <tr>
+                      <th rowspan="2">操作</th>
+                      <th rowspan="2">(順位)姓名</th>
+                      <th rowspan="2">住址</th>
+                      <th colspan="2">地號持分</th>
+                      <th colspan="2">建號持分</th>
+                      <th rowspan="2">存/殁</th>
+                    </tr>
+                    <tr>
+                      <th>個人</th>
+                      <th>所有</th>
+                      <th>個人</th>
+                      <th>所有</th>
+                    </tr>
+                    {% for coownerheir in coownerinfo.coownerheirs.all %}
+                      <tr>
+                        <td>
+                          <a href="{% url 'yfcase:coowner_heir_update' coownerinfo.id coownerheir.id %}" class="btn__icon__update">更新</a>
+                          <a href="{% url 'yfcase:coowner_heir_delete' coownerinfo.id coownerheir.id %}" class="btn__icon__delete">刪除</a>
+                        </td>
+                        <td>
+                          ({{coownerheir.coOwnerHeirSerial}})
+                          {{coownerheir.coOwnerHeirName}}
+                        </td>
+                        <td class="text-left">{{coownerheir.coOwnerHeirAddress|default_if_none:""}}</td>
+                        <td>{{coownerheir.coOwnerHeirLandHPPersonnal}}</td>
+                        <td>{{coownerheir.coOwnerHeirLandHPAll}}</td>
+                        <td>{{coownerheir.coOwnerHeirBuildHPPersonnal}}</td>
+                        <td>{{coownerheir.coOwnerHeirBuildHPAll}}</td>
+                        <td>{{coownerheir.coOwnerHeirLifeOrDie|default_if_none:""}}</td>
+                      </tr>
+                    {% endfor %}
+                  </table>
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </table>
+      {% endif %}
+        
       <!-- footer -->
-      <div class="modal-footer">
-        
-        <button type="button" class="btn btn-secondary col" data-dismiss="modal">返回</button>
-        <input class="btn btn-primary col-md-3" type="submit" value="建立" />
-        
-      </div>
+
+        <div class="row mt-3">
+          <div class="col-md-6 mt-3">
+            <a href="{% url 'yfcase:home' %}" class="btn btn-secondary form-control" >返回</a>
+          </div>
+          <div class="col-md-6 mt-3">
+            <input class="btn btn-primary form-control" type="submit" value="建立" />
+          </div>
+        </div>
 
     </div>
   </div>
@@ -146,6 +239,8 @@
       dateFormat: "yy-mm-dd"
     });
   });
+
+  get_coowner_yfcase
 
 </script>
 {% endblock content %}

@@ -484,6 +484,11 @@ ACCEPTING_AUTHORITY_TOWNSHIP_LIST = [
   ("富里鄉","富里鄉")
 ]
 
+LIFEORDIE_LIST=[
+  ("存","存"),
+  ("殁","殁")
+]
+
 class YfcaseForm(forms.ModelForm):
   # 多加了widget=forms.Select(attrs={'class': 'form-select'})是要欄位在右側出現了向下的箭頭所設定
   yfcaseCompany = forms.ChoiceField(label="所屬公司",choices=COMPANY_LIST, widget=forms.Select(attrs={'class': 'form-select'}),required=False)
@@ -629,18 +634,20 @@ class ResultForm(forms.ModelForm):
 
 # 共有人資訊
 class CoOwnerInfoForm(forms.ModelForm):
+  yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
+  coOwnerLifeOrDie = forms.ChoiceField(label="存/殁",choices=LIFEORDIE_LIST, required=False)
   class Meta:
     model = CoOwnerInfo
-    exclude = ()
+    fields =['yfcase','coOwnerName','coOwnerAddress','coOwnerLandHPPersonnal','coOwnerLandHPAll','coOwnerBuildHPPersonnal','coOwnerBuildHPAll','coOwnerLifeOrDie'] 
 
-CoOwnerInfoFormSet = inlineformset_factory(
-  Yfcase, 
-  CoOwnerInfo, 
-  form=CoOwnerInfoForm,
-  fields=["coOwnerName","coOwnerAddress","coOwnerLandHPPersonnal","coOwnerLandHPAll","coOwnerBuildHPPersonnal","coOwnerBuildHPAll"], 
-  extra=0, 
-  can_delete=True
-  )
+# 共有人資訊
+class CoOwnerHeirForm(forms.ModelForm):
+  coowner = forms.ModelChoiceField(CoOwnerInfo.objects.all(), widget=forms.HiddenInput())
+  coOwnerHeirLifeOrDie = forms.ChoiceField(label="存/殁",choices=LIFEORDIE_LIST, required=False)
+  class Meta:
+    model = CoOwnerHeir
+    fields =['coowner','coOwnerHeirName','coOwnerHeirSerial','coOwnerHeirAddress','coOwnerHeirLandHPPersonnal','coOwnerHeirLandHPAll','coOwnerHeirBuildHPPersonnal','coOwnerHeirBuildHPAll','coOwnerHeirLifeOrDie'] 
+
 
 # ======= 契稅申請書 =======
 class DeedtaxForm(forms.ModelForm):
@@ -682,22 +689,7 @@ class ComplaintForm(forms.ModelForm):
     fields =[
       "yfcaseComplaintComplaintDate","yfcaseComplaintLitigationAgent","yfcaseComplaintPresentValueOfLandAnnouncement","yfcaseComplaintPresentValueOfHouseTax","yfcaseComplaintRefereeFee","yfcaseComplaintUnsuccessfulDate","yfcaseComplaintLandWidth","yfcaseComplaintLandDepth","yfcaseComplaintExhibit1","yfcaseComplaintExhibit2","yfcaseComplaintExhibit3","yfcaseComplaintExhibit4"
     ] 
-    
-  def __init__(self, *args, **kwargs):
-    super(ComplaintForm, self).__init__(*args, **kwargs)
-    self.helper = FormHelper()
-    self.helper.form_tag = True
-    self.helper.form_class = 'form-horizontal'
-    self.helper.label_class = 'col-md-2 create-label'
-    self.helper.field_class = 'col-md-10'
-    self.helper.layout = Layout(
-      Div(
-        Fieldset('新增(編輯)共有人資訊',
-          Formset('titles'),
-        ),
-        HTML("<br>"),
-        )
-      )
+
 
 # ======= 存證信函 =======
 class LetterForm(forms.ModelForm):
