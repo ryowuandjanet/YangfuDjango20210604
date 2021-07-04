@@ -638,15 +638,23 @@ class CoOwnerInfoForm(forms.ModelForm):
   coOwnerLifeOrDie = forms.ChoiceField(label="存/殁",choices=LIFEORDIE_LIST, required=False)
   class Meta:
     model = CoOwnerInfo
-    fields =['yfcase','coOwnerName','coOwnerAddress','coOwnerLandHPPersonnal','coOwnerLandHPAll','coOwnerBuildHPPersonnal','coOwnerBuildHPAll','coOwnerLifeOrDie'] 
+    fields =['yfcase','coOwnerName','coOwnerIdentityCard','coOwnerAddress','coOwnerLandHPPersonnal','coOwnerLandHPAll','coOwnerBuildHPPersonnal','coOwnerBuildHPAll','coOwnerLifeOrDie'] 
 
-# 共有人資訊
+# 共有人之繼承人資訊
 class CoOwnerHeirForm(forms.ModelForm):
   coowner = forms.ModelChoiceField(CoOwnerInfo.objects.all(), widget=forms.HiddenInput())
   coOwnerHeirLifeOrDie = forms.ChoiceField(label="存/殁",choices=LIFEORDIE_LIST, required=False)
   class Meta:
     model = CoOwnerHeir
-    fields =['coowner','coOwnerHeirName','coOwnerHeirSerial','coOwnerHeirAddress','coOwnerHeirLandHPPersonnal','coOwnerHeirLandHPAll','coOwnerHeirBuildHPPersonnal','coOwnerHeirBuildHPAll','coOwnerHeirLifeOrDie'] 
+    fields =['coowner','coOwnerHeirName','coOwnerHeirIdentityCard','coOwnerHeirAddress','coOwnerHeirLandHPPersonnal','coOwnerHeirLandHPAll','coOwnerHeirBuildHPPersonnal','coOwnerHeirBuildHPAll','coOwnerHeirLifeOrDie'] 
+
+# 承受訴訟人之繼承人資訊
+class CoOwnerLitigationForm(forms.ModelForm):
+  coownerheir = forms.ModelChoiceField(CoOwnerHeir.objects.all(), widget=forms.HiddenInput())
+  coOwnerLitigationLifeOrDie = forms.ChoiceField(label="存/殁",choices=LIFEORDIE_LIST, required=False)
+  class Meta:
+    model = CoOwnerLitigation
+    fields =['coownerheir','coOwnerLitigationName','coOwnerLitigationIdentityCard','coOwnerLitigationAddress','coOwnerLitigationLandHPPersonnal','coOwnerLitigationLandHPAll','coOwnerLitigationBuildHPPersonnal','coOwnerLitigationBuildHPAll','coOwnerLitigationLifeOrDie'] 
 
 
 # ======= 契稅申請書 =======

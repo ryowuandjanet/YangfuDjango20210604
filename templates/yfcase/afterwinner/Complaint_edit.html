@@ -156,8 +156,8 @@
             </tr>
             {% if coownerinfo.coownerheirs.count > 0 %}
               <tr>
-                <td colspan=2></td>
-                <td colspan=7>
+                <td></td>
+                <td colspan=8>
                   <table class="coownerheir__table">
                     <tr>
                       <th rowspan="2">操作</th>
@@ -166,6 +166,7 @@
                       <th colspan="2">地號持分</th>
                       <th colspan="2">建號持分</th>
                       <th rowspan="2">存/殁</th>
+                      <th rowspan="2">訢訟人</th>
                     </tr>
                     <tr>
                       <th>個人</th>
@@ -180,8 +181,9 @@
                           <a href="{% url 'yfcase:coowner_heir_delete' coownerinfo.id coownerheir.id %}" class="btn__icon__delete">刪除</a>
                         </td>
                         <td>
-                          ({{coownerheir.coOwnerHeirSerial}})
-                          {{coownerheir.coOwnerHeirName}}
+                          ({{coownerheir.coOwnerHeirIdentityCard}})
+                          {{coownerheir.coOwnerHeirName}}<br>
+                          {{coownerheir.coOwnerHeirName}}即{{coownerinfo.coOwnerName}}之繼承人
                         </td>
                         <td class="text-left">{{coownerheir.coOwnerHeirAddress|default_if_none:""}}</td>
                         <td>{{coownerheir.coOwnerHeirLandHPPersonnal}}</td>
@@ -189,7 +191,54 @@
                         <td>{{coownerheir.coOwnerHeirBuildHPPersonnal}}</td>
                         <td>{{coownerheir.coOwnerHeirBuildHPAll}}</td>
                         <td>{{coownerheir.coOwnerHeirLifeOrDie|default_if_none:""}}</td>
+                        <td>
+                          <a href="{% url 'yfcase:coowner_litigation_create' coownerheir.id %}" class="btn__icon__create">新增</a>
+                        </td>
                       </tr>
+                      {% if coownerheir.coownerlitigations.count > 0 %}
+                        <tr>
+                          <td></td>
+                          <td colspan=8>
+                            <table class="coownerheir__table">
+                              <tr>
+                                <th rowspan="2">操作</th>
+                                <th rowspan="2">(順位)姓名</th>
+                                <th rowspan="2">住址</th>
+                                <th colspan="2">地號持分</th>
+                                <th colspan="2">建號持分</th>
+                                <th rowspan="2">存/殁</th>
+                              </tr>
+                              <tr>
+                                <th>個人</th>
+                                <th>所有</th>
+                                <th>個人</th>
+                                <th>所有</th>
+                              </tr>
+                              {% for coownerlitigation in coownerheir.coownerlitigations.all %}
+                                <tr>
+                                  <td>
+                                    <a href="{% url 'yfcase:coowner_litigation_update' coownerheir.id coownerlitigation.id %}" class="btn__icon__update">更新</a>
+                                    <a href="{% url 'yfcase:coowner_litigation_delete' coownerheir.id coownerlitigation.id %}" class="btn__icon__delete">刪除</a> 
+                                  </td>
+                                  <td>
+                                    ({{coownerlitigation.coOwnerLitigationIdentityCard}})
+                                    {{coownerlitigation.coOwnerLitigationName}}<br>
+                                    {{coownerlitigation.coOwnerLitigationName}}即{{coownerheir.coOwnerHeirName}}之承受訴訟人即{{coownerinfo.coOwnerName}}之繼承人
+                                    
+                                  </td>
+                                  <td class="text-left">{{coownerlitigation.coOwnerLitigationAddress|default_if_none:""}}</td>
+                                  <td>{{coownerlitigation.coOwnerLitigationLandHPPersonnal}}</td>
+                                  <td>{{coownerlitigation.coOwnerLitigationLandHPAll}}</td>
+                                  <td>{{coownerlitigation.coOwnerLitigationBuildHPPersonnal}}</td>
+                                  <td>{{coownerlitigation.coOwnerLitigationBuildHPAll}}</td>
+                                  <td>{{coownerlitigation.coOwnerLitigationLifeOrDie|default_if_none:""}}</td>
+                                 
+                                </tr>
+                              {% endfor %}
+                            </table>
+                          </td>
+                        </tr>
+                      {% endif %}
                     {% endfor %}
                   </table>
                 </td>
@@ -240,7 +289,6 @@
     });
   });
 
-  get_coowner_yfcase
 
 </script>
 {% endblock content %}

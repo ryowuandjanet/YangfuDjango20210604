@@ -944,6 +944,60 @@ def coownerheir_delete(request,coowner_id=None,id=None):
   return render(request, "coownerheir/coowner_heir_delete.html", context)
 
 
+# Form(Edit)-承受訴訟人之繼承人資訊
+def coownerlitigation_create(request,coowner_heir_id=None):
+  instance_coowner_heir = get_object_or_404(CoOwnerHeir,id=coowner_heir_id)
+  instance_coowner =CoOwnerInfo.objects.get(id=instance_coowner_heir.coowner_id)
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
+  form = CoOwnerLitigationForm(request.POST or None)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    return redirect("yfcase:complaint_edit", instance_coowner.yfcase_id)
+  context = {
+    "form" : form, 
+    "instance_coowner_heir": instance_coowner_heir,
+    "instance_coowner": instance_coowner,
+    "title": "新增承受訴訟人之繼承人",
+  }
+  return render(request, "coownerlitigation/coowner_litigation_form.html",context)
+  
+
+def coownerlitigation_update(request,coowner_heir_id=None,id=None):
+  instance_coowner_heir = get_object_or_404(CoOwnerHeir,id=coowner_heir_id)
+  instance_coowner_litigation = get_object_or_404(CoOwnerLitigation,id=id)
+  instance_coowner =CoOwnerInfo.objects.get(id=instance_coowner_heir.coowner_id)
+  form=CoOwnerLitigationForm(request.POST or None,instance=instance_coowner_litigation)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    return redirect("yfcase:complaint_edit", instance_coowner.yfcase_id)
+  context={
+    "instance_coowner_heir" : instance_coowner_heir,
+    "instance_coowner_litigation" : instance_coowner_litigation,
+    "instance_coowner" : instance_coowner,
+    "form" : form,
+    "title": "變更承受訴訟人之繼承人",
+  }
+  return render(request, "coownerlitigation/coowner_litigation_form.html",context)
+
+def coownerlitigation_delete(request,coowner_heir_id=None,id=None):
+  instance_coowner_heir = get_object_or_404(CoOwnerHeir,id=coowner_heir_id)
+  instance_coowner_litigation = get_object_or_404(CoOwnerLitigation,id=id)
+  instance_coowner =CoOwnerInfo.objects.get(id=instance_coowner_heir.coowner_id)
+  if request.method == "POST":
+    instance_coowner_litigation.delete()
+    return redirect("yfcase:complaint_edit", instance_coowner.yfcase_id)
+  context = {
+    "instance_coowner_heir" : instance_coowner_heir,
+    "instance_coowner_litigation" : instance_coowner_litigation,
+    "instance_coowner" : instance_coowner,
+    "title": "刪除承受訴訟人之繼承人"
+  }
+  return render(request, "coownerlitigation/coowner_litigation_delete.html", context)
+
+
 # PDFkit-訴訟狀
 class complaintPDFView(PDFView):
   template_name = './pdf/complaint_pdf.html'
@@ -997,14 +1051,20 @@ class coownerPDFView(PDFView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     pk = kwargs.get('pk')
-    yfcase = Yfcase.objects.get(pk=pk)
-    coowner = CoOwnerInfo.objects.all()
-    coownerheir = CoOwnerHeir.objects.all()
+    yfcases = Yfcase.objects.get(pk=pk)
+    coowners = yfcases.coownerinfos.all()
+    coowner_life = list(yfcases.coownerinfos.filter(coOwnerLifeOrDie="殁").values_list('id', flat=True)) 
+    context['coownerheir'] = CoOwnerHeir.objects.filter(id=coowner_life)
+    # coowner_life = yfcases.coownerinfos.filter(coOwnerLifeOrDie="存")
+    
+    # coownerheirs = coowners.coownerheirs.all()
+    # 共有人在世
+    # coowner_life = yfcases.coownerinfos.order_by(coOwnerLifeOrDie="存")
     users = CustomUser.objects.all()
     context.update({
-        'yfcase': yfcase,
-        'coowner': coowner,
-        'coownerheir': coownerheir,
+        'yfcases': yfcases,
+        'coowners': coowners,
+        'coowner_life': coowner_life,
         'users': users,
     })
     return context

@@ -34,7 +34,14 @@
           {{ form.coOwnerName.error }}
         </div>
       </div>
-      <div class="col-md-9 mt-3">
+      <div class="col-md-2 mt-3">
+        <label for="{{ form.coOwnerIdentityCard.id_for_label }}">{{ form.coOwnerIdentityCard.label }}</label>
+        {{ form.coOwnerIdentityCard|add_class:'form-control'|attr:"autocomplete:off" }}
+        <div class="invalid-feedback">
+          {{ form.coOwnerIdentityCard.error }}
+        </div>
+      </div>
+      <div class="col-md-7 mt-3">
         <label for="{{ form.coOwnerAddress.id_for_label }}">{{ form.coOwnerAddress.label }}</label>
         {{ form.coOwnerAddress|add_class:'form-control'|attr:"autocomplete:off" }}
         <div class="invalid-feedback">

@@ -74,6 +74,11 @@ urlpatterns = [
   path('coownerinfo/<int:coowner_id>/coownerheir/update/<int:id>/',coownerheir_update,name="coowner_heir_update" ),
   path('coownerinfo/<int:coowner_id>/coownerheir/delete/<int:id>/',coownerheir_delete,name="coowner_heir_delete" ),
 
+  # 承受訴訟人之繼承人
+  path('coownerheir/<int:coowner_heir_id>/coownerlitigation/create/',coownerlitigation_create,name="coowner_litigation_create" ),
+  path('coownerheir/<int:coowner_heir_id>/coownerlitigation/update/<int:id>/',coownerlitigation_update,name="coowner_litigation_update" ),
+  path('coownerheir/<int:coowner_heir_id>/coownerlitigation/delete/<int:id>/',coownerlitigation_delete,name="coowner_litigation_delete" ),
+  
   path('letter/<int:pk>/edit/', LetterUpdateView.as_view(), name='letter_edit'),
   path('deedTaxPDFView/<int:pk>/', deedtaxPDFView.as_view(), name='deedtax_pdf_view'),
   path('realestateregistrationPDFView/<int:pk>/', realestateregistrationPDFView.as_view(),name="realestateregistrationPDF_View"),

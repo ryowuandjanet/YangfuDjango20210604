@@ -19,9 +19,14 @@
 </head>
 <body>
   <h1>共有人清單</h1>
-  {% for coowner in object.coownerinfos.all %}
-    {{coowner.coOwnerName}}
+  {{yfcases}}<br>
+  {{coowners}}<br>
+  {{coowner_life}}<br>
+  {% for co in coowner_life %}
+    {{co}}
   {% endfor %}
+  
+  
 
 </body>
 </html>
