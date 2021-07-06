@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
-{% load crispy_forms_tags %}
 
 {% block style %}
   <style type="text/css">
@@ -19,28 +18,20 @@
     .btn__icon__create { background-color: MediumBlue; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
     .btn__icon__update { background-color: DarkGreen; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
     .btn__icon__delete { background-color: DarkRed; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
+    .btn__icon__return { background-color: DimGrey; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
   </style>
 {% endblock style %}
 
 {% block content %}
 <!-- 程式主題的部份 -->
-<form action="{% url 'yfcase:coowner_edit' yfcase.id %}" method="post" id="Coowner_edit_form" data-townships-url="{% url 'yfcase:ajax_load_townships' %}">{% csrf_token %}
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
+  <h1>{{title}}</h1>
 
-      <!-- header -->
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-
-      <div>
-        <a href="{% url 'yfcase:coowner_create' object.id %}" class="btn__icon__create">新增共有人</a>
-      </div>
-
-      {% if object.coownerinfos.count > 0 %} 
+  <div>
+    <a href="{% url 'yfcase:coowner_create' object.id %}" class="btn__icon__create">新增共有人</a>
+    <a href="{% url 'yfcase:home' %}" class="btn__icon__return">返回</a>
+  </div>
+  
+  {% if yfcase.coownerinfos.count > 0 %} 
         <table class="coowner__table">
           <tr>
             <th rowspan="2">操作</th>
@@ -57,7 +48,7 @@
             <th>個人</th>
             <th>所有</th>
           </tr>
-          {% for coownerinfo in object.coownerinfos.all %}
+          {% for coownerinfo in yfcase.coownerinfos.all %}
             <tr>
               <td class="coowner__td">
                 <a href="{% url 'yfcase:coowner_update' object.id coownerinfo.id %}" class="btn__icon__update">更新</a>
@@ -167,48 +158,11 @@
           {% endfor %}
         </table>
       {% endif %}
-        
-      <!-- footer -->
 
-        <div class="row mt-3">
-          <div class="col-md-6 mt-3">
-            <a href="{% url 'yfcase:home' %}" class="btn btn-secondary form-control" >返回</a>
-          </div>
-          <div class="col-md-6 mt-3">
-            <input class="btn btn-primary form-control" type="submit" value="建立" />
-          </div>
-        </div>
-
-    </div>
-  </div>
-</form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
-  $(document).ready(function(){
-    const complaint_clent_id = JSON.parse(document.getElementById('complaint_clent_id').textContent);
-    document.getElementById("id_yfcaseComplaintLitigationAgent").value = complaint_clent_id; 
-    // 此為欄位驗証的JS
-    $('#Coowner_edit_form').bootstrapValidator({
-      // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-      feedbackIcons: {
-          valid: 'glyphicon glyphicon-ok',
-          invalid: 'glyphicon glyphicon-remove',
-          validating: 'glyphicon glyphicon-refresh'
-      },
-      fields: {
-      }
-    });
-
-  });
-
-  $(function() {
-    $(".datepicker").datepicker({
-      dateFormat: "yy-mm-dd"
-    });
-  });
-
-
+ 
 </script>
 {% endblock content %}

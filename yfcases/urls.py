@@ -65,6 +65,7 @@ urlpatterns = [
   path('deedtax/<int:pk>/edit/', DeedtaxUpdateView.as_view(), name='deedtax_edit'),
   path('realestateregistration/<int:pk>/edit/', RealestateregistrationUpdateView.as_view(), name='realestateregistration_edit'),
   path('complaint/<int:pk>/edit/', ComplaintUpdateView.as_view(), name='complaint_edit'),
+  path('coowner/<int:pk>/edit/', CoownertUpdateView.as_view(), name='coowner_edit'),
   # 共有人
   path('yfcase/<int:yfcase_id>/coownerinfo/create/',coownerinfo_create,name="coowner_create"),
   path('yfcase/<int:yfcase_id>/coownerinfo/update/<int:id>/',coownerinfo_update,name="coowner_update" ),

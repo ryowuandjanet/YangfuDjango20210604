@@ -672,7 +672,7 @@ def font_path():
 
 # PDFkit-評量表
 class yfratingscalePDFView(PDFView):
-  template_name = './pdf/yfratingscale_pdf.html'
+
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
@@ -860,7 +860,7 @@ def coownerinfo_create(request,yfcase_id=None):
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
-    return redirect("yfcase:complaint_edit", yfcase_id)
+    return redirect("yfcase:coowner_edit", yfcase_id)
   context = {
     "form" : form, 
     "instance_yfcase": instance_yfcase,
@@ -875,7 +875,7 @@ def coownerinfo_update(request,yfcase_id=None,id=None):
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
-    return redirect("yfcase:complaint_edit", yfcase_id)
+    return redirect("yfcase:coowner_edit", yfcase_id)
   context={
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
@@ -889,7 +889,7 @@ def coownerinfo_delete(request,yfcase_id=None,id=None):
   instance = get_object_or_404(CoOwnerInfo, id=id)
   if request.method == "POST":
     instance.delete()
-    return redirect("yfcase:complaint_edit", instance_yfcase.id)
+    return redirect("yfcase:coowner_edit", instance_yfcase.id)
   context = {
     "instance": instance,
     "instance_yfcase": instance_yfcase,
@@ -906,7 +906,7 @@ def coownerheir_create(request,coowner_id=None):
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
-    return redirect("yfcase:complaint_edit", instance_coowner.yfcase_id)
+    return redirect("yfcase:coowner_edit", instance_coowner.yfcase_id)
   context = {
     "form" : form, 
     "instance_coowner": instance_coowner,
@@ -921,7 +921,7 @@ def coownerheir_update(request,coowner_id=None,id=None):
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
-    return redirect("yfcase:complaint_edit", instance_coowner.yfcase_id)
+    return redirect("yfcase:coowner_edit", instance_coowner.yfcase_id)
   context={
     "instance_coowner_heir" : instance_coowner_heir,
     "instance_coowner" : instance_coowner,
@@ -935,7 +935,7 @@ def coownerheir_delete(request,coowner_id=None,id=None):
   instance_coowner_heir = get_object_or_404(CoOwnerHeir,id=id)
   if request.method == "POST":
     instance_coowner_heir.delete()
-    return redirect("yfcase:complaint_edit", instance_coowner.yfcase_id)
+    return redirect("yfcase:coowner_edit", instance_coowner.yfcase_id)
   context = {
     "instance_coowner_heir" : instance_coowner_heir,
     "instance_coowner" : instance_coowner,
@@ -954,7 +954,7 @@ def coownerlitigation_create(request,coowner_heir_id=None):
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
-    return redirect("yfcase:complaint_edit", instance_coowner.yfcase_id)
+    return redirect("yfcase:coowner_edit", instance_coowner.yfcase_id)
   context = {
     "form" : form, 
     "instance_coowner_heir": instance_coowner_heir,
@@ -972,7 +972,7 @@ def coownerlitigation_update(request,coowner_heir_id=None,id=None):
   if form.is_valid():
     instance=form.save(commit=False)
     instance.save()
-    return redirect("yfcase:complaint_edit", instance_coowner.yfcase_id)
+    return redirect("yfcase:coowner_edit", instance_coowner.yfcase_id)
   context={
     "instance_coowner_heir" : instance_coowner_heir,
     "instance_coowner_litigation" : instance_coowner_litigation,
@@ -988,7 +988,7 @@ def coownerlitigation_delete(request,coowner_heir_id=None,id=None):
   instance_coowner =CoOwnerInfo.objects.get(id=instance_coowner_heir.coowner_id)
   if request.method == "POST":
     instance_coowner_litigation.delete()
-    return redirect("yfcase:complaint_edit", instance_coowner.yfcase_id)
+    return redirect("yfcase:coowner_edit", instance_coowner.yfcase_id)
   context = {
     "instance_coowner_heir" : instance_coowner_heir,
     "instance_coowner_litigation" : instance_coowner_litigation,
@@ -1029,6 +1029,20 @@ class LetterUpdateView(UpdateView):
     context['title'] = '編輯得標後相關資料'
     return context
 
+# Form(Edit)-共有人
+class CoownertUpdateView(UpdateView):
+  model=Yfcase
+  form_class = CoOwnerInfoForm
+  template_name="yfcase/afterwinner/Coowner_edit.html"
+
+  def get_context_data(self, **kwargs):
+    context = super(CoownertUpdateView,self).get_context_data(**kwargs)
+    yfcase=Yfcase.objects.get(pk=self.kwargs.get('pk'))
+    context["author_id"]=self.request.user.id
+    context['value'] = '編輯'
+    context['title'] = '共有人資訊'
+    return context
+
 # PDFkit-存證信函
 class letterPDFView(PDFView):
   template_name = './pdf/letter_pdf.html'
@@ -1044,27 +1058,25 @@ class letterPDFView(PDFView):
     })
     return context
 
-# PDFkit-存證信函
+# PDFkit-共有人
 class coownerPDFView(PDFView):
   template_name = './pdf/coowner_pdf.html'
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     pk = kwargs.get('pk')
-    yfcases = Yfcase.objects.get(pk=pk)
-    coowners = yfcases.coownerinfos.all()
-    coowner_life = list(yfcases.coownerinfos.filter(coOwnerLifeOrDie="殁").values_list('id', flat=True)) 
-    context['coownerheir'] = CoOwnerHeir.objects.filter(id=coowner_life)
-    # coowner_life = yfcases.coownerinfos.filter(coOwnerLifeOrDie="存")
+    yfcase = Yfcase.objects.get(pk=pk)
+    coowners = yfcase.coownerinfos.filter(yfcase_id=yfcase.id)
     
-    # coownerheirs = coowners.coownerheirs.all()
-    # 共有人在世
-    # coowner_life = yfcases.coownerinfos.order_by(coOwnerLifeOrDie="存")
+    # coowners = yfcases.coownerinfos.all()
+    # coowner_life = list(yfcases.coownerinfos.filter(coOwnerLifeOrDie="殁").values_list('id', flat=True)) 
+    # context['coownerheir'] = CoOwnerHeir.objects.filter(id=coowner_life)
+
     users = CustomUser.objects.all()
     context.update({
-        'yfcases': yfcases,
+        'yfcase': yfcase,
         'coowners': coowners,
-        'coowner_life': coowner_life,
+        # 'coowner_life': coowner_life,
         'users': users,
     })
     return context

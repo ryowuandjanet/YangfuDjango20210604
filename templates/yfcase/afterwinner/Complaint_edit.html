@@ -151,7 +151,7 @@
               <td class="coowner__td">{{coownerinfo.coOwnerBuildHPAll}}</td>
               <td class="coowner__td">{{coownerinfo.coOwnerLifeOrDie|default_if_none:""}}</td>
               <td class="coowner__td">
-                <a href="{% url 'yfcase:coowner_heir_create' coownerinfo.id %}" class="btn__icon__create">新增</a>
+                <a href="{% url 'yfcase:coowner_heir_create' coownerinfo.id %}" class="btn__icon__create">新增繼承人</a>
               </td>
             </tr>
             {% if coownerinfo.coownerheirs.count > 0 %}
@@ -192,7 +192,7 @@
                         <td>{{coownerheir.coOwnerHeirBuildHPAll}}</td>
                         <td>{{coownerheir.coOwnerHeirLifeOrDie|default_if_none:""}}</td>
                         <td>
-                          <a href="{% url 'yfcase:coowner_litigation_create' coownerheir.id %}" class="btn__icon__create">新增</a>
+                          <a href="{% url 'yfcase:coowner_litigation_create' coownerheir.id %}" class="btn__icon__create">新增訴訟人</a>
                         </td>
                       </tr>
                       {% if coownerheir.coownerlitigations.count > 0 %}
