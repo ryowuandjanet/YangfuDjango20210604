@@ -1067,6 +1067,7 @@ class coownerPDFView(PDFView):
     pk = kwargs.get('pk')
     yfcase = Yfcase.objects.get(pk=pk)
     coowners = yfcase.coownerinfos.filter(yfcase_id=yfcase.id)
+  
     
     # coowners = yfcases.coownerinfos.all()
     # coowner_life = list(yfcases.coownerinfos.filter(coOwnerLifeOrDie="殁").values_list('id', flat=True)) 
