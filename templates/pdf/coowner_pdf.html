@@ -69,13 +69,46 @@
     {% if coowners.count > 0 %}
       {% for coownerinfo in coowners.all %}
         <tr>
-          {% if coownerinfo.coOwnerLifeOrDie == "存" %}
-            <td>2</td>
-            <td>被告{{coownerinfo.coOwnerName}}</td>
-            <td>12分之2</2></td>
-            <td>12分之2</td>
-            <td></td>
-          {% endif %}
+            <td>
+
+              {{coowners|addOne}}
+
+            </td>
+            <td>
+              {% if coownerinfo.coOwnerLifeOrDie == "存" %}
+                被告{{coownerinfo.coOwnerName}}
+              {% else %}
+                {% for coownerheir in coownerinfo.coownerheirs.all %}
+                  {% if coownerheir.coOwnerHeirLifeOrDie == "存" %}
+                    被告{{coownerheir.coOwnerHeirName}}<br>
+                  {% endif %}
+                  {% for coownerlitigation in coownerheir.coownerlitigations.all %}
+                    {% if coownerlitigation.coOwnerLitigationLifeOrDie == "存" %}
+                      被告{{coownerlitigation.coOwnerLitigationName}}<br>
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+              {% endif %}
+            </td>
+            <td>
+              {{coownerinfo.coOwnerLandHPAll}}分之{{coownerinfo.coOwnerLandHPPersonnal}}<br>
+              {% if coownerinfo.coownerheirs.count > 0 %}
+                (公同共有)
+              {% endif %}
+            </2></td>
+            <td>
+              {{coownerinfo.coOwnerBuildHPAll}}分之{{coownerinfo.coOwnerBuildHPPersonnal}}<br>
+              {% if coownerinfo.coownerheirs.count > 0 %}
+                (連帶負擔)
+              {% endif %}
+            </td>
+            <td>
+              {% if coownerinfo.coownerheirs.count > 0 %}
+                原共有人{{coownerinfo.coOwnerName}}
+              {% endif %}
+              
+            </td>
+          
         </tr>
       {% endfor %}
     {% endif %}

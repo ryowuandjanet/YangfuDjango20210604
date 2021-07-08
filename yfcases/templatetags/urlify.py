@@ -3,7 +3,6 @@ from decimal import *
 from django import template
 from datetime import datetime
 from django.utils.safestring import mark_safe
-
  
 register=template.Library()
  
@@ -159,4 +158,11 @@ def isWordCount(value,wordCount):
     return mark_safe( "<div style='font-size: 9pt;margin:3px 0px;'>" + str(value) +  "</div>")
   else:
     return mark_safe( "<div style='font-size: 12pt;'>" + str(value) +  "</div>")
+
+# 編號由2開始，循環一次加1
+@register.filter
+def addOne(value,personname):
+  valueList = list(value)
+  # kk = valueList.index(personname)
+  return valueList
 
