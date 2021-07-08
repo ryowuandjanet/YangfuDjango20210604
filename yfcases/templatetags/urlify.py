@@ -1,8 +1,10 @@
+import numpy as np
 from urllib.parse import quote
 from decimal import *
 from django import template
 from datetime import datetime
 from django.utils.safestring import mark_safe
+
  
 register=template.Library()
  
@@ -161,8 +163,8 @@ def isWordCount(value,wordCount):
 
 # 編號由2開始，循環一次加1
 @register.filter
-def addOne(value,personname):
-  valueList = list(value)
+def addOne(value):
+  valueList = np.array(value)
   # kk = valueList.index(personname)
   return valueList
 
