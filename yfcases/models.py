@@ -157,6 +157,13 @@ class Yfcase(models.Model):
   # 存證信函
   yfcaseLetterAgent = models.CharField(u'存證信函代理人',max_length=100,null=True,blank=True)
   
+  # 共有人
+  yfcaseCownerAgent = models.CharField(u'共有人代理人',max_length=100,null=True,blank=True)
+  yfcasecoOwnerLandHPPersonnal=models.DecimalField(u'土地個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  yfcasecoOwnerLandHPAll=models.DecimalField(u'土地所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  yfcasecoOwnerBuildHPPersonnal=models.DecimalField(u'建物個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  yfcasecoOwnerBuildHPAll=models.DecimalField(u'建物所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  
   def __str__(self):
     return self.yfcaseCaseNumber
     

@@ -161,10 +161,12 @@ def isWordCount(value,wordCount):
   else:
     return mark_safe( "<div style='font-size: 12pt;'>" + str(value) +  "</div>")
 
-# 編號由2開始，循環一次加1
-@register.filter
-def addOne(value):
-  valueList = np.array(value)
-  # kk = valueList.index(personname)
-  return valueList
+# 編號由2開始，回傳陣列中對應字串的第幾個位置
+# 用法{{coowners.all|times:coownerinfo.coOwnerName}}
+# coowners.all為QuestSet ,coownerinfo.coOwnerName為coowners.all其中一人的名字
+@register.filter(name='times') 
+def times(cownerinfo,coownername):
+  return list(cownerinfo.values_list('coOwnerName',flat=True)).index(coownername)+2
+
+
 

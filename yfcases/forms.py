@@ -707,3 +707,14 @@ class LetterForm(forms.ModelForm):
     fields =[
       "yfcaseLetterAgent"
     ] 
+    
+# ======= 共有人 =======
+class CoOwnerForm(forms.ModelForm):
+  yfcaseCownerAgent = forms.ModelChoiceField(label="共有人代理人",queryset=CustomUser.objects.filter(userRole=0), required=False)
+  class Meta:
+    model=Yfcase
+    fields =[
+      "yfcaseCownerAgent","yfcasecoOwnerLandHPPersonnal","yfcasecoOwnerLandHPAll","yfcasecoOwnerBuildHPPersonnal","yfcasecoOwnerBuildHPAll"
+    ] 
+    
+    

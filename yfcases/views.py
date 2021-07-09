@@ -1032,12 +1032,15 @@ class LetterUpdateView(UpdateView):
 # Form(Edit)-共有人
 class CoownertUpdateView(UpdateView):
   model=Yfcase
-  form_class = CoOwnerInfoForm
+  form_class = CoOwnerForm
   template_name="yfcase/afterwinner/Coowner_edit.html"
-
+  success_url = reverse_lazy('yfcase:home')
+  
   def get_context_data(self, **kwargs):
     context = super(CoownertUpdateView,self).get_context_data(**kwargs)
     yfcase=Yfcase.objects.get(pk=self.kwargs.get('pk'))
+    cowner_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseCownerAgent
+    context['cowner_clent_id'] =CustomUser.objects.get(userFullName=cowner_user_id).id
     context["author_id"]=self.request.user.id
     context['value'] = '編輯'
     context['title'] = '共有人資訊'
@@ -1067,6 +1070,7 @@ class coownerPDFView(PDFView):
     pk = kwargs.get('pk')
     yfcase = Yfcase.objects.get(pk=pk)
     coowners = yfcase.coownerinfos.filter(yfcase_id=yfcase.id)
+    yfcasecowneragent = CustomUser.objects.get(userFullName=yfcase.yfcaseCownerAgent)
   
     
     # coowners = yfcases.coownerinfos.all()
@@ -1077,7 +1081,7 @@ class coownerPDFView(PDFView):
     context.update({
         'yfcase': yfcase,
         'coowners': coowners,
-        # 'coowner_life': coowner_life,
+        'yfcasecowneragent': yfcasecowneragent,
         'users': users,
     })
     return context

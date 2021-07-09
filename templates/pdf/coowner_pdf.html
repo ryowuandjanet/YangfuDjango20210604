@@ -59,59 +59,57 @@
       <th>應負擔之訴訟費用比例</th>
       <th>備註</th>
     </tr>
-    <tr>
-      <td>1</td>
-      <td>原告劉家彰</td>
-      <td>12分之2</2></td>
-      <td>12分之2</td>
-      <td></td>
-    </tr>
+    {% if yfcase.yfcaseCownerAgent %}
+      <tr>
+        <td>1</td>
+        <td>原告{{ yfcase.yfcaseCownerAgent }}</td>
+        <td>{{yfcase.yfcasecoOwnerLandHPAll}}分之{{yfcase.yfcasecoOwnerLandHPPersonnal}}<br></2></td>
+        <td>{{yfcase.yfcasecoOwnerBuildHPAll}}分之{{yfcase.yfcasecoOwnerBuildHPPersonnal}}<br></td>
+        <td></td>
+      </tr>
+    {% endif %}
     {% if coowners.count > 0 %}
       {% for coownerinfo in coowners.all %}
         <tr>
-            <td>
-
-              {{coowners|addOne}}
-
-              
-
-            </td>
-            <td>
-              {% if coownerinfo.coOwnerLifeOrDie == "存" %}
-                被告{{coownerinfo.coOwnerName}}
-              {% else %}
-                {% for coownerheir in coownerinfo.coownerheirs.all %}
-                  {% if coownerheir.coOwnerHeirLifeOrDie == "存" %}
-                    被告{{coownerheir.coOwnerHeirName}}<br>
+          <td>
+            {{coowners.all|times:coownerinfo.coOwnerName}}
+          </td>
+          <td>
+            {% if coownerinfo.coOwnerLifeOrDie == "存" %}
+              被告{{coownerinfo.coOwnerName}}
+            {% else %}
+              {% for coownerheir in coownerinfo.coownerheirs.all %}
+                {% if coownerheir.coOwnerHeirLifeOrDie == "存" %}
+                  被告{{coownerheir.coOwnerHeirName}}<br>
+                {% endif %}
+                {% for coownerlitigation in coownerheir.coownerlitigations.all %}
+                  {% if coownerlitigation.coOwnerLitigationLifeOrDie == "存" %}
+                    被告{{coownerlitigation.coOwnerLitigationName}}<br>
                   {% endif %}
-                  {% for coownerlitigation in coownerheir.coownerlitigations.all %}
-                    {% if coownerlitigation.coOwnerLitigationLifeOrDie == "存" %}
-                      被告{{coownerlitigation.coOwnerLitigationName}}<br>
-                    {% endif %}
-                  {% endfor %}
                 {% endfor %}
-              {% endif %}
-            </td>
-            <td>
-              {{coownerinfo.coOwnerLandHPAll}}分之{{coownerinfo.coOwnerLandHPPersonnal}}<br>
-              {% if coownerinfo.coownerheirs.count > 0 %}
-                (公同共有)
-              {% endif %}
-            </2></td>
-            <td>
-              {{coownerinfo.coOwnerBuildHPAll}}分之{{coownerinfo.coOwnerBuildHPPersonnal}}<br>
-              {% if coownerinfo.coownerheirs.count > 0 %}
-                (連帶負擔)
-              {% endif %}
-            </td>
-            <td>
-              {% if coownerinfo.coownerheirs.count > 0 %}
-                原共有人{{coownerinfo.coOwnerName}}
-              {% endif %}
-              
-            </td>
-          
+              {% endfor %}
+            {% endif %}
+          </td>
+          <td>
+            {{coownerinfo.coOwnerLandHPAll}}分之{{coownerinfo.coOwnerLandHPPersonnal}}<br>
+            {% if coownerinfo.coownerheirs.count > 0 %}
+              (公同共有)
+            {% endif %}
+          </2></td>
+          <td>
+            {{coownerinfo.coOwnerBuildHPAll}}分之{{coownerinfo.coOwnerBuildHPPersonnal}}<br>
+            {% if coownerinfo.coownerheirs.count > 0 %}
+              (連帶負擔)
+            {% endif %}
+          </td>
+          <td>
+            {% if coownerinfo.coownerheirs.count > 0 %}
+              原共有人{{coownerinfo.coOwnerName}}
+            {% endif %}
+            
+          </td>
         </tr>
+
       {% endfor %}
     {% endif %}
     
@@ -138,13 +136,21 @@
     </tr>
     <tr>
       <td>1</td>
-      <td>臺南市</td>
-      <td>中西區</td>
-      <td>南門段</td>
-      <td></td>
-      <td>901</td>
+      <td>{{yfcase.yfcaseCity|default_if_none:""}}</td>
+      <td>{{yfcase.yfcaseTownship|default_if_none:""}}</td>
+      <td>{{yfcase.yfcaseBigSection|default_if_none:""}}</td>
+      <td>{{yfcase.yfcaseSmallSection|default_if_none:""}}</td>
+      <td>
+        {% for land in yfcase.lands.all %}
+          {{land.landNumber|default_if_none:""}}<br>
+        {% endfor %}
+      </td>
       <td>建</td>
-      <td>73.67</td>
+      <td>
+        {% if yfcase.builds.count > 0 %}
+          {{ yfcase.get_build_holding_point_after_group_total|floatformat:"2"|default_if_none:"" }}
+        {% endif %}
+      </td>
       <td>全部</td>
     </tr>
   </table>
@@ -168,13 +174,41 @@
     </tr>
     <tr>
       <td>1</td>
-      <td>774</td>
-      <td>台南市中西區南門段901地號</td>
-      <td>台南市中西區西門路1段702巷17號</td>
-      <td>2樓磚造，住家用</td>
       <td>
-        一層：57.75
-        一層：12.83
+        {% for build in yfcase.builds.all %}
+          {{build.buildNumber}}<br>
+        {% endfor %}
+      </td>
+      <td>
+        {{ yfcase.yfcaseCity|default_if_none:""}}{{ yfcase.yfcaseTownship|default_if_none:""}}{{ yfcase.yfcaseBigSection|default_if_none:""}}
+        {% for land in yfcase.lands.all %}
+          {{land.landNumber}}地號<br>
+        {% endfor %}
+
+      </td>
+      <td>{{yfcase.fullAddress}}</td>
+      <td>
+        {{ yfcase.yfcaseDeedtaxBuildingTransferStructure1|default_if_none:"" }}
+      </td>
+      <td>
+        {% if yfcase.yfcaseDeedtaxBuildingTransferArea1 %}
+          一層：{{ yfcase.yfcaseDeedtaxBuildingTransferArea1 }}<br>
+        {% endif %}
+        {% if yfcase.yfcaseDeedtaxBuildingTransferArea2 %}
+          二層：{{ yfcase.yfcaseDeedtaxBuildingTransferArea2 }}<br>
+        {% endif %}
+        {% if yfcase.yfcaseDeedtaxBuildingTransferArea3 %}
+          三層：{{ yfcase.yfcaseDeedtaxBuildingTransferArea3 }}<br>
+        {% endif %}
+        {% if yfcase.yfcaseDeedtaxBuildingTransferArea4 %}
+          四層：{{ yfcase.yfcaseDeedtaxBuildingTransferArea4 }}<br>
+        {% endif %}
+        {% if yfcase.yfcaseDeedtaxBuildingTransferArea5 %}
+          五層：{{ yfcase.yfcaseDeedtaxBuildingTransferArea5 }}<br>
+        {% endif %}
+        {% if yfcase.yfcaseDeedtaxBuildingTransferArea6 %}
+          六層：{{ yfcase.yfcaseDeedtaxBuildingTransferArea6 }}<br>
+        {% endif %}
         總面積：70.58
       </td>
       <td>面積：9.25</td>
@@ -187,12 +221,15 @@
   <table class="cowner__people__table">
     <tr>
       <td class="cowner__people__type">原告</td>
-      <td class="cowner__people__name">劉家彰</td>
-      <td class="cowner__people__info">住台南</td>
+      <td class="cowner__people__name">{{ yfcase.yfcaseCownerAgent }}</td>
+      <td class="cowner__people__info">
+        <span>住{{ yfcasecowneragent.userCountry|default_if_none:""}}{{ yfcasecowneragent.userTownship|default_if_none:""}}{{ yfcasecowneragent.userVillage|default_if_none:""}}{{ yfcasecowneragent.userNeighbor|default_if_none:""}}{{ yfcasecowneragent.userStreet|default_if_none:""}}{{ yfcasecowneragent.userSection|default_if_none:""}}{{ yfcasecowneragent.userLane|default_if_none:""}}{{ yfcasecowneragent.userAlley|default_if_none:""}}{{ yfcasecowneragent.userNumber|default_if_none:""}}{{ yfcasecowneragent.userFloor|default_if_none:""}}</span>
+      </td>
+      
     </tr>
     <tr>
       <td colspan=2></td>
-      <td>身分證統一編號：1111號</td>
+      <td>身分證統一編號：{{ yfcasecowneragent.userIdentityCard}}號</td>
     </tr>
     {% for coownerinfo in coowners.all %}
       {% if coownerinfo.coOwnerLifeOrDie == "存" %}
