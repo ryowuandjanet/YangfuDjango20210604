@@ -696,7 +696,7 @@ class DeedtaxUpdateView(UpdateView):
     context['deedtax_clent_id'] =CustomUser.objects.get(userFullName=deedtax_user_id).id
     context["author_id"]=self.request.user.id
     context['value'] = '編輯'
-    context['title'] = '編輯得標後相關資料'
+    context['title'] = '契稅申請單相關資料'
     return context
 
 # PDFkit-契稅申請書
@@ -727,7 +727,7 @@ class RealestateregistrationUpdateView(UpdateView):
     context['realestateregistration_user_id'] =CustomUser.objects.get(userFullName=realestateregistration_user_id).id
     context["author_id"]=self.request.user.id
     context['value'] = '編輯'
-    context['title'] = '編輯得標後相關資料'
+    context['title'] = '不動產登記清冊相關資料'
     return context
 
 # PDFkit-不動產土地登記申請書
@@ -848,7 +848,7 @@ class ComplaintUpdateView(UpdateView):
     data['instace'] =Yfcase.objects.get(pk=self.kwargs.get('pk'))
     data["author_id"]=self.request.user.id
     data['value'] = '編輯'
-    data['title'] = '編輯得標後相關資料'
+    data['title'] = '訴訟狀相關資料'
     return data 
   
 # Form(Edit)-共有人資訊
@@ -1026,7 +1026,7 @@ class LetterUpdateView(UpdateView):
     context['letter_clent_id'] =CustomUser.objects.get(userFullName=letter_user_id).id
     context["author_id"]=self.request.user.id
     context['value'] = '編輯'
-    context['title'] = '編輯得標後相關資料'
+    context['title'] = '存證信函相關資料'
     return context
 
 # Form(Edit)-共有人

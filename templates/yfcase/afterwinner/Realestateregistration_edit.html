@@ -11,82 +11,86 @@
 
 {% block content %}
 
+<div class="col-md p-2 bg-light">
+  <!-- 程式主題的部份 -->
+  <form action="{% url 'yfcase:realestateregistration_edit' yfcase.id %}" method="post" id="editRealestateregistrationModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}">{% csrf_token %}
 
-<!-- 程式主題的部份 -->
-<form action="{% url 'yfcase:realestateregistration_edit' yfcase.id %}" method="post" id="editRealestateregistrationModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" >{% csrf_token %}
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- header -->
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <!-- body -->
-      <div class="modal-body">
- 
-        不動產登記
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseRealEstateRegistrationRegisteredAgent.id_for_label }}">{{ form.yfcaseRealEstateRegistrationRegisteredAgent.label }}</label>
-          {{ form.yfcaseRealEstateRegistrationRegisteredAgent|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseRealEstateRegistrationRegisteredAgent.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseRealEstateRegistrationDateOfCause.id_for_label }}">{{ form.yfcaseRealEstateRegistrationDateOfCause.label }}</label>
-          {{ form.yfcaseRealEstateRegistrationDateOfCause|add_class:'form-control fieldcolor datepicker pt-0' }}
-          <span class="help-block">{{ form.yfcaseRealEstateRegistrationDateOfCause.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseRealEstateRegistrationReasonForRegistration.id_for_label }}">{{ form.yfcaseRealEstateRegistrationReasonForRegistration.label }}</label>
-          {{ form.yfcaseRealEstateRegistrationReasonForRegistration|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseRealEstateRegistrationReasonForRegistration.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseRealEstateRegistrationRegistrationNote.id_for_label }}">{{ form.yfcaseRealEstateRegistrationRegistrationNote.label }}</label>
-          {{ form.yfcaseRealEstateRegistrationRegistrationNote|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseRealEstateRegistrationRegistrationNote.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          {% render_field form.yfcaseApplyAcrossInstitutions|attr:"multiple:multiple"|attr:"data-plugin-multiselect" %} <span style="color:red;">跨所申請</span>
-          <span class="help-block">{{ form.yfcaseApplyAcrossInstitutions.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseAcceptingAuthorityTownship.id_for_label }}">{{ form.yfcaseAcceptingAuthorityTownship.label }}</label>
-          {{ form.yfcaseAcceptingAuthorityTownship|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseAcceptingAuthorityTownship.error }}</span>
-        </div>
-
-        {{ realestateregistration_user_id|json_script:"realestateregistration_clent_id" }}
-
-      </div>
-
-      <!-- footer -->
-      <div class="modal-footer">
-        <a href="{% url 'yfcase:home' %}" class="btn btn-secondary col">返回</a>
-        <input class="btn btn-primary col-md-3" type="submit" value="建立" />
-      </div>
-
+  <!-- header -->
+  <h1>{{title}}</h1>
+  
+  <!-- body -->
+  <!--不動產登記代理人-->
+  <div class="col mb-3">
+    <div class="form-group">
+      <label>{{ form.yfcaseRealEstateRegistrationRegisteredAgent.label }}</label>
+      {{ form.yfcaseRealEstateRegistrationRegisteredAgent|add_class:'form-control' }}
+      <span class="help-block">{{ form.yfcaseRealEstateRegistrationRegisteredAgent.error }}</span>
     </div>
   </div>
+  <!--原因發生日期-->
+  <div class="col mb-3">
+    <div class="form-group">
+      <label>{{ form.yfcaseRealEstateRegistrationDateOfCause.label }}</label>
+      {{ form.yfcaseRealEstateRegistrationDateOfCause|add_class:'form-control fieldcolor datepicker pt-0' }}
+      <span class="help-block">{{ form.yfcaseRealEstateRegistrationDateOfCause.error }}</span>
+    </div>
+  </div>
+  <!--登記原因-->
+  <div class="col mb-3">
+    <div class="form-group">
+      <label>{{ form.yfcaseRealEstateRegistrationReasonForRegistration.label }}</label>
+      {{ form.yfcaseRealEstateRegistrationReasonForRegistration|add_class:'form-control' }}
+      <span class="help-block">{{ form.yfcaseRealEstateRegistrationReasonForRegistration.error }}</span>
+    </div>
+  </div>
+  <!--登記備註-->
+  <div class="col mb-3">
+    <div class="form-group">
+      <label>{{ form.yfcaseRealEstateRegistrationRegistrationNote.label }}</label>
+      {{ form.yfcaseRealEstateRegistrationRegistrationNote|add_class:'form-control' }}
+      <span class="help-block">{{ form.yfcaseRealEstateRegistrationRegistrationNote.error }}</span>
+    </div>
+  </div>
+  <!--跨所申請-->
+  <div class="col mb-3">
+    <div class="form-group">
+      {% render_field form.yfcaseApplyAcrossInstitutions|attr:"multiple:multiple"|attr:"data-plugin-multiselect" %} <span style="color:red;">跨所申請</span>
+      <span class="help-block">{{ form.yfcaseApplyAcrossInstitutions.error }}</span>
+    </div>
+  </div>
+  <!--受理機關-鄉鎮-->
+  <div class="col mb-3">
+    <div class="form-group">
+      <label>{{ form.yfcaseAcceptingAuthorityTownship.label }}</label>
+      {{ form.yfcaseAcceptingAuthorityTownship|add_class:'form-control' }}
+      <span class="help-block">{{ form.yfcaseAcceptingAuthorityTownship.error }}</span>
+    </div>
+  </div>
+
+  {{ realestateregistration_user_id|json_script:"realestateregistration_clent_id" }}
+
+  <!-- footer -->
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <a href="{% url 'yfcase:home' %}" class="btn btn-secondary form-control">返回</a>
+    </div>
+    <div class="col-md-6 mb-3">
+      <input class="btn btn-primary form-control" type="submit" value="建立" />
+    </div>
+  </div>
+
 </form>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
+  /* global $ */
   $(document).ready(function(){
     const realestateregistration_clent_id = JSON.parse(document.getElementById('realestateregistration_clent_id').textContent);
     document.getElementById("id_yfcaseRealEstateRegistrationRegisteredAgent").value = realestateregistration_clent_id;
     // 此為欄位驗証的JS
-    $('#yfcaseCreateForm').bootstrapValidator({
+    $('#editRealestateregistrationModal').bootstrapValidator({
       // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
       feedbackIcons: {
           valid: 'glyphicon glyphicon-ok',
@@ -94,46 +98,13 @@
           validating: 'glyphicon glyphicon-refresh'
       },
       fields: {
-          yfcaseCaseNumber: {
-            validators: {
-              notEmpty: {
-                message: '此一欄位不得為空'
-              },
-              stringLength: {
-                min: 5,
-                max: 50,
-                message: '案件名稱必需介於5-50個文字'
-              }
-            }
-          },
-          yfcaseCity: {
-            validators: {
-              notEmpty: {
-                message: '此為必要欄位'
-              }
-            }
-          },
-          yfcaseTownship: {
-            validators: {
-              notEmpty: {
-                message: '此為必要欄位'
-              }
-            }
-          },
-          yfcaseOtherAddress: {
-            validators: {
-              notEmpty: {
-                message: '此為必要欄位'
-              }
-            }
-          },
-          yfcaseCompany: {
-            validators: {
-              notEmpty: {
-                message: '必選欄位'
-              }
+        yfcaseRealEstateRegistrationRegisteredAgent: {
+          validators: {
+            notEmpty: {
+              message: '此一欄位不得為空'
             }
           }
+        }  
       }
     });
 

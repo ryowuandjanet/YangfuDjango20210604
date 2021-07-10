@@ -10,43 +10,38 @@
 {% endblock style %}
 
 {% block content %}
-<!-- 程式主題的部份 -->
-<form action="{% url 'yfcase:letter_edit' yfcase.id %}" method="post" id="letter_edit_form" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" >{% csrf_token %}
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- header -->
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <!-- body -->
-      <div class="modal-body">
-        存證信函 - 案號：{{ yfcase.yfcaseCaseNumber }}
-        <!--基本資料欄位-->
-        <div class="form-group">
-          <label for="{{ form.yfcaseLetterAgent.id_for_label }}">{{ form.yfcaseLetterAgent.label }}</label>
-          {{ form.yfcaseLetterAgent|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseLetterAgent.error }}</span>
-        </div>
-        {{ letter_clent_id|json_script:"letter_clent_id" }}
-
-      </div>
-
-      <!-- footer -->
-      <div class="modal-footer">
-        
-        <button type="button" class="btn btn-secondary col" data-dismiss="modal">返回</button>
-        <input class="btn btn-primary col-md-3" type="submit" value="建立" />
-        
-      </div>
-
+<div class="col-md p-2 bg-light">
+  <!-- 程式主題的部份 -->
+  <form action="{% url 'yfcase:letter_edit' yfcase.id %}" method="post" id="letter_edit_form" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" >{% csrf_token %}
+    <!-- header -->
+    <h1>{{title}}</h1>
+    
+    <div class="col mb-3">
+      存證信函 - 案號：{{ yfcase.yfcaseCaseNumber }}
     </div>
-  </div>
-</form>
+    
+    <div class="col mb-3">
+      <div class="form-group">
+        <label for="{{ form.yfcaseLetterAgent.id_for_label }}">{{ form.yfcaseLetterAgent.label }}</label>
+        {{ form.yfcaseLetterAgent|add_class:'form-control' }}
+        <span class="help-block">{{ form.yfcaseLetterAgent.error }}</span>
+      </div>
+    </div>
+      
+    {{ letter_clent_id|json_script:"letter_clent_id" }}
+
+    <!-- footer -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <button type="button" class="btn btn-secondary col" data-dismiss="modal">返回</button>
+      </div>
+      <div class="col-md-6 mb-3">
+        <input class="btn btn-primary col-md-3" type="submit" value="建立" />
+      </div>
+    </div>
+    
+  </form>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
