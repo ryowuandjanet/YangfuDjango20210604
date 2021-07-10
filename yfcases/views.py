@@ -672,7 +672,7 @@ def font_path():
 
 # PDFkit-評量表
 class yfratingscalePDFView(PDFView):
-
+  template_name = './pdf/yfratingscale_pdf.html'
 
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)

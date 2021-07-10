@@ -762,7 +762,8 @@
                     <br>
                   {% endif %}
                   {% if objectbuild.objectBuildTotalPrice %}| 總價={{ objectbuild.objectBuildTotalPrice|floatformat:0|intcomma }}元{% endif %}
-                  {% if objectbuild.objectBuildBuildArea %}| 建坪={{ objectbuild.objectBuildBuildArea }}元{% endif %}
+                  {% if objectbuild.objectBuildBuildArea %}| 建坪={{ objectbuild.objectBuildBuildArea }}坪{% endif %}
+                  {% if objectbuild.objectBuildSubBuildArea > 0 %}[增坪={{ objectbuild.objectBuildSubBuildArea }}坪X0.5]{% endif %}
                   {% if objectbuild.get_objectbuild_ping_price %}| 單價={{ objectbuild.get_objectbuild_ping_price|floatformat:0|intcomma }}元{% endif %}
                 </td>
               </tr>
@@ -823,7 +824,11 @@
           </td>
           <!--輸入計算-->
           <td>
-            {{objectbuild.get_a_plus_value_total|floatformat:0|intcomma}} 
+            {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
+              {{ objectbuild.get_objectbuild_ping_price_abc_calculation|floatformat:0|intcomma }}
+            {% else %}
+              {{ objectbuild.get_objectbuild_ping_price_ab_calculation|floatformat:0|intcomma }}
+            {% endif %}
           </td>
         </tr>
         </tr>
