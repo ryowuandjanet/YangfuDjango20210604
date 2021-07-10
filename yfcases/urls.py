@@ -60,8 +60,6 @@ urlpatterns = [
   path('export-excel/',export_yfcase,name='export'),
 
   #PDF轉檔
-  
-  path('yfratingscalePDFView/<int:pk>/', yfratingscalePDFView.as_view(),name="yfratingscalePDF_View"),
   path('deedtax/<int:pk>/edit/', DeedtaxUpdateView.as_view(), name='deedtax_edit'),
   path('realestateregistration/<int:pk>/edit/', RealestateregistrationUpdateView.as_view(), name='realestateregistration_edit'),
   path('complaint/<int:pk>/edit/', ComplaintUpdateView.as_view(), name='complaint_edit'),
@@ -79,7 +77,8 @@ urlpatterns = [
   path('coownerheir/<int:coowner_heir_id>/coownerlitigation/create/',coownerlitigation_create,name="coowner_litigation_create" ),
   path('coownerheir/<int:coowner_heir_id>/coownerlitigation/update/<int:id>/',coownerlitigation_update,name="coowner_litigation_update" ),
   path('coownerheir/<int:coowner_heir_id>/coownerlitigation/delete/<int:id>/',coownerlitigation_delete,name="coowner_litigation_delete" ),
-  
+ 
+  path('yfratingscalePDFView/<int:pk>/', yfratingscalePDFView.as_view(),name="yfratingscalePDF_View"), 
   path('letter/<int:pk>/edit/', LetterUpdateView.as_view(), name='letter_edit'),
   path('deedTaxPDFView/<int:pk>/', deedtaxPDFView.as_view(), name='deedtax_pdf_view'),
   path('realestateregistrationPDFView/<int:pk>/', realestateregistrationPDFView.as_view(),name="realestateregistrationPDF_View"),

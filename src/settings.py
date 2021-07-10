@@ -9,13 +9,13 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+
 import os
 import src.db as db
-
 from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -150,6 +150,7 @@ STATICFILES_DIRS=[
 ]
 # 運行python manage.py collectstatic後會在根目錄下產生一個/static_cdn
 STATIC_ROOT=os.path.join(BASE_DIR, "static_cdn")
+
 
 
 # Default primary key field type

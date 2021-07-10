@@ -37,7 +37,7 @@
             共有人分割--代理人
           </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
           <div class="accordion-body bg-light">
             <div class="row">
               <div class="col-md-4 mb-3">
@@ -45,7 +45,7 @@
                   <label>
                     {{ form.yfcaseCownerAgent.label }}
                   </label>
-                  {{ form.yfcaseCownerAgent|add_class:'form-control fieldcolor pt-0' }}
+                  {{ form.yfcaseCownerAgent|add_class:'form-control border border-dark fieldcolor' }}
                   <span class="help-block">
                     {{ form.yfcaseCownerAgent.error }}
                   </span>
@@ -56,7 +56,7 @@
                     <label>
                       {{ form.yfcasecoOwnerLandHPPersonnal.label }}
                     </label>
-                    {{ form.yfcasecoOwnerLandHPPersonnal|add_class:'form-control fieldcolor pt-0' }}
+                    {{ form.yfcasecoOwnerLandHPPersonnal|add_class:'form-control border border-dark fieldcolor' }}
                     <span class="help-block">
                       {{ form.yfcasecoOwnerLandHPPersonnal.error }}
                     </span>
@@ -67,7 +67,7 @@
                   <label>
                     {{ form.yfcasecoOwnerLandHPAll.label }}
                   </label>
-                  {{ form.yfcasecoOwnerLandHPAll|add_class:'form-control fieldcolor pt-0' }}
+                  {{ form.yfcasecoOwnerLandHPAll|add_class:'form-control border border-dark fieldcolor' }}
                   <span class="help-block">
                     {{ form.yfcasecoOwnerLandHPAll.error }}
                   </span>
@@ -78,7 +78,7 @@
                   <label>
                     {{ form.yfcasecoOwnerBuildHPPersonnal.label }}
                   </label>
-                  {{ form.yfcasecoOwnerBuildHPPersonnal|add_class:'form-control fieldcolor pt-0' }}
+                  {{ form.yfcasecoOwnerBuildHPPersonnal|add_class:'form-control border border-dark fieldcolor' }}
                   <span class="help-block">
                     {{ form.yfcasecoOwnerBuildHPPersonnal.error }}
                   </span>
@@ -89,7 +89,7 @@
                   <label>
                     {{ form.yfcasecoOwnerBuildHPAll.label }}
                   </label>
-                  {{ form.yfcasecoOwnerBuildHPAll|add_class:'form-control fieldcolor pt-0' }}
+                  {{ form.yfcasecoOwnerBuildHPAll|add_class:'form-control border border-dark fieldcolor' }}
                   <span class="help-block">
                     {{ form.yfcasecoOwnerBuildHPAll.error }}
                   </span>
@@ -266,6 +266,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
+  /* global $ */
   $(document).ready(function(){
     const cowner_clent_id = JSON.parse(document.getElementById('cowner_clent_id').textContent);
     document.getElementById("id_yfcaseCownerAgent").value = cowner_clent_id; 
@@ -273,9 +274,9 @@
     $('#Coowner_edit_form').bootstrapValidator({
       // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
       feedbackIcons: {
-          valid: 'glyphicon glyphicon-ok',
-          invalid: 'glyphicon glyphicon-remove',
-          validating: 'glyphicon glyphicon-refresh'
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
       },
       fields: {
       }
@@ -283,10 +284,6 @@
 
   });
 
-  $(function() {
-    $(".datepicker").datepicker({
-      dateFormat: "yy-mm-dd"
-    });
-  });
+
 </script>
 {% endblock content %}

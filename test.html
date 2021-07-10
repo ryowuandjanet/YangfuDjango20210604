@@ -1,578 +1,942 @@
-{% extends "base.html" %}
-{% load widget_tweaks %}
+{% load static %}
+{% load urlify %}
+{% load humanize %}
 
-{% block style %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
+  <title>評量表</title>
   <style type="text/css">
-    .help-block{
-      color:red;
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
     }
+    
+    th, 
+    td {
+      font-size: 12pt;
+      padding: 0px 2px;
+      margin: 0px;
+      border: 1px solid black;
+    }
+    .yfratingscalePDFTitle {
+      font-size: 20pt;
+      font-weight: bolder;
+      text-align: center;
+    }
+    .yfratingscalePDFBaseData, 
+    .yfratingscalePDFLand, 
+    .yfratingscalePDFBuild, 
+    .yfratingscalePDFAction, 
+    .yfratingscalePDFAttachment, 
+    .yfratingscalePDFBuildCheckList, 
+    .yfratingscalePDFFinaldecision, 
+    .yfratingscalePDFObjectBuild,
+    .yfratingscalePDFResult {
+      border-collapse:collapse;
+      margin-bottom:5px;
+      width:100%;
+    }
+    
+    /* 基本資料-th選擇器的特有屬性:值 */
+    .yfratingscalePDFBaseData th {
+      background-color: AntiqueWhite;
+    }
+    
+    /* 基本資料-td選擇器的特有屬性:值 */
+    .yfratingscalePDFBaseData td {
+      text-align:left;
+      color:blue;
+    }
+    
+    /* 土地-th選擇器的特有屬性:值 */
+    .yfratingscalePDFLand th {
+      background-color: Aquamarine;
+    }
+    
+    /* 建物-th選擇器的特有屬性:值 */
+    .yfratingscalePDFBuild th {
+      background-color: DeepSkyBlue;
+    }
+    
+    /* 拍賣-th選擇器的特有屬性:值 */
+    .yfratingscalePDFAction th {
+      background-color: Gainsboro;
+    }
+    
+    /* 勘查-th選擇器的特有屬性:值 */
+    .yfratingscalePDFAttachment th {
+      background-color: Khaki;
+    }
+    
+    /* 執行結果-th選擇器(標頭)的特有屬性:值 */
+    .yfratingscalePDFResult th {
+      background-color: LightSalmon;
+    }
+    
+    
+    /* 標的編號-th選擇器(內文)的特有屬性:值 */
+    th.yfratingscalePDFObjectNumber {
+      background-color: Gainsboro;
+    }
+    
+    /* 參考物件-th選擇器的特有屬性:值 */
+    table.yfratingscalePDFObjectBuild th{
+      background-color: Thistle;
+      color:black;
+    }
+    
+    /* 最終判定-th選擇器的特有屬性:值 */
+    .yfratingscalePDFFinaldecision th {
+      background-color: YellowGreen;
+    }
+
+    .yfratingscalePDFLand td, 
+    .yfratingscalePDFBuild td, 
+    .yfratingscalePDFBuildCheckList td,
+    .yfratingscalePDFAction td,
+    .yfratingscalePDFAttachment td,
+    .yfratingscalePDFFinaldecision td,
+    .yfratingscalePDFResult td,
+     table.yfratingscalePDFObjectBuild td {
+      text-align:center;
+      color:blue;
+    }
+
+    td.landEmpty {
+      border-top:hidden;
+      border-bottom:hidden;
+      border-left:1px solid black;
+      border-right:1px solid black;
+    }
+
+    .yfratingscalePDFPerson {
+      padding: 0px 5px;
+    }
+    
+    .black_font {
+      color:black;
+    }
+    
+    .small_red {
+      color:red;
+      font-size:9pt;
+    }
+    
+    .small_green {
+      color: green;
+      font-size: 9pt;
+    }
+
+    .objectbuild__td__table {width:100%;}
+    .objectbuild__td__table tr,
+    .objectbuild__td__table td,
+    .objectbuild__td__table th { border: none; background-color: white;width:100%;}
+    .objectbuild__td__table .objectbuild__td__address, 
+    .objectbuild__td__table .objectbuild__td__scorer { font-size: 11pt; vertical-align:text-top; text-align: right; width:30%; }
+    .objectbuild__td__table .objectbuild__td__note, 
+    .objectbuild__td__table .objectbuild__td__plus { font-size: 11pt; vertical-align:text-top; text-align: left; }
+    
+    .regionalhead__seal { width:86px;border-radius:50%;border:3px solid red; }
+    .regionalhead__td__person { font-size: 14pt; height: 30px; line-height: 36px; color: red; }
+    .regionalhead__td__date { 
+      color: red;
+      font-size: 10pt;  
+      height: 20px;
+      line-height: 18px;
+      font-weight: 700;
+      margin: 0px;
+      border-top: 3px solid red;
+      border-bottom: 3px solid red;
+    }
+    .regionalhead__td__workarea { font-size: 14pt; height: 30px; line-height: 22px; color: red; }
+
+    td.text-left { text-align: left; margin:0px 5px; }
+
+    .finaldecision__td { padding:10px 5px; border-radius: 10px; font-size: 18pt;margin: 10px;}
+    .finaldecision__first { color:brown;border:5px solid brown; }
+    .finaldecision__second { color:purple;border:5px solid purple; }
+    .finaldecision__third { color:blue;border:5px solid blue; }
+    .finaldecision__fourth { color:green;border:5px solid green; }
+    .finaldecision__giveup { color:red;border:5px solid red; }
   </style>
-{% endblock style %}
-
-{% block content %}
-<!-- 程式主題的部份 -->
-<form action="{% url 'yfcase:deedtax_edit' yfcase.id %}" method="post" id="editAfterWinnerModal" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" >{% csrf_token %}
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-
-      <!-- header -->
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
-      </div>
-      
-      <!-- body -->
-      <div class="modal-body">
-        契稅申請書基本資料 - 案號：{{ yfcase.yfcaseCaseNumber }}
-        <div class="accordion" id="accordionExample">
-
-          <!-- 契稅申請書 - 基本資料 -->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-              <button class="accordion-button bg-primary text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                契稅申請書 - 基本資料
-              </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <!--基本資料欄位-->
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxHouseTaxRegistrationNumber.id_for_label }}">{{ form.yfcaseDeedtaxHouseTaxRegistrationNumber.label }}</label>
-                  {{ form.yfcaseDeedtaxHouseTaxRegistrationNumber|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxHouseTaxRegistrationNumber.error }}</span>
-                </div>
-
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxEstablishmentDate.id_for_label }}">{{ form.yfcaseDeedtaxEstablishmentDate.label }}</label>
-                  {{ form.yfcaseDeedtaxEstablishmentDate|add_class:"form-control fieldcolor datepicker pt-0" }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxEstablishmentDate.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDeclarationDate.id_for_label }}">{{ form.yfcaseDeedtaxDeclarationDate.label }}</label>
-                  {{ form.yfcaseDeedtaxDeclarationDate|add_class:"form-control fieldcolor datepicker pt-0" }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDeclarationDate.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxClient.id_for_label }}">{{ form.yfcaseDeedtaxClient.label }}</label>
-                  {{ form.yfcaseDeedtaxClient|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxClient.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxTransferPrice.id_for_label }}">{{ form.yfcaseDeedtaxTransferPrice.label }}</label>
-                  {{ form.yfcaseDeedtaxTransferPrice|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxTransferPrice.error }}</span> 
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxReclaimMethod.id_for_label }}">{{ form.yfcaseDeedtaxReclaimMethod.label }}</label>
-                  {{ form.yfcaseDeedtaxReclaimMethod|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxReclaimMethod.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxClosingNewsletter.id_for_label }}">{{ form.yfcaseDeedtaxClosingNewsletter.label }}</label>
-                  {{ form.yfcaseDeedtaxClosingNewsletter|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxClosingNewsletter.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxRemarks.id_for_label }}">{{ form.yfcaseDeedtaxRemarks.label }}</label>
-                  {{ form.yfcaseDeedtaxRemarks|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxRemarks.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxReportAttached.id_for_label }}">{{ form.yfcaseDeedtaxReportAttached.label }}</label>
-                  {{ form.yfcaseDeedtaxReportAttached|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxReportAttached.error }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 契稅申請書 - 移轉情形 -->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-              <button class="accordion-button collapsed bg-success text-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                契稅申請書 - 移轉情形
-              </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferLevel1.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferLevel1.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferLevel1|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferLevel1.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferLevel2.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferLevel2.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferLevel2|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferLevel2.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferLevel3.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferLevel3.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferLevel3|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferLevel3.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferLevel4.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferLevel4.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferLevel4|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferLevel4.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferLevel5.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferLevel5.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferLevel5|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferLevel5.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferLevel6.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferLevel6.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferLevel6|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferLevel6.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferStructure1.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferStructure1.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferStructure1|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferStructure1.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferStructure2.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferStructure2.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferStructure2|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferStructure2.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferStructure3.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferStructure3.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferStructure3|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferStructure3.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferStructure4.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferStructure4.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferStructure4|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferStructure4.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferStructure5.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferStructure5.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferStructure5|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferStructure5.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferStructure6.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferStructure6.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferStructure6|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferStructure6.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferArea1.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferArea1.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferArea1|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferArea1.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferArea2.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferArea2.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferArea2|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferArea2.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferArea3.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferArea3.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferArea3|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferArea3.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferArea4.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferArea4.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferArea4|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferArea4.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferArea5.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferArea5.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferArea5|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferArea5.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferArea6.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferArea6.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferArea6|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferArea6.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber1.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber1.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber1|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber1.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber2.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber2.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber2|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber2.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber3.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber3.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber3|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber3.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber4.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber4.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber4|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferPublicBuildingNumber4.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings1.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings1.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferPublicHoldings1|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings1.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings2.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings2.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferPublicHoldings2|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings2.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings3.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings3.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferPublicHoldings3|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings3.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings4.id_for_label }}">{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings4.label }}</label>
-                  {{ form.yfcaseDeedtaxBuildingTransferPublicHoldings4|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxBuildingTransferPublicHoldings4.error }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 契稅申請書 - 義務人 -->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-              <button class="accordion-button collapsed bg-warning text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                契稅申請書 - 義務人：{{yfcase.yfcaseDebtor|default_if_none:""}}
-              </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorIdentityCard.id_for_label }}">{{ form.yfcaseDeedtaxDebtorIdentityCard.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorIdentityCard|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorIdentityCard.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorBirthday.id_for_label }}">{{ form.yfcaseDeedtaxDebtorBirthday.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorBirthday|add_class:"form-control fieldcolor datepicker pt-0" }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorBirthday.error }}</span>
-                </div>
-                 <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorLocalPhone.id_for_label }}">{{ form.yfcaseDeedtaxDebtorLocalPhone.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorLocalPhone|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorLocalPhone.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorMobilePhone.id_for_label }}">{{ form.yfcaseDeedtaxDebtorMobilePhone.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorMobilePhone|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorMobilePhone.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorCity.id_for_label }}">{{ form.yfcaseDeedtaxDebtorCity.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorCity|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorCity.error }}</span>
-                </div>
-                 <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorTownship.id_for_label }}">{{ form.yfcaseDeedtaxDebtorTownship.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorTownship|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorTownship.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorVillage.id_for_label }}">{{ form.yfcaseDeedtaxDebtorVillage.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorVillage|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorVillage.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorNeighbor.id_for_label }}">{{ form.yfcaseDeedtaxDebtorNeighbor.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorNeighbor|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorNeighbor.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorStreet.id_for_label }}">{{ form.yfcaseDeedtaxDebtorStreet.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorStreet|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorStreet.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorSection.id_for_label }}">{{ form.yfcaseDeedtaxDebtorSection.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorSection|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorSection.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorLane.id_for_label }}">{{ form.yfcaseDeedtaxDebtorLane.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorLane|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorLane.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorAlley.id_for_label }}">{{ form.yfcaseDeedtaxDebtorAlley.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorAlley|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorAlley.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorNumber.id_for_label }}">{{ form.yfcaseDeedtaxDebtorNumber.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorNumber|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorNumber.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorFloor.id_for_label }}">{{ form.yfcaseDeedtaxDebtorFloor.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorFloor|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorFloor.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorLandHoldingPointPersonal.id_for_label }}">{{ form.yfcaseDeedtaxDebtorLandHoldingPointPersonal.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorLandHoldingPointPersonal|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorLandHoldingPointPersonal.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorLandHoldingPointAll.id_for_label }}">{{ form.yfcaseDeedtaxDebtorLandHoldingPointAll.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorLandHoldingPointAll|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorLandHoldingPointAll.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorBuildHoldingPointPersonal.id_for_label }}">{{ form.yfcaseDeedtaxDebtorBuildHoldingPointPersonal.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorBuildHoldingPointPersonal|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorBuildHoldingPointPersonal.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxDebtorBuildHoldingPointAll.id_for_label }}">{{ form.yfcaseDeedtaxDebtorBuildHoldingPointAll.label }}</label>
-                  {{ form.yfcaseDeedtaxDebtorBuildHoldingPointAll|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxDebtorBuildHoldingPointAll.error }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 契稅申請書 - 權利人 -->
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="headingFourth">
-              <button class="accordion-button bg-info text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFourth" aria-expanded="true" aria-controls="collapseFourth">
-                契稅申請書 - 
-                {% if yfcase.yfcaseCreditor %}
-                  權利人：{{yfcase.yfcaseCreditor}}
-                {% else %}
-                  權利人：{{yfcase.yfcaseCompany}}
-                {% endif %}
-              </button>
-            </h2>
-            <div id="collapseFourth" class="accordion-collapse collapse" aria-labelledby="headingFourth" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorIdentityCard.id_for_label }}">{{ form.yfcaseDeedtaxCreditorIdentityCard.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorIdentityCard|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorIdentityCard.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorBirthday.id_for_label }}">{{ form.yfcaseDeedtaxCreditorBirthday.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorBirthday|add_class:"form-control fieldcolor datepicker pt-0" }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorBirthday.error }}</span>
-                </div>
-                 <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorLocalPhone.id_for_label }}">{{ form.yfcaseDeedtaxCreditorLocalPhone.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorLocalPhone|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorLocalPhone.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorMobilePhone.id_for_label }}">{{ form.yfcaseDeedtaxCreditorMobilePhone.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorMobilePhone|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorMobilePhone.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorCity.id_for_label }}">{{ form.yfcaseDeedtaxCreditorCity.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorCity|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorCity.error }}</span>
-                </div>
-                 <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorTownship.id_for_label }}">{{ form.yfcaseDeedtaxCreditorTownship.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorTownship|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorTownship.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorVillage.id_for_label }}">{{ form.yfcaseDeedtaxCreditorVillage.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorVillage|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorVillage.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorNeighbor.id_for_label }}">{{ form.yfcaseDeedtaxCreditorNeighbor.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorNeighbor|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorNeighbor.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorStreet.id_for_label }}">{{ form.yfcaseDeedtaxCreditorStreet.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorStreet|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorStreet.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorSection.id_for_label }}">{{ form.yfcaseDeedtaxCreditorSection.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorSection|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorSection.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorLane.id_for_label }}">{{ form.yfcaseDeedtaxCreditorLane.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorLane|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorLane.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorAlley.id_for_label }}">{{ form.yfcaseDeedtaxCreditorAlley.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorAlley|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorAlley.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorNumber.id_for_label }}">{{ form.yfcaseDeedtaxCreditorNumber.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorNumber|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorNumber.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorFloor.id_for_label }}">{{ form.yfcaseDeedtaxCreditorFloor.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorFloor|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorFloor.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorLandHoldingPointPersonal.id_for_label }}">{{ form.yfcaseDeedtaxCreditorLandHoldingPointPersonal.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorLandHoldingPointPersonal|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorLandHoldingPointPersonal.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorLandHoldingPointAll.id_for_label }}">{{ form.yfcaseDeedtaxCreditorLandHoldingPointAll.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorLandHoldingPointAll|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorLandHoldingPointAll.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorBuildHoldingPointPersonal.id_for_label }}">{{ form.yfcaseDeedtaxCreditorBuildHoldingPointPersonal.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorBuildHoldingPointPersonal|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorBuildHoldingPointPersonal.error }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="{{ form.yfcaseDeedtaxCreditorBuildHoldingPointAll.id_for_label }}">{{ form.yfcaseDeedtaxCreditorBuildHoldingPointAll.label }}</label>
-                  {{ form.yfcaseDeedtaxCreditorBuildHoldingPointAll|add_class:'form-control' }}
-                  <span class="help-block">{{ form.yfcaseDeedtaxCreditorBuildHoldingPointAll.error }}</span>
-                </div>
-                
-                <div class="form-group">
-                  {% render_field form.yfcaseDeedtaxCoOwnerMatch|attr:"multiple:multiple"|attr:"data-plugin-multiselect" %} <span style="color:red;">土地 / 建物共有人是否一致</span>
-                  <span class="help-block">{{ form.yfcaseDeedtaxCoOwnerMatch.error }}</span>
-                </div>
-                {{ deedtax_clent_id|json_script:"deedtax_clent_id" }}
-
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- footer -->
-      <div class="modal-footer">
-        <a href="{% url 'yfcase:home' %}" class="btn btn-secondary col">返回</a>
-        <input class="btn btn-primary col-md-3" type="submit" value="建立" />
-      </div>
-
-    </div>
+</head>
+<body>
+  <!--標頭-->
+  <div class="yfratingscalePDFTitle">
+   {{yfcase.yfcaseCaseNumber}} YF評量表
   </div>
-</form>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!--基本資料-->
+  <div class="row">
+    <table class="yfratingscalePDFBaseData">
+      <tr>
+        <th style="width:10%;">案號</th>
+        <td style="width:40%;">
+          {{yfcase.yfcaseCaseNumber}}
+        </td>
+        <th style="width:8%;">債務人</th>
+        <td style="width:15%;">
+          {{yfcase.yfcaseDebtor|default_if_none:""}}
+        </td>
+        <th style="width:8%;">債權人</th>
+        <td>
+          {% if yfcase.yfcaseCreditor == None %}
+            {{yfcase.yfcaseCompany}}
+          {% else %}
+            {{yfcase.yfcaseCreditor|default_if_none:""}}
+          {% endif %}
+        </td>
+      </tr>
+      <tr>
+        <th>住址</th>
+        <td colspan="5">
+          {{yfcase.yfcaseCity|default_if_none:""}}{{yfcase.yfcaseTownship|default_if_none:""}}{{yfcase.yfcaseVillage|default_if_none:""}}{{yfcase.yfcaseNeighbor|default_if_none:""}}{{yfcase.yfcaseStreet|default_if_none:""}}{{yfcase.yfcaseSection|default_if_none:""}}{{yfcase.yfcaseLane|default_if_none:""}}{{yfcase.yfcaseAlley|default_if_none:""}}{{yfcase.yfcaseNumber|default_if_none:""}}{{yfcase.yfcaseFloor|default_if_none:""}}
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <!-- 土地 -->
+  <div class="row">
+    <table class="yfratingscalePDFLand col">
+      <tr>
+        <th style="width:15%;">地號</th>
+        <th style="width:5%;">地號<br>謄本</th>
+        <th style="width:19%;">地坪面積<br>(平方公尺/坪)</th>
+        <th style="width:12%;">持分</th>
+        <th style="width:15%;">地坪(持分)<br>(平方公尺/坪)</th>
+        <td class="landEmpty" style="width:2%;"></td>
+        <th style="width:15%;">地坪總面積<br>(平方公尺/坪)</th>
+        <td class="landEmpty" style="width:2%;"></td>
+        <th style="background-color:DeepSkyBlue;">建坪總面積<br>(平方公尺/坪)</th>
+      </tr>
 
-<script>
-  $(document).ready(function(){
-    const deedtax_clent_id = JSON.parse(document.getElementById('deedtax_clent_id').textContent);
-    document.getElementById("id_yfcaseDeedtaxClient").value = deedtax_clent_id;
-    // 此為欄位驗証的JS
-    $('#editAfterWinnerModal').bootstrapValidator({
-      // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-      feedbackIcons: {
-          valid: 'glyphicon glyphicon-ok',
-          invalid: 'glyphicon glyphicon-remove',
-          validating: 'glyphicon glyphicon-refresh'
-      },
-      fields: {
-          yfcaseCaseNumber: {
-            validators: {
-              notEmpty: {
-                message: '此一欄位不得為空'
-              },
-              stringLength: {
-                min: 5,
-                max: 50,
-                message: '案件名稱必需介於5-50個文字'
-              }
-            }
-          },
-          yfcaseCity: {
-            validators: {
-              notEmpty: {
-                message: '此為必要欄位'
-              }
-            }
-          },
-          yfcaseTownship: {
-            validators: {
-              notEmpty: {
-                message: '此為必要欄位'
-              }
-            }
-          },
-          yfcaseOtherAddress: {
-            validators: {
-              notEmpty: {
-                message: '此為必要欄位'
-              }
-            }
-          },
-          yfcaseCompany: {
-            validators: {
-              notEmpty: {
-                message: '必選欄位'
-              }
-            }
-          }
-      }
-    });
+        <tr>
+          <td style="text-align:left;">
+            {% for land in yfcase.lands.all %}
+              {{yfcase.yfcaseBigSection}}{{land.landNumber}}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for land in yfcase.lands.all %}
+              {% if land.landUrl != None %}
+                ☀<br>
+              {% else %}
+                <br>
+              {% endif %}
+            {% endfor %}
+          </td>
+          <td>
+            {% for land in yfcase.lands.all %}
+              {{ land.landArea|floatformat:"2" }} / {{ land.landArea|m2toping|floatformat:"2" }}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for land in yfcase.lands.all %}
+              {{land.landHoldingPointPersonal}} / {{land.landHoldingPointAll}}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for land in yfcase.lands.all %}
+              {{ land.get_land_holding_point_area|floatformat:"2" }} / {{ land.get_land_holding_point_area|m2toping|floatformat:"2" }}<br>
+            {% endfor %}
+          </td>
+          <td class="landEmpty"></td>
+          <td>
+            {{ yfcase.get_land_holding_point_area_total|floatformat:"2" }} / {{ yfcase.get_land_holding_point_area_total|m2toping|floatformat:"2" }}
+          </td>
+          <td class="landEmpty"></td>
+          <td>
+            {{ yfcase.get_build_holding_point_after_group_total|floatformat:"2" }} / {{ yfcase.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
+          </td>
+        </tr>
+    </table>
+  </div>
+  
+   <!-- 建物 -->
+  <div>
+    <table class="yfratingscalePDFBuild">
+      <tr>
+        <th rowspan="2" style="width:15%">建號</th>
+        <th rowspan="2" style="width:5%">建號<br>謄本</th>
+        <th rowspan="2" style="width:19%">建坪(面積)<br>平方公尺(坪)</th>
+        <th rowspan="2" style="width:12%">持分</th>  
+        <th colspan="2">建坪持分 - 平方公尺(坪)</th>
+        <th rowspan="2" style="width:23%">
+          <div style="font-size:12pt;color:red;background-color:Cornsilk;text-align:center;">
+           使用分區：{{ yfcase.builds.first.buildUsePartition|default_if_none:"" }}
+          </div>
+          建物型/使用
+        </th>
+      </tr>
+       
+      <tr>
+        <th>(原)</th>
+        <th>(計算後)</th>
+      </tr>
+        <tr>
+          <td style="text-align:left;">
+            {% for build in yfcase.builds.all %}
+              {{yfcase.yfcaseBigSection}}{{build.buildNumber}}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for build in yfcase.builds.all %}
+              {% if build.buildUrl != None %}
+                ☀<br>
+              {% else %}
+                <br>
+              {% endif %}
+            {% endfor %}
+          </td>
+          <td>
+            {% for build in yfcase.builds.all %}
+              {{ build.buildArea|floatformat:"2" }} / {{ build.buildArea|m2toping|floatformat:"2" }}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for build in yfcase.builds.all %}
+              {{build.buildHoldingPointPersonal}} / {{build.buildHoldingPointAll}}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for build in yfcase.builds.all %}
+              {{ build.get_build_holding_point_area|floatformat:"2" }} / {{ build.get_build_holding_point_area|m2toping|floatformat:"2" }}<br>
+            {% endfor %}
+          </td>
+          <td>
+            {% for build in yfcase.builds.all %}
+              {% if build.buildTypeUse == "公設" %}
+                {{ build.get_build_first_not_add_and_not_public_holding_point_area|floatformat:"2" }} / 
+                {{ build.get_build_first_not_add_and_not_public_holding_point_area|m2toping|floatformat:"2" }}<br>
+              {% elif build.buildTypeUse == "增建-持分後坪數打對折" %}
+                {{ build.get_after_add_holding_point_area|floatformat:"2" }} / 
+                {{ build.get_after_add_holding_point_area|m2toping|floatformat:"2" }}<br>
+              {% else %}
+                {{ build.get_build_holding_point_area|floatformat:"2" }} / 
+                {{ build.get_build_holding_point_area|m2toping|floatformat:"2" }}<br>
+              {% endif %}
+            {% endfor %}
+          </td>
+          <td style="text-align:left;">
+            {% for build in yfcase.builds.all %}
+              {{ build.buildTypeUse|isWordCount:9|default_if_none:"" }}
+            {% endfor %}
+          </td>
+        </tr>
+    </table>
+  </div> 
 
-  });
+  <!-- 拍賣結果 -->
+  <div class="auction">
+    <table class="yfratingscalePDFAction">
+      <tr>
+        <th style="width:11%;">拍賣日</th>
+        <th colspan="4">拍別-進場判定<br>
+          <div class="small_red">(可進場CP值)</div>
+        </th>
+        <th style="width:12%;">底價<small>(NT)</small><br>
+          <div class="small_red">各拍建議底價</div>
+        </th>
+        <th style="width:10%;">坪價<small>(NT)</small></th>
+        <th style="width:10%;">時價<small>(NT)</small></th>
+        <th style="width:6%;">CP</th>
+        <th style="width:5%;">點閱</th>
+        <th style="width:5%;">監控</th>
+        <th style="width:14%;">建議加價</th>
+        <th style="width:9%;">保証金</th>
+      </tr>
+      <!-- 第一拍 -->
+      <tr>
+        <!-- 拍別：第一拍 -->
+        <td>
+          {{yfcase.auctions.first.auctionDateFirst|default_if_none:""}}
+        </td>
+        <td style="width:8%;padding-top:6px;color:black;">
+          第一拍<br>
+          <span class="small_red">(CP>0.92)</span>
+        </td>
+        <td colspan="3">
+          {% if yfcase.auctions.first.auctionFloorPriceFirst == 0 %}
+            <div class="black_font">底價未輸入</div>
+          {% elif yfcase.auctions.first.get_suggestedincreaseFirst_cp >= 0.92 %}
+            <small class="small_green">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseFirst_cp|floatformat:2 }})<br>建議進場
+            </small>
+          {% elif yfcase.auctions.first.get_suggestedincreaseFirst_cp < 0.92 %}
+            <small class="small_red">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseFirst_cp|floatformat:2 }})<br>不可進場
+            </small>
+          {% endif %}
+        </td>
+        <!-- 第一拍：底價 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+            {{yfcase.auctions.first.auctionFloorPriceFirst|floatformat:0|intcomma }}
+          {% endif %}
+        </td>
+        <!-- 第一拍：坪價 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 and yfcase.builds.all|length > 0 %}
+            {{yfcase.auctions.first.get_ping_first_price|floatformat:0|intcomma}}
+          {% endif %}
+        </td>
+        <!-- 第一拍：時價 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 and yfcase.pbk != 0 %}
+            {{yfcase.pbk|floatformat:0|intcomma}}
+          {% endif %}
+        </td>
+        <!-- 第一拍：CP值 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 and yfcase.auctions.first.get_first_cp != 0 %}
+            {{yfcase.auctions.first.get_first_cp|floatformat:2|intcomma}}
+          {% endif %}
+        </td>
+        <!-- 第一拍：點閱 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+            {{yfcase.auctions.first.auctionClickFirst }}
+          {% endif %}
+        </td>
+        <!-- 第一拍：監控 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+            {{yfcase.auctions.first.auctionMonitorFirst }}
+          {% endif %}
+        </td>
+        <!-- 第一拍：建議加價 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+            (100% + {{yfcase.auctions.first.get_suggestedincreaseFirst|multiplication:100|floatformat:0 }}%)<br>
+            {{yfcase.auctions.first.get_suggestedincreaseFirst_floor_price|floatformat:0|intcomma }}
+          {% endif %}
+        </td>
+        <!-- 第一拍：保証金 -->
+        <td>
+          {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+            {{yfcase.auctions.first.auctionMarginFirst|floatformat:0|intcomma }}
+          {% endif %}
+        </td>
+      </tr>
+      <!-- 第二拍 -->
+      <tr>
+        <!-- 拍別：第二拍 -->
+        <td>
+          {{yfcase.auctions.first.auctionDateSecond|default_if_none:""}}
+        </td>
+        <td style="color:black;">
+          第二拍
+          <br>
+          <span class="small_red">(CP>1.15)</span>
+        </td>
+        <td colspan="3">
+          {% if yfcase.auctions.first.auctionFloorPriceSecond == 0 %}
+            <div class="black_font">底價未輸入</div>
+          {% elif yfcase.auctions.first.get_suggestedincreaseSecond_cp >= 1.15 %}
+            <small class="small_red">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseSecond_cp|floatformat:2 }})<br>建議進場
+            </small>
+          {% elif yfcase.auctions.first.get_suggestedincreaseSecond_cp < 1.15 %}
+            <small class="small_red">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseSecond_cp|floatformat:2 }})<br>不可進場
+            </small>
+          {% endif %}
+        </td>
+        <!-- 第二拍：底價 -->
+        <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              {{yfcase.auctions.first.auctionFloorPriceSecond|floatformat:0|intcomma }}
+            {% endif %}
+            {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+              <br>
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceFirst|multiplication:8|divide:10|floatformat:0|intcomma }}
+              </div>
+            {% endif %}
+          </td>
+          <!-- 第二拍：坪價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 and yfcase.builds.all|length > 0 %}
+              {{yfcase.auctions.first.get_ping_second_price|floatformat:0|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第二拍：時價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 and yfcase.pbk != 0 %}
+              {{yfcase.pbk|floatformat:0|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第二拍：CP值 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 and yfcase.auctions.first.get_second_cp != 0 %}
+              {{yfcase.auctions.first.get_second_cp|floatformat:2|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第二拍：點閱 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              {{yfcase.auctions.first.auctionClickSecond }}
+            {% endif %}
+          </td>
+          <!-- 第二拍：監控 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              {{yfcase.auctions.first.auctionMonitorSecond }}
+            {% endif %}
+          </td>
+          <!-- 第二拍：建議加價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              (100% + {{yfcase.auctions.first.get_suggestedincreaseSecond|multiplication:100|floatformat:0 }}%)<br>
+              {{yfcase.auctions.first.get_suggestedincreaseSecond_floor_price|floatformat:0|intcomma }}
+            {% endif %}
+          </td>
+          <!-- 第二拍：保証金 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              {{yfcase.auctions.first.auctionMarginSecond|floatformat:0|intcomma }}
+            {% endif %}
+          </td>
+      </tr>
+      <!-- 第三拍 -->
+      <tr>
+        <!-- 拍別：第三拍 -->
+        <td>
+          {{yfcase.auctions.first.auctionDateThird|default_if_none:""}}  
+        </td>
+        <td style="color:black;">
+          第三拍
+          <br>
+          <span class="small_red">(CP>1.44)</span>
+        </td>
+        <td colspan="3">
+          {% if yfcase.auctions.first.auctionFloorPriceThird == 0 %}
+            <div class="black_font">底價未輸入</div>
+          {% elif yfcase.auctions.first.get_suggestedincreaseThird_cp >= 1.44 %}
+            <small class="small_green">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseThird_cp|floatformat:2 }})<br>建議進場
+            </small>
+          {% elif yfcase.auctions.first.get_suggestedincreaseThird_cp < 1.44 %}
+            <small class="small_red">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseThird_cp|floatformat:2 }})<br>不可進場
+            </small>
+          {% endif %} 
+        </td>
+        <!-- 第三拍：底價 -->
+        <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              {{yfcase.auctions.first.auctionFloorPriceThird|floatformat:0|intcomma }}
+            {% endif %}
+            {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+              <br>
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceFirst|multiplication:64|divide:100|floatformat:0|intcomma }}
+              </div>
+            {% elif yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              <br>
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceSecond|multiplication:8|divide:10|floatformat:0|intcomma }}
+              </div>
+            {% endif %}
+          </td>
+          <!-- 第三拍：坪價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 and yfcase.builds.all|length > 0 %}
+              {{yfcase.auctions.first.get_ping_third_price|floatformat:0|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第三拍：時價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 and yfcase.pbk != 0 %}
+              {{yfcase.pbk|floatformat:0|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第三拍：CP值 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 and yfcase.auctions.first.get_third_cp != 0 %}
+              {{yfcase.auctions.first.get_third_cp|floatformat:2|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第三拍：點閱 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              {{yfcase.auctions.first.auctionClickThird }}
+            {% endif %}
+          </td>
+          <!-- 第三拍：監控 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              {{yfcase.auctions.first.auctionMonitorThird }}
+            {% endif %}
+          </td>
+          <!-- 第三拍：建議加價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              (100% + {{yfcase.auctions.first.get_suggestedincreaseThird|multiplication:100|floatformat:0 }}%)<br>
+              {{yfcase.auctions.first.get_suggestedincreaseThird_floor_price|floatformat:0|intcomma }}
+            {% endif %}
+          </td>
+          <!-- 第三拍：保証金 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              {{yfcase.auctions.first.auctionMarginThird|floatformat:0|intcomma }}
+            {% endif %}
+          </td>
+      </tr>
+      <!-- 第四拍 -->
+      <tr>
+        <!-- 拍別：第四拍 -->
+        <td>
+          {{yfcase.auctions.first.auctionDateFourth|default_if_none:""}} 
+        </td>
+        <td style="color:black;">
+          第四拍
+          <br>
+          <span class="small_red">(CP>1.80)</span>
+        </td>
+        <td colspan="3">
+          {% if yfcase.auctions.first.auctionFloorPriceFourth == 0 %}
+            <div class="black_font">底價未輸入</div>
+          {% elif yfcase.auctions.first.get_suggestedincreaseFourth_cp >= 1.80 %}
+            <small class="small_green">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseFourth_cp|floatformat:2 }})<br>建議進場
+            </small>
+          {% elif yfcase.auctions.first.get_suggestedincreaseFourth_cp < 1.80 %}
+            <small class="small_red">
+              加價CP({{ yfcase.auctions.first.get_suggestedincreaseFourth_cp|floatformat:2 }})<br>不可進場
+            </small>
+          {% endif %}
+        </td>
+        <!-- 第四拍：底價 -->
+        <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 %}
+              {{yfcase.auctions.first.auctionFloorPriceFourth|floatformat:0|intcomma }}
+            {% endif %}
 
-// JS觸發事件來使yfcaseCity/yfcaseTownship這兩個欄位動作
-  $("#id_yfcaseCity").change(function () {
-    var url = $("#editAfterWinnerModal").attr("data-townships-url");
-    var cityId = $(this).val();
+            {% if yfcase.auctions.first.auctionFloorPriceFirst != 0 %}
+              <br>
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceFirst|multiplication:512|divide:1000|floatformat:0|intcomma }}
+              </div>
+            {% elif yfcase.auctions.first.auctionFloorPriceSecond != 0 %}
+              <br>
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceSecond|multiplication:64|divide:100|floatformat:0|intcomma }}
+              </div>
+            {% elif yfcase.auctions.first.auctionFloorPriceThird != 0 %}
+              <br>
+              <div class="small_red">
+                {{yfcase.auctions.first.auctionFloorPriceThird|multiplication:8|divide:10|floatformat:0|intcomma }}
+              </div>
+            {% endif %}
+          </td>
+          <!-- 第四拍：坪價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 and yfcase.builds.all|length > 0 %}
+              {{yfcase.auctions.first.get_ping_fourth_price|floatformat:0|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第四拍：時價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 and yfcase.pbk != 0 %}
+              {{yfcase.pbk|floatformat:0|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第四拍：CP值 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 and yfcase.auctions.first.get_fourth_cp != 0 %}
+              {{yfcase.auctions.first.get_fourth_cp|floatformat:2|intcomma}}
+            {% endif %}
+          </td>
+          <!-- 第四拍：點閱 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 %}
+              {{yfcase.auctions.first.auctionClickFourth }}
+            {% endif %}
+          </td>
+          <!-- 第四拍：監控 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 %}
+              {{yfcase.auctions.first.auctionMonitorFourth }}
+            {% endif %}
+          </td>
+          <!-- 第四拍：建議加價 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 %}
+              (100% + {{yfcase.auctions.first.get_suggestedincreaseFouth|multiplication:100|floatformat:0 }}%)<br>
+              {{yfcase.auctions.first.get_suggestedincreaseFourth_floor_price|floatformat:0|intcomma }}
+            {% endif %}
+          </td>
+          <!-- 第四拍：保証金 -->
+          <td>
+            {% if yfcase.auctions.first.auctionFloorPriceFourth != 0 %}
+              {{yfcase.auctions.first.auctionMarginFourth|floatformat:0|intcomma }}
+            {% endif %}
+          </td>
+      </tr>
+    </table>
+  </div>
 
-    $.ajax({
-      url: url,
-      data: {
-        'city': cityId
-      },
-      success: function (data) {
-        $("#id_yfcaseTownship").html(data);
-      }
-    });
-  });
+  <!-- 勘查結果 -->
+  <div>
+    <table class="yfratingscalePDFAttachment">
+      <tr>
+        <th style="width:11%">初勘日</th>
+        <th style="width:11%">會勘日</th>
+        <th style="width:15%">法拍公告<small>(證物三)</small></th>
+        <th style="width:15%">998連結</th>
+        <th style="width:15%">物件照片<small>(證物四)</small></th>
+        <th style="width:15%">法拍記錄<small>(證物七)</small></th>
+        <th style="width:18%">標的物<small>(現場勘)</th>
+      </tr>
+      <tr>
+        <td class="yfratingscalePDFAttachmentContent">
+          {{yfcase.surveys.first.surveyFirstDay}}
+        </td>
+        <td class="yfratingscalePDFAttachmentContent">
+          {{yfcase.surveys.first.surveySecondDay}}
+        </td>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.surveyForeclosureAnnouncementLink %}
+            <a href="{{yfcase.surveys.first.surveyForeclosureAnnouncementLink}}" target="_blank">V</a>
+          {% endif %}
+        </td>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.survey988Link %}
+            <a href="{{yfcase.surveys.first.survey988Link}}" target="_blank">V</a>
+          {% endif %}
+        </td>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.surveyObjectPhotoLink %}
+            <a href="{{yfcase.surveys.first.surveyObjectPhotoLink}}" target="_blank">V</a>
+          {% endif %}
+        </td>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.surveyForeclosureRecordLink %}
+            <a href="{{yfcase.surveys.first.surveyForeclosureRecordLink}}" target="_blank">V</a>
+          {% endif %}
+        </td>
+        <td class="yfratingscalePDFAttachmentContent">
+          {% if yfcase.surveys.first.surveyObjectViewLink %}
+            <a href="{{yfcase.surveys.first.surveyObjectViewLink}}" target="_blank">V</a>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </div>
 
-  $(function() {
-    $(".datepicker").datepicker({
-      dateFormat: "yy-mm-dd"
-    });
-  });
+  <!-- 參考物件 -->
+  <div class="objectbuild">
+    {% for objectbuild in yfcase.objectbuilds.all %}    
+      <table class="yfratingscalePDFObjectBuild">
+        <tr>
+          <th style="width:90%;">參考物件</th>
+          <th style="width:10%;">計算</th>
+        </tr>
+        <tr>
+          <!--輸入狀態-->
+          <td>
+            <table class="objectbuild__td__table">
 
-</script>
-{% endblock content %}
+              <!-- 參考物件--物件資訊 -->
+              <tr>
+                <td class="objectbuild__td__address">
+                  {% if objectbuild.objectBuildStatus %}
+                    ({{objectbuild.objectBuildStatus}})
+                  {% endif %}
+                  {% if objectbuild.objectBuildAddress %}
+                    {{objectbuild.objectBuildAddress}}
+                  {% endif %}
+                </td>
+                <td class="objectbuild__td__note">
+                  {% if objectbuild.objectBuildHouseAge or objectbuild.objectBuildFloorHeight or objectbuild.objectBuildTransactionDate %}
+                    {% if objectbuild.objectBuildHouseAge %}| 屋齡={{ objectbuild.objectBuildHouseAge }}年{% endif %}
+                    {% if objectbuild.objectBuildFloorHeight %}| 樓高={{ objectbuild.objectBuildFloorHeight }}{% endif %}
+                    {% if objectbuild.objectBuildTransactionDate %}| 成交日期={{ objectbuild.objectBuildTransactionDate }}{% endif %}
+                    <br>
+                  {% endif %}
+                  {% if objectbuild.objectBuildTotalPrice %}| 總價={{ objectbuild.objectBuildTotalPrice|floatformat:0|intcomma }}元{% endif %}
+                  {% if objectbuild.objectBuildBuildArea %}| 建坪={{ objectbuild.objectBuildBuildArea }}元{% endif %}
+                  {% if objectbuild.get_objectbuild_ping_price %}| 單價={{ objectbuild.get_objectbuild_ping_price|floatformat:0|intcomma }}元{% endif %}
+                </td>
+              </tr>
+
+              <!-- 參考物件--勘查員A -->
+              {% if objectbuild.objectBuildScorerA %}
+                <tr>
+                  <td class="objectbuild__td__scorer">
+                    勘查員A：{{ objectbuild.objectBuildScorerA }}
+                  </td>
+                  <td class="objectbuild__td__plus">
+                    {% if objectbuild.plusItemA1 %}| {% isItem2 objectbuild.plusItemA1 objectbuild.plusValueA1 %} {% endif %} 
+                    {% if objectbuild.plusItemA2 %}| {% isItem2 objectbuild.plusItemA2 objectbuild.plusValueA2 %} {% endif %} 
+                    {% if objectbuild.plusItemA3 %}| {% isItem2 objectbuild.plusItemA3 objectbuild.plusValueA3 %}<br> {% endif %} 
+                    {% if objectbuild.plusItemA4 %}| {% isItem2 objectbuild.plusItemA4 objectbuild.plusValueA4 %} {% endif %} 
+                    {% if objectbuild.plusItemA5 %}| {% isItem2 objectbuild.plusItemA5 objectbuild.plusValueA5 %} {% endif %} 
+                    {% if objectbuild.plusItemOtherA %}| {% isItem2 objectbuild.plusItemOtherA objectbuild.plusValueOtherA %} {% endif %} 
+                  </td>
+                </tr>
+              {% endif %}
+
+              <!-- 參考物件--勘查員B -->
+              {% if objectbuild.objectBuildScorerB %}
+                <tr>
+                  <td class="objectbuild__td__scorer">
+                    勘查員B：{{ objectbuild.objectBuildScorerB }}
+                  </td>
+                  <td class="objectbuild__td__plus">
+                    {% if objectbuild.plusItemB1 %}| {% isItem2 objectbuild.plusItemB1 objectbuild.plusValueB1 %} {% endif %} 
+                    {% if objectbuild.plusItemB2 %}| {% isItem2 objectbuild.plusItemB2 objectbuild.plusValueB2 %} {% endif %} 
+                    {% if objectbuild.plusItemB3 %}| {% isItem2 objectbuild.plusItemB3 objectbuild.plusValueB3 %}<br> {% endif %} 
+                    {% if objectbuild.plusItemB4 %}| {% isItem2 objectbuild.plusItemB4 objectbuild.plusValueB4 %} {% endif %} 
+                    {% if objectbuild.plusItemB5 %}| {% isItem2 objectbuild.plusItemB5 objectbuild.plusValueB5 %} {% endif %} 
+                    {% if objectbuild.plusItemOtherB %}| {% isItem2 objectbuild.plusItemOtherB objectbuild.plusValueOtherB %} {% endif %} 
+                  </td>
+                </tr>
+              {% endif %}
+
+              <!-- 參考物件--勘查員C -->
+              {% if objectbuild.objectBuildScorerC %}
+                <tr>
+                  <td class="objectbuild__td__scorer">
+                    勘查員C：{{ objectbuild.objectBuildScorerC }}
+                  </td>
+                  <td class="objectbuild__td__plus">
+                    {% if objectbuild.plusItemC1 %}| {% isItem2 objectbuild.plusItemC1 objectbuild.plusValueC1 %} {% endif %} 
+                    {% if objectbuild.plusItemC2 %}| {% isItem2 objectbuild.plusItemC2 objectbuild.plusValueC2 %} {% endif %} 
+                    {% if objectbuild.plusItemC3 %}| {% isItem2 objectbuild.plusItemC3 objectbuild.plusValueC3 %}<br> {% endif %} 
+                    {% if objectbuild.plusItemC4 %}| {% isItem2 objectbuild.plusItemC4 objectbuild.plusValueC4 %} {% endif %} 
+                    {% if objectbuild.plusItemC5 %}| {% isItem2 objectbuild.plusItemC5 objectbuild.plusValueC5 %} {% endif %} 
+                    {% if objectbuild.plusItemOtherC %}| {% isItem2 objectbuild.plusItemOtherC objectbuild.plusValueOtherC %} {% endif %} 
+                  </td>
+                </tr>
+              {% endif %}
+
+            </table>
+
+          </td>
+          <!--輸入計算-->
+          <td>
+            {{objectbuild.get_a_plus_value_total|floatformat:0|intcomma}} 
+          </td>
+        </tr>
+        </tr>
+      </table>
+    {% endfor %}
+  </div>
+
+  <!-- 最終判定 -->
+  <div class="finaldecision" >
+    <table class="yfratingscalePDFFinaldecision">
+      <tr>
+        <th style="width:20%;">結論</th>
+        <th>備註</th>
+        <th style="width:12%;">區域負責人</th>
+        <th style="width:12%;">副署人員1</th>
+        <th style="width:12%;">副署人員2</th>
+      </tr>
+      {% for finaldecision in yfcase.finaldecisions.all %} 
+        <tr>
+          <td>
+            {% if finaldecision.finalDecision == "1拍進場" %}
+              <div class="finaldecision__td finaldecision__first">{{ finaldecision.finalDecision }}</div>
+            {% elif finaldecision.finalDecision == "2拍進場" %}
+              <div class="finaldecision__td finaldecision__second">{{ finaldecision.finalDecision }}</div>
+            {% elif finaldecision.finalDecision == "3拍進場" %}
+              <div class="finaldecision__td finaldecision__third">{{ finaldecision.finalDecision }}</div>
+            {% elif finaldecision.finalDecision == "4拍進場" %}
+              <div class="finaldecision__td finaldecision__fourth">{{ finaldecision.finalDecision }}</div>
+            {% elif finaldecision.finalDecision == "放棄" %}
+              <div class="finaldecision__td finaldecision__giveup">{{ finaldecision.finalDecision }}</div>
+            {% else %}
+              ""
+            {% endif %}
+          </td>
+            
+          <td class="yfratingscalePDFPerson text-left">
+            {{ finaldecision.finalDecisionRemark|default_if_none:"" }}
+          </td>
+
+          <td class="yfratingscalePDFPerson">
+            {% if finaldecision.regionalHead != None %}
+              <div class="regionalhead__seal">
+                <div class="regionalhead__td__person">{{ finaldecision.regionalHead }}</div>
+                <div class="regionalhead__td__date">{{ finaldecision.regionalHeadDate }}</div>
+                <div class="regionalhead__td__workarea">{{ finaldecision.regionalHeadWorkArea|isWordCountOverFour2 }}</div>
+              </div>
+            {% endif %}
+          </td>
+            
+            
+          <td class="yfratingscalePDFPerson">
+            {% if finaldecision.subSigntrueA != None %}
+              <div class="regionalhead__seal">
+                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
+                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
+                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour2 }}</div>
+              </div>
+            {% endif %}
+          </td>
+          
+          <td class="yfratingscalePDFPerson">
+            {% if finaldecision.subSigntrueB != None %}
+              <div class="regionalhead__seal">
+                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour2 }}</div>
+              </div>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <!-- 執行結果 -->
+  <div class="result">
+    <table class="yfratingscalePDFResult">
+      <tr>
+        <th rowspan=2>一賣止日</th>
+        <th rowspan=2>1.撤回</th>
+        <th colspan=2>
+          {% for result in yfcase.results.all %}
+            {% if result.actionResult == "第三人搶標" %}
+              <span class="result__checkbox">V</span> 2.第三人搶標
+            {% else %}
+              2.第三人搶標
+            {% endif%}
+          {% endfor %}
+        </th>
+        <th colspan=3>3.得標</th>
+        <th rowspan=2 class="yfratingscalePDFObjectNumber">標的編號</th>
+      </tr>
+      <tr>
+        <th>搶標拍別</th>
+        <th>搶標金額</th>
+        <th>等待優購</th>
+        <th>遭優購</th>
+        <th>無人優購</th>
+      </tr>
+      {% for result in yfcase.results.all %}
+      <tr>
+        <td>{{ result.stopBuyDate|default_if_none:"" }}</td>
+        <td>{% if result.actionResult == "撤回" %} V {% endif %}</td>
+        <td>{{ result.bidAuctionTime|default_if_none:"" }}</td>
+        <td>{% if result.bidMoney > 0 %}{{ result.bidMoney|floatformat:0|intcomma }}{% endif %}</td>
+        <td>{% if result.actionResult == "等待優購" %} V {% endif %}</td>
+        <td>{% if result.actionResult == "遭優購" %} V {% endif %}</td>
+        <td>{% if result.actionResult == "無人優購" %} V {% endif %}</td>
+        <td>{{ result.objectNumber|default_if_none:"" }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+</body>
+</html>
