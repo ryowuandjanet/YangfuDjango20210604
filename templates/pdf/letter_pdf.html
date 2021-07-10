@@ -665,15 +665,15 @@
         </td>
         <td style="border: 1px solid black; text-align: center;">
           <span class="bluefont">
-            {% for land in yfcase.lands.all %}
-              {{ land.landHoldingPointAll|num2cn2 }}分之{{ land.landHoldingPointPersonal|num2cn2 }}
-            {% endfor %}
+            {% if yfcase.yfcasecoOwnerLandHPAll and yfcase.yfcasecoOwnerLandHPPersonnal %}
+              {{yfcase.yfcasecoOwnerLandHPAll|num2cn2}}分之{{yfcase.yfcasecoOwnerLandHPPersonnal|num2cn2}}
+            {% endif %}
           </span>
         </td>
         <td style="border: 1px solid black; text-align: center;">
           <span class="bluefont">
-            {% if yfcase.get_first_not_add_and_not_public_holding_point_personnal_rate and yfcase.get_first_not_add_and_not_public_holding_point_all_rate %}
-              {{ yfcase.get_first_not_add_and_not_public_holding_point_all_rate|num2cn2 }}分之{{ yfcase.get_first_not_add_and_not_public_holding_point_personnal_rate|num2cn2 }}
+            {% if yfcase.yfcasecoOwnerBuildHPAll and yfcase.yfcasecoOwnerBuildHPPersonnal %}
+              {{yfcase.yfcasecoOwnerBuildHPAll|num2cn2}}分之{{yfcase.yfcasecoOwnerBuildHPPersonnal|num2cn2}}
             {% endif %}
           </span>
         </td>

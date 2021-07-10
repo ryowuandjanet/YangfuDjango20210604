@@ -23,249 +23,196 @@
 {% endblock style %}
 
 {% block content %}
-<!-- 程式主題的部份 -->
-<form action="{% url 'yfcase:complaint_edit' yfcase.id %}" method="post" id="Complaint_edit_form" data-townships-url="{% url 'yfcase:ajax_load_townships' %}">{% csrf_token %}
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-
-      <!-- header -->
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <!-- body -->
-      <div class="modal-body">
-
-        訢訟狀
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintComplaintDate.id_for_label }}">{{ form.yfcaseComplaintComplaintDate.label }}</label>
-          {{ form.yfcaseComplaintComplaintDate|add_class:'form-control datepicker fieldcolor pt-0' }}
-          <span class="help-block">{{ form.yfcaseComplaintComplaintDate.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintLitigationAgent.id_for_label }}">{{ form.yfcaseComplaintLitigationAgent.label }}</label>
-          {{ form.yfcaseComplaintLitigationAgent|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseComplaintLitigationAgent.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintPresentValueOfLandAnnouncement.id_for_label }}">{{ form.yfcaseComplaintPresentValueOfLandAnnouncement.label }}</label>
-          {{ form.yfcaseComplaintPresentValueOfLandAnnouncement|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseComplaintPresentValueOfLandAnnouncement.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintPresentValueOfHouseTax.id_for_label }}">{{ form.yfcaseComplaintPresentValueOfHouseTax.label }}</label>
-          {{ form.yfcaseComplaintPresentValueOfHouseTax|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseComplaintPresentValueOfHouseTax.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintRefereeFee.id_for_label }}">{{ form.yfcaseComplaintRefereeFee.label }}</label>
-          {{ form.yfcaseComplaintRefereeFee|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseComplaintRefereeFee.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintUnsuccessfulDate.id_for_label }}">{{ form.yfcaseComplaintUnsuccessfulDate.label }}</label>
-          {{ form.yfcaseComplaintUnsuccessfulDate|add_class:'form-control datepicker fieldcolor pt-0' }}
-          <span class="help-block">{{ form.yfcaseComplaintUnsuccessfulDate.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintLandWidth.id_for_label }}">{{ form.yfcaseComplaintLandWidth.label }}</label>
-          {{ form.yfcaseComplaintLandWidth|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseComplaintLandWidth.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintLandDepth.id_for_label }}">{{ form.yfcaseComplaintLandDepth.label }}</label>
-          {{ form.yfcaseComplaintLandDepth|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseComplaintLandDepth.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintExhibit1.id_for_label }}">{{ form.yfcaseComplaintExhibit1.label }}</label>
-          {{ form.yfcaseComplaintExhibit1|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseComplaintExhibit1.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintExhibit2.id_for_label }}">{{ form.yfcaseComplaintExhibit2.label }}</label>
-          {{ form.yfcaseComplaintExhibit2|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseComplaintExhibit2.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintExhibit3.id_for_label }}">{{ form.yfcaseComplaintExhibit3.label }}</label>
-          {{ form.yfcaseComplaintExhibit3|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseComplaintExhibit3.error }}</span>
-        </div>
-        
-        <div class="form-group">
-          <label for="{{ form.yfcaseComplaintExhibit4.id_for_label }}">{{ form.yfcaseComplaintExhibit4.label }}</label>
-          {{ form.yfcaseComplaintExhibit4|add_class:'form-control' }}
-          <span class="help-block">{{ form.yfcaseComplaintExhibit4.error }}</span>
-        </div>
-        {{ complaint_clent_id|json_script:"complaint_clent_id" }}
-        
-      </div>
-
-      <div>
-        <a href="{% url 'yfcase:coowner_create' object.id %}" class="btn__icon__create">新增共有人</a>
-      </div>
-
-      {% if object.coownerinfos.count > 0 %} 
-        <table class="coowner__table">
-          <tr>
-            <th rowspan="2">操作</th>
-            <th rowspan="2">姓名</th>
-            <th rowspan="2">住址</th>
-            <th colspan="2">地號持分</th>
-            <th colspan="2">建號持分</th>
-            <th rowspan="2">存/殁</th>
-            <th rowspan="2">繼承人</th>
-          </tr>
-          <tr>
-            <th>個人</th>
-            <th>所有</th>
-            <th>個人</th>
-            <th>所有</th>
-          </tr>
-          {% for coownerinfo in object.coownerinfos.all %}
-            <tr>
-              <td class="coowner__td">
-                <a href="{% url 'yfcase:coowner_update' object.id coownerinfo.id %}" class="btn__icon__update">更新</a>
-                <a href="{% url 'yfcase:coowner_delete' object.id coownerinfo.id %}" class="btn__icon__delete">刪除</a>
-              </td>
-              <td class="coowner__td">{{coownerinfo.coOwnerName}}</td>
-              <td class="coowner__td text-left">{{coownerinfo.coOwnerAddress|default_if_none:""}}</td>
-              <td class="coowner__td">{{coownerinfo.coOwnerLandHPPersonnal}}</td>
-              <td class="coowner__td">{{coownerinfo.coOwnerLandHPAll}}</td>
-              <td class="coowner__td">{{coownerinfo.coOwnerBuildHPPersonnal}}</td>
-              <td class="coowner__td">{{coownerinfo.coOwnerBuildHPAll}}</td>
-              <td class="coowner__td">{{coownerinfo.coOwnerLifeOrDie|default_if_none:""}}</td>
-              <td class="coowner__td">
-                <a href="{% url 'yfcase:coowner_heir_create' coownerinfo.id %}" class="btn__icon__create">新增繼承人</a>
-              </td>
-            </tr>
-            {% if coownerinfo.coownerheirs.count > 0 %}
-              <tr>
-                <td></td>
-                <td colspan=8>
-                  <table class="coownerheir__table">
-                    <tr>
-                      <th rowspan="2">操作</th>
-                      <th rowspan="2">(順位)姓名</th>
-                      <th rowspan="2">住址</th>
-                      <th colspan="2">地號持分</th>
-                      <th colspan="2">建號持分</th>
-                      <th rowspan="2">存/殁</th>
-                      <th rowspan="2">訢訟人</th>
-                    </tr>
-                    <tr>
-                      <th>個人</th>
-                      <th>所有</th>
-                      <th>個人</th>
-                      <th>所有</th>
-                    </tr>
-                    {% for coownerheir in coownerinfo.coownerheirs.all %}
-                      <tr>
-                        <td>
-                          <a href="{% url 'yfcase:coowner_heir_update' coownerinfo.id coownerheir.id %}" class="btn__icon__update">更新</a>
-                          <a href="{% url 'yfcase:coowner_heir_delete' coownerinfo.id coownerheir.id %}" class="btn__icon__delete">刪除</a>
-                        </td>
-                        <td>
-                          ({{coownerheir.coOwnerHeirIdentityCard}})
-                          {{coownerheir.coOwnerHeirName}}<br>
-                          {{coownerheir.coOwnerHeirName}}即{{coownerinfo.coOwnerName}}之繼承人
-                        </td>
-                        <td class="text-left">{{coownerheir.coOwnerHeirAddress|default_if_none:""}}</td>
-                        <td>{{coownerheir.coOwnerHeirLandHPPersonnal}}</td>
-                        <td>{{coownerheir.coOwnerHeirLandHPAll}}</td>
-                        <td>{{coownerheir.coOwnerHeirBuildHPPersonnal}}</td>
-                        <td>{{coownerheir.coOwnerHeirBuildHPAll}}</td>
-                        <td>{{coownerheir.coOwnerHeirLifeOrDie|default_if_none:""}}</td>
-                        <td>
-                          <a href="{% url 'yfcase:coowner_litigation_create' coownerheir.id %}" class="btn__icon__create">新增訴訟人</a>
-                        </td>
-                      </tr>
-                      {% if coownerheir.coownerlitigations.count > 0 %}
-                        <tr>
-                          <td></td>
-                          <td colspan=8>
-                            <table class="coownerheir__table">
-                              <tr>
-                                <th rowspan="2">操作</th>
-                                <th rowspan="2">(順位)姓名</th>
-                                <th rowspan="2">住址</th>
-                                <th colspan="2">地號持分</th>
-                                <th colspan="2">建號持分</th>
-                                <th rowspan="2">存/殁</th>
-                              </tr>
-                              <tr>
-                                <th>個人</th>
-                                <th>所有</th>
-                                <th>個人</th>
-                                <th>所有</th>
-                              </tr>
-                              {% for coownerlitigation in coownerheir.coownerlitigations.all %}
-                                <tr>
-                                  <td>
-                                    <a href="{% url 'yfcase:coowner_litigation_update' coownerheir.id coownerlitigation.id %}" class="btn__icon__update">更新</a>
-                                    <a href="{% url 'yfcase:coowner_litigation_delete' coownerheir.id coownerlitigation.id %}" class="btn__icon__delete">刪除</a> 
-                                  </td>
-                                  <td>
-                                    ({{coownerlitigation.coOwnerLitigationIdentityCard}})
-                                    {{coownerlitigation.coOwnerLitigationName}}<br>
-                                    {{coownerlitigation.coOwnerLitigationName}}即{{coownerheir.coOwnerHeirName}}之承受訴訟人即{{coownerinfo.coOwnerName}}之繼承人
-                                    
-                                  </td>
-                                  <td class="text-left">{{coownerlitigation.coOwnerLitigationAddress|default_if_none:""}}</td>
-                                  <td>{{coownerlitigation.coOwnerLitigationLandHPPersonnal}}</td>
-                                  <td>{{coownerlitigation.coOwnerLitigationLandHPAll}}</td>
-                                  <td>{{coownerlitigation.coOwnerLitigationBuildHPPersonnal}}</td>
-                                  <td>{{coownerlitigation.coOwnerLitigationBuildHPAll}}</td>
-                                  <td>{{coownerlitigation.coOwnerLitigationLifeOrDie|default_if_none:""}}</td>
-                                 
-                                </tr>
-                              {% endfor %}
-                            </table>
-                          </td>
-                        </tr>
-                      {% endif %}
-                    {% endfor %}
-                  </table>
-                </td>
-              </tr>
-            {% endif %}
-          {% endfor %}
-        </table>
-      {% endif %}
-        
-      <!-- footer -->
-
-        <div class="row mt-3">
-          <div class="col-md-6 mt-3">
-            <a href="{% url 'yfcase:home' %}" class="btn btn-secondary form-control" >返回</a>
-          </div>
-          <div class="col-md-6 mt-3">
-            <input class="btn btn-primary form-control" type="submit" value="建立" />
-          </div>
-        </div>
-
+<div class="col-md p-2 bg-light">
+  <!-- 程式主題的部份 -->
+  <form action="{% url 'yfcase:complaint_edit' yfcase.id %}" method="post" id="Complaint_edit_form" data-townships-url="{% url 'yfcase:ajax_load_townships' %}">{% csrf_token %}
+    <!-- header -->
+    <h1>{{title}}</h1>
+    
+    <div class="col mb-3">
+      訴訟狀 - 案號：{{ yfcase.yfcaseCaseNumber }}
     </div>
-  </div>
-</form>
+
+    <!-- 起訴狀填寫日期、訴訟狀委託人、土地公告現值、房屋課稅現值 -->
+    <div class="row">
+      <!-- 訴訟狀委託人 -->
+      <div class="col-md-3 mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintLitigationAgent.label }}
+          </label>
+          {{ form.yfcaseComplaintLitigationAgent|add_class:'form-control' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintLitigationAgent.error }}
+          </span>
+        </div>
+      </div>
+      <!-- 起訴狀填寫日期 -->
+      <div class="col-md-3 mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintComplaintDate.label }}
+          </label>
+          {{ form.yfcaseComplaintComplaintDate|add_class:'form-control datepicker fieldcolor pt-0' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintComplaintDate.error }}
+          </span>
+        </div>
+      </div>
+      <!-- 土地公告現值 -->
+      <div class="col-md-3 mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintPresentValueOfLandAnnouncement.label }}
+          </label>
+          {{ form.yfcaseComplaintPresentValueOfLandAnnouncement|add_class:'form-control' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintPresentValueOfLandAnnouncement.error }}
+          </span>
+        </div>
+      </div>
+      <!-- 房屋課稅現值 -->
+      <div class="col-md-3 mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintPresentValueOfHouseTax.label }}
+          </label>
+          {{ form.yfcaseComplaintPresentValueOfHouseTax|add_class:'form-control' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintPresentValueOfHouseTax.error }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 裁判費、分割未果日期、土地面寬、土地深度 -->
+    <div class="row">
+      <!-- 裁判費 -->
+      <div class="col-md-3 mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintRefereeFee.label }}
+          </label>
+          {{ form.yfcaseComplaintRefereeFee|add_class:'form-control' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintRefereeFee.error }}
+          </span>
+        </div>
+      </div>
+      <!-- 分割未果日期 -->
+      <div class="col-md-3 mb-3">
+         <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintUnsuccessfulDate.label }}
+          </label>
+          {{ form.yfcaseComplaintUnsuccessfulDate|add_class:'form-control datepicker fieldcolor pt-0' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintUnsuccessfulDate.error }}
+          </span>
+        </div>
+      </div>
+      <!-- 土地面寬 -->
+      <div class="col-md-3 mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintLandWidth.label }}
+          </label>
+          {{ form.yfcaseComplaintLandWidth|add_class:'form-control' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintLandWidth.error }}
+          </span>
+        </div>
+      </div>
+      <!-- 土地深度 -->
+      <div class="col-md-3 mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintLandDepth.label }}
+          </label>
+          {{ form.yfcaseComplaintLandDepth|add_class:'form-control' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintLandDepth.error }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 證物1 -->
+    <div class="row">
+      <div class="col-md mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintExhibit1.label }}
+          </label>
+          {{ form.yfcaseComplaintExhibit1|add_class:'form-control' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintExhibit1.error }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- 證物2 -->
+    <div class="row">
+      <div class="col-md mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintExhibit2.label }}
+          </label>
+          {{ form.yfcaseComplaintExhibit2|add_class:'form-control' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintExhibit2.error }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- 證物3 -->
+    <div class="row">
+      <div class="col-md mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintExhibit3.label }}
+          </label>
+          {{ form.yfcaseComplaintExhibit3|add_class:'form-control' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintExhibit3.error }}
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- 證物4 -->
+    <div class="row">
+      <div class="col-md mb-3">
+        <div class="form-group">
+          <label>
+            {{ form.yfcaseComplaintExhibit4.label }}
+          </label>
+          {{ form.yfcaseComplaintExhibit4|add_class:'form-control' }}
+          <span class="help-block">
+            {{ form.yfcaseComplaintExhibit4.error }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    {{ complaint_clent_id|json_script:"complaint_clent_id" }}
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <a href="{% url 'yfcase:home' %}" class="btn btn-secondary form-control" >返回</a>
+      </div>
+      <div class="col-md-6 mb-3">
+        <input class="btn btn-primary form-control" type="submit" value="建立" />
+      </div>
+    </div>
+        
+  </form>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
+  /* global $ */
   $(document).ready(function(){
     const complaint_clent_id = JSON.parse(document.getElementById('complaint_clent_id').textContent);
     document.getElementById("id_yfcaseComplaintLitigationAgent").value = complaint_clent_id; 
@@ -278,6 +225,13 @@
           validating: 'glyphicon glyphicon-refresh'
       },
       fields: {
+        yfcaseComplaintLitigationAgent: {
+          validators: {
+            notEmpty: {
+              message: '此一欄位不得為空'
+            }
+          }
+        },
       }
     });
 

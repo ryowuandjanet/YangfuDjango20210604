@@ -439,7 +439,7 @@ class Yfcase(models.Model):
       getCoOwnerInfosLandHPPersonnalTotal=0
       for getCoOwnerLandHP in self.coownerinfos.filter(coOwnerLandHPPersonnal__gt=0).filter(coOwnerLandHPAll__gt=0):
         getCoOwnerInfosLandHPPersonnalTotal = getCoOwnerInfosLandHPPersonnalTotal + ( getCoOwnerLandHP.coOwnerLandHPPersonnal / getCoOwnerLandHP.coOwnerLandHPAll )
-      return getCoOwnerInfosLandHPPersonnalTotal + self.get_first_land_holding_point_value()
+      return getCoOwnerInfosLandHPPersonnalTotal + ( self.yfcasecoOwnerLandHPPersonnal / self.yfcasecoOwnerLandHPAll )
     except:
       newlist.append(0)
     
@@ -450,7 +450,7 @@ class Yfcase(models.Model):
       getCoOwnerInfosBuildHPPersonnalTotal=0
       for getCoOwnerBuildHP in self.coownerinfos.filter(coOwnerBuildHPPersonnal__gt=0).filter(coOwnerBuildHPAll__gt=0):
         getCoOwnerInfosBuildHPPersonnalTotal = getCoOwnerInfosBuildHPPersonnalTotal + ( getCoOwnerBuildHP.coOwnerBuildHPPersonnal / getCoOwnerBuildHP.coOwnerBuildHPAll )
-      return getCoOwnerInfosBuildHPPersonnalTotal + self.get_first_not_add_and_not_public_holding_point_rate()
+      return getCoOwnerInfosBuildHPPersonnalTotal + ( self.yfcasecoOwnerBuildHPPersonnal / self.yfcasecoOwnerBuildHPAll )
     except:
       newlist.append(0)
 

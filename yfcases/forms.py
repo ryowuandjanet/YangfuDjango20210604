@@ -691,7 +691,7 @@ class RealestateregistrationForm(forms.ModelForm):
 
 # ======= 訴訟狀  =======
 class ComplaintForm(forms.ModelForm):
-  yfcaseComplaintLitigationAgent = forms.ModelChoiceField(label="契稅委託人",queryset=CustomUser.objects.filter(userRole=0), required=False)
+  yfcaseComplaintLitigationAgent = forms.ModelChoiceField(label="訴訟代理人",queryset=CustomUser.objects.filter(userRole=0), required=False)
   class Meta:
     model=Yfcase
     fields =[
