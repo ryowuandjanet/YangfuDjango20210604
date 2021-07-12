@@ -55,9 +55,10 @@ def yfcase_list_all(request):
       Q(yfcaseStreet__icontains=query)|
       Q(yfcaseNumber__icontains=query)|
       Q(finaldecisions__finalDecision__icontains=query)|
-      Q(finaldecisions__regionalHead__icontains=query)
+      Q(finaldecisions__regionalHead__icontains=query)|
+      Q(user__userFullName__icontains=query)
     ).distinct()
-  paginator = Paginator(queryset_list, 3) 
+  paginator = Paginator(queryset_list, 10) 
 
   page = request.GET.get('page')
   queryset = paginator.get_page(page)
@@ -84,9 +85,10 @@ def yfcase_list(request):
       Q(yfcaseStreet__icontains=query)|
       Q(yfcaseNumber__icontains=query)|
       Q(finaldecisions__finalDecision__icontains=query)|
-      Q(finaldecisions__regionalHead__icontains=query)
+      Q(finaldecisions__regionalHead__icontains=query)|
+      Q(user__userFullName__icontains=query)
     ).distinct()
-  paginator = Paginator(queryset_list, 3) 
+  paginator = Paginator(queryset_list, 10) 
 
   page = request.GET.get('page')
   queryset = paginator.get_page(page)
