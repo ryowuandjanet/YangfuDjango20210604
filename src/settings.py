@@ -14,6 +14,7 @@ import os
 import src.db as db
 import subprocess
 from pathlib import Path
+import subprocess
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -72,9 +73,7 @@ LOGOUT_REDIRECT_URL = 'yfcase:home'
 
 # 設定WKHTMLTOPDF的路徑
 # WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
-WKHTMLTOPDF_CMD = [
-  os.path.join(BASE_DIR,"yfcases/wkhtmltox"),
-]
+# WKHTMLTOPDF_CMD = "C:/RyowuTestCode/djangotest/YangfuDjango/yfcases/wkhtmltox/bin/wkhtmltopdf.exe"
 
 
 TEMPLATES = [
