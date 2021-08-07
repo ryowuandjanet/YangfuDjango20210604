@@ -16,7 +16,7 @@ POSTGRESQL = {
     'NAME': 'YfcaseDjango',        #此例為posts
     'USER': 'ryowu',                #此例為user
     'PASSWORD': 'leo140814',     #此例為自己設定的密碼
-    'HOST': '127.0.0.1',        #此例為localhost
+    'HOST': 'localhost',        #此例為localhost
     'PORT': '5432',                 #此例為5432
   }
 }
