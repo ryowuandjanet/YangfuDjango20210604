@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 import src.db as db
+import subprocess
 from pathlib import Path
+import subprocess
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -70,7 +72,8 @@ LOGIN_REDIRECT_URL = 'yfcase:home'
 LOGOUT_REDIRECT_URL = 'yfcase:home'
 
 # 設定WKHTMLTOPDF的路徑
-WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+# WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+# WKHTMLTOPDF_CMD = "C:/RyowuTestCode/djangotest/YangfuDjango/yfcases/wkhtmltox/bin/wkhtmltopdf.exe"
 
 
 TEMPLATES = [
@@ -157,3 +160,13 @@ STATIC_ROOT=os.path.join(BASE_DIR, "static_cdn")
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+if 'DYNO' in os.environ:
+    print ('loading wkhtmltopdf path on heroku')
+    WKHTMLTOPDF_CMD = subprocess.Popen(
+        ['which', os.environ.get('WKHTMLTOPDF_BINARY', 'wkhtmltopdf-pack')], # Note we default to 'wkhtmltopdf' as the binary name
+        stdout=subprocess.PIPE).communicate()[0].strip()
+else:
+    print ('loading wkhtmltopdf path on localhost')
+    MYDIR = os.path.dirname(__file__)    
+    WKHTMLTOPDF_CMD = os.path.join(MYDIR + "/static/executables/bin/", "wkhtmltopdf.exe")
