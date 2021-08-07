@@ -697,10 +697,10 @@
       </tr>
       <tr>
         <td class="yfratingscalePDFAttachmentContent">
-          {{yfcase.surveys.first.surveyFirstDay}}
+          {{yfcase.surveys.first.surveyFirstDay|default_if_none:""}}
         </td>
         <td class="yfratingscalePDFAttachmentContent">
-          {{yfcase.surveys.first.surveySecondDay}}
+          {{yfcase.surveys.first.surveySecondDay|default_if_none:""}}
         </td>
         <td class="yfratingscalePDFAttachmentContent">
           {% if yfcase.surveys.first.surveyForeclosureAnnouncementLink %}

@@ -44,7 +44,7 @@
       </td>
       <td class="build__td text-left">
         <div style="font-size:12pt;"> 
-          {{ object.yfcaseBigSection }}{{ build.buildNumber }}
+          {{ object.yfcaseBigSection|default_if_none:"" }}{{ build.buildNumber }}
         </div>
       </td>
       <td class="build__td">

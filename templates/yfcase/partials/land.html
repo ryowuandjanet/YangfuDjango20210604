@@ -31,7 +31,7 @@
       </td>
       <td class="land__td text-left">
         <div style="font-size:12pt;">
-          {{ object.yfcaseBigSection }}{{ land.landNumber }}
+          {{ object.yfcaseBigSection|default_if_none:"" }}{{ land.landNumber }}
         </div>
       </td>
       <td class="land__td">

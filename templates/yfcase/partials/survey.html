@@ -23,12 +23,12 @@
   <tr>
     <td class="survey__td">
       {% for survey in object.surveys.all %}
-        {{survey.surveyFirstDay}}
+        {{survey.surveyFirstDay|default_if_none:""}}
       {% endfor %}
     </td>
     <td class="survey__td">
       {% for survey in object.surveys.all %}
-        {{survey.surveySecondDay}}
+        {{survey.surveySecondDay|default_if_none:""}}
       {% endfor %}
     </td>
     <td class="survey__td">
