@@ -194,7 +194,9 @@
         <span class="bluefont">{{ yfcase.yfcaseComplaintLandDepth|default_if_none:"" }}</span>
         公尺)。建物總面積
         <span class="bluefont">
-          {{ yfcase.get_build_first_not_add_and_not_public_area|floatformat:2|default_if_none:"" }}
+          {% if yfcase.builds.count < 0 %}
+            {{ yfcase.get_build_first_not_add_and_not_public_area|floatformat:2|default_if_none:"" }}
+          {% endif %}
         </span>
         平方公尺(此為謄本面積，未保存登記部份，請鈞院調取107年度司執更一字第5號執行卷) 【證物2】。
       </td>

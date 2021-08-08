@@ -204,7 +204,10 @@ class Yfcase(models.Model):
   # 在編輯Build設定
   # 第一筆建物(非公設、非增建)各別面積
   def get_build_first_not_add_and_not_public_area(self):
-    return self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first().get_build_holding_point_area()
+    try:
+      return self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first().get_build_holding_point_area()
+    except ZeroDivisionError:
+      return 0
 
   # 取得第一筆非公設、非增建的持分比
   def get_first_not_add_and_not_public_holding_point_rate(self):
@@ -353,8 +356,11 @@ class Yfcase(models.Model):
   # 在編輯Build設定
   # 第一筆建物(非公設、非增建)各別面積
   def get_build_first_not_add_and_not_public_area(self):
-    return self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first().get_build_holding_point_area()
-    
+    try:
+      return self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first().get_build_holding_point_area()
+    except ZeroDivisionError:
+      return 0
+
   # 取得第一筆非公設、非增建的個人持分
   def get_first_not_add_and_not_public_holding_point_personnal_rate(self):
     try:
@@ -421,15 +427,19 @@ class Yfcase(models.Model):
       
   # 訴訟標的價額  
   def get_litigation_subject_price(self):
-    # 土地公告現值
-    PresentValueOfLandAnnouncement = self.yfcaseComplaintPresentValueOfLandAnnouncement
-    # 土地總面積 * 土地原告應有持分
-    LandHPTotalArea = self.get_land_holding_point_area_total()
-    # 系爭房屋課稅現值
-    PresentValueOfHouseTax = self.yfcaseComplaintPresentValueOfHouseTax
-    # 房屋原告應有持分
-    BuildHP = self.get_first_not_add_and_not_public_holding_point_personnal_rate() / self.get_first_not_add_and_not_public_holding_point_all_rate()
-    return (PresentValueOfLandAnnouncement * LandHPTotalArea) + (PresentValueOfHouseTax * BuildHP)
+    newlist=[]
+    try:
+      # 土地公告現值
+      PresentValueOfLandAnnouncement = self.yfcaseComplaintPresentValueOfLandAnnouncement
+      # 土地總面積 * 土地原告應有持分
+      LandHPTotalArea = self.get_land_holding_point_area_total()
+      # 系爭房屋課稅現值
+      PresentValueOfHouseTax = self.yfcaseComplaintPresentValueOfHouseTax
+      # 房屋原告應有持分
+      BuildHP = self.get_first_not_add_and_not_public_holding_point_personnal_rate() / self.get_first_not_add_and_not_public_holding_point_all_rate()
+      return (PresentValueOfLandAnnouncement * LandHPTotalArea) + (PresentValueOfHouseTax * BuildHP)
+    except:
+      newlist.append(0)
 
     # ⺠事起訴狀（裁判分割共有物）
   # 共有人+債權人土地持分合計
