@@ -98,8 +98,8 @@ WSGI_APPLICATION = 'src.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = db.SQLITE 
-DATABASES = db.POSTGRESQL
+DATABASES = db.SQLITE 
+#DATABASES = db.POSTGRESQL
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'
