@@ -694,8 +694,9 @@ class DeedtaxUpdateView(UpdateView):
 
   def get_context_data(self, **kwargs):
     context = super(DeedtaxUpdateView,self).get_context_data(**kwargs)
-    deedtax_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseDeedtaxClient
-    context['deedtax_clent_id'] =CustomUser.objects.get(userFullName=deedtax_user_id).id
+    if Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseDeedtaxClient:
+      deedtax_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseDeedtaxClient
+      context['deedtax_clent_id'] =CustomUser.objects.get(userFullName=deedtax_user_id).id
     context["author_id"]=self.request.user.id
     context['value'] = '編輯'
     context['title'] = '契稅申請單相關資料'
@@ -725,8 +726,9 @@ class RealestateregistrationUpdateView(UpdateView):
 
   def get_context_data(self, **kwargs):
     context = super(RealestateregistrationUpdateView,self).get_context_data(**kwargs)
-    realestateregistration_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseRealEstateRegistrationRegisteredAgent
-    context['realestateregistration_user_id'] =CustomUser.objects.get(userFullName=realestateregistration_user_id).id
+    if Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseRealEstateRegistrationRegisteredAgent:
+      realestateregistration_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseRealEstateRegistrationRegisteredAgent
+      context['realestateregistration_user_id'] =CustomUser.objects.get(userFullName=realestateregistration_user_id).id
     context["author_id"]=self.request.user.id
     context['value'] = '編輯'
     context['title'] = '不動產登記清冊相關資料'
@@ -845,8 +847,9 @@ class ComplaintUpdateView(UpdateView):
 
   def get_context_data(self, **kwargs):
     data = super(ComplaintUpdateView,self).get_context_data(**kwargs)
-    complaint_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseComplaintLitigationAgent
-    data['complaint_clent_id'] =CustomUser.objects.get(userFullName=complaint_user_id).id
+    if Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseComplaintLitigationAgent:
+      complaint_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseComplaintLitigationAgent
+      data['complaint_clent_id'] =CustomUser.objects.get(userFullName=complaint_user_id).id
     data['instace'] =Yfcase.objects.get(pk=self.kwargs.get('pk'))
     data["author_id"]=self.request.user.id
     data['value'] = '編輯'
@@ -1024,8 +1027,9 @@ class LetterUpdateView(UpdateView):
 
   def get_context_data(self, **kwargs):
     context = super(LetterUpdateView,self).get_context_data(**kwargs)
-    letter_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseLetterAgent
-    context['letter_clent_id'] =CustomUser.objects.get(userFullName=letter_user_id).id
+    if Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseLetterAgent:
+      letter_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseLetterAgent
+      context['letter_clent_id'] =CustomUser.objects.get(userFullName=letter_user_id).id
     context["author_id"]=self.request.user.id
     context['value'] = '編輯'
     context['title'] = '存證信函相關資料'
@@ -1041,8 +1045,9 @@ class CoownertUpdateView(UpdateView):
   def get_context_data(self, **kwargs):
     context = super(CoownertUpdateView,self).get_context_data(**kwargs)
     yfcase=Yfcase.objects.get(pk=self.kwargs.get('pk'))
-    cowner_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseCownerAgent
-    context['cowner_clent_id'] =CustomUser.objects.get(userFullName=cowner_user_id).id
+    if Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseCownerAgent:
+      cowner_user_id=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseCownerAgent
+      context['cowner_clent_id'] =CustomUser.objects.get(userFullName=cowner_user_id).id
     context["author_id"]=self.request.user.id
     context['value'] = '編輯'
     context['title'] = '共有人資訊'
@@ -1072,7 +1077,10 @@ class coownerPDFView(PDFView):
     pk = kwargs.get('pk')
     yfcase = Yfcase.objects.get(pk=pk)
     coowners = yfcase.coownerinfos.filter(yfcase_id=yfcase.id)
-    yfcasecowneragent = CustomUser.objects.get(userFullName=yfcase.yfcaseCownerAgent)
+    if yfcase.yfcaseCownerAgent:
+      yfcasecowneragent = CustomUser.objects.get(userFullName=yfcase.yfcaseCownerAgent)
+    else:
+      yfcasecowneragent = ''
   
     
     # coowners = yfcases.coownerinfos.all()
