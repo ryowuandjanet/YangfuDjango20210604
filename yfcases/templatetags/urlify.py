@@ -47,7 +47,7 @@ def less_two_week(auctionDate,auctionStr):
   auctionDateValue = datetime.strptime(auctionDate,'%Y-%m-%d')
   DateValue = (auctionDateValue-today).days + 1
   if DateValue >= 0 and DateValue <= 14 :
-    return auctionStr + "(" + str(DateValue) + "天後)"
+    return mark_safe( "<div style='color: red;'>" + auctionStr + "(" + str(DateValue) + "天後)" +  "</div>")
     
     
 # 計算轄區字數是否超過3個字元(例如：雙北桃竹苗)

@@ -337,7 +337,7 @@ class Yfcase(models.Model):
     return self.auctions.all().get(auctionFloorPriceThird__gt=0)
 
   # auction 第四拍底價大於0的資料(get)
-  def get_auction_3rd(self):
+  def get_auction_4th(self):
     return self.auctions.all().get(auctionFloorPriceFourth__gt=0)    
 
   # result 篩選買止日不為空(filter)

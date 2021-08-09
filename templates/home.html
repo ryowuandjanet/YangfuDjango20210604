@@ -171,7 +171,7 @@
               {% if result.actionResult == '等待優購' or result.actionResult == '遭優購' or result.actionResult == '無人優購' %}
                 得標
               {% else %}
-                {{ result.actionResult }}
+                {{ result.actionResult|default_if_none:"" }}
               {% endif %}
             {% endfor %}
           </td>
