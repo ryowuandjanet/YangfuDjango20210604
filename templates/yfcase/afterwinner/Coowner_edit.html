@@ -110,6 +110,31 @@
         </h2>
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
           <div class="accordion-body">
+            <div class="row">
+              <div class="col-md mb-3">
+                <div class="form-group">
+                  <label>
+                    {{ form.yfcaseAllCoOwnerLandHPPersonnal.label }}
+                  </label>
+                  {{ form.yfcaseAllCoOwnerLandHPPersonnal|add_class:'form-control border border-dark fieldcolor' }}
+                  <span class="help-block">
+                    {{ form.yfcaseAllCoOwnerLandHPPersonnal.error }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-md mb-3"> 
+                <div class="form-group">
+                  <label>
+                    {{ form.yfcaseAllCoOwnerLandHPAll.label }}
+                  </label>
+                  {{ form.yfcaseAllCoOwnerLandHPAll|add_class:'form-control border border-dark fieldcolor' }}
+                  <span class="help-block">
+                    {{ form.yfcaseAllCoOwnerLandHPAll.error }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
             <!--共有人分割--共有人(按鍵)-->
             <div>
               <a href="{% url 'yfcase:coowner_create' object.id %}" class="btn__icon__create">新增共有人</a>

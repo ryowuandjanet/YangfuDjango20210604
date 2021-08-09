@@ -77,7 +77,7 @@
         <tr>
           <th>操作</th>
           <th>案號</th>
-          <th>兩週內<br><div class="text-mark">拍別(一賣止日)</div></th>
+          <th>兩週內<br><div class="text-mark">拍別(應買止日)</div></th>
           <th>負責人</th>
           <th>最終判定</th>
           <th>執行結果</th>
@@ -155,9 +155,9 @@
             {% if yfcase.get_auction_4th.auctionDateFourth %}
               {{ yfcase.get_auction_4th.auctionDateFourth|less_two_week:"4拍"|default_if_none:"" }}
             {% endif %}
-            <!-- 買止日 -->
+            <!-- 應買止日 -->
             {% for result in yfcase.get_result_stopBuyDate %}
-              <div class="text-stopBuyDate">一買止日({{ result.stopBuyDate }})</div>
+              <div class="text-stopBuyDate">應買止日({{ result.stopBuyDate }})</div>
             {% endfor %} 
           </td>
           <td>{{ yfcase.user }}</td>

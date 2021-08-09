@@ -1061,6 +1061,9 @@ class letterPDFView(PDFView):
     context = super().get_context_data(**kwargs)
     pk = kwargs.get('pk')
     yfcase = Yfcase.objects.get(pk=pk)
+    if Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseLetterAgent:
+      letter_agent_name=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseLetterAgent
+      context['letter_agent_phone'] =CustomUser.objects.get(userFullName=letter_agent_name).userMobilePhone
     users = CustomUser.objects.all()
     context.update({
         'yfcase': yfcase,

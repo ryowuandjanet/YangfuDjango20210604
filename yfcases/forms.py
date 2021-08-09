@@ -703,10 +703,11 @@ class ComplaintForm(forms.ModelForm):
 # ======= 存證信函 =======
 class LetterForm(forms.ModelForm):
   yfcaseLetterAgent = forms.ModelChoiceField(label="存證信函代理人",queryset=CustomUser.objects.filter(userRole=0), required=False)
+  yfcaseLetterSender = forms.ChoiceField(label="存證信函代理人",choices=COMPANY_LIST, widget=forms.Select(attrs={'class': 'form-select'}),required=False)
   class Meta:
     model=Yfcase
     fields =[
-      "yfcaseLetterAgent"
+      "yfcaseLetterAgent","yfcaseLetterSender"
     ] 
     
 # ======= 共有人 =======
@@ -715,7 +716,7 @@ class CoOwnerForm(forms.ModelForm):
   class Meta:
     model=Yfcase
     fields =[
-      "yfcaseCownerAgent","yfcasecoOwnerLandHPPersonnal","yfcasecoOwnerLandHPAll","yfcasecoOwnerBuildHPPersonnal","yfcasecoOwnerBuildHPAll"
+      "yfcaseCownerAgent","yfcasecoOwnerLandHPPersonnal","yfcasecoOwnerLandHPAll","yfcasecoOwnerBuildHPPersonnal","yfcasecoOwnerBuildHPAll","yfcaseAllCoOwnerLandHPPersonnal","yfcaseAllCoOwnerLandHPAll"
     ] 
     
     

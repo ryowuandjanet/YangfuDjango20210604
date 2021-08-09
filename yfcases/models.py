@@ -156,11 +156,15 @@ class Yfcase(models.Model):
 
   # 存證信函
   yfcaseLetterAgent = models.CharField(u'存證信函代理人',max_length=100,null=True,blank=True)
+  yfcaseLetterSender = models.CharField(u'存證信函寄件人',max_length=100,null=True,blank=True)
+
   
   # 共有人
   yfcaseCownerAgent = models.CharField(u'共有人代理人',max_length=100,null=True,blank=True)
   yfcasecoOwnerLandHPPersonnal=models.DecimalField(u'土地個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
   yfcasecoOwnerLandHPAll=models.DecimalField(u'土地所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  yfcaseAllCoOwnerLandHPPersonnal=models.DecimalField(u'所有共有人應土地持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
+  yfcaseAllCoOwnerLandHPAll=models.DecimalField(u'所有土地持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
   yfcasecoOwnerBuildHPPersonnal=models.DecimalField(u'建物個人持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
   yfcasecoOwnerBuildHPAll=models.DecimalField(u'建物所有持分',default=0,max_digits=8,decimal_places=0,null=True,blank=True)
   
@@ -461,6 +465,14 @@ class Yfcase(models.Model):
       for getCoOwnerBuildHP in self.coownerinfos.filter(coOwnerBuildHPPersonnal__gt=0).filter(coOwnerBuildHPAll__gt=0):
         getCoOwnerInfosBuildHPPersonnalTotal = getCoOwnerInfosBuildHPPersonnalTotal + ( getCoOwnerBuildHP.coOwnerBuildHPPersonnal / getCoOwnerBuildHP.coOwnerBuildHPAll )
       return getCoOwnerInfosBuildHPPersonnalTotal + ( self.yfcasecoOwnerBuildHPPersonnal / self.yfcasecoOwnerBuildHPAll )
+    except:
+      newlist.append(0)
+
+  # 存証信函-所有共有人的土地持分總計
+  def get_all_coowner_land_HP(self):
+    newlist=[]
+    try:
+      return self.yfcaseAllCoOwnerLandHPPersonnal / self.yfcaseAllCoOwnerLandHPAll
     except:
       newlist.append(0)
 
@@ -971,7 +983,7 @@ class FinalDecision(models.Model):
 # ======= Result =======
 class Result(models.Model):
   yfcase = models.ForeignKey(Yfcase,related_name='results',on_delete=models.CASCADE)
-  stopBuyDate = models.CharField(u'一買止日',max_length=20,null=True,blank=True)
+  stopBuyDate = models.CharField(u'應買止日',max_length=20,null=True,blank=True)
   actionResult = models.CharField(u'執行結果',max_length=20,null=True,blank=True)
   bidAuctionTime = models.CharField(u'搶標拍別',max_length=20,null=True,blank=True)
   bidMoney = models.DecimalField(u'搶標金額',default=0,max_digits=10,decimal_places=2,null=True,blank=True)

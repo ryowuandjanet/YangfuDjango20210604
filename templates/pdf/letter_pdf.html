@@ -153,14 +153,23 @@
             <td style="padding: 0px;">
               <table>
                 <tr>
-                  <td>姓名： 揚富開發有限公司&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</td>
+                  <td>姓名：{{ yfcase.yfcaseLetterSender|default_if_none:"" }}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                  </td>
                   <td style="margin: 0px; padding: 0px 5px; border: 1px solid black;">印</td>
                 </tr>
               </table>
             </td>
           </tr>
           <tr>
-            <td>詳細地址：臺中市大里區新仁路三段49號</td>
+            <td>
+              {% if yfcase.yfcaseLetterSender == '揚富開發有限公司' %}
+                詳細地址：臺中市大里區新仁路三段49號
+              {% elif yfcase.yfcaseLetterSender == '鉅鈦開發有限公司' %}
+                詳細地址：臺中市大里區新仁路三段72巷3號1樓
+              {% else %}
+                詳細地址：
+              {% endif %}
+            </td>
           </tr>
           <tr>
             <td rowspan="2">二、收件人</td>
@@ -227,8 +236,8 @@
       <td class="lettertd">。</td>
       <td class="lettertd">關</td>
       <td class="lettertd">於</td>
-      <td class="lettertd">揚</td>
-      <td class="lettertd">富</td>
+      <td class="lettertd bluefont">{{ yfcase.yfcaseLetterSender|slice:"0:1"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ yfcase.yfcaseLetterSender|slice:"1:2"|default_if_none:"" }}</td>
       <td class="lettertd">開</td>
       <td class="lettertd">發</td>
       <td class="lettertd">有</td>
@@ -287,60 +296,57 @@
       <td class="lettertd">您</td>
       <td class="lettertd">於</td>
     </tr>
-  
+
     <!--第四行-->
-    {% for user in users %}
-      {% if user.userFullName == yfcase.yfcaseLetterAgent %}
-        <tr>
-          <td class="lettertdTitle">四</td>
-          <td class="lettertd">十</td>
-          <td class="lettertd">日</td>
-          <td class="lettertd">內</td>
-          <td class="lettertd">與</td>
-          <td class="lettertd">揚</td>
-          <td class="lettertd">富</td>
-          <td class="lettertd">開</td>
-          <td class="lettertd">發</td>
-          <td class="lettertd">有</td>
-          <td class="lettertd">限</td>
-          <td class="lettertd">公</td>
-          <td class="lettertd">司</td>
-          <td class="lettertd bluefont">{{ user.userFullName|slice:"0:1"|default_if_none:"" }}</td>
-          <td class="lettertd bluefont">{{ user.userFullName|slice:"1:2"|default_if_none:"" }}</td>
-          <td class="lettertd bluefont">{{ user.userFullName|slice:"2:3"|default_if_none:"" }}</td>
-          <td class="lettertd">先</td>
-          <td class="lettertd">生</td>
-          <td class="lettertd">(</td>
-          <td class="lettertd bluefont">{{ user.userMobilePhone|slice:"0:1"|default_if_none:"" }}</td>
-          <td class="lettertd bluefont">{{ user.userMobilePhone|slice:"1:2"|default_if_none:"" }}</td>
-        </tr>
-      
-        <!--第五行-->
-        <tr>
-          <td class="lettertdTitle">五</td>
-          <td class="lettertd bluefont">{{ user.userMobilePhone|slice:"2:3"|default_if_none:"" }}</td>
-          <td class="lettertd bluefont">{{ user.userMobilePhone|slice:"3:4"|default_if_none:"" }}</td>
-          <td class="lettertd bluefont">-</td>
-          <td class="lettertd bluefont">{{ user.userMobilePhone|slice:"4:5"|default_if_none:"" }}</td>
-          <td class="lettertd bluefont">{{ user.userMobilePhone|slice:"5:6"|default_if_none:"" }}</td>
-          <td class="lettertd bluefont">{{ user.userMobilePhone|slice:"6:7"|default_if_none:"" }}</td>
-          <td class="lettertd bluefont">{{ user.userMobilePhone|slice:"7:8"|default_if_none:"" }}</td>
-          <td class="lettertd bluefont">{{ user.userMobilePhone|slice:"8:9"|default_if_none:"" }}</td>
-          <td class="lettertd bluefont">{{ user.userMobilePhone|slice:"9:10"|default_if_none:"" }}</td>
-          <td class="lettertd">)</td>
-          <td class="lettertd">聯</td>
-          <td class="lettertd">繫</td>
-          <td class="lettertd">並</td>
-          <td class="lettertd">完</td>
-          <td class="lettertd">成</td>
-          <td class="lettertd">協</td>
-          <td class="lettertd">議</td>
-          <td class="lettertd">，</td>
-          <td class="lettertd">倘</td>
-          <td class="lettertd">協</td>
-        </tr>
-      {% endif %}
-    {% endfor %}
+    <tr>
+      <td class="lettertdTitle">四</td>
+      <td class="lettertd">十</td>
+      <td class="lettertd">日</td>
+      <td class="lettertd">內</td>
+      <td class="lettertd">與</td>
+      <td class="lettertd bluefont">{{ yfcase.yfcaseLetterSender|slice:"0:1"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ yfcase.yfcaseLetterSender|slice:"1:2"|default_if_none:"" }}</td>
+      <td class="lettertd">開</td>
+      <td class="lettertd">發</td>
+      <td class="lettertd">有</td>
+      <td class="lettertd">限</td>
+      <td class="lettertd">公</td>
+      <td class="lettertd">司</td>
+      <td class="lettertd bluefont">{{ yfcase.yfcaseLetterAgent|slice:"0:1"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ yfcase.yfcaseLetterAgent|slice:"1:2"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ yfcase.yfcaseLetterAgent|slice:"2:3"|default_if_none:"" }}</td>
+      <td class="lettertd">先</td>
+      <td class="lettertd">生</td>
+      <td class="lettertd">(</td>
+      <td class="lettertd bluefont">{{ letter_agent_phone|slice:"0:1"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ letter_agent_phone|slice:"1:2"|default_if_none:"" }}</td>
+    </tr>
+
+    <!--第五行-->
+    <tr>
+      <td class="lettertdTitle">五</td>
+      <td class="lettertd bluefont">{{ letter_agent_phone|slice:"2:3"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ letter_agent_phone|slice:"3:4"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">-</td>
+      <td class="lettertd bluefont">{{ letter_agent_phone|slice:"4:5"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ letter_agent_phone|slice:"5:6"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ letter_agent_phone|slice:"6:7"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ letter_agent_phone|slice:"7:8"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ letter_agent_phone|slice:"8:9"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ letter_agent_phone|slice:"9:10"|default_if_none:"" }}</td>
+      <td class="lettertd">)</td>
+      <td class="lettertd">聯</td>
+      <td class="lettertd">繫</td>
+      <td class="lettertd">並</td>
+      <td class="lettertd">完</td>
+      <td class="lettertd">成</td>
+      <td class="lettertd">協</td>
+      <td class="lettertd">議</td>
+      <td class="lettertd">，</td>
+      <td class="lettertd">倘</td>
+      <td class="lettertd">協</td>
+    </tr>
+
   
     <!--第六行-->
     <tr>
@@ -677,20 +683,23 @@
             {% endif %}
           </span>
         </td>
-      </tr>
+      </tr> 
       
       <tr>
         <th style="border: 1px solid black;">合計</th>
         <th style="border: 1px solid black;">
-          {% if yfcase.get_coownerinfo_land_holding_point_total == 1 %}
+          {% if yfcase.get_coownerinfo_land_holding_point_total == yfcase.get_all_coowner_land_HP %}
             <span class="bluefont">全部</span>
           {% else %}
-            <span style="color:red;">持分比例有誤({{ yfcase.get_coownerinfo_land_holding_point_total|floatformat:"2" }})</span>
+            <span style="color:red;">
+              應為：({{ yfcase.get_all_coowner_land_HP|floatformat:"2" }})<br>
+              實際：({{ yfcase.get_coownerinfo_land_holding_point_total|floatformat:"2" }})
+            </span>
           {% endif %}
         </th>
         <th style="border: 1px solid black;">
           {% if yfcase.get_coownerinfo_build_holding_point_total == 1 %}
-            <span class="bluefont">全部</span>
+            <span class="bluefont">一分之一</span>
           {% else %}
             <span style="color:red;">持分比例有誤({{ yfcase.get_coownerinfo_build_holding_point_total|floatformat:"2" }})</span>
           {% endif %}
