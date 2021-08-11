@@ -41,7 +41,9 @@
 <!-- 測試樣版1 -->
 <table class="regionalhead__table">
   <tr>
-    <th class="regionalhead__th">操作</th>
+    {% if request.user == object.user %}
+      <th class="regionalhead__th">操作</th>
+    {% endif %}
     <th class="regionalhead__th">判定</th>
     <th class="regionalhead__th">備註</th>
     <th class="regionalhead__th">區域負責人</th>
@@ -50,10 +52,12 @@
   </tr>
   {% for finaldecision in object.finaldecisions.all %}
     <tr>
-      <td class="regionalhead__td">
-        <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}" class="btn__icon__update">改判</a>
-        <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
-      </td>
+      {% if request.user == object.user %}
+        <td class="regionalhead__td">
+          <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}" class="btn__icon__update">改判</a>
+          <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
+        </td>
+      {% endif %}
       <td class="regionalhead__td">
         {% if finaldecision.finalDecision == "1拍進場" %}
           <div class="finaldecision__td finaldecision__first">{{ finaldecision.finalDecision }}</div>
@@ -74,7 +78,7 @@
         {% if finaldecision.regionalHead != None %}
           <div class="regionalhead__seal">
             <div class="regionalhead__td__person">{{ finaldecision.regionalHead }}</div>
-            <div class="regionalhead__td__date">{{ finaldecision.regionalHeadDate }}</div>
+            <div class="regionalhead__td__date">{{ finaldecision.regionalHeadAddDate|date:"Y-m-d" }}</div>
             <div class="regionalhead__td__workarea">{{ finaldecision.regionalHeadWorkArea|isWordCountOverFour }}</div>
           </div>
         {% endif %}

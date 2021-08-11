@@ -50,6 +50,7 @@
 
 {% block content %}
 
+
   <!-- 標頭 -->
   <div class="col">
     <div class="yfcase__detail__caption">
@@ -63,7 +64,9 @@
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
           <label>基本資料</label>
-          <a href="{% url 'yfcase:yfcase_update' object.id %}" class="btn__icon__update">變更</a>
+          {% if request.user == object.user %}
+            <a href="{% url 'yfcase:yfcase_update' object.id %}" class="btn__icon__update">變更</a>
+          {% endif %}
         </div>
       </div>
       <div class="row">
@@ -75,7 +78,9 @@
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
           <label>土地</label>
-          <a href="{% url 'yfcase:land_create' object.id %}" class="btn__icon__create">新增</a>
+          {% if request.user == object.user %}
+            <a href="{% url 'yfcase:land_create' object.id %}" class="btn__icon__create">新增</a>
+          {% endif %}
         </div>
         <div class="yfcase__detail__subtitle">
           {% if object.lands.count > 0 %}
@@ -94,7 +99,9 @@
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
           <label>建物</label>
-          <a href="{% url 'yfcase:build_create' object.id %}" class="btn__icon__create">新增</a>
+          {% if request.user == object.user %}
+            <a href="{% url 'yfcase:build_create' object.id %}" class="btn__icon__create">新增</a>
+          {% endif %}
         </div>
         <div class="yfcase__detail__subtitle">
           {% if object.builds.count > 0 %}
@@ -113,12 +120,14 @@
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
           <label>拍賣資訊</label>
-          {% if object.auctions.all %}
-            {% for auction in object.auctions.all %}
-              <a href="{% url 'yfcase:auction_update' object.id auction.id %}" class="btn__icon__update">變更</a> 
-            {% endfor %}
-          {% else %}
-            <a href="{% url 'yfcase:auction_create' object.id %}" class="btn__icon__create">新增</a> 
+          {% if request.user == object.user %}
+            {% if object.auctions.all %}
+              {% for auction in object.auctions.all %}
+                <a href="{% url 'yfcase:auction_update' object.id auction.id %}" class="btn__icon__update">變更</a> 
+              {% endfor %}
+            {% else %}
+              <a href="{% url 'yfcase:auction_create' object.id %}" class="btn__icon__create">新增</a> 
+            {% endif %}
           {% endif %}
         </div>
       </div>
@@ -132,12 +141,14 @@
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
           <label>勘查記錄</label>
-          {% if object.surveys.all %}
-            {% for survey in object.surveys.all %}
-              <a href="{% url 'yfcase:survey_update' object.id survey.id %}" class="btn__icon__update">變更</a> 
-            {% endfor %}
-          {% else %}
-            <a href="{% url 'yfcase:survey_create' object.id %}" class="btn__icon__create">新增</a> 
+          {% if request.user == object.user %}
+            {% if object.surveys.all %}
+              {% for survey in object.surveys.all %}
+                <a href="{% url 'yfcase:survey_update' object.id survey.id %}" class="btn__icon__update">變更</a> 
+              {% endfor %}
+            {% else %}
+              <a href="{% url 'yfcase:survey_create' object.id %}" class="btn__icon__create">新增</a> 
+            {% endif %}
           {% endif %}
         </div>
       </div>
@@ -151,7 +162,9 @@
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
           <label>參考物件</label>
-          <a href="{% url 'yfcase:objectbuild_create' object.id %}" class="btn__icon__create">新增</a>
+          {% if request.user == object.user %}
+            <a href="{% url 'yfcase:objectbuild_create' object.id %}" class="btn__icon__create">新增</a>
+          {% endif %}
         </div>
         <div class="yfcase__detail__subtitle">
           {% if object.objectbuilds.count > 0 %}
@@ -169,7 +182,9 @@
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
           <label>最終判定</label>
-          <a href="{% url 'yfcase:finaldecision_create' object.id %}" class="btn__icon__create">新增</a>
+          {% if request.user == object.user %} 
+            <a href="{% url 'yfcase:finaldecision_create' object.id %}" class="btn__icon__create">新增</a>
+          {% endif %}
         </div>
       </div>
       
@@ -182,8 +197,10 @@
       <div class="yfcase__detail__test">
         <div class="yfcase__detail__subtitle">
           <label>執行結果</label>
-          {% if object.results.count == 0 %}
-            <a href="{% url 'yfcase:result_create' object.id %}" class="btn__icon__create">新增</a>
+          {% if request.user == object.user %} 
+            {% if object.results.count == 0 %}
+              <a href="{% url 'yfcase:result_create' object.id %}" class="btn__icon__create">新增</a>
+            {% endif %}
           {% endif %}
         </div>
       </div>

@@ -16,7 +16,9 @@
 
 <table class="land__table">
   <tr>
-    <th class="land__th">操作</th>
+    {% if request.user == object.user %}
+      <th class="land__th">操作</th>
+    {% endif %}
     <th class="land__th">地號</th>
     <th class="land__th">地號<br>謄本</th>
     <th class="land__th">地坪(面積)<br>平方公尺(坪)</th>
@@ -25,10 +27,12 @@
   </tr>
   {% for land in object.lands.all %}
     <tr>
-      <td class="land__td">
-        <a href="{% url 'yfcase:land_update' object.id land.id %}" class="btn__icon__update">變更</a><br>
-        <a href="{% url 'yfcase:land_delete' object.id land.id %}" class="btn__icon__delete">刪除</a>
-      </td>
+      {% if request.user == object.user %}
+        <td class="land__td">
+          <a href="{% url 'yfcase:land_update' object.id land.id %}" class="btn__icon__update">變更</a><br>
+          <a href="{% url 'yfcase:land_delete' object.id land.id %}" class="btn__icon__delete">刪除</a>
+        </td>
+      {% endif %}
       <td class="land__td text-left">
         <div style="font-size:12pt;">
           {{ object.yfcaseBigSection|default_if_none:"" }}{{ land.landNumber }}

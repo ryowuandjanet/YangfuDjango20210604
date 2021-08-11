@@ -599,7 +599,7 @@ class FinalDecisionForm(forms.ModelForm):
   # regionalHead = forms.ModelChoiceField(CustomUser.objects.all(), widget=forms.HiddenInput())
   class Meta:
     model=FinalDecision
-    fields = ['yfcase','finalDecision','finalDecisionRemark','regionalHead','regionalHeadDate','regionalHeadWorkArea']
+    fields = ['yfcase','finalDecision','regionalHeadAddDate','finalDecisionRemark','regionalHead','regionalHeadDate','regionalHeadWorkArea']
 
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)

@@ -3,6 +3,8 @@ from decimal import *
 from django.urls import reverse
 from datetime import datetime
 import math
+import datetime
+from django.utils import timezone
 
 # ======= 縣市 =======
 class City(models.Model):
@@ -961,6 +963,7 @@ class FinalDecision(models.Model):
   finalDecisionRemark = models.CharField(u'備註',max_length=100,null=True,blank=True)
   regionalHead = models.CharField(u'區域負責人',max_length=10,null=True,blank=True)
   regionalHeadDate = models.CharField(u'區域負責人簽核日期',max_length=10,null=True,blank=True)
+  regionalHeadAddDate = models.DateTimeField(u'區域負責人存檔日期',default = timezone.now)
   regionalHeadWorkArea = models.CharField(u'區域負責人轄區',max_length=10,null=True,blank=True)
   subSigntrueA = models.CharField(u'副署人員A',max_length=10,null=True,blank=True)
   subSigntrueDateA = models.CharField(u'副署日期A',max_length=10,null=True,blank=True)
@@ -976,7 +979,7 @@ class FinalDecision(models.Model):
     # 取得目前的日期，要用form dateteim import datetime,不可用import datetime
     today = datetime.now()
     # 取得要計算的日期，要用form dateteim import datetime,不可用import datetime
-    other_day = datetime.strptime(self.regionalHeadDate,'%m/%d/%Y')
+    other_day = datetime.strptime(self.regionalHeadAddDate,'%m/%d/%Y')
     result = other_day - today
     return str(result.days)
 

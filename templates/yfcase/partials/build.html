@@ -17,7 +17,9 @@
 
 <table class="build__table">
   <tr>
-    <th class="build__th" rowspan="2">操作</th>
+    {% if request.user == object.user %}
+      <th class="build__th" rowspan="2">操作</th>
+    {% endif %}
     <th class="build__th" rowspan="2">
       建號
     </th>
@@ -38,10 +40,12 @@
   </tr>
   {% for build in object.builds.all %}
     <tr>
-      <td class="build__td">  
-        <a href="{% url 'yfcase:build_update' object.id build.id %}" class="btn__icon__update">變更</a><br>
-        <a href="{% url 'yfcase:build_delete' object.id build.id %}" class="btn__icon__delete">刪除</a>
-      </td>
+      {% if request.user == object.user %}
+        <td class="build__td">  
+          <a href="{% url 'yfcase:build_update' object.id build.id %}" class="btn__icon__update">變更</a><br>
+          <a href="{% url 'yfcase:build_delete' object.id build.id %}" class="btn__icon__delete">刪除</a>
+        </td>
+      {% endif %}
       <td class="build__td text-left">
         <div style="font-size:12pt;"> 
           {{ object.yfcaseBigSection|default_if_none:"" }}{{ build.buildNumber }}
