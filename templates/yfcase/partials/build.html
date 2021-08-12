@@ -3,31 +3,28 @@
 
 <style>
   .build__table { border: 3px solid black;}
-  .build__th { width: 10%; background-color: DeepSkyBlue; border: 1px solid black; text-align: center;} 
+  .build__th { background-color: DeepSkyBlue; border: 1px solid black; text-align: center;} 
   .build__td { border: 1px dotted black; }
-  .build__th:nth-child(1) { width: 5%; }
-  .build__th:nth-child(3) { width: 5%; }
-  .build__th:nth-child(4) { width: 12%; }
-  .build__th:nth-child(5) { width: 8%; }
-  .build__th:nth-child(7) { width: 14%; }
-  .build__td:nth-child(2) { width: 18%; }
-  .build__td:nth-child(6) { width: 8%; }
-  .build__td:nth-child(7) { width: 8%; }
+
+
+  .build__th__7 { width: 7%; }
+  .build__th__10 { width: 10%; }
+  .build__th__15 { width: 15%; }
 </style>
 
 <table class="build__table">
   <tr>
     {% if request.user == object.user %}
-      <th class="build__th" rowspan="2">操作</th>
+      <th class="build__th build__th__7" rowspan="2">操作</th>
     {% endif %}
     <th class="build__th" rowspan="2">
       建號
     </th>
-    <th class="build__th" rowspan="2">建號<br>謄本</th>
-    <th class="build__th" rowspan="2">建坪(面積)<br>平方公尺(坪)</th>
-    <th class="build__th" rowspan="2">持分</th>  
+    <th class="build__th build__th__10" rowspan="2">建號<br>謄本</th>
+    <th class="build__th build__th__15" rowspan="2">建坪(面積)<br>平方公尺(坪)</th>
+    <th class="build__th build__th__10" rowspan="2">持分</th>  
     <th class="build__th" colspan="2">建坪持分 - 平方公尺(坪)</th>
-    <th class="build__th" rowspan="2">
+    <th class="build__th build__th__15" rowspan="2">
       <div style="font-size:10.5pt;color: red;background-color:Cornsilk;text-align:center;">
        使用分區：{{ object.builds.first.buildUsePartition|default_if_none:"" }}
       </div>
@@ -35,8 +32,8 @@
     </th>
   </tr>
   <tr>
-    <th class="build__th build__th__a">(原)</th>
-    <th class="build__th build__th__b">(計算後)</th>
+    <th class="build__th build__th__10">(原)</th>
+    <th class="build__th build__th__10">(計算後)</th>
   </tr>
   {% for build in object.builds.all %}
     <tr>

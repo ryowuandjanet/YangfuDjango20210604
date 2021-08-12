@@ -20,17 +20,17 @@
       border-bottom: 2px double;
       text-align: center;
     }
-    th:nth-child(1) { width: 5%; }  
-    th:nth-child(2) { width: 29%; }
-    th:nth-child(3) { width: 16%; }
-    th:nth-child(4) { width: 7%; }
-    th:nth-child(5) { width: 9%; }
-    th:nth-child(6) { width: 11%; }
-    th:nth-child(7) { width: 9%; }
-    th:nth-child(8) { width: 9%; }
-    th:nth-child(9) { width: 5%; }
 
-    .home_body > tr > td { border: 1px dotted grey; }
+    .th_head_two { width: 29%; }
+    .th_head_three { width: 16%; }
+    .th_head_four { width: 7%; }
+    .th_head_five { width: 9%; }
+    .th_head_six { width: 11%; }
+    .th_head_seven { width: 9%; }
+    .th_head_eight { width: 9%; }
+    .th_head_nine { width: 5%; }
+
+    .home_body > tr > td { border: 1px dotted grey; text-align: center;}
     .text-mark { font-size: 10.5pt; background-color: yellow; font-weight: 700; }
     .text-address { font-size: 10pt; font-weight: 700; }
     .text-stopBuyDate { font-size: 9pt; background-color: yellow; font-weight: 700; }
@@ -38,17 +38,6 @@
     .home__bg__red { background-color: red; color:white; font-weight: 700; }
     .home__bg__green { background-color: green; color:white; font-weight: 700; }
     /*.home__casenumber__td { width:14.2%; }*/
-
-    td:nth-child(1) { text-align: center; }
-    td:nth-child(2) { text-align: left; text-decoration: none;}
-    td:nth-child(2) > a { text-decoration: none;}
-    td:nth-child(3) { text-align: center; }
-    td:nth-child(4) { text-align: center; }
-    td:nth-child(5) { text-align: center; }
-    td:nth-child(6) { text-align: center; }
-    td:nth-child(7) { text-align: center; }
-    td:nth-child(8) { text-align: center; }
-    td:nth-child(9) { text-align: center; }
 
     .icon__pdf { font-size:12pt; font-weight:700;  line-height: 30px;  border:3px double DarkBlue;  border-radius:50%;  text-align:center;padding: 0px 2px; margin: 0px; color: white;text-decoration: none;}
     .icon__view { font-size:12pt; font-weight:700;  line-height: 30px;  border:3px double DarkBlue;  border-radius:5px;  text-align:center;padding: 0px 2px; margin: 0px; color: white;text-decoration: none;}
@@ -75,25 +64,29 @@
     <table class="home_table">
       <thead class="home_head">
         <tr>
-          <th>操作</th>
-          <th>案號</th>
-          <th>兩週內<br><div class="text-mark">拍別(應買止日)</div></th>
-          <th>負責人</th>
-          <th>最終判定</th>
-          <th>執行結果</th>
-          <th>優購結果</th>
-          <th>標的編號</th>
-          <th>狀態</th>
+          {% if request.user.userFullName == '管理者' %}
+            <th>操作</th>
+          {% endif %}
+          <th class="th_head_two">案號</th>
+          <th class="th_head_three">兩週內<br><div class="text-mark">拍別(應買止日)</div></th>
+          <th class="th_head_four">負責人</th>
+          <th class="th_head_five">最終判定</th>
+          <th class="th_head_six">執行結果</th>
+          <th class="th_head_seven">優購結果</th>
+          <th class="th_head_eight">標的編號</th>
+          <th class="th_head_nine">狀態</th>
         </tr>
       </thead>
       <tbody class="home_body">
         {% for yfcase in object_list %}
         <tr>
-          <td>
-             <a href="{% url 'yfcase:yfcase_delete' yfcase.id %}">刪除</a>
-          </td>
-          <td>
-            <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" >
+          {% if request.user.userFullName == '管理者' %}
+            <td>
+               <a href="{% url 'yfcase:yfcase_delete' yfcase.id %}">刪除</a>
+            </td>
+          {% endif %}
+          <td style="text-align: left; text-decoration: none;padding: 0px 3px;">
+            <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" style="text-decoration: none;" >
               {{yfcase.yfcaseCaseNumber}}
               <br>
               <div class="text-address">

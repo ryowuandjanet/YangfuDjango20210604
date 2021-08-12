@@ -3,27 +3,24 @@
 
 <style>
   .land__table { border: 3px solid black;}
-  .land__th { width: 10%; background-color: Aquamarine; border: 1px solid black; text-align: center;} 
+  .land__th { background-color: Aquamarine; border: 1px solid black; text-align: center;} 
   .land__td { border: 1px dotted black; }
-  .land__th:nth-child(1) { width: 7%; }
-  .land__th:nth-child(2) { width: auto; }
-  .land__th:nth-child(3) { width: 7%; }
-  .land__th:nth-child(4) { width: 15%; }
-  .land__th:nth-child(5) { width: 15%; }
-  .land__th:nth-child(6) { width: 15%; }
+  .land__th__7 { width: 7%; }
+  .land__th__10 { width: 10%; }
+  .land__th__15 { width: 15%; }
 </style>
 
 
 <table class="land__table">
   <tr>
     {% if request.user == object.user %}
-      <th class="land__th">操作</th>
+      <th class="land__th land__th__7">操作</th>
     {% endif %}
     <th class="land__th">地號</th>
-    <th class="land__th">地號<br>謄本</th>
-    <th class="land__th">地坪(面積)<br>平方公尺(坪)</th>
-    <th class="land__th">持分</th>
-    <th class="land__th">地坪(持分)<br>平方公尺(坪)</th>
+    <th class="land__th land__th__10">地號<br>謄本</th>
+    <th class="land__th land__th__15">地坪(面積)<br>平方公尺(坪)</th>
+    <th class="land__th land__th__15">持分</th>
+    <th class="land__th land__th__15">地坪(持分)<br>平方公尺(坪)</th>
   </tr>
   {% for land in object.lands.all %}
     <tr>

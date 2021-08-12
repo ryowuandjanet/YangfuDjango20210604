@@ -82,20 +82,49 @@
           </tr>
         </table>
       </td>
-      
+      {{ objectbuild.objectBuildScorerA }}
       <td class="objectbuild__td">
         <div>
-          {% if objectbuild.objectBuildScorerA == request.user.userFullName %}
-            <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
-            <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+          {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
+            {% if objectbuild.objectBuildScorerA == None and objectbuild.objectBuildScorerB != request.user.userFullName and objectbuild.objectBuildScorerC != request.user.userFullName %}
+              <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+              {% if objectbuild.objectBuildScorerA %}
+                <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+              {% endif %}
+            {% elif objectbuild.objectBuildScorerA != None and objectbuild.objectBuildScorerA == request.user.userFullName %}
+              <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+              <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+            {% else %}
+            {% endif %}
+          {% else %}
+            {% if objectbuild.objectBuildScorerA == None and objectbuild.objectBuildScorerB != request.user.userFullName %}
+              <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+              {% if objectbuild.objectBuildScorerA %}
+              <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+              {% endif %}
+            {% elif objectbuild.objectBuildScorerA != None and objectbuild.objectBuildScorerA == request.user.userFullName %}
+              <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+              <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+            {% else %}
+            {% endif %}
           {% endif %}
         </div>
         <div>
-          {% if objectbuild.objectBuildScorerA %}
-            {% if objectbuild.objectBuildScorerA == objectbuild.objectBuildScorerB or objectbuild.objectBuildScorerA == objectbuild.objectBuildScorerC %}
-              該員己評
+          {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
+            {% if objectbuild.objectBuildScorerA == None %}
+              {% if objectbuild.objectBuildScorerB == request.user.userFullName or objectbuild.objectBuildScorerC == request.user.userFullName %}
+                該員己評
+              {% endif %}
             {% else %}
-              {{ objectbuild.objectBuildScorerA|default_if_none:"" }}
+                {{ objectbuild.objectBuildScorerA|default_if_none:"" }}
+            {% endif %}
+          {% else %}
+            {% if objectbuild.objectBuildScorerA == None %}
+              {% if objectbuild.objectBuildScorerB == request.user.userFullName %}
+                該員己評
+              {% endif %}
+            {% else %}
+                {{ objectbuild.objectBuildScorerA|default_if_none:"" }}
             {% endif %}
           {% endif %}
         </div>
@@ -126,17 +155,46 @@
       <th class="objectbuild__th">現勘</th>
       <td class="objectbuild__td">
         <div>
-          {% if objectbuild.objectBuildScorerB == request.user.userFullName %}
-            <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
-            <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+          {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
+            {% if objectbuild.objectBuildScorerB == None and objectbuild.objectBuildScorerA != request.user.userFullName and objectbuild.objectBuildScorerC != request.user.userFullName %}
+              <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+              {% if objectbuild.objectBuildScorerB %}
+                <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+              {% endif %}
+            {% elif objectbuild.objectBuildScorerB != None and objectbuild.objectBuildScorerB == request.user.userFullName %}
+              <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+              <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+            {% else %}
+            {% endif %}
+          {% else %}
+            {% if objectbuild.objectBuildScorerB == None and objectbuild.objectBuildScorerA != request.user.userFullName %}
+              <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+              {% if objectbuild.objectBuildScorerB %}
+                <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+              {% endif %}
+            {% elif objectbuild.objectBuildScorerB != None and objectbuild.objectBuildScorerB == request.user.userFullName %}
+              <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+              <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+            {% else %}
+            {% endif %}
           {% endif %}
         </div>
         <div>
-          {% if objectbuild.objectBuildScorerB %}
-            {% if objectbuild.objectBuildScorerB == objectbuild.objectBuildScorerA or objectbuild.objectBuildScorerB == objectbuild.objectBuildScorerC %}
-              該員己評
+          {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
+            {% if objectbuild.objectBuildScorerB == None %}
+              {% if objectbuild.objectBuildScorerA == request.user.userFullName or objectbuild.objectBuildScorerC == request.user.userFullName %}
+                該員己評
+              {% endif %}
             {% else %}
-              {{ objectbuild.objectBuildScorerB|default_if_none:"" }}
+                {{ objectbuild.objectBuildScorerB|default_if_none:"" }}
+            {% endif %}
+          {% else %}
+            {% if objectbuild.objectBuildScorerB == None %}
+              {% if objectbuild.objectBuildScorerA == request.user.userFullName %}
+                該員己評
+              {% endif %}
+            {% else %}
+                {{ objectbuild.objectBuildScorerB|default_if_none:"" }}
             {% endif %}
           {% endif %}
         </div>
@@ -174,24 +232,27 @@
       {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
         <td class="objectbuild__td">
           <div>
-
-            {% if objectbuild.objectBuildScorerC == None %}
-            {% if objectbuild.objectBuildScorerC == objectbuild.objectBuildScorerB %}
-
-
+            {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
+              {% if objectbuild.objectBuildScorerC == None and objectbuild.objectBuildScorerA != request.user.userFullName and objectbuild.objectBuildScorerB != request.user.userFullName %}
+                <a href="{% url 'yfcase:score_c_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
+                {% if objectbuild.objectBuildScorerC %}
+                  <a href="{% url 'yfcase:score_c_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
+                {% endif %}
+              {% elif objectbuild.objectBuildScorerC != None and objectbuild.objectBuildScorerC == request.user.userFullName %}
                 <a href="{% url 'yfcase:score_c_update' object.id objectbuild.id %}" class="btn__icon__update">評分</a>
                 <a href="{% url 'yfcase:score_c_delete' object.id objectbuild.id %}" class="btn__icon__delete">刪除</a>
-
-            {% endif %}
-            {% else %}
+              {% else %}
+              {% endif %}
             {% endif %}
           </div>
           <div>
-            {% if objectbuild.objectBuildScorerC %}
-              {% if objectbuild.objectBuildScorerC == objectbuild.objectBuildScorerA or objectbuild.objectBuildScorerC == objectbuild.objectBuildScorerB %}
-                該員己評
+            {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
+              {% if objectbuild.objectBuildScorerC == None %}
+                {% if objectbuild.objectBuildScorerA == request.user.userFullName or objectbuild.objectBuildScorerB == request.user.userFullName %}
+                  該員己評
+                {% endif %}
               {% else %}
-                {{ objectbuild.objectBuildScorerC|default_if_none:"" }}
+                  {{ objectbuild.objectBuildScorerC|default_if_none:"" }}
               {% endif %}
             {% endif %}
           </div>
