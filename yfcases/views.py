@@ -76,7 +76,7 @@ def yfcase_list(request):
     raise Http404
   # 登入者姓名
   request_userid=request.user.id
-  queryset_list = Yfcase.objects.filter(user_id=request_userid)
+  queryset_list = Yfcase.objects.filter(user_id=request_userid).filter(yfcaseCaseStatus="在途")
   query = request.GET.get('q')
   if query:
     queryset_list = queryset_list.filter(

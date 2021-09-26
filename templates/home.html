@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load urlify %}
 {% block title %}Home{% endblock %}
 
@@ -39,7 +40,7 @@
     .home__bg__green { background-color: green; color:white; font-weight: 700; }
     /*.home__casenumber__td { width:14.2%; }*/
 
-    .icon__pdf { font-size:12pt; font-weight:700;  line-height: 30px;  border:3px double DarkBlue;  border-radius:50%;  text-align:center;padding: 0px 2px; margin: 0px; color: white;text-decoration: none;}
+    .icon__pdf { font-size:14pt; font-weight:700;  line-height: 30px;  border:3px double DarkBlue;  border-radius:50%;  text-align:center;padding: 0px 2px; margin: 0px; color: white;text-decoration: none;}
     .icon__view { font-size:12pt; font-weight:700;  line-height: 30px;  border:3px double DarkBlue;  border-radius:5px;  text-align:center;padding: 0px 2px; margin: 0px; color: white;text-decoration: none;}
     .icon__yfratingscale { background-color: blue; }
     .icon__deedtax { background-color: red; }
@@ -53,13 +54,19 @@
 {% endblock style %}
 
 {% block content %}
-  <div class="home_title d-flex justify-content-between">
-    <h1 class="mb-0">案件清單</h1>
-    <form action="" method="GET" class="d-flex align-items-end pb-1"  >
-      <input type="text" name="q" placeholder="模糊比對(案號、住址、負責人、最終判定...等)" value='{{ request.GET.q }}' class="home__input">
-      <input type="submit" value="搜尋">
-    </form>
+
+  <div class="row pt-3" >
+    <div class="col pt-2">
+      <p class="fs-2 text-center text-sm-start mt-1 pb-1 fw-bold">案件清單</p>
+    </div>
+    <div class="col-md-10">
+      <form action="" method="GET" class="input-group mb-3 col">
+        <input type="text" name="q" class="form-control border border-secondary" placeholder="模糊比對(案號、住址、負責人、最終判定...等)" aria-label="Recipient's username" aria-describedby="button-addon2" value='{{ request.GET.q }}'>
+        <input type="submit" class="btn btn-primary" value="搜尋">
+      </form>
+    </div>
   </div>
+
   <div class="home_container">
     <table class="home_table">
       <thead class="home_head">
@@ -67,14 +74,13 @@
           {% if request.user.userFullName == '管理者' %}
             <th>操作</th>
           {% endif %}
-          <th class="th_head_two">案號</th>
+          <th class="th_head_two" colspan="2">案號</th>
           <th class="th_head_three">兩週內<br><div class="text-mark">拍別(應買止日)</div></th>
           <th class="th_head_four">負責人</th>
           <th class="th_head_five">最終判定</th>
           <th class="th_head_six">執行結果</th>
           <th class="th_head_seven">優購結果</th>
           <th class="th_head_eight">標的編號</th>
-          <th class="th_head_nine">狀態</th>
         </tr>
       </thead>
       <tbody class="home_body">
@@ -86,51 +92,20 @@
             </td>
           {% endif %}
           <td style="text-align: left; text-decoration: none;padding: 0px 3px;">
-            <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" style="text-decoration: none;" >
-              {{yfcase.yfcaseCaseNumber}}
-              <br>
-              <div class="text-address">
-                 &emsp;&#10149;{{yfcase.fullAddress}}
+            <div class="row">
+              <div class="col align-middle">
+                <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__yfratingscale">評</a>
               </div>
-            </a>
-            <div class="container">
-              <div class="row">
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__yfratingscale">評</a>
-                </div>
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:deedtax_pdf_view' yfcase.pk %}?inline=" class="icon__pdf icon__deedtax">契</a>
-                </div>
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:realestateregistrationPDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__realestateregistration">動</a>
-                </div>
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:complaintPDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__complaint">訴</a>
-                </div>
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:letterPDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__letter">函</a>
-                </div>
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:coownerPDF_View' yfcase.pk %}?inline=" class="icon__pdf icon__coowner">共</a>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:deedtax_edit' yfcase.pk %}" class="icon__view icon__view__grey">契</a>
-                </div>
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:realestateregistration_edit' yfcase.pk %}" class="icon__view icon__view__grey">動</a>
-                </div>
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:complaint_edit' yfcase.pk %}" class="icon__view icon__view__grey">訴</a>
-                </div>
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:letter_edit' yfcase.pk %}" class="icon__view icon__view__grey">函</a>
-                </div>
-                <div class="col-md-2">
-                  <a href="{% url 'yfcase:coowner_edit' yfcase.pk %}" class="icon__view icon__view__grey">共</a>
-                </div>
+            </td>
+            <td>
+              <div class="text-start fw-bolder">
+                <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" style="text-decoration: none;" >
+                  {{yfcase.yfcaseCaseNumber}}
+                  <br>
+                  <div class="text-address text-secondary">
+                     &emsp;&#10149;{{yfcase.fullAddress}}
+                  </div>
+                </a>
               </div>
             </div>
           </td>
@@ -180,16 +155,12 @@
               {{ result.objectNumber|default_if_none:"" }}
             {% endfor %}
           </td>
-          {% if yfcase.yfcaseCaseStatus == "在途" %}
-            <td class="home__bg__green">{{ yfcase.yfcaseCaseStatus }}</td>
-          {% else %}
-            <td class="home__bg__red">{{ yfcase.yfcaseCaseStatus }}</td>
-          {% endif %}
         </tr>
         {% endfor %}
       </tbody>
     </table>
     {% include "pagination.html" %}
   </div>
+
 {% endblock %}
 

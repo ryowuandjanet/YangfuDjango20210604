@@ -32,6 +32,7 @@ AREA_LIST = [
   ("第二種住宅區","第二種住宅區"),
   ("第三種住宅區","第三種住宅區"),
   ("第四種住宅區","第四種住宅區"),
+  ("第五種住宅區","第五種住宅區"),
   ("第一種商業區","第一種商業區"),
   ("第二種商業區","第二種商業區"),
   ("第三種商業區","第三種商業區"),
@@ -492,11 +493,10 @@ LIFEORDIE_LIST=[
 
 class YfcaseForm(forms.ModelForm):
   # 多加了widget=forms.Select(attrs={'class': 'form-select'})是要欄位在右側出現了向下的箭頭所設定
-  yfcaseCompany = forms.ChoiceField(label="所屬公司",choices=COMPANY_LIST, widget=forms.Select(attrs={'class': 'form-select'}),required=False)
-  yfcaseCaseStatus = forms.ChoiceField(label="案件狀態",choices=CASESTATUS_CHOICES, required=False)
+  yfcaseCompany = forms.ChoiceField(label="所屬公司",choices=COMPANY_LIST, widget=forms.Select(attrs={'class': 'form-select'}))
+  yfcaseCaseStatus = forms.ChoiceField(label="案件狀態",choices=CASESTATUS_CHOICES)
   class Meta:
     model=Yfcase
-    # fields =['yfcaseCaseNumber','user'] 
     fields =['yfcaseCaseNumber','yfcaseCompany','yfcaseCity','yfcaseTownship','yfcaseBigSection','yfcaseSmallSection',"yfcaseVillage","yfcaseNeighbor","yfcaseStreet","yfcaseSection","yfcaseLane","yfcaseAlley","yfcaseNumber","yfcaseFloor",'yfcaseDebtor','yfcaseCreditor','yfcaseCreditorMobilePhone','yfcaseCityWithTownship','yfcaseCaseStatus','yfcaseSealUrl','user'] 
     
 

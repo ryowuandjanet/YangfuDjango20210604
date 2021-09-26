@@ -50,7 +50,7 @@ class Yfcase(models.Model):
   yfcaseSection=models.CharField(u'段',max_length=100,null=True,blank=True)
   yfcaseLane=models.CharField(u'巷',max_length=100,null=True,blank=True)
   yfcaseAlley=models.CharField(u'弄',max_length=100,null=True,blank=True)
-  yfcaseNumber=models.CharField(u'號',max_length=100,null=True,blank=True)
+  yfcaseNumber=models.CharField(u'號',max_length=100,null=True)
   yfcaseFloor=models.CharField(u'樓(含之幾)',max_length=100,null=True,blank=True)
   yfcaseDebtor=models.CharField(u'債務人',max_length=100,null=True,blank=True)
   yfcaseCreditor=models.CharField(u'債權人',max_length=100,null=True,blank=True)
@@ -58,6 +58,8 @@ class Yfcase(models.Model):
   yfcaseCityWithTownship = models.CharField(u'縣市鄉鎮',max_length=20,null=True,blank=True)
   yfcaseCaseStatus = models.CharField(u'案件狀態',max_length=10,null=True,blank=True)
   yfcaseSealUrl = models.URLField(max_length=255,null=True,blank=True)
+  yfcaseUpdated = models.DateTimeField(u'案件最後更新時間',auto_now=True,auto_now_add=False)
+  yfcaseTimestamp = models.DateTimeField(u'案件建立時間',auto_now=False,auto_now_add=True)
   user = models.ForeignKey('users.CustomUser',verbose_name = u'區域負責人', on_delete=models.CASCADE)
   # 契稅申請單欄位
   yfcaseDeedtaxHouseTaxRegistrationNumber=models.CharField(u'房屋稅籍編號',max_length=100,null=True,blank=True)
@@ -176,6 +178,8 @@ class Yfcase(models.Model):
   class Meta:
     # managed = True
     db_table = 'yfcase_yfcase'
+    ordering = ["-yfcaseUpdated",]
+
 
   def fullAddress(self):
     # 變數名稱 = 自身欄名 判定自身欄名為None就空白，要不然返回自身的變數
