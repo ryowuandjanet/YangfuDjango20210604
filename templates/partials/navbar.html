@@ -1,29 +1,39 @@
 {% load static %}
 
 {% block style %}
-  <link rel="stylesheet" href="{% static 'css/navbar.css' %}" type="text/css" />
+ 
 {% endblock %}
 
 {% block content %}
   {% if user.is_authenticated %}
 
-    <header class="header-area">
-      <!-- site-navbar start -->
-      <div class="navbar-area">
-        <div class="container">
-          <nav class="site-navbar">
-            <!-- site logo -->
-            <a href="/" class="site-logo">首頁</a>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand fs-3" href="/">首頁</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            <!-- site menu/nav -->
-            <ul>
-              <li><a href="{% url 'yfcase:home_all' %}" class="fs-4">所有</a></li>
-              <li><a href="{% url 'yfcase:home' %}" class="fs-4">個人</a></li>
-              <li><a href="{% url 'yfcase:yfcase_create' %}" class="fs-4">新建評量表</a></li>
-
-              <li><a href="#" class="fs-4">登錄者：{{user.userFullName}}</a></li>
-              <li><a href="{% url 'logout' %}" class="fs-4">登出</a></li>
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active fs-4" aria-current="page" href="{% url 'yfcase:home_all' %}">所有</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active fs-4" href="{% url 'yfcase:home' %}">個人</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active fs-4" href="{% url 'yfcase:yfcase_create' %}">新增評量表</a>
+          </li>
+          
+        </ul>
+        <ul>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fs-4 bg-white rounded" href="#" id="dropdown04" data-bs-toggle="dropdown" aria-expanded="false">登錄人員：{{ user.userFullName }}</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown04">
+              <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
             </ul>
+<<<<<<< HEAD
 
             <!-- nav-toggler for mobile version only -->
             <button class="nav-toggler">
@@ -33,40 +43,17 @@
         </div>
       </div><!-- navbar-area end -->
     </header>
+=======
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+>>>>>>> 45992a67059ac5ec05aebf8b68edcb2585b72656
 
   {% endif %}
 {% endblock %}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-  // define all UI variable
-  const navToggler = document.querySelector('.nav-toggler');
-  const navMenu = document.querySelector('.site-navbar ul');
-  const navLinks = document.querySelectorAll('.site-navbar a');
 
-  // load all event listners
-  allEventListners();
-
-  // functions of all event listners
-  function allEventListners() {
-    // toggler icon click event
-    navToggler.addEventListener('click', togglerClick);
-    // nav links click event
-    navLinks.forEach( elem => elem.addEventListener('click', navLinkClick));
-  }
-
-  // togglerClick function
-  function togglerClick() {
-    navToggler.classList.toggle('toggler-open');
-    navMenu.classList.toggle('open');
-  }
-
-  // navLinkClick function
-  function navLinkClick() {
-    if(navMenu.classList.contains('open')) {
-      navToggler.click();
-    }
-  }
-</script>
 
 
