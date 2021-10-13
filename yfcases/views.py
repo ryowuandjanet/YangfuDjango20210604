@@ -46,7 +46,7 @@ def export_yfcase(reauest):
 def yfcase_list_all(request):
   if not request.user.is_staff or not request.user.is_superuser:
     raise Http404
-  queryset_list = Yfcase.objects.all()
+  queryset_list = Yfcase.objects.all().filter(yfcaseCaseStatus="在途")
   query = request.GET.get('q')
   if query:
     queryset_list = queryset_list.filter(
