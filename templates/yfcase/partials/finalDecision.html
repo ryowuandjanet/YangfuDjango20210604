@@ -110,8 +110,6 @@
         {% endfor %}
       {% endfor %}
 
-
-
       
     </th>
   </tr>
@@ -138,7 +136,7 @@
           <div class="finaldecision__td finaldecision__no_decision">未判定</div>
         {% endif %}
       </td>
-      <td class="regionalhead__td">{{ finaldecision.finalDecisionRemark|default_if_none:"" }}</td>
+      <td class="regionalhead__td text-left p-1">{{ finaldecision.finalDecisionRemark|default_if_none:"" }}</td>
       <td class="regionalhead__td regionalhead__td_decision">
         {% if finaldecision.regionalHead != None %}
           <div class="regionalhead__seal">

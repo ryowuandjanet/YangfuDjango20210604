@@ -189,7 +189,7 @@
           <tr>
             <th>PDF</th>
             <th>案號</th>
-            <th>兩週內<br>應買止日)</th>
+            <th>兩週內<br>應買止日s</th>
             <th>負責人</th>
             <th>最終判定</th>
             <th>執行結果</th>
@@ -214,23 +214,25 @@
                   </div>
                 </a>
               </td>
-              <td data-label="兩週內/應買止日" class="text-danger">
+              <td data-label="兩週內/應買止日" style="color:red;">
                <!-- 兩週內 -->
-                {% if yfcase.get_auction_1st.auctionDateFirst %}
-                  {{ yfcase.get_auction_1st.auctionDateFirst|less_two_week:"1拍"|default_if_none:"" }}
-                {% endif %}
-                {% if yfcase.get_auction_2nd.auctionDateSecond %}
-                  {{ yfcase.get_auction_2nd.auctionDateSecond|less_two_week:"2拍"|default_if_none:"" }}
-                {% endif %}
-                {% if yfcase.get_auction_3rd.auctionDateThird %}
-                  {{ yfcase.get_auction_3rd.auctionDateThird|less_two_week:"3拍"|default_if_none:"" }}
-                {% endif %}
-                {% if yfcase.get_auction_4th.auctionDateFourth %}
-                  {{ yfcase.get_auction_4th.auctionDateFourth|less_two_week:"4拍"|default_if_none:"" }}
-                {% endif %}
+                {% for finaldecision in yfcase.finaldecisions.all %}
+                  {% if yfcase.get_auction_1st.auctionDateFirst and finaldecision.finalDecision == '1拍進場' %}
+                    {{ yfcase.get_auction_1st.auctionDateFirst|less_two_week:"1拍"|default_if_none:"" }}
+                  {% endif %}
+                  {% if yfcase.get_auction_2nd.auctionDateSecond and finaldecision.finalDecision == '2拍進場' %}
+                    {{ yfcase.get_auction_2nd.auctionDateSecond|less_two_week:"2拍"|default_if_none:"" }}
+                  {% endif %}
+                  {% if yfcase.get_auction_3rd.auctionDateThird and finaldecision.finalDecision == '3拍進場' %}
+                    {{ yfcase.get_auction_3rd.auctionDateThird|less_two_week:"3拍"|default_if_none:"" }}
+                  {% endif %}
+                  {% if yfcase.get_auction_4th.auctionDateFourth and finaldecision.finalDecision == '4拍進場' %}
+                    {{ yfcase.get_auction_4th.auctionDateFourth|less_two_week:"4拍"|default_if_none:"" }}
+                  {% endif %}
+                {% endfor %}
                 <!-- 應買止日 -->
                 {% for result in yfcase.get_result_stopBuyDate %}
-                  <div class="text-stopBuyDate">應買止日({{ result.stopBuyDate }})</div>
+                  {{ result.stopBuyDate|less_three_month:"應買止日"|default_if_none:"" }}
                 {% endfor %}  
               </td>
               <td data-label="負責人">{{ yfcase.user }}</td>
@@ -276,24 +278,26 @@
           <div class="panel border-start border-secondary border-3">
             <div class="row row-content fw-bolder">
               <div class="col-3 text-dark bg-warning">兩週內/應買日</div>
-              <div class="col-6">
+              <div class="col-6" style="color:red;">
                 <!-- 兩週內 -->
-                {% if yfcase.get_auction_1st.auctionDateFirst %}
-                  {{ yfcase.get_auction_1st.auctionDateFirst|less_two_week:"1拍"|default_if_none:"" }}
-                {% endif %}
-                {% if yfcase.get_auction_2nd.auctionDateSecond %}
-                  {{ yfcase.get_auction_2nd.auctionDateSecond|less_two_week:"2拍"|default_if_none:"" }}
-                {% endif %}
-                {% if yfcase.get_auction_3rd.auctionDateThird %}
-                  {{ yfcase.get_auction_3rd.auctionDateThird|less_two_week:"3拍"|default_if_none:"" }}
-                {% endif %}
-                {% if yfcase.get_auction_4th.auctionDateFourth %}
-                  {{ yfcase.get_auction_4th.auctionDateFourth|less_two_week:"4拍"|default_if_none:"" }}
-                {% endif %}
+                {% for finaldecision in yfcase.finaldecisions.all %}
+                  {% if yfcase.get_auction_1st.auctionDateFirst and finaldecision.finalDecision == '1拍進場' %}
+                    {{ yfcase.get_auction_1st.auctionDateFirst|less_two_week:"1拍"|default_if_none:"" }}
+                  {% endif %}
+                  {% if yfcase.get_auction_2nd.auctionDateSecond and finaldecision.finalDecision == '2拍進場' %}
+                    {{ yfcase.get_auction_2nd.auctionDateSecond|less_two_week:"2拍"|default_if_none:"" }}
+                  {% endif %}
+                  {% if yfcase.get_auction_3rd.auctionDateThird and finaldecision.finalDecision == '3拍進場' %}
+                    {{ yfcase.get_auction_3rd.auctionDateThird|less_two_week:"3拍"|default_if_none:"" }}
+                  {% endif %}
+                  {% if yfcase.get_auction_4th.auctionDateFourth and finaldecision.finalDecision == '4拍進場' %}
+                    {{ yfcase.get_auction_4th.auctionDateFourth|less_two_week:"4拍"|default_if_none:"" }}
+                  {% endif %}
+                {% endfor %}
                 <!-- 應買止日 -->
                 {% for result in yfcase.get_result_stopBuyDate %}
-                  <div class="text-stopBuyDate">應買止日({{ result.stopBuyDate }})</div>
-                {% endfor %} 
+                  {{ result.stopBuyDate|less_three_month:"應買止日"|default_if_none:"" }}
+                {% endfor %}  
               </div>
             </div>
             <div class="row row-content fw-bolder">

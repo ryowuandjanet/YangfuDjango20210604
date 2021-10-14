@@ -47,7 +47,18 @@ def less_two_week(auctionDate,auctionStr):
   DateValue = (auctionDateValue-today).days + 1
   if DateValue >= 0 and DateValue <= 14 :
     return mark_safe( "<div style='color: red;'>" + auctionStr + "(" + str(DateValue) + "天後)" +  "</div>")
-    
+
+# 判斷是否為三個月內 
+# 使用方式 auctionDate|less_three_month:"應買止日"
+@register.filter
+def less_three_month(auctionDate,auctionStr):
+  # 取得目前的日期，要用from datetime import datetime,不可用import datetime
+  today = datetime.now()
+  # 修改對應日期的格式
+  auctionDateValue = datetime.strptime(auctionDate,'%Y-%m-%d')
+  DateValue = (auctionDateValue-today).days + 1
+  if DateValue >= 0 and DateValue <= 90 :
+    return mark_safe( "<div>" + auctionStr + "(" + str(DateValue) + "天後)" +  "</div>")
     
 # 計算轄區字數是否超過3個字元(例如：雙北桃竹苗)
 # 用法 {{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour }}

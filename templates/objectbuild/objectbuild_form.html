@@ -90,7 +90,7 @@
       <div class="col-md-3">
         <span class="text-white bg-dark px-2">成交日期</span>
         <div class="input-group">
-          {{ form.objectBuildTransactionDate|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"autocomplete:off" }}
+          {{ form.objectBuildTransactionDate|add_class:'form-control border border-dark border-2 fw-bold rounded-end datepicker'|attr:"autocomplete:off" }}
         </div>
       </div>
     </div>
@@ -127,70 +127,19 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
  
 <script>
-  $(function() {
-    $('#objectBuildCreateForm').bootstrapValidator({
-      // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-      feedbackIcons: {
-        valid: 'glyphicon glyphicon-ok',
-        invalid: 'glyphicon glyphicon-remove',
-        validating: 'glyphicon glyphicon-refresh'
-      },
-      fields: {
-        objectBuildAddress: {
-          validators: {
-            notEmpty: {
-              message: '此一欄位不得為空'
-            }
-          }
-        },
-        objectBuildTotalPrice: {
-          validators: {
-            notEmpty: {
-              message: '此一欄位不得為空'
-            },
-            integer: {
-              message: '此欄需為正整數，且需大於 1 '
-            },
-            between: {
-              min: 1,
-              max: 99999999,
-              message: '此欄需為正整數，且需介於 1 - 99999999 '
-            }
-          }
-        },
-        objectBuildBuildArea: {
-          validators: {
-            notEmpty: {
-              message: '此一欄位不得為空'
-            },
-            between: {
-              min: 0.01,
-              max: 99999.99,
-              message: '此欄需為數字(小數點最多兩位)，且需介於 0.01 - 99999.99 之間'
-            },
-            regexp: {
-              regexp: /^\d{1,5}(\.\d{1,2})?$/i,
-              message: '此欄需為數字(小數點最多兩位)，且需介於 0.01 - 99999.99 之間'
-            }
-          }
-        },
-        objectBuildHouseAge: {
-          validators: {
-            regexp: {
-              regexp: /^\d{1,2}(\.\d{1,2})?$/i,
-              message: '無法取得屋齡則為空格，此欄需為數字(小數點最多兩位)，且需介於 0.01 - 99.99 之間'
-            }
-          }
+  $(document).ready(function () {
+      var userLang = navigator.language || navigator.userLanguage;
+      var options = $.extend({},
+        $.datepicker.regional["zh-TW"], {
+          dateFormat: "yy-mm-dd",
+          changeMonth: true,
+          changeYear: true,
+          highlightWeek: true
         }
-      }
+      );
+
+      $("#id_objectBuildTransactionDate").datepicker(options);
     });
-    
-    
-    $( ".datepicker" ).datepicker({
-      dateFormat: "yy-mm-dd"
-    });
-    
-  });
     
   function get_objectbuild_yfcase() {
     var url = (window.location.pathname).replace("/yfcase/","").replace("/objectbuild/create/",""); 
