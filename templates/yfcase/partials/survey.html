@@ -14,11 +14,11 @@
       初勘日
     </th>
     <th class="survey__th">會勘日</th>
-    <th class="survey__th">法拍公告<small>(證物三)</small></th>
+    <th class="survey__th">法拍公告<br><small>(證物三)</small></th>
     <th class="survey__th">998連結</th>
-    <th class="survey__th">物件照片<small>(證物四)</small></th>
-    <th class="survey__th">法拍記錄<small>(證物七)</small></th>
-    <th class="survey__th">標的物<small>(現場勘查)</small></th>
+    <th class="survey__th">物件照片<br><small>(證物四)</small></th>
+    <th class="survey__th">法拍記錄<br><small>(證物七)</small></th>
+    <th class="survey__th">標的物<br><small>(現場勘查)</small></th>
   </tr>
   <tr>
     <td class="survey__td">
@@ -61,7 +61,7 @@
       <!-- 物件照片(證物四) -->
       {% for survey in object.surveys.all %}
         {% if survey.surveyObjectPhotoLink %}
-          <a href="{{object.surveys.surveyObjectPhotoLink}}" target="_blank">
+          <a href="{{survey.surveyObjectPhotoLink}}" target="_blank">
             <span class="fa-stack fa-2x">
               <i class="far fa-circle fa-stack-2x"></i>
               <i class="fas fa-home fa-stack-1x"></i>

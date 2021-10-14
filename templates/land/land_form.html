@@ -6,97 +6,112 @@
 {% endblock head_title %}
 
 {% block style %}
-  <style>
-    .form__container { border-radius: 5px; background-color: #f2f2f2; padding: 20px; margin-top: 20px}
-    
-    .help-block {
-      color: red;
-    }
-    
-    .bluefont {
-      color:blue;
-      font-size:12pt;
-    }
+  <style type="text/css">
+    * { font-family: 'Roboto','Noto Sans TC', sans-serif;}
+    .invalid-feedback{ color:red;font-weight: bolder;background-color: yellow;border: 1px solid red }
   </style>
 {% endblock style %}
 
 {% block content %}
-<div class="form__container">
-  <h1>{{ title }}</h1>
-  <form method="POST" action="" enctype='multipart/form-data' id="landCreateForm">{% csrf_token %}
+
+
+<form method="POST" action="" enctype='multipart/form-data' id="landCreateForm" class="was-validated" novalidate >{% csrf_token %}
+  {% if instance.id %}
+     <div class="container-sm border border-success border-3 rounded mt-3 bg-light">
+  {% else %}
+     <div class="container-sm border border-primary border-3 rounded mt-3 bg-light">
+  {% endif %}
     {{ form.yfcase|attr:"type:hidden" }}
-    
-    <div class="row mt-3">
-      <div class="col-md-5 mt-3">
-        <label for="{{ form.landNumber.id_for_label }}">{{ form.landNumber.label }}</label>
-        {{ form.landNumber|add_class:'form-control'|attr:"autocomplete:off" }}
-        <div class="invalid-feedback">
-          {{ form.landNumber.error }}
-        </div>
-      </div>
-      <div class="col-md-7 mt-3">
-        <label for="{{ form.landUrl.id_for_label }}">{{ form.landUrl.label }}</label>
-        {{ form.landUrl|add_class:'form-control'|attr:"autocomplete:off" }}
-        <div class="invalid-feedback">
-          {{ form.landUrl.error }}
+
+    <!-- 標題  -->
+    <div class="row">
+      <div class="col my-1">
+        {% if instance.id %}
+           <div class="bg-success fs-3 fw-bold text-white text-center p-2 rounded">
+        {% else %}
+           <div class="bg-primary fs-3 fw-bold text-white text-center p-2 rounded">
+        {% endif %}
+          {{ title }}
         </div>
       </div>
     </div>
+
+    <!-- 地號 && 謄本 -->
     <div class="row mt-3">
-      <div class="col-md-4 mt-3">
-        <label for="{{ form.landArea.id_for_label }}">{{ form.landArea.label }}</label>
-        {{ form.landArea|add_class:'form-control' }}
-        <div class="invalid-feedback">
-          {{ form.landArea.error }}
-        </div>
-      </div>
-      <div class="col-md-4 mt-3">
-        <label for="{{ form.landHoldingPointPersonal.id_for_label }}">{{ form.landHoldingPointPersonal.label }}</label>
-        {{ form.landHoldingPointPersonal|add_class:'form-control' }}
-        <div class="invalid-feedback">
-          {{ form.landHoldingPointPersonal.error }}
-        </div>
-      </div>
-      <div class="col-md-4 mt-3">
-        {{ form.landHoldingPointAll.label }}
-        {{ form.landHoldingPointAll|add_class:'form-control' }}
-        <div class="invalid-feedback">
-          {{ form.landHoldingPointAll.error }}
-        </div>
-      </div>
-      
-      <div class="row mt-3">
-        <div class="col-md-12 mt-3">
-          <label for="{{ form.landRemark.id_for_label }}">
-            {{ form.landRemark.label }}
-            <span class="bluefont"> (此欄會出現在不動產登記的地號備註欄)</span>
-          </label>
-          {{ form.landRemark|add_class:'form-control'|attr:"autocomplete:off" }}
+      <span class="text-dark fs-4 fw-bold">地號</span>
+      <div class="col-md-5">
+        <span class="text-white bg-dark px-2">地號</span>
+        <div class="input-group">
+          {{ form.landNumber|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"autocomplete:off"|attr:"placeholder:請輸入地號" }}
+          <span class="help-block">{{ form.landNumber.error }}</span>
           <div class="invalid-feedback">
-            {{ form.landRemark.error }}
+            必填，請輸入地號
           </div>
         </div>
       </div>
-    </div>
-    
-    <div class="row mt-3">
-      <div class="col-md-6 mt-3">
-        <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary form-control" >返回</a>
+      <div class="col-md-7">
+        <span class="text-white bg-dark px-2">謄本</span>
+        <div class="input-group">
+          {{ form.landUrl|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:請輸入謄本連結路徑" }}
+          <span class="help-block">{{ form.landUrl.error }}</span>
+        </div>
       </div>
-      <div class="col-md-6 mt-3">
+    </div>
+
+    <!-- 地坪 && 個人持分 && 所有持分 -->
+    <div class="row mt-3">
+      <span class="text-dark fs-4 fw-bold">地坪</span>
+      <div class="col-md-4">
+        <span class="text-white bg-dark px-2">地坪</span>
+        <div class="input-group">
+          {{ form.landArea|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:請輸入地坪坪數" }}
+          <span class="help-block">{{ form.landArea.error }}</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <span class="text-white bg-dark px-2">個人持分</span>
+        <div class="input-group">
+          {{ form.landHoldingPointPersonal|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:請輸入個人持分" }}
+          <span class="help-block">{{ form.landHoldingPointPersonal.error }}</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <span class="text-white bg-dark px-2">所有持分</span>
+        <div class="input-group">
+          {{ form.landHoldingPointAll|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:請輸入所有持分" }}
+          <span class="help-block">{{ form.landHoldingPointAll.error }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 備註 -->
+    <div class="row mt-3">
+      <span class="text-dark fs-4 fw-bold">備註</span>
+      <div class="col-md-12">
+        <div class="input-group my-1">
+          {{ form.landRemark|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:請輸入該筆地號備註說明" }}
+          <span class="help-block">{{ form.landRemark.error }}</span>
+        </div>
+        <span class="text-primary">(此欄會出現在不動產登記的地號備註欄)</span>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div class="row mt-3">
+      <div class="col-md-6"></div>
+      <div class="col-md-3 d-grid gap-2 my-1">
+        <a href="{% url 'yfcase:yfcase_detail' instance_yfcase.id %}" class="btn btn-secondary form-control">返回</a>
+      </div>
+      <div class="col-md-3 d-grid gap-2 my-1">
         {% if instance.id %}
-          <input type="submit" class="btn btn-success form-control" value="更新">
+          <input type="submit" class="col btn btn-success form-control" value="更新">
         {% else %}
-          <input type="submit" class="btn btn-info form-control" value="新增" onclick="get_land_yfcase()">
+          <input type="submit" class="col btn btn-primary form-control" value="新增" onclick="get_land_yfcase()">
         {% endif %}
       </div>
     </div>
-
-  </form>
-</div>
-
-
-
+  </div>
+</form>
 
 
 <!-- 為防止在運行jquery程式碼時出錯Uncaught ReferenceError: $ is not defined，所以要將jquery.min.js -->
@@ -104,70 +119,20 @@
  
 <script>
   $(document).ready(function(){
-    // 此為欄位驗証的JS
-    $('#landCreateForm').bootstrapValidator({
-        // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-        feedbackIcons: {
-          valid: 'glyphicon glyphicon-ok',
-          invalid: 'glyphicon glyphicon-remove',
-          validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-          landNumber: {
-            validators: {
-              notEmpty: {
-                message: '此一欄位不得為空'
-              }
-            }
-          },
-          landArea: {
-            validators: {
-              notEmpty: {
-                message: '此一欄位不得為空'
-              },
-              between: {
-                min: 0.01,
-                max: 99999.99,
-                message: '此欄需為數字(小數點最多兩位)，且需介於 0.01 - 99999.99 之間'
-              },
-              regexp: {
-                regexp: /^\d{1,5}(\.\d{1,2})?$/i,
-                message: '此欄需為數字(小數點最多兩位)，且需介於 0.01 - 99999.99 之間'
-              }
-            }
-          },
-          landHoldingPointPersonal: {
-            validators: {
-              notEmpty: {
-                message: '此一欄位不得為空'
-              },
-              integer: {
-                message: '此欄需為正整數，且需大於 1 '
-              },
-              between: {
-                min: 1,
-                max: 9999999,
-                message: '此欄需為正整數，且需大於 1 '
-              }
-            }
-          },
-          landHoldingPointAll: {
-            validators: {
-              notEmpty: {
-                message: '此一欄位不得為空'
-              },
-              integer: {
-                message: '此欄需為正整數，且需大於 1 '
-              },
-              between: {
-                min: 1,
-                max: 9999999,
-                message: '此欄需為正整數，且需大於 1 '
-              }
-            }
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
           }
-        }
-      });
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+
   });
  
   function get_land_yfcase() {

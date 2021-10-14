@@ -625,6 +625,7 @@ class SubSigntrueBForm(forms.ModelForm):
 # ======= Result =======
 class ResultForm(forms.ModelForm):
   yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
+  stopBuyDate = forms.CharField(label="應買止日",widget=forms.TextInput(attrs={'class': 'form-control datepicker'}),required=False)
   bidAuctionTime = forms.ChoiceField(label="搶標拍別",choices=BIDAUCTION_LIST, required=False)
   actionResult = forms.ChoiceField(label="執行結果",choices=ACTIONRESULT_CHOICES, required=False)
   caseStatus = forms.ChoiceField(label="執行結果",choices=CASESTATUS_CHOICES, required=False)

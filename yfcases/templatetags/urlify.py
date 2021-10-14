@@ -4,7 +4,6 @@ from decimal import *
 from django import template
 from datetime import datetime
 from django.utils.safestring import mark_safe
-
  
 register=template.Library()
  
@@ -167,6 +166,5 @@ def isWordCount(value,wordCount):
 @register.filter(name='times') 
 def times(cownerinfo,coownername):
   return list(cownerinfo.values_list('coOwnerName',flat=True)).index(coownername)+2
-
 
 

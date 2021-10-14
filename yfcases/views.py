@@ -65,7 +65,7 @@ def yfcase_list_all(request):
 
   context={
     "object_list" : queryset,
-    "title": "List"
+    "title": "List",
     }
   return render(request, "home.html", context)
   
@@ -419,7 +419,7 @@ def score_a_clean(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "Title": "清除勘查員A評分",
+    "title": "清除勘查員A評分",
   }
   return render(request, "score/score_a_delete.html",context)
 
@@ -456,7 +456,7 @@ def score_b_clean(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "Title": "清除勘查員B評分",
+    "title": "清除勘查員B評分",
   }
   return render(request, "score/score_b_delete.html",context)
 
@@ -493,7 +493,7 @@ def score_c_clean(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "Title": "清除勘查員C評分",
+    "title": "清除勘查員C評分",
   }
   return render(request, "score/score_c_delete.html",context)
 
@@ -583,7 +583,7 @@ def subsignture_a_delete(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "Title": "刪除副署人員1的簽核",
+    "title": "刪除副署人員1的簽核",
   }
   return render(request, "finaldecision/subsignture_a_delete.html",context)
 
@@ -620,7 +620,7 @@ def subsignture_b_delete(request,yfcase_id=None,id=None):
     "instance" : instance,
     "instance_yfcase" : instance_yfcase,
     "form" : form,
-    "Title": "刪除副署人員2的簽核",
+    "title": "刪除副署人員2的簽核",
   }
   return render(request, "finaldecision/subsignture_b_delete.html",context)
 

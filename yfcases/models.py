@@ -485,7 +485,7 @@ class Yfcase(models.Model):
 # ======= Land =======
 class Land(models.Model):
   yfcase=models.ForeignKey(Yfcase,related_name='lands',on_delete=models.CASCADE)
-  landNumber=models.CharField(u'地號',max_length=100,null=True,blank=True)
+  landNumber=models.CharField(u'地號',max_length=100,null=True)
   landUrl=models.URLField(u'謄本',max_length=200,null=True,blank=True)
   landArea=models.DecimalField(u'地坪(平方公尺)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
   landHoldingPointPersonal=models.DecimalField(u'個人持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
@@ -501,7 +501,7 @@ class Land(models.Model):
 # ======= Build =======
 class Build(models.Model):
   yfcase=models.ForeignKey(Yfcase,related_name='builds',on_delete=models.CASCADE)
-  buildNumber=models.CharField(u'建號',max_length=100,null=True,blank=True)
+  buildNumber=models.CharField(u'建號',max_length=100,null=True)
   buildUrl=models.URLField(u'謄本',max_length=200,null=True,blank=True)
   buildArea=models.DecimalField(u'建坪(平方公尺)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
   buildHoldingPointPersonal=models.DecimalField(u'個人持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
