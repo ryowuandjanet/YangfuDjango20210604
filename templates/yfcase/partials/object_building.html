@@ -64,7 +64,7 @@
           {% endif %}
           <tr>
             <th>總價：</th>
-            <td>{{ objectbuild.objectBuildTotalPrice|floatformat:0|intcomma }}元</td>
+            <td>{{ objectbuild.objectBuildTotalPrice|floatformat:0|thousandCut }}元</td>
           </tr>
           <tr>
             <th>建坪：</th>
@@ -78,7 +78,7 @@
           {% endif %}
           <tr>
             <th>單價：</th>
-            <td>{{ objectbuild.get_objectbuild_ping_price|floatformat:0|intcomma }}元</td>
+            <td>{{ objectbuild.get_objectbuild_ping_price|floatformat:0|thousandCut }}元</td>
           </tr>
         </table>
       </td>
@@ -140,9 +140,9 @@
       </td>
       <td class="objectbuild__td" rowspan=5>
         {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
-          {{ objectbuild.get_objectbuild_ping_price_abc_calculation|floatformat:0|intcomma }}
+          {{ objectbuild.get_objectbuild_ping_price_abc_calculation|floatformat:0|thousandCut }}
         {% else %}
-          {{ objectbuild.get_objectbuild_ping_price_ab_calculation|floatformat:0|intcomma }}
+          {{ objectbuild.get_objectbuild_ping_price_ab_calculation|floatformat:0|thousandCut }}
         {% endif %}
       </td>
     </tr>

@@ -32,7 +32,7 @@
     <th class="auction__th">
       坪價<small>(NT)</small><br>
       <div class="text-mark">
-        時價：{{object.pbk|floatformat:0|intcomma}}元
+        時價：{{object.pbk|floatformat:0|thousandCut}}元
       </div>
     </th>
     <th class="auction__th">CP</th>
@@ -63,19 +63,19 @@
       <!-- 第一拍：底價 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceFirst != 0 %}
-          {{auction.auctionFloorPriceFirst|floatformat:0|intcomma }}
+          {{auction.auctionFloorPriceFirst|floatformat:0|thousandCut }}
         {% endif %}
       </td>
       <!-- 第一拍：坪價 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceFirst != 0 and object.builds.all|length > 0 %}
-          {{auction.get_ping_first_price|floatformat:0|intcomma}}
+          {{auction.get_ping_first_price|floatformat:0|thousandCut}}
         {% endif %}
       </td>
       <!-- 第一拍：CP值 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceFirst != 0 and auction.get_first_cp != 0 %}
-          {{auction.get_first_cp|floatformat:2|intcomma}}
+          {{auction.get_first_cp|floatformat:2|thousandCut}}
         {% endif %}
       </td>
       <!-- 第一拍：點閱 -->
@@ -94,13 +94,13 @@
       <td class="auction__td">
         {% if auction.auctionFloorPriceFirst != 0 %}
           (100% + {{auction.get_suggestedincreaseFirst|multiplication:100|floatformat:0 }}%)<br>
-          {{auction.get_suggestedincreaseFirst_floor_price|floatformat:0|intcomma }}
+          {{auction.get_suggestedincreaseFirst_floor_price|floatformat:0|thousandCut }}
         {% endif %}
       </td>
       <!-- 第一拍：保証金 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceFirst != 0 %}
-          {{auction.auctionMarginFirst|floatformat:0|intcomma }}
+          {{auction.auctionMarginFirst|floatformat:0|thousandCut }}
         {% endif %}
       </td>
     </tr>
@@ -126,25 +126,25 @@
       <!-- 第二拍：底價 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceSecond != 0 %}
-          {{auction.auctionFloorPriceSecond|floatformat:0|intcomma }}
+          {{auction.auctionFloorPriceSecond|floatformat:0|thousandCut }}
         {% endif %}
         {% if auction.auctionFloorPriceFirst != 0 %}
           <br>
           <div class="text-red">
-            {{auction.auctionFloorPriceFirst|multiplication:8|divide:10|floatformat:0|intcomma }}
+            {{auction.auctionFloorPriceFirst|multiplication:8|divide:10|floatformat:0|thousandCut }}
           </div>
         {% endif %}
       </td>
       <!-- 第二拍：坪價 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceSecond != 0 and object.builds.all|length > 0 %}
-          {{auction.get_ping_second_price|floatformat:0|intcomma}}
+          {{auction.get_ping_second_price|floatformat:0|thousandCut}}
         {% endif %}
       </td>
       <!-- 第二拍：CP值 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceSecond != 0 and auction.get_second_cp != 0 %}
-          {{auction.get_second_cp|floatformat:2|intcomma}}
+          {{auction.get_second_cp|floatformat:2|thousandCut}}
         {% endif %}
       </td>
       <!-- 第二拍：點閱 -->
@@ -163,13 +163,13 @@
       <td class="auction__td">
         {% if auction.auctionFloorPriceSecond != 0 %}
           (100% + {{auction.get_suggestedincreaseSecond|multiplication:100|floatformat:0 }}%)<br>
-          {{auction.get_suggestedincreaseSecond_floor_price|floatformat:0|intcomma }}
+          {{auction.get_suggestedincreaseSecond_floor_price|floatformat:0|thousandCut }}
         {% endif %}
       </td>
       <!-- 第二拍：保証金 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceSecond != 0 %}
-          {{auction.auctionMarginSecond|floatformat:0|intcomma }}
+          {{auction.auctionMarginSecond|floatformat:0|thousandCut }}
         {% endif %}
       </td>
     </tr>
@@ -195,30 +195,30 @@
       <!-- 第三拍：底價 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceThird != 0 %}
-          {{auction.auctionFloorPriceThird|floatformat:0|intcomma }}
+          {{auction.auctionFloorPriceThird|floatformat:0|thousandCut }}
         {% endif %}
         {% if auction.auctionFloorPriceFirst != 0 %}
           <br>
           <div class="text-red">
-            {{auction.auctionFloorPriceFirst|multiplication:64|divide:100|floatformat:0|intcomma }}
+            {{auction.auctionFloorPriceFirst|multiplication:64|divide:100|floatformat:0|thousandCut }}
           </div>
         {% elif auction.auctionFloorPriceSecond != 0 %}
           <br>
           <div class="text-red">
-            {{auction.auctionFloorPriceSecond|multiplication:8|divide:10|floatformat:0|intcomma }}
+            {{auction.auctionFloorPriceSecond|multiplication:8|divide:10|floatformat:0|thousandCut }}
           </div>
         {% endif %}
       </td>
       <!-- 第三拍：坪價 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceThird != 0 and object.builds.all|length > 0 %}
-          {{auction.get_ping_third_price|floatformat:0|intcomma}}
+          {{auction.get_ping_third_price|floatformat:0|thousandCut}}
         {% endif %}
       </td>
       <!-- 第三拍：CP值 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceThird != 0 and auction.get_third_cp != 0 %}
-          {{auction.get_third_cp|floatformat:2|intcomma}}
+          {{auction.get_third_cp|floatformat:2|thousandCut}}
         {% endif %}
       </td>
       <!-- 第三拍：點閱 -->
@@ -237,13 +237,13 @@
       <td class="auction__td">
         {% if auction.auctionFloorPriceThird != 0 %}
           (100% + {{auction.get_suggestedincreaseThird|multiplication:100|floatformat:0 }}%)<br>
-          {{auction.get_suggestedincreaseThird_floor_price|floatformat:0|intcomma }}
+          {{auction.get_suggestedincreaseThird_floor_price|floatformat:0|thousandCut }}
         {% endif %}
       </td>
       <!-- 第三拍：保証金 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceThird != 0 %}
-          {{auction.auctionMarginThird|floatformat:0|intcomma }}
+          {{auction.auctionMarginThird|floatformat:0|thousandCut }}
         {% endif %}
       </td>
     </tr>
@@ -269,36 +269,36 @@
       <!-- 第四拍：底價 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceFourth != 0 %}
-          {{auction.auctionFloorPriceFourth|floatformat:0|intcomma }}
+          {{auction.auctionFloorPriceFourth|floatformat:0|thousandCut }}
         {% endif %}
 
         {% if auction.auctionFloorPriceFirst != 0 %}
           <br>
           <div class="text-red">
-            {{auction.auctionFloorPriceFirst|multiplication:512|divide:1000|floatformat:0|intcomma }}
+            {{auction.auctionFloorPriceFirst|multiplication:512|divide:1000|floatformat:0|thousandCut }}
           </div>
         {% elif auction.auctionFloorPriceSecond != 0 %}
           <br>
           <div class="text-red">
-            {{auction.auctionFloorPriceSecond|multiplication:64|divide:100|floatformat:0|intcomma }}
+            {{auction.auctionFloorPriceSecond|multiplication:64|divide:100|floatformat:0|thousandCut }}
           </div>
         {% elif auction.auctionFloorPriceThird != 0 %}
           <br>
           <div class="text-red">
-            {{auction.auctionFloorPriceThird|multiplication:8|divide:10|floatformat:0|intcomma }}
+            {{auction.auctionFloorPriceThird|multiplication:8|divide:10|floatformat:0|thousandCut }}
           </div>
         {% endif %}
       </td>
       <!-- 第四拍：坪價 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceFourth != 0 and object.builds.all|length > 0 %}
-          {{auction.get_ping_fourth_price|floatformat:0|intcomma}}
+          {{auction.get_ping_fourth_price|floatformat:0|thousandCut}}
         {% endif %}
       </td>
       <!-- 第四拍：CP值 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceFourth != 0 and auction.get_fourth_cp != 0 %}
-          {{auction.get_fourth_cp|floatformat:2|intcomma}}
+          {{auction.get_fourth_cp|floatformat:2|thousandCut}}
         {% endif %}
       </td>
       <!-- 第四拍：點閱 -->
@@ -317,13 +317,13 @@
       <td class="auction__td">
         {% if auction.auctionFloorPriceFourth != 0 %}
           (100% + {{auction.get_suggestedincreaseFouth|multiplication:100|floatformat:0 }}%)<br>
-          {{auction.get_suggestedincreaseFourth_floor_price|floatformat:0|intcomma }}
+          {{auction.get_suggestedincreaseFourth_floor_price|floatformat:0|thousandCut }}
         {% endif %}
       </td>
       <!-- 第四拍：保証金 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceFourth != 0 %}
-          {{auction.auctionMarginFourth|floatformat:0|intcomma }}
+          {{auction.auctionMarginFourth|floatformat:0|thousandCut }}
         {% endif %}
       </td>
     </tr>

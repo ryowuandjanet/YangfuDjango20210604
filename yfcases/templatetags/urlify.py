@@ -1,9 +1,11 @@
 import numpy as np
+import locale
 from urllib.parse import quote
 from decimal import *
 from django import template
 from datetime import datetime
 from django.utils.safestring import mark_safe
+
  
 register=template.Library()
  
@@ -179,3 +181,8 @@ def times(cownerinfo,coownername):
   return list(cownerinfo.values_list('coOwnerName',flat=True)).index(coownername)+2
 
 
+# 貨幣輸出數值千分位分割
+# 用法{{ 22587.2|thousandCut }} 
+@register.filter(name='thousandCut')
+def thousandCut(value):
+  return '{:20,.0f}'.format(float(value))

@@ -61,7 +61,7 @@
     <td class="result__td">{{ result.stopBuyDate|default_if_none:"" }}</td>
     <td class="result__td">{% if result.actionResult == "撤回" %} V {% endif %}</td>
     <td class="result__td">{{ result.bidAuctionTime|default_if_none:"" }}</td>
-    <td class="result__td">{% if result.bidMoney > 0 %}{{ result.bidMoney|floatformat:0|intcomma }}{% endif %}</td>
+    <td class="result__td">{% if result.bidMoney > 0 %}{{ result.bidMoney|floatformat:0|thousandCut }}{% endif %}</td>
     <td class="result__td">{% if result.actionResult == "等待優購" %} V {% endif %}</td>
     <td class="result__td">{% if result.actionResult == "遭優購" %} V {% endif %}</td>
     <td class="result__td">{% if result.actionResult == "無人優購" %} V {% endif %}</td>
