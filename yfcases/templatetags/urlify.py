@@ -185,4 +185,5 @@ def times(cownerinfo,coownername):
 # 用法{{ 22587.2|thousandCut }} 
 @register.filter(name='thousandCut')
 def thousandCut(value):
-  return '{:20,.0f}'.format(float(value))
+  if value:
+    return '{:20,.0f}'.format(float(value))
