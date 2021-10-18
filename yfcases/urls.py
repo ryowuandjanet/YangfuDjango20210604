@@ -9,6 +9,7 @@ urlpatterns = [
   # path('',YfcaseListView.as_view(),name="home" ),
   path('',yfcase_list,name="home" ),
   path('all/',yfcase_list_all,name="home_all" ),
+  path('all_include_close/',yfcase_list_all_include_close,name="home_all_include_close" ),
   path('yfcase/<int:pk>/',YfcaseDetailView.as_view(),name="yfcase_detail" ),
   path('yfcase/create/',YfcaseCreateView.as_view(),name="yfcase_create" ),
   path('yfcase/<int:pk>/update/',YfcaseUpdateView.as_view(),name="yfcase_update"),

@@ -75,7 +75,7 @@
       <!-- 第一拍：CP值 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceFirst != 0 and auction.get_first_cp != 0 %}
-          {{auction.get_first_cp|floatformat:2|thousandCut}}
+          {{auction.get_first_cp|floatformat:2}}
         {% endif %}
       </td>
       <!-- 第一拍：點閱 -->
@@ -144,7 +144,7 @@
       <!-- 第二拍：CP值 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceSecond != 0 and auction.get_second_cp != 0 %}
-          {{auction.get_second_cp|floatformat:2|thousandCut}}
+          {{auction.get_second_cp|floatformat:2}}
         {% endif %}
       </td>
       <!-- 第二拍：點閱 -->
@@ -218,7 +218,7 @@
       <!-- 第三拍：CP值 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceThird != 0 and auction.get_third_cp != 0 %}
-          {{auction.get_third_cp|floatformat:2|thousandCut}}
+          {{auction.get_third_cp|floatformat:2}}
         {% endif %}
       </td>
       <!-- 第三拍：點閱 -->
@@ -298,7 +298,7 @@
       <!-- 第四拍：CP值 -->
       <td class="auction__td">
         {% if auction.auctionFloorPriceFourth != 0 and auction.get_fourth_cp != 0 %}
-          {{auction.get_fourth_cp|floatformat:2|thousandCut}}
+          {{auction.get_fourth_cp|floatformat:2}}
         {% endif %}
       </td>
       <!-- 第四拍：點閱 -->

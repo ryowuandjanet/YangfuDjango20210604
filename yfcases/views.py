@@ -41,7 +41,36 @@ def export_yfcase(reauest):
 #   model=Yfcase
 #   template_name="home.html"
 
-# 所有(List)
+
+# 所有(在途+結案)
+@login_required
+def yfcase_list_all_include_close(request):
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
+  queryset_list = Yfcase.objects.all()
+  query = request.GET.get('q')
+  if query:
+    queryset_list = queryset_list.filter(
+      Q(yfcaseCaseNumber__icontains=query)|
+      Q(yfcaseCityWithTownship__icontains=query)|
+      Q(yfcaseStreet__icontains=query)|
+      Q(yfcaseNumber__icontains=query)|
+      Q(finaldecisions__finalDecision__icontains=query)|
+      Q(finaldecisions__regionalHead__icontains=query)|
+      Q(user__userFullName__icontains=query)
+    ).distinct()
+  paginator = Paginator(queryset_list, 10) 
+
+  page = request.GET.get('page')
+  queryset = paginator.get_page(page)
+
+  context={
+    "object_list" : queryset,
+    "title": "List",
+    }
+  return render(request, "home.html", context)
+
+# 所有(在途)
 @login_required
 def yfcase_list_all(request):
   if not request.user.is_staff or not request.user.is_superuser:

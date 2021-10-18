@@ -17,7 +17,8 @@
 
             <!-- site menu/nav -->
             <ul style="z-index: 100;">
-              <li><a href="{% url 'yfcase:home_all' %}" class="fs-5">所有</a></li>
+              <li><a href="{% url 'yfcase:home_all_include_close' %}" class="fs-5">所有<small>(含結案)</small></a></li>
+              <li><a href="{% url 'yfcase:home_all' %}" class="fs-5">所有<small>(在途)</small></a></li>
               <li><a href="{% url 'yfcase:home' %}" class="fs-5">個人</a></li>
               <li><a href="{% url 'yfcase:yfcase_create' %}" class="fs-5">新建評量表</a></li>
 

@@ -999,5 +999,5 @@ class Result(models.Model):
   stopBuyDate = models.CharField(u'應買止日',max_length=20,null=True,blank=True)
   actionResult = models.CharField(u'執行結果',max_length=20,null=True,blank=True)
   bidAuctionTime = models.CharField(u'搶標拍別',max_length=20,null=True,blank=True)
-  bidMoney = models.DecimalField(u'搶標金額',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
+  bidMoney = models.DecimalField(u'搶標金額',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
   objectNumber = models.CharField(u'標的編號',max_length=20,null=True,blank=True)
