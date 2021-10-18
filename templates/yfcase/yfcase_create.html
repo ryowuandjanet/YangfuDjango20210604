@@ -15,7 +15,7 @@
         {{ request.user.id|json_script:"author_id" }} 
         {{ form.yfcaseUpdated|attr:"type:hidden" }}
         <input type="hidden" id="user" name="user" value={{request.user.id}}>
-        {{ form.yfcaseUpdated|attr:"type:hidden" }}
+        {{ form.yfcaseTimestamp|attr:"type:hidden" }}
         <!-- {{ form.user|attr:"type:text value:1" }} -->
 
         <!-- 標題 && 案件狀況 -->
@@ -235,9 +235,13 @@
       let townshipValue = parseInt(document.getElementById("id_yfcaseTownship").value) - 1;
       const cityString = cities[cityValue];
       const townshipString = townships[townshipValue];
+      var Today = new Date();
+      var addToday = Today.getFullYear()+ "-" + ("0" + (Today.getMonth() + 1)).slice(-2) + "-" + ("0" + Today.getDate()).slice(-2)
       document.getElementById("id_yfcaseCityWithTownship").value = cityString+townshipString;
       document.getElementById("id_yfcaseCaseStatus").value = "在途";
       document.getElementById("id_yfcaseSealUrl").value = "https://img69.imagetwist.com/i/41830/2ll75rh4pb8w.jpg/seal.jpg";
+      document.getElementById("id_yfcaseTimestamp").value = addToday;
+
     }
   </script>
 {% endblock %}

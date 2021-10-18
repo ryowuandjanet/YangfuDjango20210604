@@ -41,7 +41,12 @@
       <td class="objectbuild__td" rowspan=5>
         <table class="objectbuild_info">
           <tr>
-            <th>({{objectbuild.objectBuildStatus}})地址：</th>
+            <th>
+              {% if objectbuild.objectBuildStatus %}
+                ({{objectbuild.objectBuildStatus}})
+              {% endif %}
+              地址：
+            </th>
             <td>{{objectbuild.objectBuildAddress}}</td>
           </tr>
           {% if objectbuild.objectBuildHouseAge %}

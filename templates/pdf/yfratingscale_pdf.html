@@ -219,7 +219,10 @@
         <tr>
           <td style="text-align:left;">
             {% for land in yfcase.lands.all %}
-              {{yfcase.yfcaseBigSection}}{{land.landNumber}}<br>
+              {% if yfcase.yfcaseBigSection%}
+                {{yfcase.yfcaseBigSection}}
+              {% endif %}
+              {{land.landNumber}}<br>
             {% endfor %}
           </td>
           <td>

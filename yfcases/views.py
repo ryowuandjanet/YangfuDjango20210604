@@ -141,9 +141,15 @@ class YfcaseUpdateView(UpdateView):
     
   def get_context_data(self, **kwargs):
     context = super(YfcaseUpdateView,self).get_context_data(**kwargs)
+
+    pk = Yfcase.objects.get(pk=self.kwargs.get('pk')).lands.all
+
     context["author_id"]=self.request.user.id
     context['value'] = '更新'
     context['title'] = '更新基本資料'
+    context.update({
+        'yland': pk,
+    })
     return context
 
 class YfcaseDeleteView(DeleteView):

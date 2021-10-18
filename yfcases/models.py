@@ -185,8 +185,8 @@ class Yfcase(models.Model):
     # 變數名稱 = 自身欄名 判定自身欄名為None就空白，要不然返回自身的變數
     city = self.yfcaseCity if self.yfcaseCity is not None else ""
     township = self.yfcaseTownship if self.yfcaseTownship is not None else ""
-    bigSection = self.yfcaseBigSection if self.yfcaseBigSection is not None else ""
-    smallSection = self.yfcaseSmallSection if self.yfcaseSmallSection is not None else ""
+    # bigSection = self.yfcaseBigSection if self.yfcaseBigSection is not None else ""
+    # smallSection = self.yfcaseSmallSection if self.yfcaseSmallSection is not None else ""
     village = self.yfcaseVillage if self.yfcaseVillage is not None else ""
     neighbor = self.yfcaseNeighbor if self.yfcaseNeighbor is not None else ""
     street = self.yfcaseStreet if self.yfcaseStreet is not None else ""
@@ -491,9 +491,15 @@ class Land(models.Model):
   landHoldingPointPersonal=models.DecimalField(u'個人持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
   landHoldingPointAll=models.DecimalField(u'所有持分',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
   landRemark=models.CharField(u'備註',max_length=100,null=True,blank=True)
+  landUpdated = models.DateTimeField(u'案件最後更新時間',auto_now=True,auto_now_add=False)
   
   def __str__(self):
     return self.landNumber
+
+  class Meta:
+    # managed = True
+    db_table = 'yfcase_land'
+    ordering = ["-landUpdated",]
 
   def get_land_holding_point_area(self):
     return self.landArea * ( self.landHoldingPointPersonal / self.landHoldingPointAll)
