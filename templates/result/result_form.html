@@ -16,7 +16,8 @@
 
 {% block content %}
 
-<form action="" method="post">{% csrf_token %}
+<!-- 如果有要用到dateValidationCheck()函數的話，在後面加上onsubmit="return dateValidationCheck(this.stopBuyDate.value);" -->
+<form action="" method="post" onsubmit="return dateValidationCheck(this.stopBuyDate.value);">{% csrf_token %}
   {% if instance.id %}
      <div class="container-sm border border-success border-3 rounded mt-3 bg-light">
   {% else %}
@@ -42,7 +43,7 @@
       <span class="text-dark fs-4 fw-bold">應買止日</span>
       <div class="col-md-12">
         <div class="input-group my-1">
-          {{ form.stopBuyDate|add_class:'form-control border border-dark border-2 fw-bold rounded-end datepicker'|attr:"placeholder:請輸入應買止日" }}
+          {{ form.stopBuyDate|add_class:'form-control border border-dark border-2 fw-bold rounded-end datepicker'|attr:"autocomplete:off"|attr:"placeholder:請輸入應買止日" }}
         </div>
       </div>
     </div>
@@ -114,12 +115,32 @@
 
 <script>
   $(function() {
+    // 應買止日日期格式
+    var userLang = navigator.language || navigator.userLanguage;
+    var options = $.extend({},
+      $.datepicker.regional["zh-TW"], {
+        dayNames:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
+        dayNamesMin:["日","一","二","三","四","五","六"],
+        monthNames:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+        monthNamesShort:["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+        prevText:"上月",
+        nextText:"次月",
+        weekHeader:"週",
+        dateFormat: "yy-mm-dd",
+        changeMonth: true,
+        changeYear: true,
+        highlightWeek: true
+      }
+    );
+    $("#id_stopBuyDate").datepicker(options);
+
+    // 第三人搶標及無人優購
     var bidAuctionTime = document.getElementById("myBidAuctionTime");
     var bidMoney = document.getElementById("myBidMoney");
     var objectNumber = document.getElementById("myObjectNumber");
     
-    var y = document.getElementById("id_actionResult").value
-    
+    var y = document.getElementById("id_actionResult").value;
+
     if ( y === "第三人搶標" ) {
       bidAuctionTime.style.display = "block";
       bidMoney.style.display = "block";
@@ -178,6 +199,18 @@
       bidMoney.style.display = "none";
       objectNumber.style.display = "none";
     }
+  }
+
+  function dateValidationCheck(theDate){
+    var reg = /^\d{4}-(02-(0[1-9]|[12][0-9])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))$/; 
+    var result=true;
+    if(!reg.test(theDate) && theDate != ""){
+      result = false; 
+    }
+    if (!result) {
+      alert("請輸入正確的日期格式(YYYY-MM-DD)或是有效日期");
+    }
+    return result;
   }
 </script>
 {% endblock content %}
