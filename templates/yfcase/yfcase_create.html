@@ -97,43 +97,45 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseVillage|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:村里" }}
               <span class="help-block">{{ form.yfcaseVillage.error }}</span>
             </div>
           </div>
-          <div class="col-md-1">
+          <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseNeighbor|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:鄰" }}
               <span class="help-block">{{ form.yfcaseNeighbor.error }}</span>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseStreet|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:街路" }}
               <span class="help-block">{{ form.yfcaseStreet.error }}</span>
             </div>
           </div>
-          <div class="col-md-1">
+          <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:段" }}
               <span class="help-block">{{ form.yfcaseSection.error }}</span>
             </div>
           </div>
-          <div class="col-md-1">
+        </div>
+        <div class="row">
+          <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseLane|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:巷" }}
               <span class="help-block">{{ form.yfcaseLane.error }}</span>
             </div>
           </div>
-          <div class="col-md-1">
+          <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseAlley|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:弄" }}
               <span class="help-block">{{ form.yfcaseAlley.error }}</span>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseNumber|add_class:'form-control border border-dark border-2 fw-bold rounded'|add_required_class:"is-required"|attr:"placeholder:號" }}
               <span class="help-block">{{ form.yfcaseNumber.error }}</span>
@@ -142,7 +144,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseFloor|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:樓" }}
               <span class="help-block">{{ form.yfcaseFloor.error }}</span>
@@ -158,7 +160,7 @@
               <span class="input-group-text border border-dark border-2">
                 <i class="fas fa-user-secret"></i>
               </span>
-              {{ form.yfcaseDebtor|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:債權人" }}
+              {{ form.yfcaseDebtor|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:債務人" }}
               <span class="help-block">{{ form.yfcaseDebtor.error }}</span>
             </div>
           </div>
@@ -167,9 +169,9 @@
               <span class="input-group-text border border-dark border-2">
                 <i class="fas fa-user-friends"></i>
               </span>
-              {{ form.yfcaseCreditor|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:債務人" }}
+              {{ form.yfcaseCreditor|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:債權人" }}
               <span class="help-block">{{ form.yfcaseCreditor.error }}</span>
-              {{ form.yfcaseCreditorMobilePhone|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:債務人電話" }}
+              {{ form.yfcaseCreditorMobilePhone|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:債權人電話" }}
               <span class="help-block">{{ form.yfcaseCreditorMobilePhone.error }}</span>
             </div>
           </div>

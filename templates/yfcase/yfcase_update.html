@@ -60,96 +60,98 @@
       </div>
     </div>
 
-    <!-- 住址 -->
-    <div class="row mt-3">
-      <span class="text-dark fs-4 fw-bold">案號位置</span>
-      <div class="col-md-3">
-        <div class="input-group my-1">
-          <span class="input-group-text border border-dark border-2">
-            <i class="fas fa-home"></i>
-          </span>
-          {{ form.yfcaseCity|add_class:'form-control border border-dark border-2 fw-bold rounded-end' }}
-          <span class="help-block">{{ form.yfcaseCity.error }}</span>
-          <div class="invalid-feedback">
-            必填，請選擇縣市
+        <!-- 住址 -->
+        <div class="row mt-3">
+          <span class="text-dark fs-4 fw-bold">案號位置</span>
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              <span class="input-group-text border border-dark border-2">
+                <i class="fas fa-home"></i>
+              </span>
+              {{ form.yfcaseCity|add_class:'form-control border border-dark border-2 fw-bold rounded-end' }}
+              <span class="help-block">{{ form.yfcaseCity.error }}</span>
+              <div class="invalid-feedback">
+                必填，請選擇縣市
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseTownship|add_class:'form-control border border-dark border-2 fw-bold rounded' }}
+              <span class="help-block">{{ form.yfcaseTownship.error }}</span>
+              <div class="invalid-feedback">
+                必填，請選擇鄉鎮
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseBigSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:段號" }}
+              <span class="help-block">{{ form.yfcaseBigSection.error }}</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseSmallSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:小段" }}
+              <span class="help-block">{{ form.yfcaseSmallSection.error }}</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group my-1">
-          {{ form.yfcaseTownship|add_class:'form-control border border-dark border-2 fw-bold rounded' }}
-          <span class="help-block">{{ form.yfcaseTownship.error }}</span>
-          <div class="invalid-feedback">
-            必填，請選擇鄉鎮
+        <div class="row">
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseVillage|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:村里" }}
+              <span class="help-block">{{ form.yfcaseVillage.error }}</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseNeighbor|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:鄰" }}
+              <span class="help-block">{{ form.yfcaseNeighbor.error }}</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseStreet|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:街路" }}
+              <span class="help-block">{{ form.yfcaseStreet.error }}</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:段" }}
+              <span class="help-block">{{ form.yfcaseSection.error }}</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group my-1">
-          {{ form.yfcaseBigSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:段號" }}
-          <span class="help-block">{{ form.yfcaseBigSection.error }}</span>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group my-1">
-          {{ form.yfcaseSmallSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:小段" }}
-          <span class="help-block">{{ form.yfcaseSmallSection.error }}</span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-2">
-        <div class="input-group my-1">
-          {{ form.yfcaseVillage|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:村里" }}
-          <span class="help-block">{{ form.yfcaseVillage.error }}</span>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <div class="input-group my-1">
-          {{ form.yfcaseNeighbor|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:鄰" }}
-          <span class="help-block">{{ form.yfcaseNeighbor.error }}</span>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="input-group my-1">
-          {{ form.yfcaseStreet|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:街路" }}
-          <span class="help-block">{{ form.yfcaseStreet.error }}</span>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <div class="input-group my-1">
-          {{ form.yfcaseSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:段" }}
-          <span class="help-block">{{ form.yfcaseSection.error }}</span>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <div class="input-group my-1">
-          {{ form.yfcaseLane|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:巷" }}
-          <span class="help-block">{{ form.yfcaseLane.error }}</span>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <div class="input-group my-1">
-          {{ form.yfcaseAlley|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:弄" }}
-          <span class="help-block">{{ form.yfcaseAlley.error }}</span>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="input-group my-1">
-          {{ form.yfcaseNumber|add_class:'form-control border border-dark border-2 fw-bold rounded'|add_required_class:"is-required"|attr:"placeholder:號" }}
-          <span class="help-block">{{ form.yfcaseNumber.error }}</span>
-          <div class="invalid-feedback">
-            必填，請輸入號碼
+        <div class="row">
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseLane|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:巷" }}
+              <span class="help-block">{{ form.yfcaseLane.error }}</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseAlley|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:弄" }}
+              <span class="help-block">{{ form.yfcaseAlley.error }}</span>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseNumber|add_class:'form-control border border-dark border-2 fw-bold rounded'|add_required_class:"is-required"|attr:"placeholder:號" }}
+              <span class="help-block">{{ form.yfcaseNumber.error }}</span>
+              <div class="invalid-feedback">
+                必填，請輸入號碼
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group my-1">
+              {{ form.yfcaseFloor|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:樓" }}
+              <span class="help-block">{{ form.yfcaseFloor.error }}</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-2">
-        <div class="input-group my-1">
-          {{ form.yfcaseFloor|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:樓" }}
-          <span class="help-block">{{ form.yfcaseFloor.error }}</span>
-        </div>
-      </div>
-    </div>
       
     <!-- 債務人/債權人 -->
     <div class="row mt-3">
@@ -159,7 +161,7 @@
           <span class="input-group-text border border-dark border-2">
             <i class="fas fa-user-secret"></i>
           </span>
-          {{ form.yfcaseDebtor|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:債權人" }}
+          {{ form.yfcaseDebtor|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:債務人" }}
           <span class="help-block">{{ form.yfcaseDebtor.error }}</span>
         </div>
       </div>
@@ -168,9 +170,9 @@
           <span class="input-group-text border border-dark border-2">
             <i class="fas fa-user-friends"></i>
           </span>
-          {{ form.yfcaseCreditor|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:債務人" }}
+          {{ form.yfcaseCreditor|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:債權人" }}
           <span class="help-block">{{ form.yfcaseCreditor.error }}</span>
-          {{ form.yfcaseCreditorMobilePhone|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:債務人電話" }}
+          {{ form.yfcaseCreditorMobilePhone|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:債權人電話" }}
           <span class="help-block">{{ form.yfcaseCreditorMobilePhone.error }}</span>
         </div>
       </div>
