@@ -7,3 +7,4 @@ Lib
 Scripts
 tcl
 backup/
+src/email_info.py

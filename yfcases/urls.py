@@ -5,7 +5,14 @@ from .views import *
 app_name='yfcase'
 
 urlpatterns = [
+  # 登入
   path('login/',auth_views.LoginView.as_view(template_name='registration/login.html'),name='login'),
+  #忘記密碼
+  path('password-reset/',auth_views.PasswordResetView.as_view(template_name='registration/password_reset.html'),name='password_reset'),
+  path('password-reset/done/',auth_views.PasswordResetDoneView.as_view(template_name='registration/password_reset_done.html'), name='password_reset_done'),
+  path('password-reset-confirm/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name='registration/password_reset_confirm.html'),name='password_reset_confirm'),
+  path('password-reset-complete/',auth_views.PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'),name='password_reset_complete'),
+
   # path('',YfcaseListView.as_view(),name="home" ),
   path('',yfcase_list,name="home" ),
   path('all/',yfcase_list_all,name="home_all" ),
@@ -85,5 +92,6 @@ urlpatterns = [
   path('realestateregistrationPDFView/<int:pk>/', realestateregistrationPDFView.as_view(),name="realestateregistrationPDF_View"),
   path('complaintPDFView/<int:pk>/', complaintPDFView.as_view(),name="complaintPDF_View"),
   path('letterPDFView/<int:pk>/', letterPDFView.as_view(),name="letterPDF_View"),
-  path('coownerPDFView/<int:pk>/', coownerPDFView.as_view(),name="coownerPDF_View"),
+  path('coowonerPDFView/<int:pk>/', coownerPDFView.as_view(),name="coownerPDF_View"),
+
 ]
