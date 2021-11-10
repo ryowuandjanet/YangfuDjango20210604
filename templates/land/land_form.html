@@ -14,7 +14,6 @@
 
 {% block content %}
 
-
 <form method="POST" action="" enctype='multipart/form-data' id="landCreateForm" class="was-validated" novalidate >{% csrf_token %}
   {% if instance.id %}
      <div class="container-sm border border-success border-3 rounded mt-3 bg-light">
@@ -22,7 +21,6 @@
      <div class="container-sm border border-primary border-3 rounded mt-3 bg-light">
   {% endif %}
     {{ form.yfcase|attr:"type:hidden" }}
-
     <!-- 標題  -->
     <div class="row">
       <div class="col my-1">
@@ -96,6 +94,8 @@
       </div>
     </div>
 
+    {{ instance_yfcase.yfcaseUpdated|json_script:"yfcase_updated" }} 
+
     <!-- footer -->
     <div class="row mt-3">
       <div class="col-md-6"></div>
@@ -138,8 +138,14 @@
   function get_land_yfcase() {
     // var url = (window.location.pathname).replace("/yfcase/land/create/","").replace("/",""); 
     var url = (window.location.pathname).replace("/yfcase/","").replace("/land/create/",""); 
+    var date = new Date();
+    var today_format = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    const yfcase_updated = JSON.parse(document.getElementById('yfcase_updated').textContent);
     // /yfcase/3/land/create/
     document.getElementById("id_yfcase").value = url;
+    yfcase_updated.value=today_format;
+    alert(yfcase_updated);
+    alert(today_format);
   }
 
 </script>

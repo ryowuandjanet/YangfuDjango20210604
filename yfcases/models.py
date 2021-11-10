@@ -178,7 +178,7 @@ class Yfcase(models.Model):
   class Meta:
     # managed = True
     db_table = 'yfcase_yfcase'
-    ordering = ["-yfcaseUpdated",]
+    ordering = ["-yfcaseUpdated"]
 
 
   def fullAddress(self):
