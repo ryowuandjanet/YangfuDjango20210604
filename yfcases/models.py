@@ -188,12 +188,12 @@ class Yfcase(models.Model):
     # bigSection = self.yfcaseBigSection if self.yfcaseBigSection is not None else ""
     # smallSection = self.yfcaseSmallSection if self.yfcaseSmallSection is not None else ""
     village = self.yfcaseVillage if self.yfcaseVillage is not None else ""
-    neighbor = self.yfcaseNeighbor if self.yfcaseNeighbor is not None else ""
+    neighbor = self.yfcaseNeighbor + "鄰" if self.yfcaseNeighbor is not None else ""
     street = self.yfcaseStreet if self.yfcaseStreet is not None else ""
-    section = self.yfcaseSection if self.yfcaseSection is not None else ""
-    lane = self.yfcaseLane if self.yfcaseLane is not None else ""
-    alley = self.yfcaseAlley if self.yfcaseAlley is not None else ""
-    number = self.yfcaseNumber if self.yfcaseNumber is not None else ""
+    section = self.yfcaseSection + "段" if self.yfcaseSection is not None else ""
+    lane = self.yfcaseLane + "巷" if self.yfcaseLane is not None else ""
+    alley = self.yfcaseAlley + "弄" if self.yfcaseAlley is not None else ""
+    number = self.yfcaseNumber + "號" if self.yfcaseNumber is not None else ""
     floor = self.yfcaseFloor if self.yfcaseFloor is not None else ""
     # 將各個欄位合併
     result = str(city)+str(township)+str(village)+str(neighbor)+str(street)+str(section)+str(lane)+str(alley)+str(number)+str(floor)

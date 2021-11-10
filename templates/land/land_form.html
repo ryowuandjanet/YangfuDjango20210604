@@ -38,7 +38,7 @@
     <div class="row mt-3">
       <span class="text-dark fs-4 fw-bold">地號</span>
       <div class="col-md-5">
-        <span class="text-white bg-dark px-2">地號</span>
+        <span class="text-white bg-dark px-2">地號(只輸入阿拉伯數字)</span>
         <div class="input-group">
           {{ form.landNumber|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"autocomplete:off"|attr:"placeholder:請輸入地號" }}
           <span class="help-block">{{ form.landNumber.error }}</span>
@@ -144,8 +144,6 @@
     // /yfcase/3/land/create/
     document.getElementById("id_yfcase").value = url;
     yfcase_updated.value=today_format;
-    alert(yfcase_updated);
-    alert(today_format);
   }
 
 </script>

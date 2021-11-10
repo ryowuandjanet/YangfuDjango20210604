@@ -88,12 +88,14 @@
               {{ form.yfcaseBigSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:段號" }}
               <span class="help-block">{{ form.yfcaseBigSection.error }}</span>
             </div>
+            <span class="text-primary">(不需輸入"段號")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseSmallSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:小段" }}
               <span class="help-block">{{ form.yfcaseSmallSection.error }}</span>
             </div>
+            <span class="text-primary">(不需輸入"小段")</span>
           </div>
         </div>
         <div class="row">
@@ -102,24 +104,28 @@
               {{ form.yfcaseVillage|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:村里" }}
               <span class="help-block">{{ form.yfcaseVillage.error }}</span>
             </div>
+            <span class="text-primary">(需輸入"村"或"里")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseNeighbor|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:鄰" }}
               <span class="help-block">{{ form.yfcaseNeighbor.error }}</span>
             </div>
+            <span class="text-primary">(不需輸入"鄰")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseStreet|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:街路" }}
               <span class="help-block">{{ form.yfcaseStreet.error }}</span>
             </div>
+            <span class="text-primary">(需輸入"街"或"路")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:段" }}
               <span class="help-block">{{ form.yfcaseSection.error }}</span>
             </div>
+            <span class="text-primary">(不需輸入"段"，但需以中文表示)</span>
           </div>
         </div>
         <div class="row">
@@ -128,12 +134,14 @@
               {{ form.yfcaseLane|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:巷" }}
               <span class="help-block">{{ form.yfcaseLane.error }}</span>
             </div>
+            <span class="text-primary">(不需輸入"巷")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseAlley|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:弄" }}
               <span class="help-block">{{ form.yfcaseAlley.error }}</span>
             </div>
+            <span class="text-primary">(不需輸入"弄")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
@@ -143,12 +151,14 @@
                 必填，請輸入號碼
               </div>
             </div>
+            <span class="text-primary">(不需輸入"號")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseFloor|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:樓" }}
               <span class="help-block">{{ form.yfcaseFloor.error }}</span>
             </div>
+            <span class="text-primary">(需輸入"樓"、"幾之幾")</span>
           </div>
         </div>
           

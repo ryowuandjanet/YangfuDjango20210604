@@ -32,7 +32,9 @@
       {% endif %}
       <td class="land__td text-left">
         <div style="font-size:12pt;">
-          {{ object.yfcaseBigSection|default_if_none:"" }}{{ land.landNumber }}
+          {% if land.landNumber %}
+            {{ object.yfcaseBigSection }}段{{ land.landNumber }}
+          {% endif %}
         </div>
       </td>
       <td class="land__td">
