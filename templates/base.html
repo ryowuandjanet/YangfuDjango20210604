@@ -2,6 +2,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
     <title>
       {% block head_title %} {% endblock head_title %}
     </title>
@@ -22,10 +27,11 @@
     {% endblock style %}
   </head>
   <body>
+    
     {% include 'partials/navbar.html' %} 
+    
     {% include "messages_display.html" %}
     <div class="container-lg">
-      
       {% block content %}
       {% endblock content %}
     </div>

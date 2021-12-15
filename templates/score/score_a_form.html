@@ -13,6 +13,8 @@
 
 
 {% block content %}
+
+
 <form method="POST" action="" enctype='multipart/form-data'>{% csrf_token %}
   {% if instance.id %}
      <div class="container-sm border border-success border-3 rounded mt-3 bg-light">

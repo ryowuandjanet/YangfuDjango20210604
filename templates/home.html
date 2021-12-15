@@ -391,6 +391,23 @@
                 {% endfor %}
               </div>
             </div>
+
+              <div class="row py-2 ">
+                <div class="col bg-primary text-center ">
+                  <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="btn btn-primary btn-sm">
+                    評量表PDF
+                  </a>  
+                </div>
+
+                <div class="col bg-warning text-center">
+                  <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" class="btn btn-secondary btn-sm " >
+                    查看(編輯)明細
+                  </a>
+                </div>
+              </div>
+
+
+
             <div class="row row-button">
               <div class="col justify-content-center">
                 <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="btn btn-primary btn-sm">

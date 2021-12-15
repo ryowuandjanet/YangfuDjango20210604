@@ -11,7 +11,7 @@
 {% block content %}
 
 <!-- 程式主題的部份 -->
-<form action="{% url 'yfcase:yfcase_update' yfcase.id %}" method="post" id="yfcaseUpdateForm" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" class="was-validated" novalidate >{% csrf_token %}
+<form action="{% url 'yfcase:yfcase_update' yfcase.id %}" method="post" id="yfcaseUpdateForm" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" class="needs-validation" novalidate >{% csrf_token %}
   <div class="container-sm border border-success border-3 rounded mt-3 bg-light">
     {{ request.user.id|json_script:"author_id" }} 
     {{ form.yfcaseUpdated|attr:"type:hidden" }}
@@ -32,13 +32,33 @@
     </div>
 
     <!-- 案號 && 所屬公司 -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="validationCustom01" class="fs-5 fw-bold">案號</label>
+        <input type="text" class="form-control" id="validationCustom01" placeholder="請輸入案號" required>
+        <div class="invalid-feedback">
+          必填，請選擇縣市
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="validationCustom02" class="fs-5 fw-bold">所屬公司</label>
+        <input type="text" class="form-control" id="validationCustom02" placeholder="請輸入所屬公司" required>
+        <div class="invalid-feedback">
+          必填，請選擇鄉鎮
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
     <div class="row mt-3">
       <span class="text-dark fs-4 fw-bold">案號 && 所屬公司</span>
       <div class="col-md-6">
         <div class="input-group my-1">
-          <span class="input-group-text border border-dark border-2">
-            <i class="fas fa-cash-register"></i>
-          </span>
           {{ form.yfcaseCaseNumber|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"autocomplete:off"|attr:"placeholder:請輸入案號" }}
           <span class="help-block">{{ form.yfcaseCaseNumber.error }}</span>
           <div class="invalid-feedback">
@@ -48,9 +68,6 @@
       </div>
       <div class="col-md-6">
         <div class="input-group my-1">
-          <span class="input-group-text border border-dark border-2">
-            <i class="fas fa-building"></i>
-          </span>
           {{ form.yfcaseCompany|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:請輸入所屬公司" }}
           <span class="help-block">{{ form.yfcaseCompany.error }}</span>
           <div class="invalid-feedback">
@@ -60,14 +77,119 @@
       </div>
     </div>
 
-        <!-- 住址 -->
+    <!-- 住址 -->
+    <div class="row">
+      <span class="text-dark fs-5 fw-bold">案號位置</span>
+      <div class="col-md-3 mb-3">
+        <input type="text" class="form-control" placeholder="縣市" required>
+        <div class="invalid-feedback">
+          必填，請選擇縣市
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <input type="text" class="form-control" placeholder="鄉鎮" required>
+        <div class="invalid-feedback">
+          必填，請選擇鄉鎮
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" />
+          <label class="btn btn-outline-secondary">段號</label>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" />
+          <label class="btn btn-outline-secondary">小段</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" aria-label="Text input with dropdown button">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">里</button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">村</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">里</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" />
+          <label class="btn btn-outline-secondary">鄰</label>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" aria-label="Text input with dropdown button">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">路</button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">路</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">街</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" />
+          <label class="btn btn-outline-secondary">段</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" />
+          <label class="btn btn-outline-secondary">巷</label>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" />
+          <label class="btn btn-outline-secondary">弄</label>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" required />
+          <label class="btn btn-outline-secondary">號</label>
+          <div class="invalid-feedback">
+            必填，請選擇縣市
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" />
+          <label class="btn btn-outline-secondary">樓</label>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
         <div class="row mt-3">
           <span class="text-dark fs-4 fw-bold">案號位置</span>
+          
           <div class="col-md-3">
             <div class="input-group my-1">
-              <span class="input-group-text border border-dark border-2">
-                <i class="fas fa-home"></i>
-              </span>
               {{ form.yfcaseCity|add_class:'form-control border border-dark border-2 fw-bold rounded-end' }}
               <span class="help-block">{{ form.yfcaseCity.error }}</span>
               <div class="invalid-feedback">
@@ -87,22 +209,29 @@
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseBigSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:段號" }}
-              <span class="help-block">{{ form.yfcaseBigSection.error }}</span>
+              <div class="input-group-append">
+                <span class="input-group-text">段號</span>
+              </div>
             </div>
-            <span class="text-primary">(不需輸入"段號")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseSmallSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:小段" }}
-              <span class="help-block">{{ form.yfcaseSmallSection.error }}</span>
+              <div class="input-group-append">
+                <span class="input-group-text">小段</span>
+              </div>
             </div>
-            <span class="text-primary">(不需輸入"小段")</span>
           </div>
         </div>
+        
         <div class="row">
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseVillage|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:村里" }}
+
+              
+
+
               <span class="help-block">{{ form.yfcaseVillage.error }}</span>
             </div>
             <span class="text-primary">(需輸入"村"或"里")</span>
@@ -110,9 +239,10 @@
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseNeighbor|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:鄰" }}
-              <span class="help-block">{{ form.yfcaseNeighbor.error }}</span>
+              <div class="input-group-append">
+                <span class="input-group-text">鄰</span>
+              </div>
             </div>
-            <span class="text-primary">(不需輸入"鄰")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
@@ -124,25 +254,28 @@
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseSection|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:段" }}
-              <span class="help-block">{{ form.yfcaseSection.error }}</span>
+              <div class="input-group-append">
+                <span class="input-group-text">段</span>
+              </div>
             </div>
-            <span class="text-primary">(不需輸入"段"，但需以中文表示)</span>
           </div>
         </div>
         <div class="row">
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseLane|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:巷" }}
-              <span class="help-block">{{ form.yfcaseLane.error }}</span>
+              <div class="input-group-append">
+                <span class="input-group-text">巷</span>
+              </div>
             </div>
-            <span class="text-primary">(不需輸入"巷")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
               {{ form.yfcaseAlley|add_class:'form-control border border-dark border-2 fw-bold rounded'|attr:"placeholder:弄" }}
-              <span class="help-block">{{ form.yfcaseAlley.error }}</span>
+              <div class="input-group-append">
+                <span class="input-group-text">弄</span>
+              </div>
             </div>
-            <span class="text-primary">(不需輸入"弄")</span>
           </div>
           <div class="col-md-3">
             <div class="input-group my-1">
