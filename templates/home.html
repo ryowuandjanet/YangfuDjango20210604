@@ -173,6 +173,14 @@
         overflow: hidden;
         transition: max-height 0.2s ease-out;
       }
+      .list-group-item {
+        font-weight: 600;
+        font-size:14pt;
+        padding-left:0px;
+        padding-right:0px;
+        padding-top:3px;
+        padding-bottom:3px;
+      }
     }
   </style>
 {% endblock style %}
@@ -319,16 +327,26 @@
 
     <div class="table-accordion">
         {% for yfcase in object_list %}
-          <button class="accordion">
-            {{yfcase.yfcaseCaseNumber}}
-            <br>
-            &emsp;&#10149;{{yfcase.fullAddress}}
+          <button class="accordion fw-bold pb-0">
+            <div class="row">
+              <div class="col">{{yfcase.yfcaseCaseNumber}}</div>
+              
+            </div>
+            <div class="row">
+              <div style="width:13%;padding-right:0px;">
+                &emsp;&#10149;
+              </div>
+              <div style="width:87%;padding-left:0px;">
+                {{yfcase.fullAddress}}   
+              </div>
+            </div> 
+            
+                     
           </button>
           <div class="panel border-start border-secondary border-3">
-            <div class="row row-content fw-bolder">
-              <div class="col-3 text-dark bg-warning">兩週內/應買日</div>
-              <div class="col-6" style="color:red;">
-                <!-- 兩週內 -->
+            <div class="row">
+              <div class="col-4 list-group-item-warning fs-6 p-1 fw-bold border-secondary border-bottom">兩週內</div>
+              <div class="col-8 fs-6 p-1 border-secondary border-bottom">
                 {% for finaldecision in yfcase.finaldecisions.all %}
                   {% if yfcase.get_auction_1st.auctionDateFirst and finaldecision.finalDecision == '1拍進場' %}
                     {{ yfcase.get_auction_1st.auctionDateFirst|less_two_week:"1拍"|default_if_none:"" }}
@@ -343,39 +361,43 @@
                     {{ yfcase.get_auction_4th.auctionDateFourth|less_two_week:"4拍"|default_if_none:"" }}
                   {% endif %}
                 {% endfor %}
-                <!-- 應買止日 -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4 list-group-item-warning fs-6 p-1 fw-bold border-secondary border-bottom">應買止日</div>
+              <div class="col-8 fs-6 p-1 border-secondary border-bottom">
                 {% for result in yfcase.get_result_stopBuyDate %}
                   {{ result.stopBuyDate|less_three_month:"應買止日"|default_if_none:"" }}
-                {% endfor %}  
+                {% endfor %}
               </div>
             </div>
-            <div class="row row-content fw-bolder">
-              <div class="col-3 text-dark bg-warning">負責人</div>
-              <div class="col-6">{{ yfcase.user }}</div>
+            <div class="row">
+              <div class="col-4 list-group-item-warning fs-6 p-1 fw-bold border-secondary border-bottom">負責人</div>
+              <div class="col-8 fs-6 p-1 border-secondary border-bottom">{{ yfcase.user }}</div>
             </div>
-            <div class="row row-content fw-bolder">
-              <div class="col-3 text-dark bg-warning">最終判定</div>
-              <div class="col-6">
+            <div class="row">
+              <div class="col-4 list-group-item-warning fs-6 p-1 fw-bold border-secondary border-bottom">最終判定</div>
+              <div class="col-8 fs-6 p-1 border-secondary border-bottom">
                 {% for finaldecision in yfcase.finaldecisions.all %}
                   {{ finaldecision.finalDecision }}<br>
-                {% endfor %}  
+                {% endfor %}
               </div>
             </div>
-            <div class="row row-content fw-bolder">
-              <div class="col-3 text-dark bg-warning">執行結果</div>
-              <div class="col-6">
+            <div class="row">
+              <div class="col-4 list-group-item-warning fs-6 p-1 fw-bold border-secondary border-bottom">執行結果</div>
+              <div class="col-8 fs-6 p-1 border-secondary border-bottom">
                 {% for result in yfcase.results.all %}
                   {% if result.actionResult == '等待優購' or result.actionResult == '遭優購' or result.actionResult == '無人優購' %}
                     得標
                   {% else %}
                     {{ result.actionResult|default_if_none:"" }}
                   {% endif %}
-                {% endfor %} 
+                {% endfor %}
               </div>
             </div>
-            <div class="row row-content fw-bolder">
-              <div class="col-3 text-dark bg-warning">優購結果</div>
-              <div class="col-6">
+            <div class="row">
+              <div class="col-4 list-group-item-warning fs-6 p-1 fw-bold border-secondary border-bottom">優購結果</div>
+              <div class="col-8 fs-6 p-1 border-secondary border-bottom">
                 {% for result in yfcase.results.all %}
                   {% if result.actionResult == '等待優購' or result.actionResult == '遭優購' or result.actionResult == '無人優購' %}
                     {{ result.actionResult }}
@@ -383,41 +405,21 @@
                 {% endfor %}
               </div>
             </div>
-            <div class="row row-content fw-bolder">
-              <div class="col-3 text-dark bg-warning">標的編號</div>
-              <div class="col-6">
+            <div class="row">
+              <div class="col-4 list-group-item-warning fs-6 p-1 fw-bold border-secondary border-bottom">標的編號</div>
+              <div class="col-8 fs-6 p-1 border-secondary border-bottom">
                 {% for result in yfcase.results.all %}
                   {{ result.objectNumber|default_if_none:"" }}
                 {% endfor %}
               </div>
             </div>
 
-              <div class="row py-2 ">
-                <div class="col bg-primary text-center ">
-                  <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="btn btn-primary btn-sm">
-                    評量表PDF
-                  </a>  
-                </div>
-
-                <div class="col bg-warning text-center">
-                  <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" class="btn btn-secondary btn-sm " >
-                    查看(編輯)明細
-                  </a>
-                </div>
+            <div class="row py-2">
+              <div class="col-6 p-0">
+                <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="btn btn-primary btn-lg btn-block w-100 fs-5 px-0 ">評量表PDF</a>
               </div>
-
-
-
-            <div class="row row-button">
-              <div class="col justify-content-center">
-                <a href="{% url 'yfcase:yfratingscalePDF_View' yfcase.pk %}?inline=" class="btn btn-primary btn-sm">
-                  評量表PDF
-                </a>      
-              </div>
-              <div class="col-6 justify-content-center">
-                <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" class="btn btn-secondary btn-sm" >
-                  查看(編輯)明細
-                </a>
+              <div class="col-6 p-0">
+                <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" class="btn btn-secondary btn-lg btn-block w-100 fs-5 px-0">查看(編輯)明細</a>
               </div>
             </div>
           </div>

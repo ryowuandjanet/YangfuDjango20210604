@@ -540,7 +540,7 @@ class Build(models.Model):
   # 建物(公設)各別面積
   def get_build_first_not_add_and_not_public_holding_point_area(self):
     try:
-      return self.buildArea * (self.buildHoldingPointPersonal / self.buildHoldingPointAll) * self.yfcase.get_first_not_add_and_not_public_holding_point_rate()
+      return self.buildArea * (self.buildHoldingPointPersonal / self.buildHoldingPointAll) 
     except ZeroDivisionError:
       return 0
 
@@ -734,6 +734,38 @@ class Auction(models.Model):
     newlist=[]
     try:
       return self.get_fourth_cp() / Decimal( 1 + self.get_suggestedincreaseFouth())
+    except:
+      newlist.append(0)
+  
+  # 建議加價後總金額(第一拍)
+  def get_totalPriceFirst(self):
+    newlist=[]
+    try:
+      return self.get_suggestedincreaseFirst_floor_price() + self.auctionMarginFirst
+    except:
+      newlist.append(0)
+  
+  # 建議加價後總金額(第二拍)
+  def get_totalPriceSecond(self):
+    newlist=[]
+    try:
+      return self.get_suggestedincreaseSecond_floor_price() + self.auctionMarginSecond
+    except:
+      newlist.append(0)
+
+  # 建議加價後總金額(第三拍)
+  def get_totalPriceThird(self):
+    newlist=[]
+    try:
+      return self.get_suggestedincreaseThird_floor_price() + self.auctionMarginThird
+    except:
+      newlist.append(0)
+
+  # 建議加價後總金額(第四拍)
+  def get_totalPriceFourth(self):
+    newlist=[]
+    try:
+      return self.get_suggestedincreaseFourth_floor_price() + self.auctionMarginFourth
     except:
       newlist.append(0)
 

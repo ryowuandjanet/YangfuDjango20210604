@@ -187,3 +187,10 @@ def times(cownerinfo,coownername):
 def thousandCut(value):
   if value:
     return '{:20,.0f}'.format(float(value))
+
+# 判定最後一個字是路/街
+# 用法{{ "仁愛街"|lastWord }} 
+@register.filter(name='lastWord')
+def lastWord(string):
+  if string:
+    return string[-1]

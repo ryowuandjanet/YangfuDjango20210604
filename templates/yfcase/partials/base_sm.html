@@ -1,0 +1,868 @@
+<!-- 測試 -->
+{% load urlify %}
+
+<style>
+  .sm-td {
+    font-size: 12pt;
+    border: 1px solid;
+    padding:3px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sm-th {background-color: #ddd; font-weight: 600;}
+  .sm-label {width:60%;background-color: #eee;border:1px solid;border-radius: 10px 10px 0px 0px;margin-top: 5px;}
+  .sm-td-first {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid dashed solid solid;background-color: pink;}
+  .sm-td-second {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid dashed solid none;background-color: PowderBlue;}
+  .sm-td-third {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid dashed solid none;background-color: LightYellow;}
+  .sm-td-fourth {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid solid solid none;background-color: Aqua;}
+  .nav-link{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+</style>
+
+<table class="build__table">
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <button class="nav-link border-dark active" id="nav-basedata-tab" data-bs-toggle="tab" data-bs-target="#nav-basedata" type="button" role="tab" aria-controls="nav-basedata" aria-selected="true">基本資料</button>
+      <button class="nav-link border-dark" id="nav-land-tab" data-bs-toggle="tab" data-bs-target="#nav-land" type="button" role="tab" aria-controls="nav-land" aria-selected="false">土地</button>
+      <button class="nav-link border-dark" id="nav-build-tab" data-bs-toggle="tab" data-bs-target="#nav-build" type="button" role="tab" aria-controls="nav-build" aria-selected="false">建物</button>
+      <button class="nav-link border-dark" id="nav-auction-tab" data-bs-toggle="tab" data-bs-target="#nav-auction" type="button" role="tab" aria-controls="nav-auction" aria-selected="false">拍賣資訊</button>   
+      <button class="nav-link border-dark" id="nav-survey-tab" data-bs-toggle="tab" data-bs-target="#nav-survey" type="button" role="tab" aria-controls="nav-survey" aria-selected="false">勘查記錄</button>
+      <button class="nav-link border-dark" id="nav-objectbuild-tab" data-bs-toggle="tab" data-bs-target="#nav-objectbuild" type="button" role="tab" aria-controls="nav-objectbuild" aria-selected="false">參考物件</button>
+      <button class="nav-link border-dark" id="nav-finaldecision-tab" data-bs-toggle="tab" data-bs-target="#nav-finaldecision" type="button" role="tab" aria-controls="nav-finaldecision" aria-selected="false">最終判定</button>
+      <button class="nav-link border-dark" id="nav-result-tab" data-bs-toggle="tab" data-bs-target="#nav-result" type="button" role="tab" aria-controls="nav-result" aria-selected="false">執行結果</button>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+
+
+    <!-- ========= 基本資料 ===========-->
+    <div class="tab-pane fade show active" id="nav-basedata" role="tabpanel" aria-labelledby="nav-basedata-tab">
+      <div class="container border border-dark py-1">
+        <div class="row">
+          <div class="col-3 sm-th sm-td">
+            案號
+          </div>
+          <div class="col-9 sm-td">
+            {{object.yfcaseCaseNumber|default_if_none:"" }}
+          </div>
+        </div>
+        <div class="row fs-6">
+          <div class="col-3 sm-th sm-td">
+            住址
+          </div>
+          <div class="col-9 sm-td">
+            {{ object.yfcaseTownship.zip_code }} {{object.fullAddress}}
+          </div>
+        </div>
+        <div class="row fs-6">
+          <div class="col-3 sm-th sm-td">
+            債權人
+          </div>
+          <div class="col-9 sm-td">   
+            {% if object.yfcaseCreditor %}
+              {{ object.yfcaseCreditor|default_if_none:"" }}<br>
+              {{ object.yfcaseCreditorMobilePhone|default_if_none:"" }}
+            {% else %}
+              {{ object.yfcaseCompany }}<br>
+              {{ request.user.userMobilePhone|default_if_none:"" }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="row fs-6">
+          <div class="col-3 sm-th sm-td">
+            債務人
+          </div>
+          <div class="col-9 sm-td">
+            {{ object.yfcaseDebtor|default_if_none:"" }}
+          </div>
+        </div>
+        {% if request.user == object.user %}
+          <div class="row">
+            <div class="col-8"></div>
+            <div class="col-4 px-0 py-1 ">
+              <a href="{% url 'yfcase:yfcase_update' object.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+
+
+    <!-- ========= 地號 ===========-->
+    <div class="tab-pane fade" id="nav-land" role="tabpanel" aria-labelledby="nav-land-tab">
+      {% if request.user == object.user %}
+        <div class="row">
+          <div class="col-4 py-1 pr-2">
+            <a href="{% url 'yfcase:land_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
+          </div>
+          <div class="col-8 fs-6" style="align-bottom;direction: flex;flex-direction: row;text-align: right;margin-top:25px;">
+            <span class="float-end">
+              {% if object.lands.count > 0 %}
+                  合計：{{ object.get_land_holding_point_area_total|floatformat:"2" }} m<sup>2</sup> 
+                  ({{ object.get_land_holding_point_area_total|m2toping|floatformat:"2" }} 坪)
+              {% endif %}
+            </span>
+            
+          </div>
+        </div>
+      {% endif %}
+      <div class="container border border-dark py-1">
+        <div class="row fs-6">
+          <div class="col-9 sm-td sm-th">地號</div>
+          <div class="col-3 sm-td sm-th">謄本</div>
+        </div>
+        {% for land in object.lands.all %}
+        <div class="row fs-6 border border-dark">
+          <div class="col-9 text-left sm-td">
+            {% if land.landNumber %}
+              {{ object.yfcaseBigSection }}段{{ land.landNumber }}
+            {% endif %}
+          </div>
+          <div class="col-3 text-center sm-td">
+            {% if land.landUrl != None %}
+              <a href="{{ land.landUrl }}" target="_blank">
+                <i class="fas fa-paperclip"></i>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row border">
+          <div class="col text-right border border-dark">
+            {% if land.landArea != 0 %}
+              {{ land.landArea }}m<sup>2</sup> * 持分({{ land.landHoldingPointPersonal }}/{{ land.landHoldingPointAll }}) = {{ land.get_land_holding_point_area|floatformat:"2" }}m<sup>2</sup>({{ land.get_land_holding_point_area|m2toping|floatformat:"2" }} 坪)
+            {% endif %}
+          </div>
+        </div>
+        {% if request.user == object.user %}
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 p-1">
+              <a href="{% url 'yfcase:land_update' object.id land.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a>
+            </div>
+            <div class="col-4 p-1">
+              <a href="{% url 'yfcase:land_delete' object.id land.id %}" class="btn btn-danger btn-sm w-100 fs-5">刪除</a>
+            </div>
+          </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+
+
+      
+
+	
+	
+
+    </div>
+
+
+
+    <!-- ========= 建號 ===========-->
+    <div class="tab-pane fade" id="nav-build" role="tabpanel" aria-labelledby="nav-build-tab">
+      {% if request.user == object.user %}
+        <div class="row">
+          <div class="col-4 py-1 pr-2">
+            <a href="{% url 'yfcase:build_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
+          </div>
+          <div class="col-8 fs-6" style="align-bottom;direction: flex;flex-direction: row;text-align: right;margin-top:25px;">
+            <span class="float-end">
+              {% if object.builds.count > 0 %}
+                合計：{{ object.get_build_holding_point_after_group_total|floatformat:"2" }} m<sup>2</sup> 
+                ({{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }} 坪)
+              {% endif %}
+            </span>
+            
+          </div>
+        </div>
+      {% endif %}
+      <div class="container border border-dark py-1">
+        <div class="row">
+          <div class="col text-right">使用分區：{{ object.builds.first.buildUsePartition|default_if_none:"" }}</div>
+        </div>
+        <div class="row fs-6">
+          <div class="col-9 text-center sm-td sm-th">建號</div>
+          <div class="col-3 text-center sm-td sm-th">謄本</div>
+        </div>
+        {% for build in object.builds.all %}
+          <div class="row fs-6 border border-dark">
+            <div class="col-9 text-left sm-td">
+              {% if build.buildNumber %}
+                ({{ build.buildTypeUse|default_if_none:"" }})<br>
+                {{ object.yfcaseBigSection }}段{{ build.buildNumber }}
+              {% endif %}
+            </div>
+            <div class="col-3 text-center sm-td">
+              {% if build.buildUrl != None %}
+                <a href="{{ build.buildUrl }}" target="_blank">
+                  <i class="fas fa-paperclip"></i>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row border">
+            <div class="col text-right border border-dark">
+              {% if build.buildArea != 0 %}
+                {{ build.buildArea }}m<sup>2</sup> 
+                * 持分({{ build.buildHoldingPointPersonal }}/{{ build.buildHoldingPointAll }}) 
+                * 
+                {% if build.buildTypeUse == "增建-持分後坪數打對折" %}
+                  加權(0.5) 
+                {% else %}
+                  加權(1.0)
+                {% endif %}
+                = 
+                <br>
+                {% if build.buildTypeUse == "公設" %}
+                  {{ build.get_build_first_not_add_and_not_public_holding_point_area|floatformat:"2" }}m<sup>2</sup>
+                  ({{ build.get_build_first_not_add_and_not_public_holding_point_area|m2toping|floatformat:"2" }}坪)
+                {% elif build.buildTypeUse == "增建-持分後坪數打對折" %}
+                  {{ build.get_after_add_holding_point_area|floatformat:"2" }}m<sup>2</sup>
+                  ({{ build.get_after_add_holding_point_area|m2toping|floatformat:"2" }}坪)
+                {% else %}
+                  {{ build.get_build_holding_point_area|floatformat:"2" }}m<sup>2</sup>
+                  ({{ build.get_build_holding_point_area|m2toping|floatformat:"2" }}坪)
+                {% endif %}
+              {% endif %}
+            </div>  
+          </div>
+          {% if request.user == object.user %}
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4 p-1">
+                <a href="{% url 'yfcase:build_update' object.id build.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a>
+              </div>
+              <div class="col-4 p-1">
+                <a href="{% url 'yfcase:build_delete' object.id build.id %}" class="btn btn-danger btn-sm w-100 fs-5">刪除</a>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+
+
+
+
+    </div>
+
+
+
+    <!-- ========= 拍賣資訊 ===========-->
+    <div class="tab-pane fade" id="nav-auction" role="tabpanel" aria-labelledby="nav-auction-tab">
+      {% if request.user == object.user %}
+        <div class="row">
+          <div class="col-4 py-1 pr-2">
+            {% if request.user == object.user %}
+              {% if object.auctions.all %}
+                {% for auction in object.auctions.all %}
+                  <a href="{% url 'yfcase:auction_update' object.id auction.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a> 
+                {% endfor %}
+              {% else %}
+                <a href="{% url 'yfcase:auction_create' object.id %}" class="btn btn-danger btn-sm w-100 fs-5">新增</a> 
+              {% endif %}
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+      <div class="container border border-dark py-1">
+        {% for auction in object.auctions.all %}
+          <!-- 拍賣日 -->
+          <div class="row">
+            <div class="sm-label">拍賣日</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">{{auction.auctionDateFirst|default_if_none:""}}</div>
+            <div class="sm-td-second">{{auction.auctionDateSecond|default_if_none:""}}</div>
+            <div class="sm-td-third">{{auction.auctionDateThird|default_if_none:""}}</div>
+            <div class="sm-td-fourth">{{auction.auctionDateFourth|default_if_none:""}}</div>
+          </div>
+
+          <!-- (A)底價 -->
+          <div class="row">
+            <div class="sm-label">(A)底價</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if auction.auctionFloorPriceFirst != 0 %}
+                {{auction.auctionFloorPriceFirst|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if auction.auctionFloorPriceSecond != 0 %}
+                {{auction.auctionFloorPriceSecond|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+            <div class="sm-td-third">
+              {% if auction.auctionFloorPriceThird != 0 %}
+                {{auction.auctionFloorPriceThird|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+            <div class="sm-td-fourth">
+              {% if auction.auctionFloorPriceFourth != 0 %}
+                {{auction.auctionFloorPriceFourth|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- (B)坪數 -->
+          <div class="row">
+            <div class="sm-label">(B)坪數</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if object.builds.count > 0 %}
+                {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if object.builds.count > 0 %}
+                {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
+              {% endif %}
+            </div>
+            <div class="sm-td-third">
+              {% if object.builds.count > 0 %}
+                {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
+              {% endif %}
+            </div>
+            <div class="sm-td-fourth">
+              {% if object.builds.count > 0 %}
+                {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- (C)坪價 -->
+          <div class="row">
+            <div class="sm-label">(C)坪價 = (A)/(B)</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if auction.auctionFloorPriceFirst != 0 and object.builds.all|length > 0 %}
+                {{auction.get_ping_first_price|floatformat:0|thousandCut|default_if_none:""}}
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if auction.auctionFloorPriceSecond != 0 and object.builds.all|length > 0 %}
+                {{auction.get_ping_second_price|floatformat:0|thousandCut}}
+              {% endif %}
+            </div>
+            <div class="sm-td-third">
+              {% if auction.auctionFloorPriceThird != 0 and object.builds.all|length > 0 %}
+                {{auction.get_ping_third_price|floatformat:0|thousandCut}}
+              {% endif %}
+            </div>
+            <div class="sm-td-fourth">
+              {% if auction.auctionFloorPriceFourth != 0 and object.builds.all|length > 0 %}
+                {{auction.get_ping_fourth_price|floatformat:0|thousandCut|default_if_none:""}}
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- (D)時價 -->
+          <div class="row">
+            <div class="sm-label">(D)時價</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
+            <div class="sm-td-second">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
+            <div class="sm-td-third">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
+            <div class="sm-td-fourth">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
+          </div>
+
+          <!-- (E)CP值 -->
+          <div class="row">
+            <div class="sm-label">(E)CP值 = (D)/(C)</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if auction.auctionFloorPriceFirst != 0 and auction.get_first_cp != 0 %}
+                {{auction.get_first_cp|floatformat:2}}
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if auction.auctionFloorPriceSecond != 0 and auction.get_second_cp != 0 %}
+                {{auction.get_second_cp|floatformat:2}}
+              {% endif %}
+            </div>
+            <div class="sm-td-third">
+              {% if auction.auctionFloorPriceThird != 0 and auction.get_third_cp != 0 %}
+                {{auction.get_third_cp|floatformat:2}}
+              {% endif %}
+            </div>
+            <div class="sm-td-fourth">
+              {% if auction.auctionFloorPriceFourth != 0 and auction.get_fourth_cp != 0 %}
+                {{auction.get_fourth_cp|floatformat:2}}
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- (F)點閱 -->
+          <div class="row">
+            <div class="sm-label">(F)點閱</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if auction.auctionFloorPriceFirst != 0 %}
+                {{auction.auctionClickFirst }}
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if auction.auctionFloorPriceSecond != 0 %}
+                {{auction.auctionClickSecond }}
+              {% endif %}
+            </div>
+            <div class="sm-td-third">
+              {% if auction.auctionFloorPriceThird != 0 %}
+                {{auction.auctionClickThird }}
+              {% endif %}
+            </div>
+            <div class="sm-td-fourth">
+              {% if auction.auctionFloorPriceFourth != 0 %}
+                {{auction.auctionClickFourth }}
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- (G)監控 -->
+          <div class="row">
+            <div class="sm-label">(G)監控</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if auction.auctionFloorPriceFirst != 0 %}
+                {{auction.auctionMonitorFirst }}
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if auction.auctionFloorPriceSecond != 0 %}
+                {{auction.auctionMonitorSecond }}
+              {% endif %}
+            </div>
+            <div class="sm-td-third">
+              {% if auction.auctionFloorPriceThird != 0 %}
+                {{auction.auctionMonitorThird }}
+              {% endif %}
+            </div>
+            <div class="sm-td-fourth">
+              {% if auction.auctionFloorPriceFourth != 0 %}
+                {{auction.auctionMonitorFourth }}
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- (H)換算後 -->
+          <div class="row">
+            <div class="sm-label">(H)換算後</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if auction.auctionFloorPriceFirst != 0 %}
+                {{auction.get_suggestedincreaseFirst|multiplication:100|floatformat:0 }}%
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if auction.auctionFloorPriceSecond != 0 %}
+                {{auction.get_suggestedincreaseSecond|multiplication:100|floatformat:0 }}%
+              {% endif %}
+            </div>
+            <div class="sm-td-third">
+              {% if auction.auctionFloorPriceThird != 0 %}
+                {{auction.get_suggestedincreaseThird|multiplication:100|floatformat:0 }}%
+              {% endif %}
+            </div>
+            <div class="sm-td-fourth">
+              {% if auction.auctionFloorPriceFourth != 0 %}
+                {{auction.get_suggestedincreaseFouth|multiplication:100|floatformat:0 }}%
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- (I)建議加價 -->
+          <div class="row">
+            <div class="sm-label">(I)建議加價 = (100% + H)</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if auction.auctionFloorPriceFirst != 0 %}
+                {{auction.get_suggestedincreaseFirst_floor_price|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if auction.auctionFloorPriceSecond != 0 %}
+                {{auction.get_suggestedincreaseSecond_floor_price|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+            <div class="sm-td-third">
+              {% if auction.auctionFloorPriceThird != 0 %}
+                {{auction.get_suggestedincreaseThird_floor_price|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+            <div class="sm-td-fourth">
+              {% if auction.auctionFloorPriceFourth != 0 %}
+                {{auction.get_suggestedincreaseFourth_floor_price|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- (J)進場CP -->
+          <div class="row">
+            <div class="sm-label">(J)進場CP = (I)/(C)</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if auction.auctionFloorPriceFirst != 0 %}
+                {{ auction.get_suggestedincreaseFirst_cp|floatformat:2 }}
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if auction.auctionFloorPriceSecond != 0 %}
+                {{ auction.get_suggestedincreaseSecond_cp|floatformat:2 }}
+              {% endif %}
+            </div>
+            <div class="sm-td-third">
+              {% if auction.auctionFloorPriceThird != 0 %}
+                {{ auction.get_suggestedincreaseThird_cp|floatformat:2 }}
+              {% endif %}
+            </div>
+            <div class="sm-td-fourth">
+              {% if auction.auctionFloorPriceFourth != 0 %}
+                {{ auction.get_suggestedincreaseFourth_cp|floatformat:2 }}
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- (K)保証金 -->
+          <div class="row">
+            <div class="sm-label">(K)保証金</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if auction.auctionFloorPriceFirst != 0 %}
+                {{auction.auctionMarginFirst|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if auction.auctionFloorPriceSecond != 0 %}
+                {{auction.auctionMarginSecond|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+            <div class="sm-td-third">
+              {% if auction.auctionFloorPriceThird != 0 %}
+                {{auction.auctionMarginThird|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+            <div class="sm-td-fourth">
+              {% if auction.auctionFloorPriceFourth != 0 %}
+                {{auction.auctionMarginFourth|floatformat:0|thousandCut }}
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- 進場判定 -->
+          <div class="row">
+            <div class="sm-label">進場判定</div>
+          </div>
+          <div class="row text-center">
+            <div class="sm-td-first">
+              {% if auction.auctionFloorPriceFirst == 0 %}
+                <div>底價未輸入</div>
+              {% elif auction.get_suggestedincreaseFirst_cp >= 0.92 %}
+                <div class="text-green">建議進場</div>
+              {% elif auction.get_suggestedincreaseFirst_cp < 0.92 %}
+                <div class="text-red">不可進場</div>
+              {% endif %}
+            </div>
+            <div class="sm-td-second">
+              {% if auction.auctionFloorPriceSecond == 0 %}
+                <div>底價未輸入</div>
+              {% elif auction.get_suggestedincreaseSecond_cp >= 1.15 %}
+                <div class="text-green">建議進場</div>
+              {% elif auction.get_suggestedincreaseSecond_cp < 1.15 %}
+                <div class="text-red">不可進場</div>
+              {% endif %}
+            </div>
+
+            <div class="sm-td-third">
+              {% if auction.auctionFloorPriceThird == 0 %}
+                <div>底價未輸入</div>
+              {% elif auction.get_suggestedincreaseThird_cp >= 1.44 %}
+                <div class="text-green">建議進場</div>
+              {% elif auction.get_suggestedincreaseThird_cp < 1.44 %}
+                <div class="text-red">不可進場</div>
+              {% endif %}
+            </div>
+
+            <div class="sm-td-fourth">
+              {% if auction.auctionFloorPriceFourth == 0 %}
+                <div>底價未輸入</div>
+              {% elif auction.get_suggestedincreaseFourth_cp >= 1.80 %}
+                <div class="text-green">建議進場</div>
+              {% elif auction.get_suggestedincreaseFourth_cp < 1.80 %}
+                <div class="text-red">不可進場</div>
+              {% endif %}
+            </div>
+
+          </div>
+
+
+          <!-- 金額 -->
+          <div class="row"><div class="sm-label">金額 = (I)+(L)</div></div>
+          <div class="row text-center">
+            <div class="sm-td-first">{{ auction.get_totalPriceFirst|floatformat:0|thousandCut|default_if_none:"" }}</div>
+            <div class="sm-td-second">{{ auction.get_totalPriceSecond|floatformat:0|thousandCut|default_if_none:"" }}</div>
+            <div class="sm-td-third">{{ auction.get_totalPriceThird|floatformat:0|thousandCut|default_if_none:"" }}</div>
+            <div class="sm-td-fourth">{{ auction.get_totalPriceFourth|floatformat:0|thousandCut|default_if_none:"" }}</div>
+          </div>
+        {% endfor %}
+
+        
+      </div>
+    </div>
+
+
+    <!-- ========= 勘查記錄 ===========-->
+    <div class="tab-pane fade" id="nav-survey" role="tabpanel" aria-labelledby="nav-survey-tab">
+      {% if request.user == object.user %}
+        <div class="row">
+          <div class="col-4 py-1 pr-2">
+            {% if object.surveys.all %}
+              {% for survey in object.surveys.all %}
+                <a href="{% url 'yfcase:survey_update' object.id survey.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a> 
+              {% endfor %}
+            {% else %}
+              <a href="{% url 'yfcase:survey_create' object.id %}" class="btn btn-danger btn-sm w-100 fs-5">新增</a> 
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+      <div class="container border border-dark py-1">
+        <div class="row">
+          <div class="col-6 sm-td sm-th">初勘日</div>
+          <div class="col-6 sm-td">
+            {% for survey in object.surveys.all %}
+              {{survey.surveyFirstDay|default_if_none:""}}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 sm-td sm-th">會勘日</div>
+          <div class="col-6 sm-td">
+            {% for survey in object.surveys.all %}
+              {{survey.surveySecondDay|default_if_none:""}}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 sm-td sm-th">法拍公告<small>(證物三)</small></div>
+          <div class="col-6 sm-td">
+            {% for survey in object.surveys.all %}
+              {% if survey.surveyForeclosureAnnouncementLink %}
+                <a href="{{survey.surveyForeclosureAnnouncementLink}}" target="_blank">
+                  <span class="fa-stack fa-2x">
+                    <i class="far fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-gavel fa-stack-1x"></i>
+                  </span>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 sm-td sm-th">998連結</div>
+          <div class="col-6 sm-td">
+            {% for survey in object.surveys.all %}
+              {% if survey.survey988Link %}
+                <a href="{{survey.survey988Link}}" target="_blank">
+                  <span class="fa-stack fa-2x">
+                    <i class="far fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-link fa-stack-1x"></i>
+                  </span>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 sm-td sm-th">物件照片<small>(證物四)</small></div>
+          <div class="col-6 sm-td">
+            {% for survey in object.surveys.all %}
+              {% if survey.surveyObjectPhotoLink %}
+                <a href="{{survey.surveyObjectPhotoLink}}" target="_blank">
+                  <span class="fa-stack fa-2x">
+                    <i class="far fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-home fa-stack-1x"></i>
+                  </span>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 sm-td sm-th">法拍記錄<small>(證物七)</small></div>
+          <div class="col-6 sm-td">
+            {% for survey in object.surveys.all %}
+              {% if survey.surveyForeclosureRecordLink %}
+                <a href="{{survey.surveyForeclosureRecordLink}}" target="_blank">
+                  <span class="fa-stack fa-2x">
+                    <i class="far fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-clipboard fa-stack-1x"></i>
+                  </span>
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-6 sm-td sm-th">標的物<small>(現場勘查)</small></div>
+        <div class="col-6 sm-td">
+          {% for survey in object.surveys.all %}
+            {% if survey.surveyObjectViewLink %}
+              <a href="{{survey.surveyObjectViewLink}}" target="_blank">
+                <span class="fa-stack fa-2x">
+                  <i class="far fa-circle fa-stack-2x"></i>
+                  <i class="fas fa-film fa-stack-1x"></i>
+                </span>
+              </a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      </div>
+      						
+    </div>
+
+
+
+    <!-- ========= 參考物件 ===========-->
+    <div class="tab-pane fade" id="nav-objectbuild" role="tabpanel" aria-labelledby="nav-objectbuild-tab">參考物件</div>
+
+
+
+
+    <!-- ========= 最終判定 ===========-->
+    <div class="tab-pane fade" id="nav-finaldecision" role="tabpanel" aria-labelledby="nav-finaldecision-tab">
+      {% if request.user == object.user %}
+        <div class="row">
+          <div class="col-4 py-1 pr-2">
+            {% if request.user == object.user %} 
+              <a href="{% url 'yfcase:finaldecision_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+      <div class="container border border-dark py-1">
+        {% for finaldecision in object.finaldecisions.all %}
+          <div class="row fs-6">
+            <div class="col-3 border border-dark bg-warning">判定</div>
+            <div class="col-9 border border-dark">
+              {% if finaldecision.finalDecision == "1拍進場" %}
+                <div class="finaldecision__td finaldecision__first">{{ finaldecision.finalDecision }}</div>
+              {% elif finaldecision.finalDecision == "2拍進場" %}
+                <div class="finaldecision__td finaldecision__second">{{ finaldecision.finalDecision }}</div>
+              {% elif finaldecision.finalDecision == "3拍進場" %}
+                <div class="finaldecision__td finaldecision__third">{{ finaldecision.finalDecision }}</div>
+              {% elif finaldecision.finalDecision == "4拍進場" %}
+                <div class="finaldecision__td finaldecision__fourth">{{ finaldecision.finalDecision }}</div>
+              {% elif finaldecision.finalDecision == "放棄" %}
+                <div class="finaldecision__td finaldecision__giveup">{{ finaldecision.finalDecision }}</div>
+              {% else %}
+                <div class="finaldecision__td finaldecision__no_decision">未判定</div>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row fs-6">
+            <div class="col-3 border border-dark bg-warning">備註</div>
+            <div class="col-9 border border-dark">{{ finaldecision.finalDecisionRemark|default_if_none:"" }}</div>
+          </div>
+          <div class="row fs-6">
+            <div class="col-4 border border-dark bg-warning">申請</div>
+            <div class="col-4 border border-dark bg-warning">覆核</div>
+            <div class="col-4 border border-dark bg-warning">決策</div>
+          </div>
+          <div class="row fs-6">
+            <div class="col-4 border border-dark">吳俊男<br>2021-12-13</div>
+            <div class="col-4 border border-dark">張浩文<br>2021-12-20</div>
+            <div class="col-4 border border-dark">曾有志<br>2021-12-29</div>
+          </div>
+          {% if request.user == object.user %}
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 p-1">
+              <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}" class="btn btn-success btn-sm w-100 fs-5">改判</a>
+            </div>
+            <div class="col-4 p-1">
+              <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm w-100 fs-5">刪除</a>
+            </div>
+          </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+
+    <!-- ========= 結果 ===========-->
+    <div class="tab-pane fade" id="nav-result" role="tabpanel" aria-labelledby="nav-result-tab">
+      {% for result in object.results.all %}
+        {% if request.user == object.user %}
+          <div class="row">
+            <div class="col-4 py-1 pr-2">
+              {% if request.user == object.user %} 
+                <a href="{% url 'yfcase:result_update' object.id result.id %}" class="btn btn-success btn-sm w-100 fs-5">修改</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+        <div class="container border border-dark py-1">
+          
+          <div class="row fs-6">
+            <div class="col-8 border border-dark bg-warning">應買止日</div>
+            <div class="col-4 border border-dark">{{ result.stopBuyDate|default_if_none:"" }}</div>
+          </div>
+          <div class="row fs-6">
+            <div class="col-8 border border-dark bg-warning">1.撤回</div>
+            <div class="col-4 border border-dark">{% if result.actionResult == "撤回" %} V {% endif %}</div>
+          </div>
+          <div class="row fs-6">
+            <div class="col-4 border border-dark bg-warning">2.第三人搶標</div>
+            <div class="col-4 border border-dark bg-warning">搶標拍別</div>
+            <div class="col-4 border border-dark">{{ result.bidAuctionTime|default_if_none:"" }}</div>
+          </div>
+          <div class="row fs-6">
+            <div class="col-4 border border-dark bg-warning"></div>
+            <div class="col-4 border border-dark bg-warning">搶標金額</div>
+            <div class="col-4 border border-dark">{% if result.bidMoney > 0 %}{{ result.bidMoney|floatformat:0|thousandCut }}{% endif %}</div>
+          </div>
+          <div class="row fs-6">
+            <div class="col-4 border border-dark bg-warning">3.得標</div>
+            <div class="col-4 border border-dark bg-warning">等待優購</div>
+            <div class="col-4 border border-dark">{% if result.actionResult == "等待優購" %} V {% endif %}</div>
+          </div>
+          <div class="row fs-6">
+            <div class="col-4 border border-dark bg-warning"></div>
+            <div class="col-4 border border-dark bg-warning">遭優購</div>
+            <div class="col-4 border border-dark">{% if result.actionResult == "遭優購" %} V {% endif %}</div>
+          </div>
+          <div class="row fs-6">
+            <div class="col-4 border border-dark bg-warning"></div>
+            <div class="col-4 border border-dark bg-warning">無人優購</div>
+            <div class="col-4 border border-dark">{% if result.actionResult == "無人優購" %} V {% endif %}</div>
+          </div>
+          <div class="row fs-6">
+            <div class="col-8 border border-dark bg-warning">標的編號</div>
+            <div class="col-4 border border-dark">{{ result.objectNumber|default_if_none:"" }}</div>
+          </div>
+        
+        </div>
+      {% endfor %}
+    </div>
+
+
+  </div>
+</table>
+
+  
