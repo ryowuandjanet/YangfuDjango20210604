@@ -3,15 +3,29 @@
 
 <style>
   .sm-td {
-    font-size: 12pt;
-    border: 1px solid;
+    font-size: 11pt;
+    margin: 0px;
+    border: 1px solid #333;
     padding:3px;
     display: flex;
     align-items: center;
   }
   
-  .sm-th {background-color: #ddd; font-weight: 600;}
-  .sm-label {width:60%;background-color: #eee;border:1px solid;border-radius: 10px 10px 0px 0px;margin-top: 5px;}
+  .sm-th {
+    font-size: 11pt;
+    margin: 0px;
+    border: 1px solid #333;
+    padding:3px;
+    display: flex;
+    align-items: center;
+    background-color: #ddd; 
+    font-weight: 600;
+    /* 文字平均分散 
+    text-align:justify;
+    text-justify:distribute-all-lines;
+    text-align-last:justify; */
+  }
+  .sm-label {width:60%;background-color: #eee;border:1px solid;border-style:solid solid none solid;border-radius: 10px 10px 0px 0px;margin-top: 5px;}
   .sm-td-first {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid dashed solid solid;background-color: pink;}
   .sm-td-second {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid dashed solid none;background-color: PowderBlue;}
   .sm-td-third {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid dashed solid none;background-color: LightYellow;}
@@ -20,29 +34,34 @@
     padding-left: 10px;
     padding-right: 10px;
   }
+  .sm_create{ width:100%; font-size: 1rem;background-color: rgb(62, 46, 150);}
+  .sm_update{ width:100%; font-size: 1rem;background-color: rgb(9, 104, 25);}
+  .sm_delete{ width:100%; font-size: 1rem;background-color: rgb(180, 25, 25);}
+  .sm-objectbuild > tbody > tr > th { background-color: rgb(255, 187, 0);}
+  .sm-objectbuild > tbody > tr > td { color:black; font-size:11pt;text-align: left;}
 </style>
 
 <table class="build__table">
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <button class="nav-link border-dark active" id="nav-basedata-tab" data-bs-toggle="tab" data-bs-target="#nav-basedata" type="button" role="tab" aria-controls="nav-basedata" aria-selected="true">基本資料</button>
-      <button class="nav-link border-dark" id="nav-land-tab" data-bs-toggle="tab" data-bs-target="#nav-land" type="button" role="tab" aria-controls="nav-land" aria-selected="false">土地</button>
-      <button class="nav-link border-dark" id="nav-build-tab" data-bs-toggle="tab" data-bs-target="#nav-build" type="button" role="tab" aria-controls="nav-build" aria-selected="false">建物</button>
-      <button class="nav-link border-dark" id="nav-auction-tab" data-bs-toggle="tab" data-bs-target="#nav-auction" type="button" role="tab" aria-controls="nav-auction" aria-selected="false">拍賣資訊</button>   
-      <button class="nav-link border-dark" id="nav-survey-tab" data-bs-toggle="tab" data-bs-target="#nav-survey" type="button" role="tab" aria-controls="nav-survey" aria-selected="false">勘查記錄</button>
-      <button class="nav-link border-dark" id="nav-objectbuild-tab" data-bs-toggle="tab" data-bs-target="#nav-objectbuild" type="button" role="tab" aria-controls="nav-objectbuild" aria-selected="false">參考物件</button>
-      <button class="nav-link border-dark" id="nav-finaldecision-tab" data-bs-toggle="tab" data-bs-target="#nav-finaldecision" type="button" role="tab" aria-controls="nav-finaldecision" aria-selected="false">最終判定</button>
-      <button class="nav-link border-dark" id="nav-result-tab" data-bs-toggle="tab" data-bs-target="#nav-result" type="button" role="tab" aria-controls="nav-result" aria-selected="false">執行結果</button>
+      <button class="nav-link border-dark fw-bold active" id="nav-basedata-tab" data-bs-toggle="tab" data-bs-target="#nav-basedata" type="button" role="tab" aria-controls="nav-basedata" aria-selected="true">基本資料</button>
+      <button class="nav-link border-dark fw-bold" id="nav-land-tab" data-bs-toggle="tab" data-bs-target="#nav-land" type="button" role="tab" aria-controls="nav-land" aria-selected="false">土地</button>
+      <button class="nav-link border-dark fw-bold" id="nav-build-tab" data-bs-toggle="tab" data-bs-target="#nav-build" type="button" role="tab" aria-controls="nav-build" aria-selected="false">建物</button>
+      <button class="nav-link border-dark fw-bold" id="nav-auction-tab" data-bs-toggle="tab" data-bs-target="#nav-auction" type="button" role="tab" aria-controls="nav-auction" aria-selected="false">拍賣資訊</button>   
+      <button class="nav-link border-dark fw-bold" id="nav-survey-tab" data-bs-toggle="tab" data-bs-target="#nav-survey" type="button" role="tab" aria-controls="nav-survey" aria-selected="false">勘查記錄</button>
+      <button class="nav-link border-dark fw-bold" id="nav-objectbuild-tab" data-bs-toggle="tab" data-bs-target="#nav-objectbuild" type="button" role="tab" aria-controls="nav-objectbuild" aria-selected="false">參考物件</button>
+      <button class="nav-link border-dark fw-bold" id="nav-finaldecision-tab" data-bs-toggle="tab" data-bs-target="#nav-finaldecision" type="button" role="tab" aria-controls="nav-finaldecision" aria-selected="false">最終判定</button>
+      <button class="nav-link border-dark fw-bold" id="nav-result-tab" data-bs-toggle="tab" data-bs-target="#nav-result" type="button" role="tab" aria-controls="nav-result" aria-selected="false">執行結果</button>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
 
 
     <!-- ========= 基本資料 ===========-->
-    <div class="tab-pane fade show active" id="nav-basedata" role="tabpanel" aria-labelledby="nav-basedata-tab">
-      <div class="container border border-dark py-1">
+    <div class="tab-pane fade" id="nav-basedata" role="tabpanel" aria-labelledby="nav-basedata-tab">
+      <div class="container border border-2 border-dark rounded py-1">
         <div class="row">
-          <div class="col-3 sm-th sm-td">
+          <div class="col-3 sm-th">
             案號
           </div>
           <div class="col-9 sm-td">
@@ -83,7 +102,7 @@
           <div class="row">
             <div class="col-8"></div>
             <div class="col-4 px-0 py-1 ">
-              <a href="{% url 'yfcase:yfcase_update' object.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a>
+              <a href="{% url 'yfcase:yfcase_update' object.id %}" class="btn btn-success btn-sm sm_update">變更</a>
             </div>
           </div>
         {% endif %}
@@ -116,7 +135,7 @@
           <div class="col-3 sm-td sm-th">謄本</div>
         </div>
         {% for land in object.lands.all %}
-        <div class="row fs-6 border border-dark">
+        <div class="row fs-6">
           <div class="col-9 text-left sm-td">
             {% if land.landNumber %}
               {{ object.yfcaseBigSection }}段{{ land.landNumber }}
@@ -130,8 +149,8 @@
             {% endif %}
           </div>
         </div>
-        <div class="row border">
-          <div class="col text-right border border-dark">
+        <div class="row border border-dark">
+          <div class="col text-right p-1">
             {% if land.landArea != 0 %}
               {{ land.landArea }}m<sup>2</sup> * 持分({{ land.landHoldingPointPersonal }}/{{ land.landHoldingPointAll }}) = {{ land.get_land_holding_point_area|floatformat:"2" }}m<sup>2</sup>({{ land.get_land_holding_point_area|m2toping|floatformat:"2" }} 坪)
             {% endif %}
@@ -739,7 +758,77 @@
 
 
     <!-- ========= 參考物件 ===========-->
-    <div class="tab-pane fade" id="nav-objectbuild" role="tabpanel" aria-labelledby="nav-objectbuild-tab">參考物件</div>
+    <div class="tab-pane fade show active" id="nav-objectbuild" role="tabpanel" aria-labelledby="nav-objectbuild-tab">
+
+      <table class="table table-bordered mx-2 sm-objectbuild">
+        <tr>
+          <td rowspan="2" colspan="2">
+            (自訂) 地址：	長榮路五段175巷7號(或9號)<br>
+            屋齡：	48.00年<br>
+            樓高：	全/2<br>
+            成立日期：	2021/10/1<br>
+            總價：	4,000,000元<br>
+            建坪：	20.41坪<br>
+            增坪：	10.00坪X0.5<br>
+            單價：	157,418元
+          </td>
+          <th>現勘</th>
+        </tr>
+        <tr>
+          <td>連結</td>
+        </tr>
+
+        <tr>
+          <th>勘查員A</th>
+          <th>加成原因A</th>
+          <th>加成A</th>
+        </tr>
+        <tr>
+          <td>吳俊男</td>
+          <td>
+            ➤(+0.00)屋況<br>
+            ➤(+0.00)臨路<br>
+            ➤(+0.00)聯外交通<br>
+            ➤(+0.20)南鐵確定東一工程開工
+          </td>
+          <td>1.2</td>
+        </tr>
+
+        <tr>
+          <th>勘查員B</th>
+          <th>加成原因B</th>
+          <th>加成B</th>
+        </tr>
+        <tr>
+          <td>曾友和</td>
+          <td>
+            ➤(-0.10)屋況增建<br>
+            ➤(+0.00)路寬<br>
+            ➤(+0.10)臨路無尾巷<br>
+            ➤(+0.20)增值空間南鐵東移
+          </td>
+          <td>1.19</td>
+        </tr>
+
+        <tr>
+          <th>勘查員C</th>
+          <th>加成原因C</th>
+          <th>加成C</th>
+        </tr>
+        <tr>
+          <td>該員己評</td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>118929</td>
+        </tr>
+
+      </table>
+
+        
+
+    </div>
 
 
 
@@ -785,9 +874,77 @@
             <div class="col-4 border border-dark bg-warning">決策</div>
           </div>
           <div class="row fs-6">
-            <div class="col-4 border border-dark">吳俊男<br>2021-12-13</div>
-            <div class="col-4 border border-dark">張浩文<br>2021-12-20</div>
-            <div class="col-4 border border-dark">曾有志<br>2021-12-29</div>
+
+            <!-- 申請者 -->
+            <div class="col-4 border border-dark">
+              {% if finaldecision.regionalHead != None %}
+                <div class="regionalhead__seal">
+                  <div class="regionalhead__td__person text-center">{{ finaldecision.regionalHead }}</div>
+                  <div class="regionalhead__td__date text-center">{{ finaldecision.regionalHeadAddDate|date:"Y-m-d" }}</div>
+                  <div class="regionalhead__td__workarea text-center">{{ finaldecision.regionalHeadWorkArea|isWordCountOverFour }}</div>
+                </div>
+              {% endif %}
+            </div>
+            
+            <!-- 覆核者 -->
+            <div class="col-4 border border-dark">
+              {% if finaldecision.regionalHead %}
+                {% if finaldecision.finalDecision == "1拍進場" or finaldecision.finalDecision == "2拍進場" or finaldecision.finalDecision == "3拍進場" or finaldecision.finalDecision == "4拍進場"%}
+                  {% if finaldecision.regionalHeadWorkArea != request.user.userWorkArea %}
+                    {% if finaldecision.subSigntrueA == request.user.userFullName or finaldecision.subSigntrueA == None %}
+                      <div>
+                        <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}" class="btn__icon__update">簽核</a>
+                        <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
+                      </div>
+                    {% else%}
+                      <div class="notice">非簽核者</div>
+                    {% endif %}
+                  {% else%}
+                    <div class="notice">登入者為同轄區</div>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            </div>
+
+            <!-- 決策者 -->
+            <div class="col-4 border border-dark">
+              {% for auction in object.auctions.all %}
+                {% if auction.auctionFloorPriceFirst >= 1000000 or auction.auctionFloorPriceSecond >= 1000000 or auction.auctionFloorPriceThird >= 1000000 or auction.auctionFloorPriceFourth >= 1000000 %}
+                  {% if finaldecision.subSigntrueA %}
+                    {% if finaldecision.subSigntrueA == '曾友和' and finaldecision.regionalHeadWorkArea == '中彰投' %}
+                      <div class="notice">副署1不得為曾友和</div>
+                    {% elif finaldecision.subSigntrueA == '曾友志' and finaldecision.regionalHeadWorkArea == '雲嘉南' %}
+                      <div class="notice">副署1不得為曾友志</div>
+                    {% else %}
+                      {% if request.user.userFullName == '曾友和' and finaldecision.subSigntrueA != '曾友和' and finaldecision.regionalHead != '曾友和' and finaldecision.regionalHeadWorkArea != '雲嘉南' %}
+                        <div>
+                          <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn__icon__update">簽核</a>
+                          <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
+                        </div>
+                      {% elif request.user.userFullName == '曾友志' and finaldecision.subSigntrueA != '曾友志' and finaldecision.regionalHead != '曾友志' and finaldecision.regionalHeadWorkArea != '中彰投' %}
+                        <div>
+                          <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn__icon__update">簽核</a>
+                          <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
+                        </div>
+                      {% else %}
+                        {% if finaldecision.regionalHeadWorkArea == '中彰投' %}
+                          <div class="notice">待曾友和簽核</div>
+                        {% elif finaldecision.regionalHeadWorkArea == '雲嘉南' %}
+                          <div class="notice">待曾友志簽核</div>
+                        {% else %}
+                          <div class="notice" style="font-size:10pt;">待曾友志或曾友和簽核</div>
+                        {% endif %}
+                      {% endif %}
+                    {% endif %}
+                  {% else %}
+                    <div class="notice">副署1未簽核</div>
+                  {% endif %}
+                {% else %}
+                  <div class="notice">該拍未達百萬</div>
+                {% endif %}
+              {% endfor %}
+            </div>
+
           </div>
           {% if request.user == object.user %}
           <div class="row">

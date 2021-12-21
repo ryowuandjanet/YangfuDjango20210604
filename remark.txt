@@ -1,0 +1,2 @@
+python 3.8.6
+scp root@128.199.175.65:/root/YangfuDjango20210604/db.sqlite3 D:\Leowu\RyowuTestCode\djangotest\YangfuDjango20210604
