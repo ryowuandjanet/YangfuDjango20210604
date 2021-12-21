@@ -1,2 +1,14 @@
 python 3.8.6
 scp root@128.199.175.65:/root/YangfuDjango20210604/db.sqlite3 D:\Leowu\RyowuTestCode\djangotest\YangfuDjango20210604
+
+How to Install wkhtmltopdf & wkhtmltoimage on Ubuntu 18.04 | 16.04
+------------------------------------------------------------------
+sudo apt update 
+sudo apt install wget xfonts-75dpi
+cd /tmp
+wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
+sudo dpkg -i wkhtmltox_0.12.5-1.bionic_amd64.deb
+	sudo apt -f install
+	After installing, you can verify that they’re installed by running the commands below:
+		wkhtmltopdf --version
+		wkhtmltopdf 0.12.5 (with patched qt)

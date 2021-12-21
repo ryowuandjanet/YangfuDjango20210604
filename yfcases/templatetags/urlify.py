@@ -80,7 +80,7 @@ def isWordCountOverFour2(value):
   else:
     return mark_safe( "<div style='font-size: 14pt; height: 30px; line-height: 22px; color: red;'>" + str(value) +  "</div>")
 
-# 判定scoreItem是否存在，是：scoreItem連同scoreValue一起出現，否：不顯示(同於參考物件評分)
+# 判定scoreItem是否存在，是：scoreItem連同scoreValue一起出現，否：不顯示(同於參考物件評分-網頁版)
 # 用法 {% isItem scoreItem scoreValue %}
 @register.simple_tag(name='isItem')
 def isItem(item, value):
