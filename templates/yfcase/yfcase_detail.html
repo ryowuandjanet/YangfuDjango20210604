@@ -8,6 +8,9 @@
     * {
       font-family: 'Roboto','Noto Sans TC', sans-serif;
     }
+    .base_lg {display: block;}
+    .base_sm {display: none; }
+
     .yfcase__detail__caption {
       margin-top: 20px;
       margin-bottom: 20px;
@@ -47,6 +50,11 @@
     .btn__icon__create { background-color: MediumBlue; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
     .btn__icon__update { background-color: DarkGreen; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
     .btn__icon__delete { background-color: DarkRed; border:2px solid darkgrey; border-radius: 5px; padding:2px 7px; font-weight: 500; color:white; text-decoration:none; }
+
+    @media (max-width:764px){
+      .base_lg {display: none;}
+      .base_sm {display: block; }
+    }
     
   </style>
 {% endblock style %}
@@ -63,13 +71,12 @@
   
   <div class="col">
 
-
     <!--測試樣版-->
-    <div class="row">
+    <div class="row base_sm">
       {% include "./partials/base_sm.html" %}
     </div>
 
-    <div class="container col">
+    <div class="container col base_lg">
 
       <!--基本資料-->
       <div class="yfcase__detail__test">
