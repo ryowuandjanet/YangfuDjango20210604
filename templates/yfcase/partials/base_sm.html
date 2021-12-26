@@ -2,6 +2,27 @@
 {% load urlify %}
 
 <style>
+  /* 文字水平置中 */
+  .text-h-center {
+    text-align: center;
+  }
+
+  /* 文字垂直置中 */
+  .text-v-center {
+    vertical-align: top;
+  }
+  .text-v-center:before {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    vertical-align: middle;
+  }
+  .text-v-center p {
+    display: inline-block;
+  }
+
+
   .sm-td {
     font-size: 11pt;
     margin: 0px;
@@ -119,13 +140,13 @@
     <!-- ========= 地號 ===========-->
     <div class="tab-pane fade" id="nav-land" role="tabpanel" aria-labelledby="nav-land-tab">
       
-      <div class="row">
+      <div class="row align-items-end">
         <div class="col-4 py-1 pr-2">
           {% if request.user == object.user %}
             <a href="{% url 'yfcase:land_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
           {% endif %}
         </div>
-        <div class="col-8 fs-6" style="align-bottom;direction: flex;flex-direction: row;text-align: right;margin-top:25px;">
+        <div class="col-8 fs-6" style="align-bottom;direction: flex;flex-direction: row;text-align: right;">
           <span class="float-end">
             {% if object.lands.count > 0 %}
                 合計：{{ object.get_land_holding_point_area_total|floatformat:"2" }} m<sup>2</sup> 
@@ -170,7 +191,7 @@
     <!-- ========= 建號 ===========-->
     <div class="tab-pane fade" id="nav-build" role="tabpanel" aria-labelledby="nav-build-tab">
       
-      <div class="row">
+      <div class="row align-items-end">
         <div class="col-4 py-1 pr-2">
           {% if request.user == object.user %}
             <a href="{% url 'yfcase:build_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
@@ -178,11 +199,11 @@
         </div>
         <div class="col-8 fs-6" style="align-bottom;direction: flex;flex-direction: row;text-align: right;">
           <span class="float-end">
-            <div class="col text-right">使用分區：{{ object.builds.first.buildUsePartition|default_if_none:"" }}</div>
             {% if object.builds.count > 0 %}
               合計：{{ object.get_build_holding_point_after_group_total|floatformat:"2" }} m<sup>2</sup> 
               ({{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }} 坪)
             {% endif %}
+            <div class="col text-right">使用分區：{{ object.builds.first.buildUsePartition|default_if_none:"" }}</div>
           </span>
           
         </div>
@@ -619,7 +640,7 @@
     <div class="tab-pane fade" id="nav-survey" role="tabpanel" aria-labelledby="nav-survey-tab">
       {% if request.user == object.user %}
         <div class="row">
-          <div class="col-4 py-1 pr-2">
+          <div class="col-4 pr-2">
             {% if object.surveys.all %}
               {% for survey in object.surveys.all %}
                 <a href="{% url 'yfcase:survey_update' object.id survey.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a> 
@@ -630,106 +651,109 @@
           </div>
         </div>
       {% endif %}
-      <div class="container border border-dark py-1">
-        <div class="row">
-          <div class="col-6 sm-td sm-th">初勘日</div>
-          <div class="col-6 sm-td">
-            {% for survey in object.surveys.all %}
-              {{survey.surveyFirstDay|default_if_none:""}}
-            {% endfor %}
+
+      <div class="card fs-6" style="width: 100%;">
+        <div class="card-body">
+          <div class="row pt-2">
+            <div class="col-4 border bg-warning fw-6 fw-bolder py-1 border border-secondary">初勘日</div>
+            <div class="col-8 border fw-6 fw-bolder py-1 border border-secondary">
+              {% for survey in object.surveys.all %}
+                {{survey.surveyFirstDay|default_if_none:""}}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col-4 border bg-warning fw-6 fw-bolder py-1 border border-secondary">會勘日</div>
+            <div class="col-8 border fw-6 fw-bolder py-1 border border-secondary">
+              {% for survey in object.surveys.all %}
+                {{survey.surveySecondDay|default_if_none:""}}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">法拍公告<br><small>(證物三)</small></div>
+            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">998連結</div>
+            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">物件照片<br><small>(證物四)</small></div>
+          </div>
+          <div class="row">
+            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
+              {% for survey in object.surveys.all %}
+                {% if survey.surveyForeclosureAnnouncementLink %}
+                  <a href="{{survey.surveyForeclosureAnnouncementLink}}" target="_blank">
+                    <span class="fa-stack fa-2x">
+                      <i class="far fa-circle fa-stack-2x"></i>
+                      <i class="fas fa-gavel fa-stack-1x"></i>
+                    </span>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
+              {% for survey in object.surveys.all %}
+                {% if survey.survey988Link %}
+                  <a href="{{survey.survey988Link}}" target="_blank">
+                    <span class="fa-stack fa-2x">
+                      <i class="far fa-circle fa-stack-2x"></i>
+                      <i class="fas fa-link fa-stack-1x"></i>
+                    </span>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
+              {% for survey in object.surveys.all %}
+                {% if survey.surveyObjectPhotoLink %}
+                  <a href="{{survey.surveyObjectPhotoLink}}" target="_blank">
+                    <span class="fa-stack fa-2x">
+                      <i class="far fa-circle fa-stack-2x"></i>
+                      <i class="fas fa-home fa-stack-1x"></i>
+                    </span>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">法拍記錄<br><small>(證物七)</small></div>
+            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">標的物<br><small>(現場勘查)</small></div>
+            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center"></div>
+          </div>
+          <div class="row">
+            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
+              {% for survey in object.surveys.all %}
+                {% if survey.surveyForeclosureRecordLink %}
+                  <a href="{{survey.surveyForeclosureRecordLink}}" target="_blank">
+                    <span class="fa-stack fa-2x">
+                      <i class="far fa-circle fa-stack-2x"></i>
+                      <i class="fas fa-clipboard fa-stack-1x"></i>
+                    </span>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
+              {% for survey in object.surveys.all %}
+                {% if survey.surveyObjectViewLink %}
+                  <a href="{{survey.surveyObjectViewLink}}" target="_blank">
+                    <span class="fa-stack fa-2x">
+                      <i class="far fa-circle fa-stack-2x"></i>
+                      <i class="fas fa-film fa-stack-1x"></i>
+                    </span>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;"></div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-6 sm-td sm-th">會勘日</div>
-          <div class="col-6 sm-td">
-            {% for survey in object.surveys.all %}
-              {{survey.surveySecondDay|default_if_none:""}}
-            {% endfor %}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6 sm-td sm-th">法拍公告<small>(證物三)</small></div>
-          <div class="col-6 sm-td">
-            {% for survey in object.surveys.all %}
-              {% if survey.surveyForeclosureAnnouncementLink %}
-                <a href="{{survey.surveyForeclosureAnnouncementLink}}" target="_blank">
-                  <span class="fa-stack fa-2x">
-                    <i class="far fa-circle fa-stack-2x"></i>
-                    <i class="fas fa-gavel fa-stack-1x"></i>
-                  </span>
-                </a>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6 sm-td sm-th">998連結</div>
-          <div class="col-6 sm-td">
-            {% for survey in object.surveys.all %}
-              {% if survey.survey988Link %}
-                <a href="{{survey.survey988Link}}" target="_blank">
-                  <span class="fa-stack fa-2x">
-                    <i class="far fa-circle fa-stack-2x"></i>
-                    <i class="fas fa-link fa-stack-1x"></i>
-                  </span>
-                </a>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6 sm-td sm-th">物件照片<small>(證物四)</small></div>
-          <div class="col-6 sm-td">
-            {% for survey in object.surveys.all %}
-              {% if survey.surveyObjectPhotoLink %}
-                <a href="{{survey.surveyObjectPhotoLink}}" target="_blank">
-                  <span class="fa-stack fa-2x">
-                    <i class="far fa-circle fa-stack-2x"></i>
-                    <i class="fas fa-home fa-stack-1x"></i>
-                  </span>
-                </a>
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6 sm-td sm-th">法拍記錄<small>(證物七)</small></div>
-          <div class="col-6 sm-td">
-            {% for survey in object.surveys.all %}
-              {% if survey.surveyForeclosureRecordLink %}
-                <a href="{{survey.surveyForeclosureRecordLink}}" target="_blank">
-                  <span class="fa-stack fa-2x">
-                    <i class="far fa-circle fa-stack-2x"></i>
-                    <i class="fas fa-clipboard fa-stack-1x"></i>
-                  </span>
-                </a>
-              {% endif %}
-            {% endfor %}
-          </div>
       </div>
-      <div class="row">
-        <div class="col-6 sm-td sm-th">標的物<small>(現場勘查)</small></div>
-        <div class="col-6 sm-td">
-          {% for survey in object.surveys.all %}
-            {% if survey.surveyObjectViewLink %}
-              <a href="{{survey.surveyObjectViewLink}}" target="_blank">
-                <span class="fa-stack fa-2x">
-                  <i class="far fa-circle fa-stack-2x"></i>
-                  <i class="fas fa-film fa-stack-1x"></i>
-                </span>
-              </a>
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-      </div>
-      						
+						
     </div>
 
 
 
     <!-- ========= 參考物件 ===========-->
-    <div class="tab-pane fade show active" id="nav-objectbuild" role="tabpanel" aria-labelledby="nav-objectbuild-tab">
+    <div class="tab-pane fade" id="nav-objectbuild" role="tabpanel" aria-labelledby="nav-objectbuild-tab">
       {% if request.user == object.user %}
         <div class="row">
           <div class="col-4 py-1 pr-2">
@@ -1002,7 +1026,7 @@
 
 
     <!-- ========= 最終判定 ===========-->
-    <div class="tab-pane fade" id="nav-finaldecision" role="tabpanel" aria-labelledby="nav-finaldecision-tab">
+    <div class="tab-pane fade show active" id="nav-finaldecision" role="tabpanel" aria-labelledby="nav-finaldecision-tab">
       {% if request.user == object.user %}
         <div class="row">
           <div class="col-4 py-1 pr-2">
@@ -1012,39 +1036,40 @@
           </div>
         </div>
       {% endif %}
-      <div class="container border border-dark py-1">
-        {% for finaldecision in object.finaldecisions.all %}
+      {% for finaldecision in object.finaldecisions.all %}
+        {{ finaldecision.is_ok }}
+        <div class="container border border-secondary rounded pt-1 pb-2" style="background-color:Snow;" >
           <div class="row fs-6">
-            <div class="col-3 border border-dark bg-warning">判定</div>
+            <div class="col-3 border border-dark bg-warning text-center fs-5 section text-h-center text-v-center">判定</div>
             <div class="col-9 border border-dark">
               {% if finaldecision.finalDecision == "1拍進場" %}
-                <div class="finaldecision__td finaldecision__first">{{ finaldecision.finalDecision }}</div>
+                <div class="finaldecision__td finaldecision__first text-center m-2">{{ finaldecision.finalDecision }}</div>
               {% elif finaldecision.finalDecision == "2拍進場" %}
-                <div class="finaldecision__td finaldecision__second">{{ finaldecision.finalDecision }}</div>
+                <div class="finaldecision__td finaldecision__second text-center m-2">{{ finaldecision.finalDecision }}</div>
               {% elif finaldecision.finalDecision == "3拍進場" %}
-                <div class="finaldecision__td finaldecision__third">{{ finaldecision.finalDecision }}</div>
+                <div class="finaldecision__td finaldecision__third text-center m-2">{{ finaldecision.finalDecision }}</div>
               {% elif finaldecision.finalDecision == "4拍進場" %}
-                <div class="finaldecision__td finaldecision__fourth">{{ finaldecision.finalDecision }}</div>
+                <div class="finaldecision__td finaldecision__fourth text-center m-2">{{ finaldecision.finalDecision }}</div>
               {% elif finaldecision.finalDecision == "放棄" %}
-                <div class="finaldecision__td finaldecision__giveup">{{ finaldecision.finalDecision }}</div>
+                <div class="finaldecision__td finaldecision__giveup text-center m-2">{{ finaldecision.finalDecision }}</div>
               {% else %}
-                <div class="finaldecision__td finaldecision__no_decision">未判定</div>
+                <div class="finaldecision__td finaldecision__no_decision text-center m-2">未判定</div>
               {% endif %}
             </div>
           </div>
-          <div class="row fs-6">
-            <div class="col-3 border border-dark bg-warning">備註</div>
+          <div class="row fs-6" style="word-wrap:break-word;">
+            <div class="col-3 border border-dark bg-warning fs-5 section text-h-center text-v-center">備註</div>
             <div class="col-9 border border-dark">{{ finaldecision.finalDecisionRemark|default_if_none:"" }}</div>
           </div>
           <div class="row fs-6">
-            <div class="col-4 border border-dark bg-warning">申請</div>
-            <div class="col-4 border border-dark bg-warning">覆核</div>
-            <div class="col-4 border border-dark bg-warning">決策</div>
+            <div class="col-4 border border-dark bg-warning text-center fs-5 py-1">申請</div>
+            <div class="col-4 border border-dark bg-warning text-center fs-5 py-1">覆核</div>
+            <div class="col-4 border border-dark bg-warning text-center fs-5 py-1">決策</div>
           </div>
           <div class="row fs-6">
 
             <!-- 申請者 -->
-            <div class="col-4 border border-dark">
+            <div class="col-4 border border-dark px-1">
               {% if finaldecision.regionalHead != None %}
                 <div class="regionalhead__seal">
                   <div class="regionalhead__td__person text-center">{{ finaldecision.regionalHead }}</div>
@@ -1055,78 +1080,191 @@
             </div>
             
             <!-- 覆核者 -->
-            <div class="col-4 border border-dark">
-              {% if finaldecision.regionalHead %}
-                {% if finaldecision.finalDecision == "1拍進場" or finaldecision.finalDecision == "2拍進場" or finaldecision.finalDecision == "3拍進場" or finaldecision.finalDecision == "4拍進場"%}
-                  {% if finaldecision.regionalHeadWorkArea != request.user.userWorkArea %}
-                    {% if finaldecision.subSigntrueA == request.user.userFullName or finaldecision.subSigntrueA == None %}
-                      <div>
-                        <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}" class="btn__icon__update">簽核</a>
-                        <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
+            <div class="col-4 border border-dark px-1">
+              <!-- 1.覆核欄位不為空值 -->
+              {% if finaldecision.subSigntrueA %}
+                {% if finaldecision.subSigntrueA == request.user.userFullName %}
+                  <!-- 覆核欄位不為空值 - 登入者為覆核者 -->
+                  <div class="regionalhead__seal text-center">
+                    <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
+                    <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
+                    <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour }}</div>
+                  </div>
+                  <div class="row text-center">
+                    <div class="col-6 p-0">
+                      <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
+                    </div>
+                    <div class="col-6 p-0">
+                      <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
+                    </div>
+                  </div>
+                {% else %}
+                  <!-- 覆核欄位不為空值 - 登入者非覆核者 -->
+                  <div class="regionalhead__seal text-center">
+                    <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
+                    <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
+                    <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour }}</div>
+                  </div>
+                {% endif %}
+              {% else %}
+                <!-- 覆核欄位為空值 -->
+                <!-- 2.覆核者不可同時為申請者 -->
+                {% if finaldecision.regionalHead == request.user.userFullName %}
+                  <!-- 覆核者同時為申請者 -->
+                  <div class="notice">覆核者不得為申請者</div>
+                {% else %}
+                  <!-- 覆核者不同時為申請者 -->
+                  <!-- 3.登入者不可和申請者為同轄區 -->
+                  {% if finaldecision.regionalHeadWorkArea == request.user.userWorkArea %}
+                    <!-- 登入者和申請者為同轄區 -->
+                    <div class="notice">同轄區不得覆核</div>
+                  {% else %}
+                    <!-- 登入者不和申請者為同轄區 -->
+                    <!-- 4.判定是否為放棄 -->
+                    {% if finaldecision.finalDecision == "放棄" %}
+                      <!-- 最終判定為'放棄' -->
+                      <div class="notice">無需覆核</div>
+                    {% else %}
+                      <!-- 最終判定不為'放棄' -->
+                      <div class="row text-center">
+                        <div class="col-6 p-0">
+                          <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
+                        </div>
+                        <div class="col-6 p-0">
+                          <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
+                        </div>
                       </div>
-                    {% else%}
-                      <div class="notice">非簽核者</div>
                     {% endif %}
-                  {% else%}
-                    <div class="notice">登入者為同轄區</div>
                   {% endif %}
                 {% endif %}
               {% endif %}
             </div>
 
             <!-- 決策者 -->
-            <div class="col-4 border border-dark">
+            <div class="col-4 border border-dark px-1">
               {% for auction in object.auctions.all %}
+                <!-- 1.各拍金額不得超過1000000-->
                 {% if auction.auctionFloorPriceFirst >= 1000000 or auction.auctionFloorPriceSecond >= 1000000 or auction.auctionFloorPriceThird >= 1000000 or auction.auctionFloorPriceFourth >= 1000000 %}
+                  <!-- 各拍金額超過1000000-->
+                  <!-- 2.覆核是否完成-->
                   {% if finaldecision.subSigntrueA %}
-                    {% if finaldecision.subSigntrueA == '曾友和' and finaldecision.regionalHeadWorkArea == '中彰投' %}
-                      <div class="notice">副署1不得為曾友和</div>
-                    {% elif finaldecision.subSigntrueA == '曾友志' and finaldecision.regionalHeadWorkArea == '雲嘉南' %}
-                      <div class="notice">副署1不得為曾友志</div>
-                    {% else %}
-                      {% if request.user.userFullName == '曾友和' and finaldecision.subSigntrueA != '曾友和' and finaldecision.regionalHead != '曾友和' and finaldecision.regionalHeadWorkArea != '雲嘉南' %}
-                        <div>
-                          <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn__icon__update">簽核</a>
-                          <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
-                        </div>
-                      {% elif request.user.userFullName == '曾友志' and finaldecision.subSigntrueA != '曾友志' and finaldecision.regionalHead != '曾友志' and finaldecision.regionalHeadWorkArea != '中彰投' %}
-                        <div>
-                          <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn__icon__update">簽核</a>
-                          <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn__icon__delete">刪除</a>
-                        </div>
-                      {% else %}
-                        {% if finaldecision.regionalHeadWorkArea == '中彰投' %}
-                          <div class="notice">待曾友和簽核</div>
-                        {% elif finaldecision.regionalHeadWorkArea == '雲嘉南' %}
-                          <div class="notice">待曾友志簽核</div>
+                    <!-- 己覆核 -->
+                    <!-- 3.申請轄區是否為"雲嘉南" -->
+                    {% if finaldecision.regionalHeadWorkArea == '雲嘉南' %}
+                      <!-- 4.申請轄區為"雲嘉南" -->
+                      {% if request.user.userFullName == '曾友志' %}
+                        {% if finaldecision.subSigntrueB %}
+                          <!-- 登入者=曾友志 + subSigntrueB不為空 -->
+                          <div class="regionalhead__seal text-center">
+                            <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+                            <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+                            <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
+                          </div>
+                          <div class="row text-center">
+                            <div class="col-6 p-0">
+                              <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
+                            </div>
+                            <div class="col-6 p-0">
+                              <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
+                            </div>
+                          </div>
                         {% else %}
-                          <div class="notice" style="font-size:10pt;">待曾友志或曾友和簽核</div>
+                          <!-- 登入者=曾友志 + subSigntrueB為空 -->
+                          <div class="row text-center">
+                            <div class="col-6 p-0">
+                              <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
+                            </div>
+                            <div class="col-6 p-0">
+                              <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
+                            </div>
+                          </div>
+                        {% endif %}
+                      {% else %}
+                        {% if finaldecision.subSigntrueB %}
+                          <!-- 登入者不是曾友志 + subSigntrueB不為空 -->
+                          <div class="regionalhead__seal text-center">
+                            <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+                            <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+                            <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
+                          </div>
+                        {% else %}
+                          <!-- 登入者不是曾友志 + subSigntrueB為空 -->
+                          <div class="notice">待曾友志決策</div>
                         {% endif %}
                       {% endif %}
+                    {% elif finaldecision.regionalHeadWorkArea == '中彰投' %}
+                      <!-- 4.申請轄區為"中彰投" -->
+                      {% if request.user.userFullName == '曾友和' %}
+                        {% if finaldecision.subSigntrueB %}
+                          <!-- 登入者=曾友和 + subSigntrueB不為空 -->
+                          <div class="regionalhead__seal text-center">
+                            <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+                            <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+                            <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
+                          </div>
+                          <div class="row text-center">
+                            <div class="col-6 p-0">
+                              <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
+                            </div>
+                            <div class="col-6 p-0">
+                              <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
+                            </div>
+                          </div>
+                        {% else %}
+                          <!-- 登入者=曾友和 + subSigntrueB為空 -->
+                          <div class="row text-center">
+                            <div class="col-6 p-0">
+                              <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
+                            </div>
+                            <div class="col-6 p-0">
+                              <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
+                            </div>
+                          </div>
+                        {% endif %}
+                      {% else %}
+                        {% if finaldecision.subSigntrueB %}
+                          <!-- 登入者不是曾友和 + subSigntrueB不為空 -->
+                          <div class="regionalhead__seal text-center">
+                            <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+                            <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+                            <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
+                          </div>
+                        {% else %}
+                          <!-- 登入者不是曾友和 + subSigntrueB為空 -->
+                          <div class="notice">待曾友和決策</div>
+                        {% endif %}
+                      {% endif %}
+                    {% else %}
+                      <!-- 申請轄區是否為"其他區域" -->
+                      <div class="notice">待曾友志/曾友和決策</div>
                     {% endif %}
                   {% else %}
-                    <div class="notice">副署1未簽核</div>
+                    <!-- 未覆核 -->
+                    <div class="notice">待覆核完成再決策</div>
                   {% endif %}
                 {% else %}
-                  <div class="notice">該拍未達百萬</div>
+                  <!-- 各拍金額少於1000000-->
+                  <div class="notice">無需決策</div>
                 {% endif %}
-              {% endfor %}
+
+              {% endfor %}    
             </div>
 
           </div>
           {% if request.user == object.user %}
-          <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4 p-1">
-              <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}" class="btn btn-success btn-sm w-100 fs-5">改判</a>
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4 p-1">
+                <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}" class="btn btn-success btn-sm w-100 fs-5">改判</a>
+              </div>
+              <div class="col-4 p-1">
+                <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm w-100 fs-5">刪除</a>
+              </div>
             </div>
-            <div class="col-4 p-1">
-              <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm w-100 fs-5">刪除</a>
-            </div>
-          </div>
-        {% endif %}
-        {% endfor %}
-      </div>
+          {% endif %}  
+        </div>
+        <hr>
+      {% endfor %}
     </div>
 
 

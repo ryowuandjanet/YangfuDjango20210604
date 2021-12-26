@@ -57,59 +57,49 @@
     <!-- 住址 -->
     <div class="row">
       <span class="text-dark fs-5 fw-bold">案號位置</span>
-      <div class="col-md-3 mb-3">
-        {{ form.yfcaseCity|add_class:'form-control fw-bold text-primary' }}
-        <div class="invalid-feedback">
-          必填，請選擇縣市
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        {{ form.yfcaseTownship|add_class:'form-control fw-bold text-primary' }}
-        <div class="invalid-feedback">
-          必填，請選擇鄉鎮
-        </div>
-      </div>
-      <div class="col-md-3">
+
+      <div class="col-md-4">
         <div class="input-group mb-3">
-          {{ form.yfcaseBigSection|add_class:'form-control fw-bold text-primary' }}
-          <label class="btn btn-outline-secondary">段號</label>
+          {{ form.yfcaseCity|add_class:'form-control fw-bold text-primary text-end' }}
+          {{ form.yfcaseTownship|add_class:'form-control fw-bold text-primary text-end' }}
+          <div class="invalid-feedback">
+            必填，請選擇縣市/鄉鎮
+          </div>
         </div>
       </div>
-      <div class="col-md-3">
+
+      <div class="col-md-4">
         <div class="input-group mb-3">
-          {{ form.yfcaseSmallSection|add_class:'form-control fw-bold text-primary' }}
+          {{ form.yfcaseBigSection|add_class:'form-control fw-bold text-primary text-end' }}
+          <label class="btn btn-outline-secondary" >段號</label>
+          {{ form.yfcaseSmallSection|add_class:'form-control fw-bold text-primary text-end' }}
           <label class="btn btn-outline-secondary">小段</label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="input-group mb-3">
+          {{ form.yfcaseVillage|add_class:'form-control fw-bold text-primary text-end' }}
+          <select id="id_li" style="color:#777;font-size:12pt;border-color:black;border-radius: 0px 3px 3px 0px;padding:3px;background-color: #fbfbfb;width:20%;text-align: center;">
+            {% if object.yfcaseVillage|lastWord == "村" %}
+              <option value="1" style="color:#aaa;" >里</option>
+              <option value="2" selected="selected">村</option>
+            {% else %}
+              <option value="1" selected="selected">里</option>
+              <option value="2">村</option>
+            {% endif %}
+          </select>
+          {{ form.yfcaseNeighbor|add_class:'form-control fw-bold text-primary text-end' }}
+          <label class="btn btn-outline-secondary" style="width:20%;">鄰</label>
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="input-group mb-3">
-          {{ form.yfcaseVillage|add_class:'form-control fw-bold text-primary' }}
-            <select id="id_li" style="color:#777;font-size:12pt;border-color:black;border-radius: 0px 3px 3px 0px;padding:3px;background-color: #fbfbfb;">
-              {% if object.yfcaseVillage|lastWord == "村" %}
-                <option value="1" style="color:#aaa;">里</option>
-                <option value="2" selected="selected">村</option>
-              {% else %}
-                <option value="1" selected="selected">里</option>
-                <option value="2">村</option>
-              {% endif %}
-            </select>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="input-group mb-3">
-          {{ form.yfcaseNeighbor|add_class:'form-control fw-bold text-primary' }}
-          <label class="btn btn-outline-secondary">鄰</label>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="input-group mb-3">
-          {{ form.yfcaseStreet|add_class:'form-control fw-bold text-primary' }}
-          <select id="id_road" style="color:#777;font-size:12pt;border-color:black;border-radius: 0px 3px 3px 0px;padding:3px;background-color: #fbfbfb;">
+          {{ form.yfcaseStreet|add_class:'form-control fw-bold text-primary text-end' }}
+          <select id="id_road" style="color:#777;font-size:12pt;border-color:black;border-radius: 0px 3px 3px 0px;padding:3px;background-color: #fbfbfb;width:20%;text-align: center;">
             {% if object.yfcaseStreet|lastWord == "街" %}
               <option value="1">路</option>
               <option value="2" selected="selected">街</option>
@@ -117,50 +107,40 @@
               <option value="1" selected="selected">路</option>
               <option value="2">街</option>
             {% endif %}
-
           </select>
+          {{ form.yfcaseSection|add_class:'form-control fw-bold text-primary text-end' }}
+          <label class="btn btn-outline-secondary" style="width:20%;">段</label>
         </div>
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="input-group mb-3">
-          {{ form.yfcaseSection|add_class:'form-control fw-bold text-primary' }}
-          <label class="btn btn-outline-secondary">段</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-3">
-        <div class="input-group mb-3">
-          {{ form.yfcaseLane|add_class:'form-control fw-bold text-primary' }}
-          <label class="btn btn-outline-secondary">巷</label>
+          {{ form.yfcaseLane|add_class:'form-control fw-bold text-primary text-end' }}
+          <label class="btn btn-outline-secondary" style="width:20%;">巷</label>
+          {{ form.yfcaseAlley|add_class:'form-control fw-bold text-primary text-end' }}
+          <label class="btn btn-outline-secondary" style="width:20%;">弄</label>
         </div>
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="input-group mb-3">
-          {{ form.yfcaseAlley|add_class:'form-control fw-bold text-primary' }}
-          <label class="btn btn-outline-secondary">弄</label>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="input-group mb-3">
-          {{ form.yfcaseNumber|add_class:'form-control fw-bold text-primary' }}
-          <label class="btn btn-outline-secondary">號</label>
+          {{ form.yfcaseNumber|add_class:'form-control fw-bold text-primary text-end' }}
+          <label class="btn btn-outline-secondary">號之</label>
+          <input type="text" class="form-control text-start" aria-label="Server">
           <div class="invalid-feedback">
             必填，請填入號碼
           </div>
         </div>
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="input-group mb-3">
-          {{ form.yfcaseFloor|add_class:'form-control fw-bold text-primary' }}
-          <label class="btn btn-outline-secondary">樓</label>
+          {{ form.yfcaseFloor|add_class:'form-control fw-bold text-primary text-end' }}
+          <label class="btn btn-outline-secondary">樓之</label>
+          <input type="text" class="form-control text-start" aria-label="Server">
         </div>
       </div>
+
     </div>
 
     <!-- 債務人 && 債權人-->

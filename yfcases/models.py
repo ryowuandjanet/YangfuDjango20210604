@@ -1024,6 +1024,22 @@ class FinalDecision(models.Model):
     other_day = datetime.strptime(self.regionalHeadAddDate,'%m/%d/%Y')
     result = other_day - today
     return str(result.days)
+  
+  # 判斷是否完成
+  def is_ok(self):
+    if self.finalDecision == '放棄' and self.regionalHead:
+      return '結案'
+    elif self.finalDecision == '1拍進場' or self.finalDecision == '2拍進場' or self.finalDecision == '3拍進場' or self.finalDecision == '4拍進場' or self.finalDecision == '4拍流標':
+      if self.yfcase.auctions.all().filter(auctionFloorPriceFirst__gt=1000000):
+        if self.regionalHead and self.subSigntrueA and self.subSigntrueB:
+          return '結案'
+      else:
+        if self.regionalHead and self.subSigntrueA:
+          return '結案'
+    else:
+      return '在途'
+    
+    
 
 # ======= Result =======
 class Result(models.Model):
