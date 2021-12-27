@@ -170,12 +170,14 @@
                   {% endif %}
                 {% endif %}
               </h5>
+              <hr class="mt-1">
               <p class="card-text fw-bold">
                 {% if land.landArea != 0 %}
                   {{ land.landArea }}m<sup>2</sup> * 持分({{ land.landHoldingPointPersonal }}/{{ land.landHoldingPointAll }}) <br>
                   = {{ land.get_land_holding_point_area|floatformat:"2" }}m<sup>2</sup>(<span style="background-color: Cyan;">{{ land.get_land_holding_point_area|m2toping|floatformat:"2" }} 坪</span>)
                 {% endif %}
               </p>
+              <hr>
               {% if request.user == object.user %}
                 <a href="{% url 'yfcase:land_update' object.id land.id %}" class="btn btn-success btn-sm fs-6">變更</a>
                 <a href="{% url 'yfcase:land_delete' object.id land.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
