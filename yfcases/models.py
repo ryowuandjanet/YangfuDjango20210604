@@ -1030,32 +1030,39 @@ class FinalDecision(models.Model):
     # 判定結果
     # return self.finalDecision
     # 取得該拍的金額(判斷是否超過1000000)
-    auctionDateFirst_price =self.yfcase.auctions.first().auctionFloorPriceFirst 
-    auctionDateSecond_price = self.yfcase.auctions.first().auctionFloorPriceSecond
-    auctionDateThird_price = self.yfcase.auctions.first().auctionFloorPriceThird
-    auctionDateFourth_price = self.yfcase.auctions.first().auctionFloorPriceFourth
-    
-    # 取得申請人欄位是否己簽署
-    # 取得覆核人欄位是否己簽署
-    # 取得決策人欄位是否己簽署
-
-    # 判定結果='放棄'，且申請人己簽署
-    # 該拍的金額超過1000000，且申請人、覆核人、決策人己簽署
-    # 該拍的金額低於1000000，且申請人、覆核人己簽署
-
-
-
-    if self.finalDecision == '放棄' and self.regionalHead:
-      return '結案'
-    elif self.finalDecision == '1拍進場' or self.finalDecision == '2拍進場' or self.finalDecision == '3拍進場' or self.finalDecision == '4拍進場' or self.finalDecision == '4拍流標':
-      if self.yfcase.auctions.all().filter(auctionFloorPriceFirst__gt=1000000):
-        if self.regionalHead and self.subSigntrueA and self.subSigntrueB:
-          return '結案'
-      else:
-        if self.regionalHead and self.subSigntrueA:
-          return '結案'
+    if self.finalDecision == '1拍進場':
+      auctionPrice =self.yfcase.auctions.first().auctionFloorPriceFirst 
+    elif self.finalDecision == '2拍進場':
+      auctionPrice = self.yfcase.auctions.first().auctionFloorPriceSecond
+    elif self.finalDecision == '3拍進場':
+      auctionPrice = self.yfcase.auctions.first().auctionFloorPriceThird
+    elif self.finalDecision == '4拍進場':
+      auctionPrice = self.yfcase.auctions.first().auctionFloorPriceFourth
     else:
-      return '在途'
+      auctionPrice = 0
+
+
+    # 判定結果='4拍流標'
+    if self.finalDecision == '4拍流標':
+      return '結案'
+    # 判定結果='放棄'，且申請人己簽署
+    elif self.finalDecision == '放棄' and self.regionalHead:
+      return '結案'
+    else:
+      if auctionPrice >= 1000000 and self.subSigntrueB:
+        return '結案'
+      elif auctionPrice < 1000000 and self.subSigntrueA:
+        return '結案'
+      else:
+        return '在途  '
+
+    
+    # 該拍的金額超過1000000，且決策人己簽署
+    # 該拍的金額低於1000000，且覆核人己簽署
+
+
+
+    
     
     
 
