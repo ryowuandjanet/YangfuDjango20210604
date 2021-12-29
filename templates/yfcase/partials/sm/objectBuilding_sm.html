@@ -1,0 +1,337 @@
+<!-- 測試 -->
+{% load urlify %} 
+
+{% if request.user == object.user %}
+  <div class="row">
+    <div class="col-4 py-1 pr-2">
+      <a href="{% url 'yfcase:objectbuild_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
+    </div>
+  </div>
+{% endif %} 
+{% for objectbuild in object.objectbuilds.all %}
+  <div class="card mb-2" style="width: 100%; background-color: AntiqueWhite">
+    <div class="card-body">
+      <!-- 參考物件資訊 -->
+      <h6 class="card-subtitle mb-2">
+        <span class="fw-bolder fs-5">
+          {% if objectbuild.objectBuildStatus %}
+            ({{objectbuild.objectBuildStatus}}) - 
+          {% endif %}
+          加成總價： 
+          {% if objectbuild.objectBuildTotalPrice >= 1000000 %} 
+            {{ objectbuild.get_objectbuild_ping_price_abc_calculation|floatformat:0|thousandCut }}元 
+          {% else %} 
+            {{ objectbuild.get_objectbuild_ping_price_ab_calculation|floatformat:0|thousandCut }}元 
+          {% endif %}
+        </span>
+        <br />
+        地址： {{objectbuild.objectBuildAddress}}<br />
+        {% if objectbuild.objectBuildTransactionDate %} 
+          成立日期： {{ objectbuild.objectBuildTransactionDate }}<br />
+        {% endif %} 
+        {% if objectbuild.objectBuildHouseAge %} 
+          屋齡：{{objectbuild.objectBuildHouseAge}}年<br />
+        {% endif %} 
+        {% if objectbuild.objectBuildFloorHeight %} 
+          樓高：{{objectbuild.objectBuildFloorHeight}}<br />
+        {% endif %} 
+        總價： {{ objectbuild.objectBuildTotalPrice|floatformat:0|thousandCut }}元<br />
+        建坪： {{ objectbuild.objectBuildBuildArea }}坪<br />
+        {% if objectbuild.objectBuildSubBuildArea > 0 %} 
+          增坪： {{ objectbuild.objectBuildSubBuildArea }}坪X0.5<br />
+        {% endif %} 
+        單價： {{ objectbuild.get_objectbuild_ping_price|floatformat:0|thousandCut }}元
+      </h6>
+
+      <div class="accordion m-0" id="accordionPanelsStayOpenExample">
+        <div class="accordion-item">
+          <!-- 勘查A-人員判定-->
+          <h2 class="accordion-header border border-secondary" id="panelsStayOpen-headingOne">
+            <button class="accordion-button" style="background-color: LightCyan" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+              {% if objectbuild.objectBuildTotalPrice >= 1000000 %} 
+                {% if objectbuild.objectBuildScorerA == None %} 
+                  {% if objectbuild.objectBuildScorerB == request.user.userFullName or objectbuild.objectBuildScorerC == request.user.userFullName %} 
+                    己評
+                  {% endif %} 
+                {% else %} 
+                  {{ objectbuild.objectBuildScorerA|default_if_none:"" }}(加成={% if objectbuild.objectBuildScorerA %}{{ objectbuild.get_a_plus_value|floatformat:"2" }}{% endif %}) 
+                {% endif %} 
+              {% else %} 
+                {% if objectbuild.objectBuildScorerA == None %} 
+                  {% if objectbuild.objectBuildScorerB == request.user.userFullName %} 
+                    己評
+                  {% endif %} 
+                {% else %} 
+                  {{ objectbuild.objectBuildScorerA|default_if_none:"" }}(加成={% if objectbuild.objectBuildScorerA %}{{ objectbuild.get_a_plus_value|floatformat:"2" }}{% endif %}) 
+                {% endif %} 
+              {% endif %}
+
+              <span class="p-2"></span>
+
+              <!-- 勘查A-update/delete-->
+              {% if objectbuild.objectBuildTotalPrice >= 1000000 %} 
+                {% if objectbuild.objectBuildScorerA == None and objectbuild.objectBuildScorerB != request.user.userFullName and objectbuild.objectBuildScorerC != request.user.userFullName %}
+                  <div class="col-2">
+                    <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}">
+                      <span style="color: Mediumslateblue">
+                        <i class="fas fa-plus-circle fa-2x"></i>
+                      </span>
+                    </a>
+                  </div>
+                  {% if objectbuild.objectBuildScorerA %}
+                    <div class="col-2">
+                      <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}">
+                        <span style="color: Tomato">
+                          <i class="fas fa-minus-circle fa-2x"></i>
+                        </span>
+                      </a>
+                    </div>
+                  {% endif %} 
+                {% elif objectbuild.objectBuildScorerA != None and objectbuild.objectBuildScorerA == request.user.userFullName %}
+                  <div class="col-2">
+                    <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}">
+                      <span style="color: Mediumslateblue">
+                        <i class="fas fa-plus-circle fa-2x"></i>
+                      </span>
+                    </a>
+                  </div>
+                  <div class="col-2">
+                    <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}">
+                      <span style="color: Tomato">
+                        <i class="fas fa-minus-circle fa-2x"></i>
+                      </span>
+                    </a>
+                  </div>
+                {% else %} 
+                {% endif %} 
+              {% else %} 
+                {% if objectbuild.objectBuildScorerA == None and objectbuild.objectBuildScorerB != request.user.userFullName %}
+                  <div class="col-2">
+                    <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}">
+                      <span style="color: Mediumslateblue">
+                        <i class="fas fa-plus-circle fa-2x"></i>
+                      </span>
+                    </a>
+                  </div>
+                  <div class="col-2">
+                    {% if objectbuild.objectBuildScorerA %}
+                      <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}">
+                        <span style="color: Tomato">
+                          <i class="fas fa-minus-circle fa-2x"></i>
+                        </span>
+                      </a>
+                    {% endif %}
+                  </div>
+                {% elif objectbuild.objectBuildScorerA != None and objectbuild.objectBuildScorerA == request.user.userFullName %}
+                  <div class="col-2">
+                    <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}" class="btn btn-success btn-sm w-100 fs-6">評分</a>
+                  </div>
+                  <div class="col-2">
+                    <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}" class="btn btn-danger btn-sm w-100 fs-6">刪除</a>
+                  </div>
+                {% else %} 
+                {% endif %} 
+              {% endif %}
+            </button>
+          </h2>
+          <!-- 勘查A-加成原因/加成比例 -->
+          <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body">
+              <strong>
+                {% isItem objectbuild.plusItemA1 objectbuild.plusValueA1 %} 
+                {% isItem objectbuild.plusItemA2 objectbuild.plusValueA2 %} 
+                {% isItem objectbuild.plusItemA3 objectbuild.plusValueA3 %} 
+                {% isItem objectbuild.plusItemA4 objectbuild.plusValueA4 %} 
+                {% isItem objectbuild.plusItemA5 objectbuild.plusValueA5 %} 
+                {% isItem objectbuild.plusItemOtherA objectbuild.plusValueOtherA %}
+              </strong>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <!-- 勘查B-人員判定-->
+          <h2 class="accordion-header border border-secondary" id="panelsStayOpen-headingTwo">
+            <button class="accordion-button collapsed" style="background-color: Gainsboro" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+              {% if objectbuild.objectBuildTotalPrice >= 1000000 %} 
+                {% if objectbuild.objectBuildScorerB == None %} 
+                  {% if objectbuild.objectBuildScorerA == request.user.userFullName or objectbuild.objectBuildScorerC == request.user.userFullName %} 
+                    己評
+                  {% endif %} 
+                {% else %} 
+                  {{ objectbuild.objectBuildScorerB|default_if_none:"" }}(加成={% if objectbuild.objectBuildScorerB %}{{ objectbuild.get_b_plus_value|floatformat:"2" }}{% endif %}) 
+                {% endif %} 
+              {% else %} 
+                {% if objectbuild.objectBuildScorerB == None %} 
+                  {% if objectbuild.objectBuildScorerA == request.user.userFullName %} 
+                    己評
+                  {% endif %} 
+                {% else %} 
+                  {{ objectbuild.objectBuildScorerB|default_if_none:"" }}(加成={% if objectbuild.objectBuildScorerB %}{{ objectbuild.get_b_plus_value|floatformat:"2" }}{% endif %}) 
+                {% endif %} 
+              {% endif %}
+
+              <span class="p-2"></span>
+
+              <!-- 勘查B-update/delete button -->
+              {% if objectbuild.objectBuildTotalPrice >= 1000000 %} {% if objectbuild.objectBuildScorerB == None and objectbuild.objectBuildScorerA != request.user.userFullName and objectbuild.objectBuildScorerC != request.user.userFullName %}
+                <div class="col-2">
+                  <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}">
+                    <span style="color: Mediumslateblue">
+                      <i class="fas fa-plus-circle fa-2x"></i>
+                    </span>
+                  </a>
+                </div>
+                {% if objectbuild.objectBuildScorerB %}
+                  <div class="col-2">
+                    <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}">
+                      <span style="color: Tomato">
+                        <i class="fas fa-minus-circle fa-2x"></i>
+                      </span>
+                    </a>
+                  </div>
+                {% endif %} 
+              {% elif objectbuild.objectBuildScorerB != None and objectbuild.objectBuildScorerB == request.user.userFullName %}
+                <div class="col-2">
+                  <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}">
+                    <span style="color: Mediumslateblue">
+                      <i class="fas fa-plus-circle fa-2x"></i>
+                    </span>
+                  </a>
+                </div>
+                <div class="col-2">
+                  <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}">
+                    <span style="color: Tomato">
+                      <i class="fas fa-minus-circle fa-2x"></i>
+                    </span>
+                  </a>
+                </div>
+              {% else %} 
+              {% endif %} 
+            {% else %} 
+              {% if objectbuild.objectBuildScorerB == None and objectbuild.objectBuildScorerA != request.user.userFullName %}
+                <div class="col-2">
+                  <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}">
+                    <span style="color: Mediumslateblue">
+                      <i class="fas fa-plus-circle fa-2x"></i>
+                    </span>
+                  </a>
+                </div>
+                {% if objectbuild.objectBuildScorerB %}
+                <div class="col-2">
+                  <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}">
+                    <span style="color: Tomato">
+                      <i class="fas fa-minus-circle fa-2x"></i>
+                    </span>
+                  </a>
+                </div>
+                {% endif %} 
+              {% elif objectbuild.objectBuildScorerB != None and objectbuild.objectBuildScorerB == request.user.userFullName %}
+                <div class="col-2">
+                  <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}">
+                    <span style="color: Mediumslateblue">
+                      <i class="fas fa-plus-circle fa-2x"></i>
+                    </span>
+                  </a>
+                </div>
+                <div class="col-2">
+                  <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}">
+                    <span style="color: Tomato">
+                      <i class="fas fa-minus-circle fa-2x"></i>
+                    </span>
+                  </a>
+                </div>
+              {% else %} 
+              {% endif %} 
+            {% endif %}
+            </button>
+          </h2>
+
+          <!-- 勘查B-加成原因/加成比例 -->
+          <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
+            aria-labelledby="panelsStayOpen-headingTwo">
+            <div class="accordion-body">
+              <strong>
+                {% isItem objectbuild.plusItemB1 objectbuild.plusValueB1 %} {% isItem objectbuild.plusItemB2 objectbuild.plusValueB2 %} {% isItem objectbuild.plusItemB3 objectbuild.plusValueB3 %} {% isItem objectbuild.plusItemB4 objectbuild.plusValueB4 %} {% isItem objectbuild.plusItemB5 objectbuild.plusValueB5 %} {% isItem objectbuild.plusItemOtherB objectbuild.plusValueOtherB %}
+              </strong>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <!-- 勘查C-人員判定-->
+          <h2 class="accordion-header border border-secondary" id="panelsStayOpen-headingThree">
+            <button class="accordion-button collapsed" style="background-color: PaleGoldenRod" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+              {% if objectbuild.objectBuildTotalPrice >= 1000000 %} 
+                {% if objectbuild.objectBuildScorerC == None %} 
+                  {% if objectbuild.objectBuildScorerA == request.user.userFullName or objectbuild.objectBuildScorerB == request.user.userFullName %} 
+                    己評
+                  {% endif %} 
+                {% else %} 
+                  {{ objectbuild.objectBuildScorerC|default_if_none:"" }}(加成={% if objectbuild.objectBuildScorerC %}{{ objectbuild.get_c_plus_value|floatformat:"2" }}{% endif %}) 
+                {% endif %} 
+              {% endif %}
+
+              <span class="p-2"></span>
+
+              <!-- 勘查C-update/delete button -->
+              {% if objectbuild.objectBuildTotalPrice >= 1000000 %} {% if objectbuild.objectBuildScorerC == None and objectbuild.objectBuildScorerA != request.user.userFullName and objectbuild.objectBuildScorerB != request.user.userFullName %}
+                <div class="col-2">
+                  <a href="{% url 'yfcase:score_c_update' object.id objectbuild.id %}">
+                    <span style="color: Mediumslateblue">
+                      <i class="fas fa-plus-circle fa-2x"></i>
+                    </span>
+                  </a>
+                </div>
+                {% if objectbuild.objectBuildScorerC %}
+                  <div class="col-2">
+                    <a href="{% url 'yfcase:score_c_delete' object.id objectbuild.id %}">
+                      <span style="color: Tomato">
+                        <i class="fas fa-minus-circle fa-2x"></i>
+                      </span>
+                    </a>
+                  </div>
+                {% endif %} 
+              {% elif objectbuild.objectBuildScorerC != None and objectbuild.objectBuildScorerC == request.user.userFullName %}
+                <div class="col-2">
+                  <a href="{% url 'yfcase:score_c_update' object.id objectbuild.id %}">
+                    <span style="color: Mediumslateblue">
+                      <i class="fas fa-plus-circle fa-2x"></i>
+                    </span>
+                  </a>
+                </div>
+                <div class="col-2">
+                  <a href="{% url 'yfcase:score_c_delete' object.id objectbuild.id %}">
+                    <span style="color: Tomato">
+                      <i class="fas fa-minus-circle fa-2x"></i>
+                    </span>
+                  </a>
+                </div>
+              {% else %} 
+              {% endif %} 
+            {% endif %}
+            </button>
+          </h2>
+          <!-- 勘查C-加成原因/加成比例 -->
+          <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
+            <div class="accordion-body">
+              <strong>
+                {% isItem objectbuild.plusItemC1 objectbuild.plusValueC1 %} 
+                {% isItem objectbuild.plusItemC2 objectbuild.plusValueC2 %} 
+                {% isItem objectbuild.plusItemC3 objectbuild.plusValueC3 %} 
+                {% isItem objectbuild.plusItemC4 objectbuild.plusValueC4 %} 
+                {% isItem objectbuild.plusItemC5 objectbuild.plusValueC5 %} 
+                {% isItem objectbuild.plusItemOtherC objectbuild.plusValueOtherC %}
+              </strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br />
+      <!-- 參考物件 update/delete button-->
+      {% if request.user == object.user %}
+        <a href="{% url 'yfcase:objectbuild_update' object.id objectbuild.id %}" class="btn btn-success btn-sm fs-5">變更</a>
+        <a href="{% url 'yfcase:objectbuild_delete' object.id objectbuild.id %}" class="btn btn-danger btn-sm fs-5">刪除</a>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}

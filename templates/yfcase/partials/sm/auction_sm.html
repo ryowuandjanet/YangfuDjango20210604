@@ -1,0 +1,375 @@
+<!-- 測試 -->
+{% load urlify %}
+
+{% if request.user == object.user %}
+<div class="row">
+  <div class="col-4 py-1 pr-2">
+    {% if request.user == object.user %}
+      {% if object.auctions.all %}
+        {% for auction in object.auctions.all %}
+          <a href="{% url 'yfcase:auction_update' object.id auction.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a>
+        {% endfor %}
+      {% else %}
+        <a href="{% url 'yfcase:auction_create' object.id %}" class="btn btn-danger btn-sm w-100 fs-5">新增</a>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<div class="container border border-dark py-1">
+  {% for auction in object.auctions.all %}
+    <!-- 拍賣日 -->
+    <div class="row">
+      <div class="sm-label">拍賣日</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">{{auction.auctionDateFirst|default_if_none:""}}</div>
+      <div class="sm-td-second">{{auction.auctionDateSecond|default_if_none:""}}</div>
+      <div class="sm-td-third">{{auction.auctionDateThird|default_if_none:""}}</div>
+      <div class="sm-td-fourth">{{auction.auctionDateFourth|default_if_none:""}}</div>
+    </div>
+
+    <!-- (A)底價 -->
+    <div class="row">
+      <div class="sm-label">(A)底價</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{auction.auctionFloorPriceFirst|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+      <div class="sm-td-second">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{auction.auctionFloorPriceSecond|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+      <div class="sm-td-third">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{auction.auctionFloorPriceThird|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+      <div class="sm-td-fourth">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{auction.auctionFloorPriceFourth|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- (B)坪數 -->
+    <div class="row">
+      <div class="sm-label">(B)坪數</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if object.builds.count > 0 %}
+          {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
+        {% endif %}
+      </div>
+      <div class="sm-td-second">
+        {% if object.builds.count > 0 %}
+          {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
+        {% endif %}
+      </div>
+      <div class="sm-td-third">
+        {% if object.builds.count > 0 %}
+          {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
+        {% endif %}
+      </div>
+      <div class="sm-td-fourth">
+        {% if object.builds.count > 0 %}
+          {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- (C)坪價 -->
+    <div class="row">
+      <div class="sm-label">(C)坪價 = (A)/(B)</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if auction.auctionFloorPriceFirst != 0 and object.builds.all|length > 0 %}
+          {{auction.get_ping_first_price|floatformat:0|thousandCut|default_if_none:""}}
+        {% endif %}
+      </div>
+      <div class="sm-td-second">
+        {% if auction.auctionFloorPriceSecond != 0 and object.builds.all|length > 0 %}
+          {{auction.get_ping_second_price|floatformat:0|thousandCut}}
+        {% endif %}
+      </div>
+      <div class="sm-td-third">
+        {% if auction.auctionFloorPriceThird != 0 and object.builds.all|length > 0 %}
+          {{auction.get_ping_third_price|floatformat:0|thousandCut}}
+        {% endif %}
+      </div>
+      <div class="sm-td-fourth">
+        {% if auction.auctionFloorPriceFourth != 0 and object.builds.all|length > 0 %}
+        {{auction.get_ping_fourth_price|floatformat:0|thousandCut|default_if_none:""}}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- (D)時價 -->
+    <div class="row">
+      <div class="sm-label">(D)時價</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
+      <div class="sm-td-second">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
+      <div class="sm-td-third">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
+      <div class="sm-td-fourth">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
+    </div>
+
+    <!-- (E)CP值 -->
+    <div class="row">
+      <div class="sm-label">(E)CP值 = (D)/(C)</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if auction.auctionFloorPriceFirst != 0 and auction.get_first_cp != 0 %}
+          {{auction.get_first_cp|floatformat:2}}
+        {% endif %}
+      </div>
+      <div class="sm-td-second">
+        {% if auction.auctionFloorPriceSecond != 0 and auction.get_second_cp != 0 %}
+          {{auction.get_second_cp|floatformat:2}}
+        {% endif %}
+      </div>
+      <div class="sm-td-third">
+        {% if auction.auctionFloorPriceThird != 0 and auction.get_third_cp != 0 %}
+        {{auction.get_third_cp|floatformat:2}}
+        {% endif %}
+      </div>
+      <div class="sm-td-fourth">
+        {% if auction.auctionFloorPriceFourth != 0 and auction.get_fourth_cp != 0 %}
+          {{auction.get_fourth_cp|floatformat:2}}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- (F)點閱 -->
+    <div class="row">
+      <div class="sm-label">(F)點閱</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{auction.auctionClickFirst }}
+        {% endif %}
+      </div>
+      <div class="sm-td-second">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{auction.auctionClickSecond }}
+        {% endif %}
+      </div>
+      <div class="sm-td-third">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{auction.auctionClickThird }}
+        {% endif %}
+      </div>
+      <div class="sm-td-fourth">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{auction.auctionClickFourth }}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- (G)監控 -->
+    <div class="row">
+      <div class="sm-label">(G)監控</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{auction.auctionMonitorFirst }}
+        {% endif %}
+      </div>
+      <div class="sm-td-second">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{auction.auctionMonitorSecond }}
+        {% endif %}
+      </div>
+      <div class="sm-td-third">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{auction.auctionMonitorThird }}
+        {% endif %}
+      </div>
+      <div class="sm-td-fourth">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{auction.auctionMonitorFourth }}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- (H)換算後 -->
+    <div class="row">
+      <div class="sm-label">(H)換算後</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{auction.get_suggestedincreaseFirst|multiplication:100|floatformat:0 }}%
+        {% endif %}
+      </div>
+      <div class="sm-td-second">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{auction.get_suggestedincreaseSecond|multiplication:100|floatformat:0 }}%
+        {% endif %}
+      </div>
+      <div class="sm-td-third">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{auction.get_suggestedincreaseThird|multiplication:100|floatformat:0 }}%
+        {% endif %}
+      </div>
+      <div class="sm-td-fourth">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{auction.get_suggestedincreaseFouth|multiplication:100|floatformat:0 }}%
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- (I)建議加價 -->
+    <div class="row">
+      <div class="sm-label">(I)建議加價 = (100% + H)</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{auction.get_suggestedincreaseFirst_floor_price|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+      <div class="sm-td-second">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{auction.get_suggestedincreaseSecond_floor_price|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+      <div class="sm-td-third">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{auction.get_suggestedincreaseThird_floor_price|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+      <div class="sm-td-fourth">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{auction.get_suggestedincreaseFourth_floor_price|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- (J)進場CP -->
+    <div class="row">
+      <div class="sm-label">(J)進場CP = (I)/(C)</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{ auction.get_suggestedincreaseFirst_cp|floatformat:2 }}
+        {% endif %}
+      </div>
+      <div class="sm-td-second">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{ auction.get_suggestedincreaseSecond_cp|floatformat:2 }}
+        {% endif %}
+      </div>
+      <div class="sm-td-third">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{ auction.get_suggestedincreaseThird_cp|floatformat:2 }}
+        {% endif %}
+      </div>
+      <div class="sm-td-fourth">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{ auction.get_suggestedincreaseFourth_cp|floatformat:2 }}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- (K)保証金 -->
+    <div class="row">
+      <div class="sm-label">(K)保証金</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if auction.auctionFloorPriceFirst != 0 %}
+          {{auction.auctionMarginFirst|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+      <div class="sm-td-second">
+        {% if auction.auctionFloorPriceSecond != 0 %}
+          {{auction.auctionMarginSecond|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+      <div class="sm-td-third">
+        {% if auction.auctionFloorPriceThird != 0 %}
+          {{auction.auctionMarginThird|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+      <div class="sm-td-fourth">
+        {% if auction.auctionFloorPriceFourth != 0 %}
+          {{auction.auctionMarginFourth|floatformat:0|thousandCut }}
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- 進場判定 -->
+    <div class="row">
+      <div class="sm-label">進場判定</div>
+    </div>
+    <div class="row text-center">
+      <div class="sm-td-first">
+        {% if auction.auctionFloorPriceFirst == 0 %}
+          <div>底價未輸入</div>
+        {% elif auction.get_suggestedincreaseFirst_cp >= 0.92 %}
+          <div class="text-green">建議進場</div>
+        {% elif auction.get_suggestedincreaseFirst_cp < 0.92 %} 
+          <div class="text-red">不可進場</div>
+        {% endif %}
+      </div>
+
+      <div class="sm-td-second">
+        {% if auction.auctionFloorPriceSecond == 0 %}
+          <div>底價未輸入</div>
+        {% elif auction.get_suggestedincreaseSecond_cp >= 1.15 %}
+          <div class="text-green">建議進場</div>
+        {% elif auction.get_suggestedincreaseSecond_cp < 1.15 %} 
+          <div class="text-red">不可進場</div>
+        {% endif %}
+      </div>
+
+      <div class="sm-td-third">
+        {% if auction.auctionFloorPriceThird == 0 %}
+          <div>底價未輸入</div>
+        {% elif auction.get_suggestedincreaseThird_cp >= 1.44 %}
+          <div class="text-green">建議進場</div>
+        {% elif auction.get_suggestedincreaseThird_cp < 1.44 %} 
+          <div class="text-red">不可進場</div>
+        {% endif %}
+      </div>
+
+      <div class="sm-td-fourth">
+        {% if auction.auctionFloorPriceFourth == 0 %}
+          <div>底價未輸入</div>
+        {% elif auction.get_suggestedincreaseFourth_cp >= 1.80 %}
+          <div class="text-green">建議進場</div>
+        {% elif auction.get_suggestedincreaseFourth_cp < 1.80 %} 
+          <div class="text-red">不可進場</div>
+        {% endif %}
+      </div>
+
+    </div>
+
+    <!-- 金額 -->
+    <div class="row">
+      <div class="sm-label">金額 = (I)+(L)</div>
+    </div>
+
+    <div class="row text-center">
+      <div class="sm-td-first">{{ auction.get_totalPriceFirst|floatformat:0|thousandCut|default_if_none:"" }}</div>
+      <div class="sm-td-second">{{ auction.get_totalPriceSecond|floatformat:0|thousandCut|default_if_none:"" }}</div>
+      <div class="sm-td-third">{{ auction.get_totalPriceThird|floatformat:0|thousandCut|default_if_none:"" }}</div>
+      <div class="sm-td-fourth">{{ auction.get_totalPriceFourth|floatformat:0|thousandCut|default_if_none:"" }}</div>
+    </div>
+
+  {% endfor %}
+
+</div>

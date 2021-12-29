@@ -1,0 +1,76 @@
+<!-- 測試 -->
+{% load urlify %}
+
+<div class="row">
+	<div class="col-4 py-1 pr-2">
+		{% if request.user == object.user %}
+			{% for result in object.results.all %}
+				<a href="{% url 'yfcase:result_update' object.id result.id %}" class="btn btn-success btn-sm w-100 fs-5">修改</a>
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>
+
+{% if object.results.all %}
+	{% for result in object.results.all %}
+		<div class="container border border-dark py-1">
+			<div class="row fs-6">
+				<div class="col-8 border border-dark bg-warning">應買止日</div>
+				<div class="col-4 border border-dark">
+					{{ result.stopBuyDate|default_if_none:"" }}
+				</div>
+			</div>
+			<div class="row fs-6">
+				<div class="col-8 border border-dark bg-warning">1.撤回</div>
+				<div class="col-4 border border-dark">
+					{% if result.actionResult == "撤回" %} V {% endif %}
+				</div>
+			</div>
+			<div class="row fs-6">
+				<div class="col-4 border border-dark bg-warning">2.第三人搶標</div>
+				<div class="col-4 border border-dark bg-warning">搶標拍別</div>
+				<div class="col-4 border border-dark">
+					{{ result.bidAuctionTime|default_if_none:"" }}
+				</div>
+			</div>
+			<div class="row fs-6">
+				<div class="col-4 border border-dark bg-warning"></div>
+				<div class="col-4 border border-dark bg-warning">搶標金額</div>
+				<div class="col-4 border border-dark">
+					{% if result.bidMoney > 0 %}{{ result.bidMoney|floatformat:0|thousandCut }}{% endif %}
+				</div>
+			</div>
+			<div class="row fs-6">
+				<div class="col-4 border border-dark bg-warning">3.得標</div>
+				<div class="col-4 border border-dark bg-warning">等待優購</div>
+				<div class="col-4 border border-dark">
+					{% if result.actionResult == "等待優購" %} V {% endif %}
+				</div>
+			</div>
+			<div class="row fs-6">
+				<div class="col-4 border border-dark bg-warning"></div>
+				<div class="col-4 border border-dark bg-warning">遭優購</div>
+				<div class="col-4 border border-dark">
+					{% if result.actionResult == "遭優購" %} V {% endif %}
+				</div>
+			</div>
+			<div class="row fs-6">
+				<div class="col-4 border border-dark bg-warning"></div>
+				<div class="col-4 border border-dark bg-warning">無人優購</div>
+				<div class="col-4 border border-dark">
+					{% if result.actionResult == "無人優購" %} V {% endif %}
+				</div>
+			</div>
+			<div class="row fs-6">
+				<div class="col-8 border border-dark bg-warning">標的編號</div>
+				<div class="col-4 border border-dark">
+					{{ result.objectNumber|default_if_none:"" }}
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+{% else %}
+	<div class="border rounded-pill mt-3 p-3 text-center fs-4 fw-bold" style="background-color: pink">
+		區域負責人尚未作執行結果
+	</div>
+{% endif %}

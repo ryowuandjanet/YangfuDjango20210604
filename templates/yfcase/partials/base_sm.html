@@ -11,6 +11,7 @@
   .text-v-center {
     vertical-align: top;
   }
+
   .text-v-center:before {
     content: "";
     display: inline-block;
@@ -18,6 +19,7 @@
     height: 100%;
     vertical-align: middle;
   }
+
   .text-v-center p {
     display: inline-block;
   }
@@ -27,7 +29,7 @@
     font-size: 11pt;
     margin: 0px;
     border: 1px solid #333;
-    padding:3px;
+    padding: 3px;
     display: flex;
     align-items: center;
   }
@@ -36,1309 +38,155 @@
     font-size: 8pt;
     margin: 0px;
     border: 1px solid #333;
-    padding:3px;
+    padding: 3px;
   }
-  
+
   .sm-th {
     font-size: 11pt;
     margin: 0px;
     border: 1px solid #333;
-    padding:3px;
+    padding: 3px;
     display: flex;
     align-items: center;
-    background-color: #ddd; 
+    background-color: #ddd;
     font-weight: 600;
     /* 文字平均分散 
     text-align:justify;
     text-justify:distribute-all-lines;
     text-align-last:justify; */
   }
-  .sm-label {width:60%;background-color: #eee;border:1px solid;border-style:solid solid none solid;border-radius: 10px 10px 0px 0px;margin-top: 5px;}
-  .sm-td-first {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid dashed solid solid;background-color: pink;}
-  .sm-td-second {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid dashed solid none;background-color: PowderBlue;}
-  .sm-td-third {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid dashed solid none;background-color: LightYellow;}
-  .sm-td-fourth {width:25%;font-size: 10pt;padding: 2px;border:1px solid;border-style: solid solid solid none;background-color: Aqua;}
-  .nav-link{
+
+  .sm-label {
+    width: 60%;
+    background-color: #eee;
+    border: 1px solid;
+    border-style: solid solid none solid;
+    border-radius: 10px 10px 0px 0px;
+    margin-top: 5px;
+  }
+
+  .sm-td-first {
+    width: 25%;
+    font-size: 10pt;
+    padding: 2px;
+    border: 1px solid;
+    border-style: solid dashed solid solid;
+    background-color: pink;
+  }
+
+  .sm-td-second {
+    width: 25%;
+    font-size: 10pt;
+    padding: 2px;
+    border: 1px solid;
+    border-style: solid dashed solid none;
+    background-color: PowderBlue;
+  }
+
+  .sm-td-third {
+    width: 25%;
+    font-size: 10pt;
+    padding: 2px;
+    border: 1px solid;
+    border-style: solid dashed solid none;
+    background-color: LightYellow;
+  }
+
+  .sm-td-fourth {
+    width: 25%;
+    font-size: 10pt;
+    padding: 2px;
+    border: 1px solid;
+    border-style: solid solid solid none;
+    background-color: Aqua;
+  }
+
+  .nav-link {
     padding-left: 10px;
     padding-right: 10px;
   }
 
-  .sm-objectbuild > tbody > tr > th { background-color: rgb(255, 187, 0);}
-  .sm-objectbuild > tbody > tr > td { color:black; font-size:11pt;text-align: left;}
+  .sm-objectbuild>tbody>tr>th {
+    background-color: rgb(255, 187, 0);
+  }
+
+  .sm-objectbuild>tbody>tr>td {
+    color: black;
+    font-size: 11pt;
+    text-align: left;
+  }
 </style>
 
 <table class="build__table">
   <nav>
     <div class="nav nav-tabs fs-6" id="nav-tab" role="tablist" style="border-bottom: 2px double black;">
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1 active" id="nav-basedata-tab" data-bs-toggle="tab" data-bs-target="#nav-basedata" type="button" role="tab" aria-controls="nav-basedata" aria-selected="true">基本資料</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-land-tab" data-bs-toggle="tab" data-bs-target="#nav-land" type="button" role="tab" aria-controls="nav-land" aria-selected="false">土地</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-build-tab" data-bs-toggle="tab" data-bs-target="#nav-build" type="button" role="tab" aria-controls="nav-build" aria-selected="false">建物</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-auction-tab" data-bs-toggle="tab" data-bs-target="#nav-auction" type="button" role="tab" aria-controls="nav-auction" aria-selected="false">拍賣資訊</button>   
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-survey-tab" data-bs-toggle="tab" data-bs-target="#nav-survey" type="button" role="tab" aria-controls="nav-survey" aria-selected="false">勘查記錄</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-objectbuild-tab" data-bs-toggle="tab" data-bs-target="#nav-objectbuild" type="button" role="tab" aria-controls="nav-objectbuild" aria-selected="false">參考物件</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-finaldecision-tab" data-bs-toggle="tab" data-bs-target="#nav-finaldecision" type="button" role="tab" aria-controls="nav-finaldecision" aria-selected="false">最終判定</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-result-tab" data-bs-toggle="tab" data-bs-target="#nav-result" type="button" role="tab" aria-controls="nav-result" aria-selected="false">執行結果</button>
+      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1 active" id="nav-basedata-tab" data-bs-toggle="tab"
+        data-bs-target="#nav-basedata" type="button" role="tab" aria-controls="nav-basedata"
+        aria-selected="true">基本資料</button>
+      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-land-tab" data-bs-toggle="tab"
+        data-bs-target="#nav-land" type="button" role="tab" aria-controls="nav-land" aria-selected="false">土地</button>
+      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-build-tab" data-bs-toggle="tab"
+        data-bs-target="#nav-build" type="button" role="tab" aria-controls="nav-build" aria-selected="false">建物</button>
+      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-auction-tab" data-bs-toggle="tab"
+        data-bs-target="#nav-auction" type="button" role="tab" aria-controls="nav-auction"
+        aria-selected="false">拍賣資訊</button>
+      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-survey-tab" data-bs-toggle="tab"
+        data-bs-target="#nav-survey" type="button" role="tab" aria-controls="nav-survey"
+        aria-selected="false">勘查記錄</button>
+      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-objectbuild-tab" data-bs-toggle="tab"
+        data-bs-target="#nav-objectbuild" type="button" role="tab" aria-controls="nav-objectbuild"
+        aria-selected="false">參考物件</button>
+      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-finaldecision-tab" data-bs-toggle="tab"
+        data-bs-target="#nav-finaldecision" type="button" role="tab" aria-controls="nav-finaldecision"
+        aria-selected="false">最終判定</button>
+      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-result-tab" data-bs-toggle="tab"
+        data-bs-target="#nav-result" type="button" role="tab" aria-controls="nav-result"
+        aria-selected="false">執行結果</button>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
 
 
     <!-- ========= 基本資料 ===========-->
-    <div class="tab-pane fade" id="nav-basedata" role="tabpanel" aria-labelledby="nav-basedata-tab">
-      <div class="container border border-2 border-dark rounded py-1">
-        <div class="row">
-          <div class="col-3 sm-th">
-            案號
-          </div>
-          <div class="col-9 sm-td">
-            {{object.yfcaseCaseNumber|default_if_none:"" }}
-          </div>
-        </div>
-        <div class="row fs-6">
-          <div class="col-3 sm-th sm-td">
-            住址
-          </div>
-          <div class="col-9 sm-td">
-            {{ object.yfcaseTownship.zip_code }} {{object.fullAddress}}
-          </div>
-        </div>
-        <div class="row fs-6">
-          <div class="col-3 sm-th sm-td">
-            債權人
-          </div>
-          <div class="col-9 sm-td">   
-            {% if object.yfcaseCreditor %}
-              {{ object.yfcaseCreditor|default_if_none:"" }}<br>
-              {{ object.yfcaseCreditorMobilePhone|default_if_none:"" }}
-            {% else %}
-              {{ object.yfcaseCompany }}<br>
-              {{ request.user.userMobilePhone|default_if_none:"" }}
-            {% endif %}
-          </div>
-        </div>
-        <div class="row fs-6">
-          <div class="col-3 sm-th sm-td">
-            債務人
-          </div>
-          <div class="col-9 sm-td">
-            {{ object.yfcaseDebtor|default_if_none:"" }}
-          </div>
-        </div>
-        {% if request.user == object.user %}
-          <div class="row">
-            <div class="col-8"></div>
-            <div class="col-4 px-0 py-1 ">
-              <a href="{% url 'yfcase:yfcase_update' object.id %}" class="btn btn-success btn-sm sm_update">變更</a>
-            </div>
-          </div>
-        {% endif %}
-      </div>
+    <div class="tab-pane fade show active" id="nav-basedata" role="tabpanel" aria-labelledby="nav-basedata-tab">
+      {% include "./sm/baseData_sm.html" %}
     </div>
-
-
 
     <!-- ========= 地號 ===========-->
     <div class="tab-pane fade" id="nav-land" role="tabpanel" aria-labelledby="nav-land-tab">
-      
-      <div class="row align-items-end">
-        <div class="col-4 py-1 pr-2">
-          {% if request.user == object.user %}
-            <a href="{% url 'yfcase:land_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
-          {% endif %}
-        </div>
-        <div class="col-8 fs-6 fw-bolder" style="align-bottom;direction: flex;flex-direction: row;text-align: right;">
-          <span class="float-end">
-            {% if object.lands.count > 0 %}
-                合計：{{ object.get_land_holding_point_area_total|floatformat:"2" }} m<sup>2</sup> 
-                ({{ object.get_land_holding_point_area_total|m2toping|floatformat:"2" }} 坪)
-            {% endif %}
-          </span>
-          
-        </div>
-      </div>
-      
-      {% for land in object.lands.all %}
-        <div class="py-1">
-          <div class="card" style="width: 100%; background-color:AntiqueWhite;">
-            <div class="card-body">
-              <h5 class="card-title">
-                {% if land.landNumber %}
-                  {% if land.landUrl != None %}
-                    <a href="{{ land.landUrl }}" target="_blank">{{ object.yfcaseBigSection }}段{{ land.landNumber }}</a>
-                  {% else %}
-                    {{ object.yfcaseBigSection }}段{{ land.landNumber }}
-                  {% endif %}
-                {% endif %}
-              </h5>
-              <hr class="mt-1">
-              <p class="card-text fw-bold">
-                {% if land.landArea != 0 %}
-                  {{ land.landArea }}m<sup>2</sup> * 持分({{ land.landHoldingPointPersonal }}/{{ land.landHoldingPointAll }}) <br>
-                  = {{ land.get_land_holding_point_area|floatformat:"2" }}m<sup>2</sup>(<span style="background-color: Cyan;">{{ land.get_land_holding_point_area|m2toping|floatformat:"2" }} 坪</span>)
-                {% endif %}
-              </p>
-              {% if request.user == object.user %}
-              <hr>
-                <a href="{% url 'yfcase:land_update' object.id land.id %}" class="btn btn-success btn-sm fs-6">變更</a>
-                <a href="{% url 'yfcase:land_delete' object.id land.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      {% endfor %}
+      {% include "./sm/land_sm.html" %}
     </div>
-
-
 
     <!-- ========= 建號 ===========-->
     <div class="tab-pane fade" id="nav-build" role="tabpanel" aria-labelledby="nav-build-tab">
-      
-      <div class="row align-items-end">
-        <div class="col-4 py-1 pr-2">
-          {% if request.user == object.user %}
-            <a href="{% url 'yfcase:build_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
-          {% endif %}
-        </div>
-        <div class="col-8 fs-6 fw-bolder" style="align-bottom;direction: flex;flex-direction: row;text-align: right;">
-          <span class="float-end">
-            {% if object.builds.count > 0 %}
-              合計：{{ object.get_build_holding_point_after_group_total|floatformat:"2" }} m<sup>2</sup> 
-              ({{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }} 坪)
-            {% endif %}
-            <div class="col text-right">使用分區：{{ object.builds.first.buildUsePartition|default_if_none:"" }}</div>
-          </span>
-          
-        </div>
-      </div>
-      
-
-      {% for build in object.builds.all %}
-        <div class="py-1">
-          <div class="card" style="width: 100%; background-color:AntiqueWhite;">
-            <div class="card-body">
-              <h5 class="card-title">
-                {% if build.buildNumber %}
-                  {% if build.buildUrl != None %}
-                    <a href="{{ build.buildUrl }}" target="_blank">{{ object.yfcaseBigSection }}段{{ build.buildNumber }}</a> <small style="font-size:10pt;color:white;background-color: #000;">({{ build.buildTypeUse|default_if_none:"" }})</small>
-                  {% else %}
-                    {{ object.yfcaseBigSection }}段{{ build.buildNumber }} <small style="font-size:10pt;color:white;background-color: #000;">({{ build.buildTypeUse|default_if_none:"" }})</small>
-                  {% endif %}
-                {% endif %}
-              </h5>
-              <p class="card-text fw-bold">
-                {% if build.buildArea != 0 %}
-                  {{ build.buildArea }}m<sup>2</sup> 
-                  * 持分({{ build.buildHoldingPointPersonal }}/{{ build.buildHoldingPointAll }}) 
-                  * 
-                  {% if build.buildTypeUse == "增建-持分後坪數打對折" %}
-                    加權(0.5) 
-                  {% else %}
-                    加權(1.0)
-                  {% endif %}
-                  <br>
-                  {% if build.buildTypeUse == "公設" %}
-                    = {{ build.get_build_first_not_add_and_not_public_holding_point_area|floatformat:"2" }}m<sup>2</sup>
-                    (<span style="background-color: Cyan;">{{ build.get_build_first_not_add_and_not_public_holding_point_area|m2toping|floatformat:"2" }}坪</span>)
-                  {% elif build.buildTypeUse == "增建-持分後坪數打對折" %}
-                    = {{ build.get_after_add_holding_point_area|floatformat:"2" }}m<sup>2</sup>
-                    (<span style="background-color: Cyan;">{{ build.get_after_add_holding_point_area|m2toping|floatformat:"2" }}坪</span>)
-                  {% else %}
-                    = {{ build.get_build_holding_point_area|floatformat:"2" }}m<sup>2</sup>
-                    (<span style="background-color: Cyan;">{{ build.get_build_holding_point_area|m2toping|floatformat:"2" }}坪</span>)
-                  {% endif %}
-                {% endif %}
-              </p>
-              {% if request.user == object.user %}
-                <a href="{% url 'yfcase:build_update' object.id build.id %}" class="btn btn-success btn-sm fs-6">變更</a>
-                <a href="{% url 'yfcase:build_delete' object.id build.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
-              {% endif %}
-            </div>  
-          </div>
-        </div>
-      {% endfor %}
-     
+      {% include "./sm/build_sm.html" %}
     </div>
-
-
-
-
-
-
 
     <!-- ========= 拍賣資訊 ===========-->
     <div class="tab-pane fade" id="nav-auction" role="tabpanel" aria-labelledby="nav-auction-tab">
-      {% if request.user == object.user %}
-        <div class="row">
-          <div class="col-4 py-1 pr-2">
-            {% if request.user == object.user %}
-              {% if object.auctions.all %}
-                {% for auction in object.auctions.all %}
-                  <a href="{% url 'yfcase:auction_update' object.id auction.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a> 
-                {% endfor %}
-              {% else %}
-                <a href="{% url 'yfcase:auction_create' object.id %}" class="btn btn-danger btn-sm w-100 fs-5">新增</a> 
-              {% endif %}
-            {% endif %}
-          </div>
-        </div>
-      {% endif %}
-      <div class="container border border-dark py-1">
-        {% for auction in object.auctions.all %}
-          <!-- 拍賣日 -->
-          <div class="row">
-            <div class="sm-label">拍賣日</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">{{auction.auctionDateFirst|default_if_none:""}}</div>
-            <div class="sm-td-second">{{auction.auctionDateSecond|default_if_none:""}}</div>
-            <div class="sm-td-third">{{auction.auctionDateThird|default_if_none:""}}</div>
-            <div class="sm-td-fourth">{{auction.auctionDateFourth|default_if_none:""}}</div>
-          </div>
-
-          <!-- (A)底價 -->
-          <div class="row">
-            <div class="sm-label">(A)底價</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if auction.auctionFloorPriceFirst != 0 %}
-                {{auction.auctionFloorPriceFirst|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if auction.auctionFloorPriceSecond != 0 %}
-                {{auction.auctionFloorPriceSecond|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-            <div class="sm-td-third">
-              {% if auction.auctionFloorPriceThird != 0 %}
-                {{auction.auctionFloorPriceThird|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-            <div class="sm-td-fourth">
-              {% if auction.auctionFloorPriceFourth != 0 %}
-                {{auction.auctionFloorPriceFourth|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- (B)坪數 -->
-          <div class="row">
-            <div class="sm-label">(B)坪數</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if object.builds.count > 0 %}
-                {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if object.builds.count > 0 %}
-                {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
-              {% endif %}
-            </div>
-            <div class="sm-td-third">
-              {% if object.builds.count > 0 %}
-                {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
-              {% endif %}
-            </div>
-            <div class="sm-td-fourth">
-              {% if object.builds.count > 0 %}
-                {{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }}
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- (C)坪價 -->
-          <div class="row">
-            <div class="sm-label">(C)坪價 = (A)/(B)</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if auction.auctionFloorPriceFirst != 0 and object.builds.all|length > 0 %}
-                {{auction.get_ping_first_price|floatformat:0|thousandCut|default_if_none:""}}
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if auction.auctionFloorPriceSecond != 0 and object.builds.all|length > 0 %}
-                {{auction.get_ping_second_price|floatformat:0|thousandCut}}
-              {% endif %}
-            </div>
-            <div class="sm-td-third">
-              {% if auction.auctionFloorPriceThird != 0 and object.builds.all|length > 0 %}
-                {{auction.get_ping_third_price|floatformat:0|thousandCut}}
-              {% endif %}
-            </div>
-            <div class="sm-td-fourth">
-              {% if auction.auctionFloorPriceFourth != 0 and object.builds.all|length > 0 %}
-                {{auction.get_ping_fourth_price|floatformat:0|thousandCut|default_if_none:""}}
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- (D)時價 -->
-          <div class="row">
-            <div class="sm-label">(D)時價</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
-            <div class="sm-td-second">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
-            <div class="sm-td-third">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
-            <div class="sm-td-fourth">{{object.pbk|floatformat:0|thousandCut|default_if_none:"" }}</div>
-          </div>
-
-          <!-- (E)CP值 -->
-          <div class="row">
-            <div class="sm-label">(E)CP值 = (D)/(C)</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if auction.auctionFloorPriceFirst != 0 and auction.get_first_cp != 0 %}
-                {{auction.get_first_cp|floatformat:2}}
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if auction.auctionFloorPriceSecond != 0 and auction.get_second_cp != 0 %}
-                {{auction.get_second_cp|floatformat:2}}
-              {% endif %}
-            </div>
-            <div class="sm-td-third">
-              {% if auction.auctionFloorPriceThird != 0 and auction.get_third_cp != 0 %}
-                {{auction.get_third_cp|floatformat:2}}
-              {% endif %}
-            </div>
-            <div class="sm-td-fourth">
-              {% if auction.auctionFloorPriceFourth != 0 and auction.get_fourth_cp != 0 %}
-                {{auction.get_fourth_cp|floatformat:2}}
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- (F)點閱 -->
-          <div class="row">
-            <div class="sm-label">(F)點閱</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if auction.auctionFloorPriceFirst != 0 %}
-                {{auction.auctionClickFirst }}
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if auction.auctionFloorPriceSecond != 0 %}
-                {{auction.auctionClickSecond }}
-              {% endif %}
-            </div>
-            <div class="sm-td-third">
-              {% if auction.auctionFloorPriceThird != 0 %}
-                {{auction.auctionClickThird }}
-              {% endif %}
-            </div>
-            <div class="sm-td-fourth">
-              {% if auction.auctionFloorPriceFourth != 0 %}
-                {{auction.auctionClickFourth }}
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- (G)監控 -->
-          <div class="row">
-            <div class="sm-label">(G)監控</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if auction.auctionFloorPriceFirst != 0 %}
-                {{auction.auctionMonitorFirst }}
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if auction.auctionFloorPriceSecond != 0 %}
-                {{auction.auctionMonitorSecond }}
-              {% endif %}
-            </div>
-            <div class="sm-td-third">
-              {% if auction.auctionFloorPriceThird != 0 %}
-                {{auction.auctionMonitorThird }}
-              {% endif %}
-            </div>
-            <div class="sm-td-fourth">
-              {% if auction.auctionFloorPriceFourth != 0 %}
-                {{auction.auctionMonitorFourth }}
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- (H)換算後 -->
-          <div class="row">
-            <div class="sm-label">(H)換算後</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if auction.auctionFloorPriceFirst != 0 %}
-                {{auction.get_suggestedincreaseFirst|multiplication:100|floatformat:0 }}%
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if auction.auctionFloorPriceSecond != 0 %}
-                {{auction.get_suggestedincreaseSecond|multiplication:100|floatformat:0 }}%
-              {% endif %}
-            </div>
-            <div class="sm-td-third">
-              {% if auction.auctionFloorPriceThird != 0 %}
-                {{auction.get_suggestedincreaseThird|multiplication:100|floatformat:0 }}%
-              {% endif %}
-            </div>
-            <div class="sm-td-fourth">
-              {% if auction.auctionFloorPriceFourth != 0 %}
-                {{auction.get_suggestedincreaseFouth|multiplication:100|floatformat:0 }}%
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- (I)建議加價 -->
-          <div class="row">
-            <div class="sm-label">(I)建議加價 = (100% + H)</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if auction.auctionFloorPriceFirst != 0 %}
-                {{auction.get_suggestedincreaseFirst_floor_price|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if auction.auctionFloorPriceSecond != 0 %}
-                {{auction.get_suggestedincreaseSecond_floor_price|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-            <div class="sm-td-third">
-              {% if auction.auctionFloorPriceThird != 0 %}
-                {{auction.get_suggestedincreaseThird_floor_price|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-            <div class="sm-td-fourth">
-              {% if auction.auctionFloorPriceFourth != 0 %}
-                {{auction.get_suggestedincreaseFourth_floor_price|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- (J)進場CP -->
-          <div class="row">
-            <div class="sm-label">(J)進場CP = (I)/(C)</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if auction.auctionFloorPriceFirst != 0 %}
-                {{ auction.get_suggestedincreaseFirst_cp|floatformat:2 }}
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if auction.auctionFloorPriceSecond != 0 %}
-                {{ auction.get_suggestedincreaseSecond_cp|floatformat:2 }}
-              {% endif %}
-            </div>
-            <div class="sm-td-third">
-              {% if auction.auctionFloorPriceThird != 0 %}
-                {{ auction.get_suggestedincreaseThird_cp|floatformat:2 }}
-              {% endif %}
-            </div>
-            <div class="sm-td-fourth">
-              {% if auction.auctionFloorPriceFourth != 0 %}
-                {{ auction.get_suggestedincreaseFourth_cp|floatformat:2 }}
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- (K)保証金 -->
-          <div class="row">
-            <div class="sm-label">(K)保証金</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if auction.auctionFloorPriceFirst != 0 %}
-                {{auction.auctionMarginFirst|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if auction.auctionFloorPriceSecond != 0 %}
-                {{auction.auctionMarginSecond|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-            <div class="sm-td-third">
-              {% if auction.auctionFloorPriceThird != 0 %}
-                {{auction.auctionMarginThird|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-            <div class="sm-td-fourth">
-              {% if auction.auctionFloorPriceFourth != 0 %}
-                {{auction.auctionMarginFourth|floatformat:0|thousandCut }}
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- 進場判定 -->
-          <div class="row">
-            <div class="sm-label">進場判定</div>
-          </div>
-          <div class="row text-center">
-            <div class="sm-td-first">
-              {% if auction.auctionFloorPriceFirst == 0 %}
-                <div>底價未輸入</div>
-              {% elif auction.get_suggestedincreaseFirst_cp >= 0.92 %}
-                <div class="text-green">建議進場</div>
-              {% elif auction.get_suggestedincreaseFirst_cp < 0.92 %}
-                <div class="text-red">不可進場</div>
-              {% endif %}
-            </div>
-            <div class="sm-td-second">
-              {% if auction.auctionFloorPriceSecond == 0 %}
-                <div>底價未輸入</div>
-              {% elif auction.get_suggestedincreaseSecond_cp >= 1.15 %}
-                <div class="text-green">建議進場</div>
-              {% elif auction.get_suggestedincreaseSecond_cp < 1.15 %}
-                <div class="text-red">不可進場</div>
-              {% endif %}
-            </div>
-
-            <div class="sm-td-third">
-              {% if auction.auctionFloorPriceThird == 0 %}
-                <div>底價未輸入</div>
-              {% elif auction.get_suggestedincreaseThird_cp >= 1.44 %}
-                <div class="text-green">建議進場</div>
-              {% elif auction.get_suggestedincreaseThird_cp < 1.44 %}
-                <div class="text-red">不可進場</div>
-              {% endif %}
-            </div>
-
-            <div class="sm-td-fourth">
-              {% if auction.auctionFloorPriceFourth == 0 %}
-                <div>底價未輸入</div>
-              {% elif auction.get_suggestedincreaseFourth_cp >= 1.80 %}
-                <div class="text-green">建議進場</div>
-              {% elif auction.get_suggestedincreaseFourth_cp < 1.80 %}
-                <div class="text-red">不可進場</div>
-              {% endif %}
-            </div>
-
-          </div>
-
-
-          <!-- 金額 -->
-          <div class="row"><div class="sm-label">金額 = (I)+(L)</div></div>
-          <div class="row text-center">
-            <div class="sm-td-first">{{ auction.get_totalPriceFirst|floatformat:0|thousandCut|default_if_none:"" }}</div>
-            <div class="sm-td-second">{{ auction.get_totalPriceSecond|floatformat:0|thousandCut|default_if_none:"" }}</div>
-            <div class="sm-td-third">{{ auction.get_totalPriceThird|floatformat:0|thousandCut|default_if_none:"" }}</div>
-            <div class="sm-td-fourth">{{ auction.get_totalPriceFourth|floatformat:0|thousandCut|default_if_none:"" }}</div>
-          </div>
-        {% endfor %}
-
-        
-      </div>
+      {% include "./sm/auction_sm.html" %}
     </div>
-
 
     <!-- ========= 勘查記錄 ===========-->
     <div class="tab-pane fade" id="nav-survey" role="tabpanel" aria-labelledby="nav-survey-tab">
-      {% if request.user == object.user %}
-        <div class="row">
-          <div class="col-4 pr-2">
-            {% if object.surveys.all %}
-              {% for survey in object.surveys.all %}
-                <a href="{% url 'yfcase:survey_update' object.id survey.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a> 
-              {% endfor %}
-            {% else %}
-              <a href="{% url 'yfcase:survey_create' object.id %}" class="btn btn-danger btn-sm w-100 fs-5">新增</a> 
-            {% endif %}
-          </div>
-        </div>
-      {% endif %}
-
-      <div class="card fs-6" style="width: 100%;">
-        <div class="card-body">
-          <div class="row pt-2">
-            <div class="col-4 border bg-warning fw-6 fw-bolder py-1 border border-secondary">初勘日</div>
-            <div class="col-8 border fw-6 fw-bolder py-1 border border-secondary">
-              {% for survey in object.surveys.all %}
-                {{survey.surveyFirstDay|default_if_none:""}}
-              {% endfor %}
-            </div>
-          </div>
-          <div class="row py-2">
-            <div class="col-4 border bg-warning fw-6 fw-bolder py-1 border border-secondary">會勘日</div>
-            <div class="col-8 border fw-6 fw-bolder py-1 border border-secondary">
-              {% for survey in object.surveys.all %}
-                {{survey.surveySecondDay|default_if_none:""}}
-              {% endfor %}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">法拍公告<br><small>(證物三)</small></div>
-            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">998連結</div>
-            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">物件照片<br><small>(證物四)</small></div>
-          </div>
-          <div class="row">
-            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
-              {% for survey in object.surveys.all %}
-                {% if survey.surveyForeclosureAnnouncementLink %}
-                  <a href="{{survey.surveyForeclosureAnnouncementLink}}" target="_blank">
-                    <span class="fa-stack fa-2x">
-                      <i class="far fa-circle fa-stack-2x"></i>
-                      <i class="fas fa-gavel fa-stack-1x"></i>
-                    </span>
-                  </a>
-                {% endif %}
-              {% endfor %}
-            </div>
-            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
-              {% for survey in object.surveys.all %}
-                {% if survey.survey988Link %}
-                  <a href="{{survey.survey988Link}}" target="_blank">
-                    <span class="fa-stack fa-2x">
-                      <i class="far fa-circle fa-stack-2x"></i>
-                      <i class="fas fa-link fa-stack-1x"></i>
-                    </span>
-                  </a>
-                {% endif %}
-              {% endfor %}
-            </div>
-            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
-              {% for survey in object.surveys.all %}
-                {% if survey.surveyObjectPhotoLink %}
-                  <a href="{{survey.surveyObjectPhotoLink}}" target="_blank">
-                    <span class="fa-stack fa-2x">
-                      <i class="far fa-circle fa-stack-2x"></i>
-                      <i class="fas fa-home fa-stack-1x"></i>
-                    </span>
-                  </a>
-                {% endif %}
-              {% endfor %}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">法拍記錄<br><small>(證物七)</small></div>
-            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">標的物<br><small>(現場勘查)</small></div>
-            <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center"></div>
-          </div>
-          <div class="row">
-            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
-              {% for survey in object.surveys.all %}
-                {% if survey.surveyForeclosureRecordLink %}
-                  <a href="{{survey.surveyForeclosureRecordLink}}" target="_blank">
-                    <span class="fa-stack fa-2x">
-                      <i class="far fa-circle fa-stack-2x"></i>
-                      <i class="fas fa-clipboard fa-stack-1x"></i>
-                    </span>
-                  </a>
-                {% endif %}
-              {% endfor %}
-            </div>
-            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
-              {% for survey in object.surveys.all %}
-                {% if survey.surveyObjectViewLink %}
-                  <a href="{{survey.surveyObjectViewLink}}" target="_blank">
-                    <span class="fa-stack fa-2x">
-                      <i class="far fa-circle fa-stack-2x"></i>
-                      <i class="fas fa-film fa-stack-1x"></i>
-                    </span>
-                  </a>
-                {% endif %}
-              {% endfor %}
-            </div>
-            <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;"></div>
-          </div>
-        </div>
-      </div>
-						
+      {% include "./sm/survey_sm.html" %}
     </div>
-
-
 
     <!-- ========= 參考物件 ===========-->
     <div class="tab-pane fade" id="nav-objectbuild" role="tabpanel" aria-labelledby="nav-objectbuild-tab">
-      {% if request.user == object.user %}
-        <div class="row">
-          <div class="col-4 py-1 pr-2">
-            <a href="{% url 'yfcase:objectbuild_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
-          </div>
-        </div>
-      {% endif %}
-      {% for objectbuild in object.objectbuilds.all %}
-
-        <div class="card mb-2" style="width: 100%; background-color: AntiqueWhite;">
-          <div class="card-body">
-            <!-- 參考物件資訊 -->
-            <h6 class="card-subtitle mb-2" >
-              <span class="fw-bolder fs-5">
-                {% if objectbuild.objectBuildStatus %}
-                  ({{objectbuild.objectBuildStatus}}) - 
-                {% endif %}
-                加成總價：
-                {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
-                  {{ objectbuild.get_objectbuild_ping_price_abc_calculation|floatformat:0|thousandCut }}元
-                {% else %}
-                  {{ objectbuild.get_objectbuild_ping_price_ab_calculation|floatformat:0|thousandCut }}元
-                {% endif %}
-              </span> 
-              <br>
-              地址：	{{objectbuild.objectBuildAddress}}<br>
-              {% if objectbuild.objectBuildTransactionDate %}
-                成立日期：	{{ objectbuild.objectBuildTransactionDate }}<br>
-              {% endif %}
-              {% if objectbuild.objectBuildHouseAge %}
-                屋齡：	{{objectbuild.objectBuildHouseAge}}年<br>
-              {% endif %}
-              {% if objectbuild.objectBuildFloorHeight %}
-                樓高：	{{objectbuild.objectBuildFloorHeight}}<br>
-              {% endif %}
-              總價：	{{ objectbuild.objectBuildTotalPrice|floatformat:0|thousandCut }}元<br>
-              建坪：	{{ objectbuild.objectBuildBuildArea }}坪<br>
-              {% if objectbuild.objectBuildSubBuildArea > 0 %}
-                增坪：	{{ objectbuild.objectBuildSubBuildArea }}坪X0.5<br>
-              {% endif %}
-              單價：	{{ objectbuild.get_objectbuild_ping_price|floatformat:0|thousandCut }}元  
-            </h6>
-              
-            <div class="accordion m-0" id="accordionPanelsStayOpenExample">
-              <div class="accordion-item">
-                <!-- 勘查A-人員判定-->
-                <h2 class="accordion-header border border-secondary" id="panelsStayOpen-headingOne">
-                  <button class="accordion-button" style="background-color: LightCyan;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                    {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
-                      {% if objectbuild.objectBuildScorerA == None %}
-                        {% if objectbuild.objectBuildScorerB == request.user.userFullName or objectbuild.objectBuildScorerC == request.user.userFullName %}
-                          己評
-                        {% endif %}
-                      {% else %}
-                          {{ objectbuild.objectBuildScorerA|default_if_none:"" }}(加成={% if objectbuild.objectBuildScorerA %}{{ objectbuild.get_a_plus_value|floatformat:"2" }}{% endif %}) 
-                      {% endif %}
-                    {% else %}
-                      {% if objectbuild.objectBuildScorerA == None %}
-                        {% if objectbuild.objectBuildScorerB == request.user.userFullName %}
-                          己評
-                        {% endif %}
-                      {% else %}
-                          {{ objectbuild.objectBuildScorerA|default_if_none:"" }}(加成={% if objectbuild.objectBuildScorerA %}{{ objectbuild.get_a_plus_value|floatformat:"2" }}{% endif %})
-                      {% endif %}
-                    {% endif %}
-
-                    <span class="p-2"></span>
-
-                    <!-- 勘查A-update/delete-->
-                    {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
-                      {% if objectbuild.objectBuildScorerA == None and objectbuild.objectBuildScorerB != request.user.userFullName and objectbuild.objectBuildScorerC != request.user.userFullName %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}"><span style="color: Mediumslateblue;"><i class="fas fa-plus-circle fa-2x"></i></span></a>
-                        </div>
-                        {% if objectbuild.objectBuildScorerA %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}"><span style="color: Tomato;"><i class="fas fa-minus-circle fa-2x"></i></span></a>
-                        </div>
-                        {% endif %}
-                      {% elif objectbuild.objectBuildScorerA != None and objectbuild.objectBuildScorerA == request.user.userFullName %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}"><span style="color: Mediumslateblue;"><i class="fas fa-plus-circle fa-2x"></i></span></a>
-                        </div>
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}"><span style="color: Tomato;"><i class="fas fa-minus-circle fa-2x"></i></span></a>
-                        </div>
-                      {% else %}
-                      {% endif %}
-                    {% else %}
-                      {% if objectbuild.objectBuildScorerA == None and objectbuild.objectBuildScorerB != request.user.userFullName %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}"><span style="color: Mediumslateblue;"><i class="fas fa-plus-circle fa-2x"></i></span></a>
-                        </div>
-                        <div class="col-2">
-                          {% if objectbuild.objectBuildScorerA %}
-                            <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}"><span style="color: Tomato;"><i class="fas fa-minus-circle fa-2x"></i></span></a>
-                          {% endif %}
-                        </div>
-                      {% elif objectbuild.objectBuildScorerA != None and objectbuild.objectBuildScorerA == request.user.userFullName %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_a_update' object.id objectbuild.id %}" class="btn btn-success btn-sm w-100 fs-6">評分</a>
-                        </div>
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_a_delete' object.id objectbuild.id %}" class="btn btn-danger btn-sm w-100 fs-6">刪除</a>
-                        </div>
-                      {% else %}
-                      {% endif %}
-                    {% endif %}
-                  </button>
-                </h2>
-                <!-- 勘查A-加成原因/加成比例 -->
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
-                  <div class="accordion-body">
-                    <strong>
-                      {% isItem objectbuild.plusItemA1 objectbuild.plusValueA1 %}
-                      {% isItem objectbuild.plusItemA2 objectbuild.plusValueA2 %}
-                      {% isItem objectbuild.plusItemA3 objectbuild.plusValueA3 %}
-                      {% isItem objectbuild.plusItemA4 objectbuild.plusValueA4 %}
-                      {% isItem objectbuild.plusItemA5 objectbuild.plusValueA5 %}
-                      {% isItem objectbuild.plusItemOtherA objectbuild.plusValueOtherA %}
-                    </strong>
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <!-- 勘查B-人員判定-->
-                <h2 class="accordion-header border border-secondary" id="panelsStayOpen-headingTwo">
-                  <button class="accordion-button collapsed" style="background-color: Gainsboro;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                    {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
-                      {% if objectbuild.objectBuildScorerB == None %}
-                        {% if objectbuild.objectBuildScorerA == request.user.userFullName or objectbuild.objectBuildScorerC == request.user.userFullName %}
-                          己評
-                        {% endif %}
-                      {% else %}
-                          {{ objectbuild.objectBuildScorerB|default_if_none:"" }}(加成={% if objectbuild.objectBuildScorerB %}{{ objectbuild.get_b_plus_value|floatformat:"2" }}{% endif %})
-                      {% endif %}
-                    {% else %}
-                      {% if objectbuild.objectBuildScorerB == None %}
-                        {% if objectbuild.objectBuildScorerA == request.user.userFullName %}
-                          己評
-                        {% endif %}
-                      {% else %}
-                          {{ objectbuild.objectBuildScorerB|default_if_none:"" }}(加成={% if objectbuild.objectBuildScorerB %}{{ objectbuild.get_b_plus_value|floatformat:"2" }}{% endif %})
-                      {% endif %}
-                    {% endif %}
-
-                    <span class="p-2"></span>
-                    
-                    <!-- 勘查B-update/delete button -->
-                    {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
-                      {% if objectbuild.objectBuildScorerB == None and objectbuild.objectBuildScorerA != request.user.userFullName and objectbuild.objectBuildScorerC != request.user.userFullName %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}"><span style="color: Mediumslateblue;"><i class="fas fa-plus-circle fa-2x"></i></span></a>
-                        </div>
-                        {% if objectbuild.objectBuildScorerB %}
-                          <div class="col-2">
-                            <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}"><span style="color: Tomato;"><i class="fas fa-minus-circle fa-2x"></i></span></a>
-                          </div>
-                        {% endif %}
-                      {% elif objectbuild.objectBuildScorerB != None and objectbuild.objectBuildScorerB == request.user.userFullName %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}"><span style="color: Mediumslateblue;"><i class="fas fa-plus-circle fa-2x"></i></span></a>
-                        </div>
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}"><span style="color: Tomato;"><i class="fas fa-minus-circle fa-2x"></i></span></a>
-                        </div>
-                      {% else %}
-                      {% endif %}
-                    {% else %}
-                      {% if objectbuild.objectBuildScorerB == None and objectbuild.objectBuildScorerA != request.user.userFullName %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}"><span style="color: Mediumslateblue;"><i class="fas fa-plus-circle fa-2x"></i></span></a>
-                        </div>
-                        {% if objectbuild.objectBuildScorerB %}
-                          <div class="col-2">
-                            <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}"><span style="color: Tomato;"><i class="fas fa-minus-circle fa-2x"></i></span></a>
-                          </div>
-                        {% endif %}
-                      {% elif objectbuild.objectBuildScorerB != None and objectbuild.objectBuildScorerB == request.user.userFullName %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_b_update' object.id objectbuild.id %}"><span style="color: Mediumslateblue;"><i class="fas fa-plus-circle fa-2x"></i></span></a>
-                        </div>
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_b_delete' object.id objectbuild.id %}"><span style="color: Tomato;"><i class="fas fa-minus-circle fa-2x"></i></span></a>
-                        </div>
-                      {% else %}
-                      {% endif %}
-                    {% endif %}
-                  </button>
-                </h2>
-                <!-- 勘查B-加成原因/加成比例 -->
-                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                  <div class="accordion-body">
-                    <strong>
-                      {% isItem objectbuild.plusItemB1 objectbuild.plusValueB1 %}
-                      {% isItem objectbuild.plusItemB2 objectbuild.plusValueB2 %}
-                      {% isItem objectbuild.plusItemB3 objectbuild.plusValueB3 %}
-                      {% isItem objectbuild.plusItemB4 objectbuild.plusValueB4 %}
-                      {% isItem objectbuild.plusItemB5 objectbuild.plusValueB5 %}
-                      {% isItem objectbuild.plusItemOtherB objectbuild.plusValueOtherB %}
-                    </strong>
-                  </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <!-- 勘查C-人員判定-->
-                <h2 class="accordion-header border border-secondary" id="panelsStayOpen-headingThree">
-                  <button class="accordion-button collapsed" style="background-color: PaleGoldenRod;" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                    {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
-                      {% if objectbuild.objectBuildScorerC == None %}
-                        {% if objectbuild.objectBuildScorerA == request.user.userFullName or objectbuild.objectBuildScorerB == request.user.userFullName %}
-                          己評
-                        {% endif %}
-                      {% else %}
-                          {{ objectbuild.objectBuildScorerC|default_if_none:"" }}(加成={% if objectbuild.objectBuildScorerC %}{{ objectbuild.get_c_plus_value|floatformat:"2" }}{% endif %})
-                      {% endif %}
-                    {% endif %}
-
-                    <span class="p-2"></span>
-                    
-                    <!-- 勘查C-update/delete button -->
-                    {% if objectbuild.objectBuildTotalPrice >= 1000000 %}
-                      {% if objectbuild.objectBuildScorerC == None and objectbuild.objectBuildScorerA != request.user.userFullName and objectbuild.objectBuildScorerB != request.user.userFullName %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_c_update' object.id objectbuild.id %}"><span style="color: Mediumslateblue;"><i class="fas fa-plus-circle fa-2x"></i></span></a>
-                        </div>
-                        {% if objectbuild.objectBuildScorerC %}
-                          <div class="col-2">
-                            <a href="{% url 'yfcase:score_c_delete' object.id objectbuild.id %}"><span style="color: Tomato;"><i class="fas fa-minus-circle fa-2x"></i></span></a>
-                          </div>
-                        {% endif %}
-                      {% elif objectbuild.objectBuildScorerC != None and objectbuild.objectBuildScorerC == request.user.userFullName %}
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_c_update' object.id objectbuild.id %}"><span style="color: Mediumslateblue;"><i class="fas fa-plus-circle fa-2x"></i></span></a>
-                        </div>
-                        <div class="col-2">
-                          <a href="{% url 'yfcase:score_c_delete' object.id objectbuild.id %}"><span style="color: Tomato;"><i class="fas fa-minus-circle fa-2x"></i></span></a>
-                        </div>
-                      {% else %}
-                      {% endif %}
-                    {% endif %}
-                  </button>
-                </h2>
-                <!-- 勘查C-加成原因/加成比例 -->
-                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                  <div class="accordion-body">
-                    <strong>
-                      {% isItem objectbuild.plusItemC1 objectbuild.plusValueC1 %}
-                      {% isItem objectbuild.plusItemC2 objectbuild.plusValueC2 %}
-                      {% isItem objectbuild.plusItemC3 objectbuild.plusValueC3 %}
-                      {% isItem objectbuild.plusItemC4 objectbuild.plusValueC4 %}
-                      {% isItem objectbuild.plusItemC5 objectbuild.plusValueC5 %}
-                      {% isItem objectbuild.plusItemOtherC objectbuild.plusValueOtherC %}
-                    </strong>
-                    </div>
-                </div>
-              </div>
-            </div>
-
-            <br>
-            <!-- 參考物件 update/delete button-->
-            {% if request.user == object.user %}
-              <a href="{% url 'yfcase:objectbuild_update' object.id objectbuild.id %}" class="btn btn-success btn-sm fs-5">變更</a>
-              <a href="{% url 'yfcase:objectbuild_delete' object.id objectbuild.id %}" class="btn btn-danger btn-sm fs-5">刪除</a>
-            {% endif %}
-          </div>
-        </div>
-        
-      {% endfor %}
+      {% include "./sm/objectBuilding_sm.html" %}
     </div>
-
-
-
 
     <!-- ========= 最終判定 ===========-->
-    <div class="tab-pane fade show active" id="nav-finaldecision" role="tabpanel" aria-labelledby="nav-finaldecision-tab">
-      {% if request.user == object.user %}
-        <div class="row">
-          <div class="col-4 py-1 pr-2">
-            {% if request.user == object.user %} 
-              <a href="{% url 'yfcase:finaldecision_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
-            {% endif %}
-          </div>
-        </div>
-      {% endif %}
-      {% if object.finaldecisions.all %}
-        {% for finaldecision in object.finaldecisions.all %}
-          {{ finaldecision.is_ok }}
-            <div class="container border border-secondary rounded pt-1 pb-2" style="background-color:Snow;" >
-              <div class="row fs-6">
-                <div class="col-3 border border-dark bg-warning text-center fs-5 section text-h-center text-v-center">判定</div>
-                <div class="col-9 border border-dark">
-                  {% if finaldecision.finalDecision == "1拍進場" %}
-                    <div class="finaldecision__td finaldecision__first text-center m-2">{{ finaldecision.finalDecision }}</div>
-                  {% elif finaldecision.finalDecision == "2拍進場" %}
-                    <div class="finaldecision__td finaldecision__second text-center m-2">{{ finaldecision.finalDecision }}</div>
-                  {% elif finaldecision.finalDecision == "3拍進場" %}
-                    <div class="finaldecision__td finaldecision__third text-center m-2">{{ finaldecision.finalDecision }}</div>
-                  {% elif finaldecision.finalDecision == "4拍進場" %}
-                    <div class="finaldecision__td finaldecision__fourth text-center m-2">{{ finaldecision.finalDecision }}</div>
-                  {% elif finaldecision.finalDecision == "放棄" %}
-                    <div class="finaldecision__td finaldecision__giveup text-center m-2">{{ finaldecision.finalDecision }}</div>
-                  {% else %}
-                    <div class="finaldecision__td finaldecision__no_decision text-center m-2">未判定</div>
-                  {% endif %}
-                </div>
-              </div>
-              <div class="row fs-6" style="word-wrap:break-word;">
-                <div class="col-3 border border-dark bg-warning fs-5 section text-h-center text-v-center">備註</div>
-                <div class="col-9 border border-dark">{{ finaldecision.finalDecisionRemark|default_if_none:"" }}</div>
-              </div>
-              <div class="row fs-6">
-                <div class="col-4 border border-dark bg-warning text-center fs-5 py-1">申請</div>
-                <div class="col-4 border border-dark bg-warning text-center fs-5 py-1">覆核</div>
-                <div class="col-4 border border-dark bg-warning text-center fs-5 py-1">決策</div>
-              </div>
-              <div class="row fs-6">
-
-                <!-- 申請者 -->
-                <div class="col-4 border border-dark px-1">
-                  {% if finaldecision.regionalHead != None %}
-                    <div class="regionalhead__seal">
-                      <div class="regionalhead__td__person text-center">{{ finaldecision.regionalHead }}</div>
-                      <div class="regionalhead__td__date text-center">{{ finaldecision.regionalHeadAddDate|date:"Y-m-d" }}</div>
-                      <div class="regionalhead__td__workarea text-center">{{ finaldecision.regionalHeadWorkArea|isWordCountOverFour }}</div>
-                    </div>
-                  {% endif %}
-                </div>
-                
-                <!-- 覆核者 -->
-                <div class="col-4 border border-dark px-1">
-                  <!-- 1.覆核欄位不為空值 -->
-                  {% if finaldecision.subSigntrueA %}
-                    {% if finaldecision.subSigntrueA == request.user.userFullName %}
-                      <!-- 覆核欄位不為空值 - 登入者為覆核者 -->
-                      <div class="regionalhead__seal text-center">
-                        <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
-                        <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
-                        <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour }}</div>
-                      </div>
-                      <div class="row text-center">
-                        <div class="col-6 p-0">
-                          <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
-                        </div>
-                        <div class="col-6 p-0">
-                          <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
-                        </div>
-                      </div>
-                    {% else %}
-                      <!-- 覆核欄位不為空值 - 登入者非覆核者 -->
-                      <div class="regionalhead__seal text-center">
-                        <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
-                        <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
-                        <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour }}</div>
-                      </div>
-                    {% endif %}
-                  {% else %}
-                    <!-- 覆核欄位為空值 -->
-                    <!-- 2.覆核者不可同時為申請者 -->
-                    {% if finaldecision.regionalHead == request.user.userFullName %}
-                      <!-- 覆核者同時為申請者 -->
-                      <div class="notice">覆核者不得為申請者</div>
-                    {% else %}
-                      <!-- 覆核者不同時為申請者 -->
-                      <!-- 3.登入者不可和申請者為同轄區 -->
-                      {% if finaldecision.regionalHeadWorkArea == request.user.userWorkArea %}
-                        <!-- 登入者和申請者為同轄區 -->
-                        <div class="notice">同轄區不得覆核</div>
-                      {% else %}
-                        <!-- 登入者不和申請者為同轄區 -->
-                        <!-- 4.判定是否為放棄 -->
-                        {% if finaldecision.finalDecision == "放棄" %}
-                          <!-- 最終判定為'放棄' -->
-                          <div class="notice">無需覆核</div>
-                        {% else %}
-                          <!-- 最終判定不為'放棄' -->
-                          <div class="row text-center">
-                            <div class="col-6 p-0">
-                              <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
-                            </div>
-                            <div class="col-6 p-0">
-                              <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
-                            </div>
-                          </div>
-                        {% endif %}
-                      {% endif %}
-                    {% endif %}
-                  {% endif %}
-                </div>
-
-                <!-- 決策者 -->
-                <div class="col-4 border border-dark px-1">
-                  {% for auction in object.auctions.all %}
-                    <!-- 1.各拍金額不得超過1000000-->
-                    {% if auction.auctionFloorPriceFirst >= 1000000 or auction.auctionFloorPriceSecond >= 1000000 or auction.auctionFloorPriceThird >= 1000000 or auction.auctionFloorPriceFourth >= 1000000 %}
-                      <!-- 各拍金額超過1000000-->
-                      <!-- 2.覆核是否完成-->
-                      {% if finaldecision.subSigntrueA %}
-                        <!-- 己覆核 -->
-                        <!-- 3.申請轄區是否為"雲嘉南" -->
-                        {% if finaldecision.regionalHeadWorkArea == '雲嘉南' %}
-                          <!-- 4.申請轄區為"雲嘉南" -->
-                          {% if request.user.userFullName == '曾友志' %}
-                            {% if finaldecision.subSigntrueB %}
-                              <!-- 登入者=曾友志 + subSigntrueB不為空 -->
-                              <div class="regionalhead__seal text-center">
-                                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
-                                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
-                                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
-                              </div>
-                              <div class="row text-center">
-                                <div class="col-6 p-0">
-                                  <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
-                                </div>
-                                <div class="col-6 p-0">
-                                  <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
-                                </div>
-                              </div>
-                            {% else %}
-                              <!-- 登入者=曾友志 + subSigntrueB為空 -->
-                              <div class="row text-center">
-                                <div class="col-6 p-0">
-                                  <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
-                                </div>
-                                <div class="col-6 p-0">
-                                  <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
-                                </div>
-                              </div>
-                            {% endif %}
-                          {% else %}
-                            {% if finaldecision.subSigntrueB %}
-                              <!-- 登入者不是曾友志 + subSigntrueB不為空 -->
-                              <div class="regionalhead__seal text-center">
-                                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
-                                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
-                                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
-                              </div>
-                            {% else %}
-                              <!-- 登入者不是曾友志 + subSigntrueB為空 -->
-                              <div class="notice">待曾友志決策</div>
-                            {% endif %}
-                          {% endif %}
-                        {% elif finaldecision.regionalHeadWorkArea == '中彰投' %}
-                          <!-- 4.申請轄區為"中彰投" -->
-                          {% if request.user.userFullName == '曾友和' %}
-                            {% if finaldecision.subSigntrueB %}
-                              <!-- 登入者=曾友和 + subSigntrueB不為空 -->
-                              <div class="regionalhead__seal text-center">
-                                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
-                                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
-                                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
-                              </div>
-                              <div class="row text-center">
-                                <div class="col-6 p-0">
-                                  <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
-                                </div>
-                                <div class="col-6 p-0">
-                                  <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
-                                </div>
-                              </div>
-                            {% else %}
-                              <!-- 登入者=曾友和 + subSigntrueB為空 -->
-                              <div class="row text-center">
-                                <div class="col-6 p-0">
-                                  <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}" class="btn btn-success btn-sm fs-6">簽核</a>
-                                </div>
-                                <div class="col-6 p-0">
-                                  <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
-                                </div>
-                              </div>
-                            {% endif %}
-                          {% else %}
-                            {% if finaldecision.subSigntrueB %}
-                              <!-- 登入者不是曾友和 + subSigntrueB不為空 -->
-                              <div class="regionalhead__seal text-center">
-                                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
-                                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
-                                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
-                              </div>
-                            {% else %}
-                              <!-- 登入者不是曾友和 + subSigntrueB為空 -->
-                              <div class="notice">待曾友和決策</div>
-                            {% endif %}
-                          {% endif %}
-                        {% else %}
-                          <!-- 申請轄區是否為"其他區域" -->
-                          <div class="notice">待曾友志/曾友和決策</div>
-                        {% endif %}
-                      {% else %}
-                        <!-- 未覆核 -->
-                        <div class="notice">待覆核完成再決策</div>
-                      {% endif %}
-                    {% else %}
-                      <!-- 各拍金額少於1000000-->
-                      <div class="notice">無需決策</div>
-                    {% endif %}
-
-                  {% endfor %}    
-                </div>
-
-              </div>
-              {% if request.user == object.user %}
-                <div class="row">
-                  <div class="col-4"></div>
-                  <div class="col-4 p-1">
-                    <a href="{% url 'yfcase:finaldecision_update' object.id finaldecision.id %}" class="btn btn-success btn-sm w-100 fs-5">改判</a>
-                  </div>
-                  <div class="col-4 p-1">
-                    <a href="{% url 'yfcase:finaldecision_delete' object.id finaldecision.id %}" class="btn btn-danger btn-sm w-100 fs-5">刪除</a>
-                  </div>
-                </div>
-              {% endif %}  
-            </div>
-            <hr>
-        {% endfor %}
-      {% else %}
-          <div class="border rounded-pill mt-3 p-3 text-center fs-4 fw-bold" style="background-color: pink;">區域負責人尚未作最終判定</div>
-      {% endif %}
+    <div class="tab-pane fade" id="nav-finaldecision" role="tabpanel" aria-labelledby="nav-finaldecision-tab">
+      {% include "./sm/finalDecision_sm.html" %}
     </div>
-
 
     <!-- ========= 結果 ===========-->
     <div class="tab-pane fade" id="nav-result" role="tabpanel" aria-labelledby="nav-result-tab">
-      
-      <div class="row">
-        <div class="col-4 py-1 pr-2">
-          {% if request.user == object.user %} 
-            <a href="{% url 'yfcase:result_update' object.id result.id %}" class="btn btn-success btn-sm w-100 fs-5">修改</a>
-          {% endif %}
-        </div>
-      </div>
-      {% if object.results.all %}
-        {% for result in object.results.all %}
-        <div class="container border border-dark py-1">
-          
-          <div class="row fs-6">
-            <div class="col-8 border border-dark bg-warning">應買止日</div>
-            <div class="col-4 border border-dark">{{ result.stopBuyDate|default_if_none:"" }}</div>
-          </div>
-          <div class="row fs-6">
-            <div class="col-8 border border-dark bg-warning">1.撤回</div>
-            <div class="col-4 border border-dark">{% if result.actionResult == "撤回" %} V {% endif %}</div>
-          </div>
-          <div class="row fs-6">
-            <div class="col-4 border border-dark bg-warning">2.第三人搶標</div>
-            <div class="col-4 border border-dark bg-warning">搶標拍別</div>
-            <div class="col-4 border border-dark">{{ result.bidAuctionTime|default_if_none:"" }}</div>
-          </div>
-          <div class="row fs-6">
-            <div class="col-4 border border-dark bg-warning"></div>
-            <div class="col-4 border border-dark bg-warning">搶標金額</div>
-            <div class="col-4 border border-dark">{% if result.bidMoney > 0 %}{{ result.bidMoney|floatformat:0|thousandCut }}{% endif %}</div>
-          </div>
-          <div class="row fs-6">
-            <div class="col-4 border border-dark bg-warning">3.得標</div>
-            <div class="col-4 border border-dark bg-warning">等待優購</div>
-            <div class="col-4 border border-dark">{% if result.actionResult == "等待優購" %} V {% endif %}</div>
-          </div>
-          <div class="row fs-6">
-            <div class="col-4 border border-dark bg-warning"></div>
-            <div class="col-4 border border-dark bg-warning">遭優購</div>
-            <div class="col-4 border border-dark">{% if result.actionResult == "遭優購" %} V {% endif %}</div>
-          </div>
-          <div class="row fs-6">
-            <div class="col-4 border border-dark bg-warning"></div>
-            <div class="col-4 border border-dark bg-warning">無人優購</div>
-            <div class="col-4 border border-dark">{% if result.actionResult == "無人優購" %} V {% endif %}</div>
-          </div>
-          <div class="row fs-6">
-            <div class="col-8 border border-dark bg-warning">標的編號</div>
-            <div class="col-4 border border-dark">{{ result.objectNumber|default_if_none:"" }}</div>
-          </div>
-        
-        </div>
-        {% endfor %}
-      {% else %}
-          <div class="border rounded-pill mt-3 p-3 text-center fs-4 fw-bold" style="background-color: pink;">區域負責人尚未作執行結果 </div>
-      {% endif %}
-
+      {% include "./sm/result_sm.html" %}
     </div>
 
 
   </div>
 </table>
-
-  

@@ -1,0 +1,38 @@
+<div class="container border border-2 border-dark rounded py-1">
+  <div class="row">
+    <div class="col-3 sm-th">案號</div>
+    <div class="col-9 sm-td">
+      {{object.yfcaseCaseNumber|default_if_none:"" }}
+    </div>
+  </div>
+  <div class="row fs-6">
+    <div class="col-3 sm-th sm-td">住址</div>
+    <div class="col-9 sm-td">
+      {{ object.yfcaseTownship.zip_code }} {{object.fullAddress}}
+    </div>
+  </div>
+  <div class="row fs-6">
+    <div class="col-3 sm-th sm-td">債權人</div>
+    <div class="col-9 sm-td">
+      {% if object.yfcaseCreditor %} 
+        {{ object.yfcaseCreditor|default_if_none:"" }}<br />
+        {{ object.yfcaseCreditorMobilePhone|default_if_none:"" }} 
+      {% else %}
+        {{ object.yfcaseCompany }}<br />
+        {{ request.user.userMobilePhone|default_if_none:"" }} 
+      {% endif %}
+    </div>
+  </div>
+  <div class="row fs-6">
+    <div class="col-3 sm-th sm-td">債務人</div>
+    <div class="col-9 sm-td">{{ object.yfcaseDebtor|default_if_none:"" }}</div>
+  </div>
+  {% if request.user == object.user %}
+  <div class="row">
+    <div class="col-8"></div>
+    <div class="col-4 px-0 py-1">
+      <a href="{% url 'yfcase:yfcase_update' object.id %}" class="btn btn-success btn-sm sm_update">變更</a>
+    </div>
+  </div>
+  {% endif %}
+</div>

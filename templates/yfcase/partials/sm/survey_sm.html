@@ -1,0 +1,123 @@
+<!-- 測試 -->
+{% load urlify %}
+
+{% if request.user == object.user %}
+  <div class="row">
+    <div class="col-4 pr-2">
+      {% if object.surveys.all %}
+        {% for survey in object.surveys.all %}
+          <a href="{% url 'yfcase:survey_update' object.id survey.id %}" class="btn btn-success btn-sm w-100 fs-5">變更</a>
+        {% endfor %}
+      {% else %}
+        <a href="{% url 'yfcase:survey_create' object.id %}" class="btn btn-danger btn-sm w-100 fs-5">新增</a>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+<div class="card fs-6" style="width: 100%;">
+  <div class="card-body">
+
+    <div class="row pt-2">
+      <div class="col-4 border bg-warning fw-6 fw-bolder py-1 border border-secondary">初勘日</div>
+      <div class="col-8 border fw-6 fw-bolder py-1 border border-secondary">
+        {% for survey in object.surveys.all %}
+          {{survey.surveyFirstDay|default_if_none:""}}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="row py-2">
+      <div class="col-4 border bg-warning fw-6 fw-bolder py-1 border border-secondary">會勘日</div>
+      <div class="col-8 border fw-6 fw-bolder py-1 border border-secondary">
+        {% for survey in object.surveys.all %}
+          {{survey.surveySecondDay|default_if_none:""}}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">
+        法拍公告<br><small>(證物三)</small></div>
+      <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">998連結</div>
+      <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">
+        物件照片<br><small>(證物四)</small></div>
+    </div>
+
+    <div class="row">
+      <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
+        {% for survey in object.surveys.all %}
+          {% if survey.surveyForeclosureAnnouncementLink %}
+            <a href="{{survey.surveyForeclosureAnnouncementLink}}" target="_blank">
+              <span class="fa-stack fa-2x">
+                <i class="far fa-circle fa-stack-2x"></i>
+                <i class="fas fa-gavel fa-stack-1x"></i>
+              </span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
+        {% for survey in object.surveys.all %}
+          {% if survey.survey988Link %}
+            <a href="{{survey.survey988Link}}" target="_blank">
+              <span class="fa-stack fa-2x">
+                <i class="far fa-circle fa-stack-2x"></i>
+                <i class="fas fa-link fa-stack-1x"></i>
+              </span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
+        {% for survey in object.surveys.all %}
+          {% if survey.surveyObjectPhotoLink %}
+            <a href="{{survey.surveyObjectPhotoLink}}" target="_blank">
+              <span class="fa-stack fa-2x">
+                <i class="far fa-circle fa-stack-2x"></i>
+                <i class="fas fa-home fa-stack-1x"></i>
+              </span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">
+        法拍記錄<br><small>(證物七)</small></div>
+      <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center">
+        標的物<br><small>(現場勘查)</small></div>
+      <div class="col-4 bg-warning border fw-6 fw-bolder py-1 border border-secondary text-center"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
+        {% for survey in object.surveys.all %}
+          {% if survey.surveyForeclosureRecordLink %}
+            <a href="{{survey.surveyForeclosureRecordLink}}" target="_blank">
+              <span class="fa-stack fa-2x">
+                <i class="far fa-circle fa-stack-2x"></i>
+                <i class="fas fa-clipboard fa-stack-1x"></i>
+              </span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;">
+        {% for survey in object.surveys.all %}
+          {% if survey.surveyObjectViewLink %}
+            <a href="{{survey.surveyObjectViewLink}}" target="_blank">
+              <span class="fa-stack fa-2x">
+                <i class="far fa-circle fa-stack-2x"></i>
+                <i class="fas fa-film fa-stack-1x"></i>
+              </span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="col-4 border fw-6 fw-bolder py-1 border border-secondary" style="height: 80px;"></div>
+    </div>
+    
+  </div>
+</div>
