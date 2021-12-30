@@ -434,7 +434,22 @@ class Yfcase(models.Model):
       return self.get_build_holding_point_area_group_total() + self.get_build_holding_point_public_group_total() + self.get_build_holding_point_add_group_total()
     except:
       newlist.append(0)
-      
+
+  # 判斷案件在途/結案?
+  # 在有判定的情況下，判定件數-結案件數=0，即為全數結案
+  def case_open_close(self):
+    newlist=[]
+    try:
+      close_sum = 0
+      if self.finaldecisions.all():
+        finaldecision_count = self.finaldecisions.all().count()
+        for open_close in self.finaldecisions.all():
+          if open_close.is_ok() == "結案":
+             close_sum += 1
+        return finaldecision_count - close_sum
+    except:
+      newlist.append(0)
+
   # 訴訟標的價額  
   def get_litigation_subject_price(self):
     newlist=[]

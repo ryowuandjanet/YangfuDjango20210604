@@ -14,56 +14,63 @@
 {% if object.results.all %}
 	{% for result in object.results.all %}
 		<div class="container border border-dark py-1">
-			<div class="row fs-6">
-				<div class="col-8 border border-dark bg-warning">應買止日</div>
-				<div class="col-4 border border-dark">
+
+			<!-- 應買止日 -->
+			<div class="row fs-6 text-v-center text-h-center">
+				<div class="col-8 border border-dark bg-warning text-v-center text-h-center h25">應買止日</div>
+				<div class="col-4 border border-dark h25">
 					{{ result.stopBuyDate|default_if_none:"" }}
 				</div>
 			</div>
-			<div class="row fs-6">
-				<div class="col-8 border border-dark bg-warning">1.撤回</div>
-				<div class="col-4 border border-dark">
+			<!-- 1.撤回 -->
+			<div class="row fs-6 text-v-center text-h-center">
+				<div class="col-8 border border-dark bg-warning h25">撤回</div>
+				<div class="col-4 border border-dark h25">
 					{% if result.actionResult == "撤回" %} V {% endif %}
 				</div>
 			</div>
-			<div class="row fs-6">
-				<div class="col-4 border border-dark bg-warning">2.第三人搶標</div>
-				<div class="col-4 border border-dark bg-warning">搶標拍別</div>
-				<div class="col-4 border border-dark">
-					{{ result.bidAuctionTime|default_if_none:"" }}
+			<!-- 2.第三人搶標-搶標拍別 -->
+			<div class="row fs-6 text-v-center text-h-center">
+				<div class="col-4 border border-dark bg-warning text-v-center">第三人搶標</div>
+				<div class="col-4 border border-dark bg-warning p-0">
+					<div class="col border-bottom border-dark bg-warning px-2 h25">搶標拍別</div>
+					<div class="col border-top border-dark bg-warning px-2 h25">搶標金額</div>
+				</div>
+				<div class="col-4 border border-dark p-0">
+					<div class="col border-bottom border-dark px-1 h25">
+						{{ result.bidAuctionTime|default_if_none:"" }}
+					</div>
+					<div class="col border-top border-dark px-1 h25">
+						{% if result.bidMoney > 0 %}{{ result.bidMoney|floatformat:0|thousandCut }}{% endif %}
+					</div>
 				</div>
 			</div>
-			<div class="row fs-6">
-				<div class="col-4 border border-dark bg-warning"></div>
-				<div class="col-4 border border-dark bg-warning">搶標金額</div>
-				<div class="col-4 border border-dark">
-					{% if result.bidMoney > 0 %}{{ result.bidMoney|floatformat:0|thousandCut }}{% endif %}
+
+			<!-- 3.得標 -->
+			<div class="row fs-6 text-v-center text-h-center" >
+				<div class="col-4 border border-dark bg-warning text-v-center text-h-center">得標</div>
+				<div class="col-4 border border-dark bg-warning p-0">
+					<div class="col border-bottom border-dark bg-warning px-2 h25">等待優購</div>
+					<div class="col border-top border-bottom border-dark bg-warning px-2 h25">遭優購</div>
+					<div class="col border-top border-dark bg-warning px-2 h25">無人優購</div>
+				</div>
+				<div class="col-4 border border-dark p-0">
+					<div class="col border-bottom border-dark text-v-center text-h-center px-1 h25">
+						{% if result.actionResult == "等待優購" %} V {% endif %}
+					</div>
+					<div class="col border-top border-bottom border-dark text-v-center text-h-center px-1 h25">
+						{% if result.actionResult == "遭優購" %} V {% endif %}
+					</div>
+					<div class="col border-top border-dark text-v-center text-h-center px-1 h25">
+						{% if result.actionResult == "無人優購" %} V {% endif %}
+					</div>
 				</div>
 			</div>
-			<div class="row fs-6">
-				<div class="col-4 border border-dark bg-warning">3.得標</div>
-				<div class="col-4 border border-dark bg-warning">等待優購</div>
-				<div class="col-4 border border-dark">
-					{% if result.actionResult == "等待優購" %} V {% endif %}
-				</div>
-			</div>
-			<div class="row fs-6">
-				<div class="col-4 border border-dark bg-warning"></div>
-				<div class="col-4 border border-dark bg-warning">遭優購</div>
-				<div class="col-4 border border-dark">
-					{% if result.actionResult == "遭優購" %} V {% endif %}
-				</div>
-			</div>
-			<div class="row fs-6">
-				<div class="col-4 border border-dark bg-warning"></div>
-				<div class="col-4 border border-dark bg-warning">無人優購</div>
-				<div class="col-4 border border-dark">
-					{% if result.actionResult == "無人優購" %} V {% endif %}
-				</div>
-			</div>
-			<div class="row fs-6">
-				<div class="col-8 border border-dark bg-warning">標的編號</div>
-				<div class="col-4 border border-dark">
+
+			<!-- 標的編號 -->
+			<div class="row fs-6 text-v-center text-h-center ">
+				<div class="col-8 border border-dark bg-warning h25">標的編號</div>
+				<div class="col-4 border border-dark h25">
 					{{ result.objectNumber|default_if_none:"" }}
 				</div>
 			</div>

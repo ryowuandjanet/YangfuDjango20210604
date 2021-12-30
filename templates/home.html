@@ -327,7 +327,12 @@
 
     <div class="table-accordion">
         {% for yfcase in object_list %}
-          <button class="accordion fw-bold pb-0">
+
+          {% if yfcase.case_open_close == 0 %}
+            <button class="accordion fw-bold pb-0 bg-danger text-white">
+          {% else %}
+            <button class="accordion fw-bold pb-0">
+          {% endif %}
             <div class="row">
               <div class="col">{{yfcase.yfcaseCaseNumber}}</div>
               
@@ -339,10 +344,9 @@
               <div style="width:87%;padding-left:0px;">
                 {{yfcase.fullAddress}}   
               </div>
-            </div> 
-            
-                     
+            </div>        
           </button>
+
           <div class="panel border-start border-secondary border-3">
             <div class="row">
               <div class="col-4 list-group-item-warning fs-6 p-1 fw-bold border-secondary border-bottom">兩週內</div>

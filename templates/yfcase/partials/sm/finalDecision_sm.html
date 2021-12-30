@@ -44,201 +44,202 @@
       </div>
       <div class="row fs-6">
 
-      <!-- 申請者 -->
-      <div class="col-4 border border-dark px-1">
-        {% if finaldecision.regionalHead != None %}
-          <div class="regionalhead__seal">
-            <div class="regionalhead__td__person text-center">{{ finaldecision.regionalHead }}</div>
-            <div class="regionalhead__td__date text-center">{{ finaldecision.regionalHeadAddDate|date:"Y-m-d" }}</div>
-            <div class="regionalhead__td__workarea text-center">{{ finaldecision.regionalHeadWorkArea|isWordCountOverFour }}
-            </div>
-          </div>
-        {% endif %}
-      </div>
-
-      <!-- 覆核者 -->
-      <div class="col-4 border border-dark px-1">
-        <!-- 1.覆核欄位不為空值 -->
-        {% if finaldecision.subSigntrueA %}
-          {% if finaldecision.subSigntrueA == request.user.userFullName %}
-            <!-- 覆核欄位不為空值 - 登入者為覆核者 -->
-            <div class="regionalhead__seal text-center">
-              <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
-              <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
-              <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour }}</div>
-            </div>
-            <div class="row text-center">
-              <div class="col-6 p-0">
-                <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}"
-                  class="btn btn-success btn-sm fs-6">簽核</a>
-              </div>
-              <div class="col-6 p-0">
-                <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}"
-                  class="btn btn-danger btn-sm fs-6">刪除</a>
+        <!-- 申請者 -->
+        <div class="col-4 border border-dark px-1">
+          {% if finaldecision.regionalHead != None %}
+            <div class="regionalhead__seal">
+              <div class="regionalhead__td__person text-center">{{ finaldecision.regionalHead }}</div>
+              <div class="regionalhead__td__date text-center">{{ finaldecision.regionalHeadAddDate|date:"Y-m-d" }}</div>
+              <div class="regionalhead__td__workarea text-center">{{ finaldecision.regionalHeadWorkArea|isWordCountOverFour }}
               </div>
             </div>
-          {% else %}
-            <!-- 覆核欄位不為空值 - 登入者非覆核者 -->
-            <div class="regionalhead__seal text-center">
-              <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
-              <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
-              <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour }}</div>
-            </div>
           {% endif %}
-        {% else %}
-          <!-- 覆核欄位為空值 -->
-          <!-- 2.覆核者不可同時為申請者 -->
-          {% if finaldecision.regionalHead == request.user.userFullName %}
-            <!-- 覆核者同時為申請者 -->
-            <div class="notice">覆核者不得為申請者</div>
-          {% else %}
-            <!-- 覆核者不同時為申請者 -->
-            <!-- 3.登入者不可和申請者為同轄區 -->
-            {% if finaldecision.regionalHeadWorkArea == request.user.userWorkArea %}
-              <!-- 登入者和申請者為同轄區 -->
-              <div class="notice">同轄區不得覆核</div>
-            {% else %}
-              <!-- 登入者不和申請者為同轄區 -->
-              <!-- 4.判定是否為放棄 -->
-              {% if finaldecision.finalDecision == "放棄" %}
-                <!-- 最終判定為'放棄' -->
-                <div class="notice">無需覆核</div>
-              {% else %}
-                <!-- 最終判定不為'放棄' -->
-                <div class="row text-center">
-                  <div class="col-6 p-0">
-                    <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}"
-                      class="btn btn-success btn-sm fs-6">簽核</a>
-                  </div>
-                  <div class="col-6 p-0">
-                    <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}"
-                      class="btn btn-danger btn-sm fs-6">刪除</a>
-                  </div>
-                </div>
-              {% endif %}
-            {% endif %}
-          {% endif %}
-        {% endif %}
-      </div>
+        </div>
 
-    <!-- 決策者 -->
-    <div class="col-4 border border-dark px-1">
-      {% for auction in object.auctions.all %}
-        <!-- 1.各拍金額不得超過1000000-->
-        {% if auction.auctionFloorPriceFirst >= 1000000 or auction.auctionFloorPriceSecond >= 1000000 or auction.auctionFloorPriceThird >= 1000000 or auction.auctionFloorPriceFourth >= 1000000 %}
-          <!-- 各拍金額超過1000000-->
-          <!-- 2.覆核是否完成-->
+        <!-- 覆核者 -->
+        <div class="col-4 border border-dark px-1">
+          <!-- 1.覆核欄位不為空值 -->
           {% if finaldecision.subSigntrueA %}
-            <!-- 己覆核 -->
-            <!-- 3.申請轄區是否為"雲嘉南" -->
-            {% if finaldecision.regionalHeadWorkArea == '雲嘉南' %}
-              <!-- 4.申請轄區為"雲嘉南" -->
-              {% if request.user.userFullName == '曾友志' %}
-                {% if finaldecision.subSigntrueB %}
-                  <!-- 登入者=曾友志 + subSigntrueB不為空 -->
-                  <div class="regionalhead__seal text-center">
-                    <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
-                    <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
-                    <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
-                  </div>
-                  <div class="row text-center">
-                    <div class="col-6 p-0">
-                      <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}"
-                        class="btn btn-success btn-sm fs-6">簽核</a>
-                    </div>
-                    <div class="col-6 p-0">
-                      <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}"
-                        class="btn btn-danger btn-sm fs-6">刪除</a>
-                    </div>
-                  </div>
-                {% else %}
-                  <!-- 登入者=曾友志 + subSigntrueB為空 -->
-                  <div class="row text-center">
-                    <div class="col-6 p-0">
-                      <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}"
-                        class="btn btn-success btn-sm fs-6">簽核</a>
-                    </div>
-                    <div class="col-6 p-0">
-                      <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}"
-                        class="btn btn-danger btn-sm fs-6">刪除</a>
-                    </div>
-                  </div>
-                {% endif %}
-              {% else %}
-                {% if finaldecision.subSigntrueB %}
-                  <!-- 登入者不是曾友志 + subSigntrueB不為空 -->
-                  <div class="regionalhead__seal text-center">
-                    <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
-                    <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
-                    <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
-                  </div>
-                {% else %}
-                  <!-- 登入者不是曾友志 + subSigntrueB為空 -->
-                  <div class="notice">待曾友志決策</div>
-                {% endif %}
-              {% endif %}
-            {% elif finaldecision.regionalHeadWorkArea == '中彰投' %}
-              <!-- 4.申請轄區為"中彰投" -->
-              {% if request.user.userFullName == '曾友和' %}
-                {% if finaldecision.subSigntrueB %}
-                  <!-- 登入者=曾友和 + subSigntrueB不為空 -->
-                  <div class="regionalhead__seal text-center">
-                    <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
-                    <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
-                    <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
-                  </div>
-                  <div class="row text-center">
-                    <div class="col-6 p-0">
-                      <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}"
-                        class="btn btn-success btn-sm fs-6">簽核</a>
-                    </div>
-                    <div class="col-6 p-0">
-                      <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}"
-                        class="btn btn-danger btn-sm fs-6">刪除</a>
-                    </div>
-                  </div>
-                {% else %}
-                  <!-- 登入者=曾友和 + subSigntrueB為空 -->
-                  <div class="row text-center">
-                    <div class="col-6 p-0">
-                      <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}"
-                        class="btn btn-success btn-sm fs-6">簽核</a>
-                    </div>
-                    <div class="col-6 p-0">
-                      <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}"
-                        class="btn btn-danger btn-sm fs-6">刪除</a>
-                    </div>
-                  </div>
-                {% endif %}
-              {% else %}
-                {% if finaldecision.subSigntrueB %}
-                  <!-- 登入者不是曾友和 + subSigntrueB不為空 -->
-                  <div class="regionalhead__seal text-center">
-                    <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
-                    <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
-                    <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
-                  </div>
-                {% else %}
-                  <!-- 登入者不是曾友和 + subSigntrueB為空 -->
-                  <div class="notice">待曾友和決策</div>
-                {% endif %}
-              {% endif %}
+            {% if finaldecision.subSigntrueA == request.user.userFullName %}
+              <!-- 覆核欄位不為空值 - 登入者為覆核者 -->
+              <div class="regionalhead__seal text-center">
+                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
+                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
+                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour }}</div>
+              </div>
+              <div class="row text-center">
+                <div class="col-6 p-0">
+                  <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}"
+                    class="btn btn-success btn-sm fs-6">簽核</a>
+                </div>
+                <div class="col-6 p-0">
+                  <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}"
+                    class="btn btn-danger btn-sm fs-6">刪除</a>
+                </div>
+              </div>
             {% else %}
-              <!-- 申請轄區是否為"其他區域" -->
-              <div class="notice">待曾友志/曾友和決策</div>
+              <!-- 覆核欄位不為空值 - 登入者非覆核者 -->
+              <div class="regionalhead__seal text-center">
+                <div class="regionalhead__td__person">{{ finaldecision.subSigntrueA }}</div>
+                <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateA }}</div>
+                <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaA|isWordCountOverFour }}</div>
+              </div>
             {% endif %}
           {% else %}
-            <!-- 未覆核 -->
-            <div class="notice">待覆核完成再決策</div>
+            <!-- 覆核欄位為空值 -->
+            <!-- 2.覆核者不可同時為申請者 -->
+            {% if finaldecision.regionalHead == request.user.userFullName %}
+              <!-- 覆核者同時為申請者 -->
+              <div class="notice">覆核者不得為申請者</div>
+            {% else %}
+              <!-- 覆核者不同時為申請者 -->
+              <!-- 3.登入者不可和申請者為同轄區 -->
+              {% if finaldecision.regionalHeadWorkArea == request.user.userWorkArea %}
+                <!-- 登入者和申請者為同轄區 -->
+                <div class="notice">同轄區不得覆核</div>
+              {% else %}
+                <!-- 登入者不和申請者為同轄區 -->
+                <!-- 4.判定是否為放棄 -->
+                {% if finaldecision.finalDecision == "放棄" %}
+                  <!-- 最終判定為'放棄' -->
+                  <div class="notice">無需覆核</div>
+                {% else %}
+                  <!-- 最終判定不為'放棄' -->
+                  <div class="row text-center">
+                    <div class="col-6 p-0">
+                      <a href="{% url 'yfcase:subsignture_a_update' object.id finaldecision.id %}"
+                        class="btn btn-success btn-sm fs-6">簽核</a>
+                    </div>
+                    <div class="col-6 p-0">
+                      <a href="{% url 'yfcase:subsignture_a_delete' object.id finaldecision.id %}"
+                        class="btn btn-danger btn-sm fs-6">刪除</a>
+                    </div>
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endif %}
           {% endif %}
-        {% else %}
-          <!-- 各拍金額少於1000000-->
-          <div class="notice">無需決策</div>
-        {% endif %}
-      {% endfor %}
-    </div>
+        </div>
 
-    </div>
+        <!-- 決策者 -->
+        <div class="col-4 border border-dark px-1">
+          {% for auction in object.auctions.all %}
+            <!-- 1.各拍金額不得超過1000000-->
+            {% if auction.auctionFloorPriceFirst >= 1000000 or auction.auctionFloorPriceSecond >= 1000000 or auction.auctionFloorPriceThird >= 1000000 or auction.auctionFloorPriceFourth >= 1000000 %}
+              <!-- 各拍金額超過1000000-->
+              <!-- 2.覆核是否完成-->
+              {% if finaldecision.subSigntrueA %}
+                <!-- 己覆核 -->
+                <!-- 3.申請轄區是否為"雲嘉南" -->
+                {% if finaldecision.regionalHeadWorkArea == '雲嘉南' %}
+                  <!-- 4.申請轄區為"雲嘉南" -->
+                  {% if request.user.userFullName == '曾友志' %}
+                    {% if finaldecision.subSigntrueB %}
+                      <!-- 登入者=曾友志 + subSigntrueB不為空 -->
+                      <div class="regionalhead__seal text-center">
+                        <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+                        <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+                        <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
+                      </div>
+                      <div class="row text-center">
+                        <div class="col-6 p-0">
+                          <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}"
+                            class="btn btn-success btn-sm fs-6">簽核</a>
+                        </div>
+                        <div class="col-6 p-0">
+                          <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}"
+                            class="btn btn-danger btn-sm fs-6">刪除</a>
+                        </div>
+                      </div>
+                    {% else %}
+                      <!-- 登入者=曾友志 + subSigntrueB為空 -->
+                      <div class="row text-center">
+                        <div class="col-6 p-0">
+                          <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}"
+                            class="btn btn-success btn-sm fs-6">簽核</a>
+                        </div>
+                        <div class="col-6 p-0">
+                          <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}"
+                            class="btn btn-danger btn-sm fs-6">刪除</a>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% else %}
+                    {% if finaldecision.subSigntrueB %}
+                      <!-- 登入者不是曾友志 + subSigntrueB不為空 -->
+                      <div class="regionalhead__seal text-center">
+                        <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+                        <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+                        <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
+                      </div>
+                    {% else %}
+                      <!-- 登入者不是曾友志 + subSigntrueB為空 -->
+                      <div class="notice">待曾友志決策</div>
+                    {% endif %}
+                  {% endif %}
+                {% elif finaldecision.regionalHeadWorkArea == '中彰投' %}
+                  <!-- 4.申請轄區為"中彰投" -->
+                  {% if request.user.userFullName == '曾友和' %}
+                    {% if finaldecision.subSigntrueB %}
+                      <!-- 登入者=曾友和 + subSigntrueB不為空 -->
+                      <div class="regionalhead__seal text-center">
+                        <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+                        <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+                        <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
+                      </div>
+                      <div class="row text-center">
+                        <div class="col-6 p-0">
+                          <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}"
+                            class="btn btn-success btn-sm fs-6">簽核</a>
+                        </div>
+                        <div class="col-6 p-0">
+                          <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}"
+                            class="btn btn-danger btn-sm fs-6">刪除</a>
+                        </div>
+                      </div>
+                    {% else %}
+                      <!-- 登入者=曾友和 + subSigntrueB為空 -->
+                      <div class="row text-center">
+                        <div class="col-6 p-0">
+                          <a href="{% url 'yfcase:subsignture_b_update' object.id finaldecision.id %}"
+                            class="btn btn-success btn-sm fs-6">簽核</a>
+                        </div>
+                        <div class="col-6 p-0">
+                          <a href="{% url 'yfcase:subsignture_b_delete' object.id finaldecision.id %}"
+                            class="btn btn-danger btn-sm fs-6">刪除</a>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% else %}
+                    {% if finaldecision.subSigntrueB %}
+                      <!-- 登入者不是曾友和 + subSigntrueB不為空 -->
+                      <div class="regionalhead__seal text-center">
+                        <div class="regionalhead__td__person">{{ finaldecision.subSigntrueB }}</div>
+                        <div class="regionalhead__td__date">{{ finaldecision.subSigntrueDateB }}</div>
+                        <div class="regionalhead__td__workarea">{{ finaldecision.subSigntrueWorkAreaB|isWordCountOverFour }}</div>
+                      </div>
+                    {% else %}
+                      <!-- 登入者不是曾友和 + subSigntrueB為空 -->
+                      <div class="notice">待曾友和決策</div>
+                    {% endif %}
+                  {% endif %}
+                {% else %}
+                  <!-- 申請轄區是否為"其他區域" -->
+                  <div class="notice">待曾友志/曾友和決策</div>
+                {% endif %}
+              {% else %}
+                <!-- 未覆核 -->
+                <div class="notice">待覆核完成再決策</div>
+              {% endif %}
+            {% else %}
+              <!-- 各拍金額少於1000000-->
+              <div class="notice">該拍小於1000000<br>無需決策</div>
+            {% endif %}
+          {% endfor %}
+        </div>
+
+      </div>
+      
       {% if request.user == object.user %}
         <div class="row">
           <div class="col-4"></div>

@@ -169,8 +169,15 @@
     var actionResult = document.getElementById("id_actionResult").value
     
     if ( actionResult === "第三人搶標" ) {
+      // 第三人搶標
       document.getElementById("id_objectNumber").value = "";
     } else if ( actionResult === "無人優購" ) {
+      // 無人優購
+      document.getElementById("id_bidAuctionTime").value = "";
+      document.getElementById("id_bidMoney").value = 0;
+    } else if ( actionResult === "撤回" || actionResult === "等待優購" || actionResult === "遭優購" ) {
+      // 撤回 或 等待優購 或 遭優購
+      document.getElementById("id_objectNumber").value = "";
       document.getElementById("id_bidAuctionTime").value = "";
       document.getElementById("id_bidMoney").value = 0;
     } else {
