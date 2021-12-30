@@ -51,7 +51,9 @@ class Yfcase(models.Model):
   yfcaseLane=models.CharField(u'巷',max_length=100,null=True,blank=True)
   yfcaseAlley=models.CharField(u'弄',max_length=100,null=True,blank=True)
   yfcaseNumber=models.CharField(u'號',max_length=100,null=True)
-  yfcaseFloor=models.CharField(u'樓(含之幾)',max_length=100,null=True,blank=True)
+  yfcaseSubNumber=models.CharField(u'號(之)',max_length=100,null=True,blank=True)
+  yfcaseFloor=models.CharField(u'樓',max_length=100,null=True,blank=True)
+  yfcaseSubFloor=models.CharField(u'樓(之)',max_length=100,null=True,blank=True)
   yfcaseDebtor=models.CharField(u'債務人',max_length=100,null=True,blank=True)
   yfcaseCreditor=models.CharField(u'債權人',max_length=100,null=True,blank=True)
   yfcaseCreditorMobilePhone=models.CharField(u'債權人電話',max_length=20,null=True,blank=True)
@@ -194,9 +196,15 @@ class Yfcase(models.Model):
     lane = self.yfcaseLane + "巷" if self.yfcaseLane is not None else ""
     alley = self.yfcaseAlley + "弄" if self.yfcaseAlley is not None else ""
     number = self.yfcaseNumber + "號" if self.yfcaseNumber is not None else ""
-    floor = self.yfcaseFloor if self.yfcaseFloor is not None else ""
+    subNumber = ""
+    if self.yfcaseSubNumber:
+      subNumber = "之" + self.yfcaseSubNumber 
+    floor = " " + self.yfcaseFloor + "樓" if self.yfcaseFloor is not None else ""
+    subFloor = ""
+    if self.yfcaseSubFloor:
+      subFloor = "之" + self.yfcaseSubFloor
     # 將各個欄位合併
-    result = str(city)+str(township)+str(village)+str(neighbor)+str(street)+str(section)+str(lane)+str(alley)+str(number)+str(floor)
+    result = str(city)+str(township)+str(village)+str(neighbor)+str(street)+str(section)+str(lane)+str(alley)+str(number)+str(subNumber)+str(floor)+str(subFloor)
     return result
 
   # 在編輯Land設定

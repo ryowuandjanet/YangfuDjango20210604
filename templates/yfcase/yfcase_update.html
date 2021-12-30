@@ -126,7 +126,7 @@
         <div class="input-group mb-3">
           {{ form.yfcaseNumber|add_class:'form-control fw-bold text-primary text-end' }}
           <label class="btn btn-outline-secondary">號之</label>
-          <input type="text" class="form-control text-start" aria-label="Server">
+          {{ form.yfcaseSubNumber|add_class:'form-control fw-bold text-primary text-start' }}
           <div class="invalid-feedback">
             必填，請填入號碼
           </div>
@@ -137,7 +137,7 @@
         <div class="input-group mb-3">
           {{ form.yfcaseFloor|add_class:'form-control fw-bold text-primary text-end' }}
           <label class="btn btn-outline-secondary">樓之</label>
-          <input type="text" class="form-control text-start" aria-label="Server">
+          {{ form.yfcaseSubFloor|add_class:'form-control fw-bold text-primary text-start' }}
         </div>
       </div>
 

@@ -498,7 +498,7 @@ class YfcaseForm(forms.ModelForm):
   yfcaseCaseStatus = forms.ChoiceField(label="案件狀態",choices=CASESTATUS_CHOICES)
   class Meta:
     model=Yfcase
-    fields =['yfcaseCaseNumber','yfcaseCompany','yfcaseCity','yfcaseTownship','yfcaseBigSection','yfcaseSmallSection',"yfcaseVillage","yfcaseNeighbor","yfcaseStreet","yfcaseSection","yfcaseLane","yfcaseAlley","yfcaseNumber","yfcaseFloor",'yfcaseDebtor','yfcaseCreditor','yfcaseCreditorMobilePhone','yfcaseCityWithTownship','yfcaseCaseStatus','yfcaseSealUrl','user'] 
+    fields =['yfcaseCaseNumber','yfcaseCompany','yfcaseCity','yfcaseTownship','yfcaseBigSection','yfcaseSmallSection',"yfcaseVillage","yfcaseNeighbor","yfcaseStreet","yfcaseSection","yfcaseLane","yfcaseAlley","yfcaseNumber","yfcaseSubNumber","yfcaseFloor","yfcaseSubFloor",'yfcaseDebtor','yfcaseCreditor','yfcaseCreditorMobilePhone','yfcaseCityWithTownship','yfcaseCaseStatus','yfcaseSealUrl','user'] 
     
 
     def __init__(self, *args, **kwargs):
