@@ -522,8 +522,8 @@ class LandForm(forms.ModelForm):
 
 class BuildForm(forms.ModelForm):
   yfcase = forms.ModelChoiceField(Yfcase.objects.all(), widget=forms.HiddenInput())
-  buildTypeUse = forms.ChoiceField(label="建物型",choices=BUILD_TYPE_USE, required=False)
-  buildUsePartition = forms.ChoiceField(label="使用分區",choices=AREA_LIST, required=False)
+  buildTypeUse = forms.ChoiceField(label="建物型",choices=BUILD_TYPE_USE)
+  buildUsePartition = forms.ChoiceField(label="使用分區",choices=AREA_LIST)
   class Meta:
     model=Build
     fields ='__all__'

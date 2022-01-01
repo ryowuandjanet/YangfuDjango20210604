@@ -9,64 +9,66 @@
   </div>
   <div class="col-8 fs-6 fw-bolder" style="align-bottom;direction: flex;flex-direction: row;text-align: right;">
     <span class="float-end">
-      {% if object.builds.count > 0 %}
+      {% if object.builds.all %}
         合計：{{ object.get_build_holding_point_after_group_total|floatformat:"2" }} m<sup>2</sup>
         ({{ object.get_build_holding_point_after_group_total|m2toping|floatformat:"2" }} 坪)
+        <div class="col text-right">使用分區：{{ object.builds.first.buildUsePartition|default_if_none:"" }}</div>
       {% endif %}
-      <div class="col text-right">使用分區：{{ object.builds.first.buildUsePartition|default_if_none:"" }}</div>
     </span>
-
   </div>
 </div>
 
-
-{% for build in object.builds.all %}
-<div class="py-1">
-  <div class="card" style="width: 100%; background-color:AntiqueWhite;">
-    <div class="card-body">
-      <h5 class="card-title">
-        {% if build.buildNumber %}
-          {% if build.buildUrl != None %}
-            <a href="{{ build.buildUrl }}" target="_blank">{{ object.yfcaseBigSection }}段{{ build.buildNumber }}</a> 
-            <small style="font-size:10pt;color:white;background-color: #000;">
-              ({{ build.buildTypeUse|default_if_none:"" }})
-            </small>
-          {% else %}
-            {{ object.yfcaseBigSection }}段{{ build.buildNumber }} 
-            <small style="font-size:10pt;color:white;background-color: #000;">
-              ({{ build.buildTypeUse|default_if_none:"" }})
-            </small>
-          {% endif %}
-        {% endif %}
-      </h5>
-      <p class="card-text fw-bold">
-        {% if build.buildArea != 0 %}
-          {{ build.buildArea }}m<sup>2</sup>
-          * 持分({{ build.buildHoldingPointPersonal }}/{{ build.buildHoldingPointAll }})
-          *
-          {% if build.buildTypeUse == "增建-持分後坪數打對折" %}
-            加權(0.5)
+{% if object.builds.all %}
+  {% for build in object.builds.all %}
+  <div class="py-1">
+    <div class="card" style="width: 100%; background-color:AntiqueWhite;">
+      <div class="card-body">
+        <h5 class="card-title">
+          {% if build.buildNumber %}
+            {% if build.buildUrl != None %}
+              <a href="{{ build.buildUrl }}" target="_blank">{{ object.yfcaseBigSection }}段{{ build.buildNumber }}</a> 
+              <small style="font-size:10pt;color:white;background-color: #000;">
+                ({{ build.buildTypeUse|default_if_none:"" }})
+              </small>
             {% else %}
-            加權(1.0)
+              {{ object.yfcaseBigSection }}段{{ build.buildNumber }} 
+              <small style="font-size:10pt;color:white;background-color: #000;">
+                ({{ build.buildTypeUse|default_if_none:"" }})
+              </small>
+            {% endif %}
           {% endif %}
-          <br>
-          {% if build.buildTypeUse == "公設" %}
-            = {{ build.get_build_first_not_add_and_not_public_holding_point_area|floatformat:"2" }}m<sup>2</sup>
-            (<span style="background-color: Cyan;">{{ build.get_build_first_not_add_and_not_public_holding_point_area|m2toping|floatformat:"2" }}坪</span>)
-          {% elif build.buildTypeUse == "增建-持分後坪數打對折" %}
-            = {{ build.get_after_add_holding_point_area|floatformat:"2" }}m<sup>2</sup>
-            (<span style="background-color: Cyan;">{{ build.get_after_add_holding_point_area|m2toping|floatformat:"2" }}坪</span>)
-          {% else %}
-            = {{ build.get_build_holding_point_area|floatformat:"2" }}m<sup>2</sup>
-            (<span style="background-color: Cyan;">{{ build.get_build_holding_point_area|m2toping|floatformat:"2" }}坪</span>)
+        </h5>
+        <p class="card-text fw-bold">
+          {% if build.buildArea != 0 %}
+            {{ build.buildArea }}m<sup>2</sup>
+            * 持分({{ build.buildHoldingPointPersonal }}/{{ build.buildHoldingPointAll }})
+            *
+            {% if build.buildTypeUse == "增建-持分後坪數打對折" %}
+              加權(0.5)
+              {% else %}
+              加權(1.0)
+            {% endif %}
+            <br>
+            {% if build.buildTypeUse == "公設" %}
+              = {{ build.get_build_first_not_add_and_not_public_holding_point_area|floatformat:"2" }}m<sup>2</sup>
+              (<span style="background-color: Cyan;">{{ build.get_build_first_not_add_and_not_public_holding_point_area|m2toping|floatformat:"2" }}坪</span>)
+            {% elif build.buildTypeUse == "增建-持分後坪數打對折" %}
+              = {{ build.get_after_add_holding_point_area|floatformat:"2" }}m<sup>2</sup>
+              (<span style="background-color: Cyan;">{{ build.get_after_add_holding_point_area|m2toping|floatformat:"2" }}坪</span>)
+            {% else %}
+              = {{ build.get_build_holding_point_area|floatformat:"2" }}m<sup>2</sup>
+              (<span style="background-color: Cyan;">{{ build.get_build_holding_point_area|m2toping|floatformat:"2" }}坪</span>)
+            {% endif %}
           {% endif %}
+        </p>
+        {% if request.user == object.user %}
+          <a href="{% url 'yfcase:build_update' object.id build.id %}" class="btn btn-success btn-sm fs-6">變更</a>
+          <a href="{% url 'yfcase:build_delete' object.id build.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
         {% endif %}
-      </p>
-      {% if request.user == object.user %}
-        <a href="{% url 'yfcase:build_update' object.id build.id %}" class="btn btn-success btn-sm fs-6">變更</a>
-        <a href="{% url 'yfcase:build_delete' object.id build.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
-      {% endif %}
+      </div>
     </div>
   </div>
-</div>
-{% endfor %}
+  {% endfor %}
+{% else %}
+  <div class="border rounded-pill mt-3 p-3 text-center fs-4 fw-bold" style="background-color: pink;">建號未設定</div>
+{% endif %}

@@ -91,6 +91,9 @@
         <div class="input-group">
           {{ form.buildTypeUse|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:請輸入建物類型" }}
           <span class="help-block">{{ form.buildTypeUse.error }}</span>
+          <div class="invalid-feedback">
+            必填，請輸入建物型
+          </div>
         </div>
       </div>
       <div class="col-md-6">
@@ -98,6 +101,9 @@
         <div class="input-group">
           {{ form.buildUsePartition|add_class:'form-control border border-dark border-2 fw-bold rounded-end'|attr:"placeholder:請輸入用途說明" }}
           <span class="help-block">{{ form.buildUsePartition.error }}</span>
+          <div class="invalid-feedback">
+            必填，請輸入使用分區
+          </div>
         </div>
       </div>
     </div>

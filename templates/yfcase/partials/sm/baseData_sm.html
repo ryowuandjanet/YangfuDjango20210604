@@ -1,4 +1,4 @@
-<div class="container border border-2 border-dark rounded py-1">
+<div class="container border-2 mt-3">
   <div class="row">
     <div class="col-3 sm-th">案號</div>
     <div class="col-9 sm-td">
@@ -8,7 +8,14 @@
   <div class="row fs-6">
     <div class="col-3 sm-th sm-td">住址</div>
     <div class="col-9 sm-td">
-      {{ object.yfcaseTownship.zip_code }} {{object.fullAddress}}
+      <div class="row">
+        <div style="width:12%;">
+          {{ object.yfcaseTownship.zip_code }}
+        </div> 
+        <div style="width:88%;">
+          {{object.fullAddress}}
+        </div>
+      </div>
     </div>
   </div>
   <div class="row fs-6">

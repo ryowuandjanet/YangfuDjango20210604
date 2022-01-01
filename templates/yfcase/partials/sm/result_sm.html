@@ -4,9 +4,13 @@
 <div class="row">
 	<div class="col-4 py-1 pr-2">
 		{% if request.user == object.user %}
-			{% for result in object.results.all %}
-				<a href="{% url 'yfcase:result_update' object.id result.id %}" class="btn btn-success btn-sm w-100 fs-5">修改</a>
-			{% endfor %}
+			{% if object.results.all %}
+				{% for result in object.results.all %}
+					<a href="{% url 'yfcase:result_update' object.id result.id %}" class="btn btn-success btn-sm w-100 fs-5">修改</a>
+				{% endfor %}
+			{% else %}
+				<a href="{% url 'yfcase:result_create' object.id %}" class="btn btn-primary btn-sm w-100 fs-5">新增</a>
+			{% endif%}
 		{% endif %}
 	</div>
 </div>
