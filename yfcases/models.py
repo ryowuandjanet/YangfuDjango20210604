@@ -219,6 +219,8 @@ class Yfcase(models.Model):
         auction_update = self.auctions.order_by('-auctionUpdated').first().auctionUpdated
       if self.surveys.all():
         survey_update = self.surveys.order_by('-surveyUpdated').first().surveyUpdated
+      else:
+        survey_update = timezone.now()
       if self.objectbuilds.all():
         objectBuilding_update = self.objectbuilds.order_by('-objectBuildingUpdated').first().objectBuildingUpdated
       if self.finaldecisions.all():
@@ -227,7 +229,7 @@ class Yfcase(models.Model):
         result_update = self.results.order_by('-resultUpdated').first().resultUpdated
 
 
-      last_time = [yfcase_update, land_update, build_update, auction_update] 
+      last_time = [yfcase_update, land_update, build_update, auction_update,survey_update] 
 
       return max(last_time)
     except ZeroDivisionError:

@@ -10,7 +10,6 @@
 {% endblock style %}
 
 {% block content %}
-
 <!-- 程式主題的部份 -->
 <form action="{% url 'yfcase:yfcase_update' yfcase.id %}" method="post" id="yfcaseUpdateForm" data-townships-url="{% url 'yfcase:ajax_load_townships' %}" class="needs-validation" novalidate >{% csrf_token %}
   <div class="container-sm border border-success border-3 rounded mt-3 bg-light">
