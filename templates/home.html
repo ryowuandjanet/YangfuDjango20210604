@@ -327,6 +327,7 @@
 
     <div class="table-accordion">
         {% for yfcase in object_list %}
+      
 
           {% if yfcase.case_open_close == 0 %}
             <button class="accordion fw-bold pb-0 bg-danger text-white">
@@ -342,7 +343,8 @@
                 &emsp;&#10149;
               </div>
               <div style="width:87%;padding-left:0px;">
-                {{yfcase.fullAddress}}   
+                {{yfcase.fullAddress}}   <br>
+                {{yfcase.get_last_update_time}}
               </div>
             </div>        
           </button>

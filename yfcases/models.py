@@ -207,6 +207,32 @@ class Yfcase(models.Model):
     result = str(city)+str(township)+str(village)+str(neighbor)+str(street)+str(section)+str(lane)+str(alley)+str(number)+str(subNumber)+str(floor)+str(subFloor)
     return result
 
+  # 案件最後更新時間
+  def get_last_update_time(self):
+    try:
+      yfcase_update = self.yfcaseUpdated
+      if self.lands.all():
+        land_update = self.lands.order_by('-landUpdated').first().landUpdated
+      if self.builds.all():
+        build_update = self.builds.order_by('-buildUpdated').first().buildUpdated
+      if self.auctions.all():
+        auction_update = self.auctions.order_by('-auctionUpdated').first().auctionUpdated
+      if self.surveys.all():
+        survey_update = self.surveys.order_by('-surveyUpdated').first().surveyUpdated
+      if self.objectbuilds.all():
+        objectBuilding_update = self.objectbuilds.order_by('-objectBuildingUpdated').first().objectBuildingUpdated
+      if self.finaldecisions.all():
+        finalDecision_update = self.finaldecisions.order_by('-finalDecisionUpdated').first().finalDecisionUpdated
+      if self.results.all():
+        result_update = self.results.order_by('-resultUpdated').first().resultUpdated
+
+
+      last_time = [yfcase_update, land_update, build_update, auction_update] 
+
+      return max(last_time)
+    except ZeroDivisionError:
+      return 0
+
   # 在編輯Land設定
   # 得到所有地號面積的總和
   def get_land_holding_point_area_total(self):
@@ -219,6 +245,7 @@ class Yfcase(models.Model):
     except:
       newlist.append(0)
 
+ 
   # 在編輯Build設定
   # 第一筆建物(非公設、非增建)各別面積
   def get_build_first_not_add_and_not_public_area(self):
@@ -540,6 +567,7 @@ class Build(models.Model):
   buildRemark=models.CharField(u'備註',max_length=100,null=True,blank=True)
   buildAncillaryBuildingUseBy=models.CharField(u'附屬建物用途',max_length=100,null=True,blank=True)
   buildAncillaryBuildingArea=models.DecimalField(u'附屬建物面積',default=0,max_digits=6,decimal_places=2,null=True,blank=True)
+  buildUpdated = models.DateTimeField(u'建號最後更新時間',auto_now=True,auto_now_add=False)
 
   def __str__(self):
     return self.buildNumber
@@ -591,6 +619,7 @@ class Auction(models.Model):
   auctionMarginSecond = models.DecimalField(u'保証金(第二拍)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
   auctionMarginThird = models.DecimalField(u'保証金(第三拍)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
   auctionMarginFourth = models.DecimalField(u'保証金(第四拍)',default=0,max_digits=10,decimal_places=2,null=True,blank=True)
+  auctionUpdated = models.DateTimeField(u'拍賣最後更新時間',auto_now=True,auto_now_add=False)
 
   def get_ping_first_price(self):
     newlist=[]
@@ -803,6 +832,7 @@ class Survey(models.Model):
   surveyNetMarketPriceLink = models.URLField(max_length=1000,null=True,blank=True)
   surveyForeclosureRecordLink = models.URLField(u'法拍記錄(證物七)',max_length=1000,null=True,blank=True)
   surveyObjectViewLink = models.URLField(u'標的物(現場勘查)',max_length=1000,null=True,blank=True)
+  surveyUpdated = models.DateTimeField(u'勘查最後更新時間',auto_now=True,auto_now_add=False)
 
 # ======= ObjectBuild =======
 class ObjectBuild(models.Model):
@@ -861,6 +891,7 @@ class ObjectBuild(models.Model):
   plusValueC4 = models.DecimalField(default=0,max_digits=4,decimal_places=2,null=True,blank=True)
   plusValueC5 = models.DecimalField(default=0,max_digits=4,decimal_places=2,null=True,blank=True)
   plusValueOtherC = models.DecimalField(default=0,max_digits=4,decimal_places=2,null=True,blank=True)
+  objectBuildingUpdated = models.DateTimeField(u'參考物件最後更新時間',auto_now=True,auto_now_add=False)
 
 
   def get_objectbuild_ping_price(self):
@@ -988,6 +1019,7 @@ class CoOwnerInfo(models.Model):
   coOwnerLifeOrDie = models.CharField(u'存/殁',max_length=4,null=True,blank=True)
   
   
+  
   def __str__(self):
     return self.coOwnerName
 
@@ -1036,6 +1068,7 @@ class FinalDecision(models.Model):
   subSigntrueB = models.CharField(u'副署人員B',max_length=10,null=True,blank=True)
   subSigntrueDateB = models.CharField(u'副署日期B',max_length=10,null=True,blank=True)
   subSigntrueWorkAreaB = models.CharField(u'副署轄區B',max_length=10,null=True,blank=True)
+  finalDecisionUpdated = models.DateTimeField(u'最終判定最後更新時間',auto_now=True,auto_now_add=False)
 
   def __str__(self):
     return self.finalDecision
@@ -1097,3 +1130,4 @@ class Result(models.Model):
   bidAuctionTime = models.CharField(u'搶標拍別',max_length=20,null=True,blank=True)
   bidMoney = models.DecimalField(u'搶標金額',default=0,max_digits=10,decimal_places=0,null=True,blank=True)
   objectNumber = models.CharField(u'標的編號',max_length=20,null=True,blank=True)
+  resultUpdated = models.DateTimeField(u'結果最後更新時間',auto_now=True,auto_now_add=False)
