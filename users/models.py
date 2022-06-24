@@ -22,6 +22,7 @@ class CustomUser(AbstractUser):
   userNumber=models.CharField(u'號',max_length=50,null=True,blank=True)
   userFloor=models.CharField(u'樓',max_length=50,null=True,blank=True)
   userPublicOrPrivate=models.CharField(u'身分別',max_length=50,null=True,blank=True)
+  userGender = models.CharField(u'性別',max_length=10,null=True,blank=True)
   
   def __str__(self):
     # 要寫成str(self.userFullName)要不然在/admin執行時會出現"__str__ returned non-string (type NoneType)"

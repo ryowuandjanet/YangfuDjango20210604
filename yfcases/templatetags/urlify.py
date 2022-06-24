@@ -1,4 +1,5 @@
 import numpy as np
+import math
 import locale
 from urllib.parse import quote
 from decimal import *
@@ -194,3 +195,47 @@ def thousandCut(value):
 def lastWord(string):
   if string:
     return string[-1]
+
+
+# 算出多個數的最小公倍數 
+# 用法 {% lcm x y %}
+# def lcm(x, y):
+ 
+#    #  获取最大的数
+#    if x > y:
+#        greater = x
+#    else:
+#        greater = y
+ 
+#    while(True):
+#        if((greater % x == 0) and (greater % y == 0)):
+#            lcm = greater
+#            break
+#        greater += 1
+ 
+#    return lcm
+ 
+ 
+# # 获取用户输入
+# num1 = int(input("输入第一个数字: "))
+# num2 = int(input("输入第二个数字: "))
+ 
+# print( num1,"和", num2,"的最小公倍数为", lcm(num1, num2))
+
+# 算出兩個數的最大公因數 
+# 用法 {% gdc a b %}
+@register.simple_tag(name='gdc')
+def gdc(a, b):
+  if a % b:
+    return gdc(b, a % b)
+  else:
+    return b
+
+# 利用gdc最大公因數來約 
+# 用法 {% gdcValue firstvalue secondvalue %}
+@register.simple_tag(name='gdcValue')
+def gdcValue(firstValue, secondValue):
+  fir_GDC = str(math.floor(firstValue / gdc(firstValue, secondValue)))
+  sec_GDC = str(math.floor(secondValue / gdc(firstValue, secondValue)))
+  return fir_GDC + "/" + sec_GDC
+

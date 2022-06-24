@@ -1,16 +1,41 @@
 <!-- 基本資料 -->
 {% load urlify %}
-
 <style>
-  .basedata__table { border: 3px solid black; }
-  .basedata__th { width: 8%; background-color: AntiqueWhite; border: 1px solid black; text-align: center;} 
-  .basedata__status__th { width: 8%; background-color: DarkSlateGray; color: white; border: 1px solid black; text-align: center;} 
-  .basedata__td { border: 1px solid black; }
-  .basedata__td:nth-child(2) { width:35%; }
-  .basedata__td:nth-child(4) { width:10%; }
-  .basedata__td:nth-child(8) { width:5%; }
-</style>
+.basedata__table {
+  border: 3px solid black;
+}
 
+.basedata__th {
+  width: 8%;
+  background-color: AntiqueWhite;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.basedata__status__th {
+  width: 8%;
+  background-color: DarkSlateGray;
+  color: white;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.basedata__td {
+  border: 1px solid black;
+}
+
+.basedata__td:nth-child(2) {
+  width: 35%;
+}
+
+.basedata__td:nth-child(4) {
+  width: 10%;
+}
+
+.basedata__td:nth-child(8) {
+  width: 5%;
+}
+</style>
 <!--基本資料-->
 <table class="basedata__table">
   <tr>
@@ -21,11 +46,11 @@
     <th class="basedata__th">債權人</th>
     <td class="basedata__td">
       {% if object.yfcaseCreditor %}
-        {{ object.yfcaseCreditor|default_if_none:"" }}<br>
-        {{ object.yfcaseCreditorMobilePhone|default_if_none:"" }}
+      {{ object.yfcaseCreditor|default_if_none:"" }}<br>
+      {{ object.yfcaseCreditorMobilePhone|default_if_none:"" }}
       {% else %}
-        {{ object.yfcaseCompany }}<br>
-        {{ request.user.userMobilePhone|default_if_none:"" }}
+      {{ object.yfcaseCompany }}<br>
+      {{ request.user.userMobilePhone|default_if_none:"" }}
       {% endif %}
     </td>
     <th class="basedata__status__th">案件狀態</th>
@@ -33,7 +58,7 @@
   </tr>
   <tr>
     <th class="basedata__th">住址</th>
-    <td  class="basedata__td text-left" colspan="7">
+    <td class="basedata__td text-left" colspan="7">
       {{ object.yfcaseTownship.zip_code }} {{object.fullAddress}}
     </td>
   </tr>

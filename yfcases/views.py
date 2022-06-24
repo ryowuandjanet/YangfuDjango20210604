@@ -124,7 +124,7 @@ def yfcase_list(request):
 
   context={
     "object_list" : queryset,
-    "title": "List"
+    "title": "List",
     }
   return render(request, "home.html", context)
 
@@ -1095,14 +1095,20 @@ class letterPDFView(PDFView):
   def get_context_data(self, **kwargs):
     context = super().get_context_data(**kwargs)
     pk = kwargs.get('pk')
+    print(pk)
     yfcase = Yfcase.objects.get(pk=pk)
+    yfcaseCoOwnerInfoLife = yfcase.coownerinfos.filter(coOwnerLifeOrDie="存")
+    yfcaseCoOwnerInfoDie = yfcase.coownerinfos.filter(coOwnerLifeOrDie="殁")
     if Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseLetterAgent:
       letter_agent_name=Yfcase.objects.get(pk=self.kwargs.get('pk')).yfcaseLetterAgent
       context['letter_agent_phone'] =CustomUser.objects.get(userFullName=letter_agent_name).userMobilePhone
+      context['letter_agent_gender'] =CustomUser.objects.get(userFullName=letter_agent_name).userGender
     users = CustomUser.objects.all()
     context.update({
         'yfcase': yfcase,
         'users': users,
+        'yfcaseCoOwnerInfoLife': yfcaseCoOwnerInfoLife,
+        'yfcaseCoOwnerInfoDie': yfcaseCoOwnerInfoDie
     })
     return context
 
@@ -1127,9 +1133,9 @@ class coownerPDFView(PDFView):
 
     users = CustomUser.objects.all()
     context.update({
-        'yfcase': yfcase,
-        'coowners': coowners,
-        'yfcasecowneragent': yfcasecowneragent,
-        'users': users,
+      'yfcase': yfcase,
+      'coowners': coowners,
+      'yfcasecowneragent': yfcasecowneragent,
+      'users': users,
     })
     return context

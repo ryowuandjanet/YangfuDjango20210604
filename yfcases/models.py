@@ -183,6 +183,9 @@ class Yfcase(models.Model):
     ordering = ["-yfcaseUpdated"]
 
 
+  def abc(self):
+    return self.builds.filter(buildTypeUse="公設").first().buildHoldingPointPersonal
+
   def fullAddress(self):
     # 變數名稱 = 自身欄名 判定自身欄名為None就空白，要不然返回自身的變數
     city = self.yfcaseCity if self.yfcaseCity is not None else ""
@@ -281,7 +284,7 @@ class Yfcase(models.Model):
   def get_build_holding_point_public_group_total(self):
     getBuildHoldingPointPublicGroupTotal=0
     for getBuildHoldingPointPublicGroup in self.builds.filter(buildTypeUse="公設"):
-      getBuildHoldingPointPublicGroupTotal = getBuildHoldingPointPublicGroupTotal + getBuildHoldingPointPublicGroup.get_build_first_not_add_and_not_public_holding_point_area()
+      getBuildHoldingPointPublicGroupTotal = getBuildHoldingPointPublicGroupTotal + getBuildHoldingPointPublicGroup.get_build_first_not_add_and_not_public_holding_point_area() 
     return getBuildHoldingPointPublicGroupTotal
 
   # (3)建物(增建)持分後總面積
@@ -534,6 +537,27 @@ class Yfcase(models.Model):
     except:
       newlist.append(0)
 
+  def selfBuildPublicHP(self):
+    if self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first():
+      buildNormalFirst = self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first()
+      return buildNormalFirst.buildHoldingPointPersonal / buildNormalFirst.buildHoldingPointAll
+    else:
+      return 1
+
+
+  def selfBuildPublicArea(self):
+    if self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設"):
+      buildNormalFirst = self.builds.exclude(buildTypeUse="增建-持分後坪數打對折").exclude(buildTypeUse="公設").first()
+      buildNormalHP = buildNormalFirst.buildHoldingPointPersonal / buildNormalFirst.buildHoldingPointAll
+      if self.builds.filter(buildTypeUse="公設").first():
+        buildPublicFirst = self.builds.filter(buildTypeUse="公設").first()
+        buildPublicHP = buildPublicFirst.buildHoldingPointPersonal / buildPublicFirst.buildHoldingPointAll
+        return buildNormalHP * buildPublicHP
+      else:
+        return buildNormalHP
+    else:
+      return 1
+
 # ======= Land =======
 class Land(models.Model):
   yfcase=models.ForeignKey(Yfcase,related_name='lands',on_delete=models.CASCADE)
@@ -593,10 +617,10 @@ class Build(models.Model):
   # 建物(公設)各別面積
   def get_build_first_not_add_and_not_public_holding_point_area(self):
     try:
-      return self.buildArea * (self.buildHoldingPointPersonal / self.buildHoldingPointAll) 
+      if self.yfcase.selfBuildPublicHP:
+        return self.buildArea * (self.buildHoldingPointPersonal / self.buildHoldingPointAll) * self.yfcase.selfBuildPublicHP() 
     except ZeroDivisionError:
       return 0
-
 
 # ======= Auction =======
 class Auction(models.Model):
@@ -1059,7 +1083,7 @@ class CoOwnerLitigation(models.Model):
 class FinalDecision(models.Model):
   yfcase=models.ForeignKey(Yfcase,related_name='finaldecisions',on_delete=models.CASCADE)
   finalDecision = models.CharField(u'最終判定',max_length=10,null=True,blank=True)
-  finalDecisionRemark = models.CharField(u'備註',max_length=100,null=True,blank=True)
+  finalDecisionRemark = models.CharField(u'備註',max_length=3000,null=True,blank=True)
   regionalHead = models.CharField(u'區域負責人',max_length=10,null=True,blank=True)
   regionalHeadDate = models.CharField(u'區域負責人簽核日期',max_length=10,null=True,blank=True)
   regionalHeadAddDate = models.DateTimeField(u'區域負責人存檔日期',default = timezone.now)

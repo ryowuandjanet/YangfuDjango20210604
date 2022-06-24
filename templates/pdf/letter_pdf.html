@@ -119,7 +119,6 @@
 </head>
 
 <body>
-    
   <div style="text-align:center;padding-bottom:10px;font-size:22pt;">
     <b>郵  局  存  證  信  函  用  紙</b>
   </div>
@@ -163,7 +162,7 @@
           <tr>
             <td>
               {% if yfcase.yfcaseLetterSender == '揚富開發有限公司' %}
-                詳細地址：臺中市大里區新仁路三段49號
+                詳細地址：臺南市東區東平路11號5樓
               {% elif yfcase.yfcaseLetterSender == '鉅鈦開發有限公司' %}
                 詳細地址：臺中市大里區新仁路三段72巷3號1樓
               {% else %}
@@ -221,8 +220,8 @@
       <td class="lettertdTitle">19</td>
       <td class="lettertdTitle">20</td>
     </tr>
-  
-    <!--第一行-->
+
+        <!--第一行-->
     <tr>
       <td class="lettertdTitle">一</td>
       <td class="lettertd">敬</td>
@@ -315,13 +314,12 @@
       <td class="lettertd bluefont">{{ yfcase.yfcaseLetterAgent|slice:"0:1"|default_if_none:"" }}</td>
       <td class="lettertd bluefont">{{ yfcase.yfcaseLetterAgent|slice:"1:2"|default_if_none:"" }}</td>
       <td class="lettertd bluefont">{{ yfcase.yfcaseLetterAgent|slice:"2:3"|default_if_none:"" }}</td>
-      <td class="lettertd">先</td>
-      <td class="lettertd">生</td>
+      <td class="lettertd bluefont">{{ letter_agent_gender|slice:"0:1"|default_if_none:"" }}</td>
+      <td class="lettertd bluefont">{{ letter_agent_gender|slice:"1:2"|default_if_none:"" }}</td>
       <td class="lettertd">(</td>
       <td class="lettertd bluefont">{{ letter_agent_phone|slice:"0:1"|default_if_none:"" }}</td>
       <td class="lettertd bluefont">{{ letter_agent_phone|slice:"1:2"|default_if_none:"" }}</td>
     </tr>
-
     <!--第五行-->
     <tr>
       <td class="lettertdTitle">五</td>
@@ -624,9 +622,8 @@
           {% endfor %}
         </th>
       </tr>
-  
       <!--共有人 : 房地應有部分比例-->
-      {% for coownerinfo in yfcase.coownerinfos.all %}
+      {% for coownerinfo in yfcaseCoOwnerInfoLife %}
       <tr style="font-size: 12pt;">
         <td style="border: 1px solid black; text-align: left;">
           <span class="bluefont">
@@ -650,6 +647,40 @@
         </td>
       </tr>
       {% endfor %}
+
+      {% if yfcaseCoOwnerInfoDie.count > 0 %}
+        {% for coownerinfodie in yfcaseCoOwnerInfoDie %}
+          {% for coownerheir in coownerinfodie.coownerheirs.all %}
+            {{ coownerheir.coOwnerHeirName }}
+            <tr style="font-size: 12pt;">
+              <td style="border: 1px solid black; text-align: left;">
+                <span class="bluefont">
+                  {{ coownerheir.coOwnerHeirName }}<br>
+                  {{ coownerheir.coOwnerHeirAddress }}
+                </span>
+              </td>
+              <td style="border: 1px solid black; text-align: center;">
+                <span class="bluefont">
+                  {% if coownerheir.coOwnerHeirLandHPPersonnal and coownerheir.coOwnerHeirLandHPAll %}
+                    {{ coownerheir.coOwnerHeirLandHPAll|num2cn2 }}分之{{coownerheir.coOwnerHeirLandHPPersonnal|num2cn2 }}
+                    <br>
+                    (公同共有)
+                  {% endif%}
+                </span>
+              </td>
+              <td style="border: 1px solid black; text-align: center;">
+                <span class="bluefont">
+                  {% if coownerheir.coOwnerHeirBuildHPPersonnal and coownerheir.coOwnerHeirBuildHPAll %}
+                    {{coownerheir.coOwnerHeirBuildHPAll|num2cn2 }}分之{{ coownerheir.coOwnerHeirBuildHPPersonnal|num2cn2 }}
+                    <br>
+                    (公同共有)
+                  {% endif%}
+                </span>
+              </td>
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
       
 
       <!--權利人 : 房地應有部分比例-->
@@ -706,6 +737,8 @@
         </th>
       </tr>
     </table>
+
+    {% gdcValue yfcase.get_all_coowner_land_HP yfcase.get_coownerinfo_land_holding_point_total %}
   </div>
     
 </body>

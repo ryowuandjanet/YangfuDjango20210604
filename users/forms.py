@@ -5,10 +5,11 @@ from .models import CustomUser
 class CustomUserCreationForm(UserCreationForm):
   class Meta(UserCreationForm.Meta):
     model = CustomUser
-    fields = ('username','email','userFirstName', 'userLastName', 'userFullName', 'userWorkArea', 'userRole', 'userIdentityCard', 'userBirthday', 'userLocalPhone', 'userMobilePhone', 'userCountry', 'userTownship', 'userVillage', 'userNeighbor', 'userStreet', 'userSection', 'userLane', 'userAlley', 'userNumber', 'userFloor', 'userPublicOrPrivate', ) # new
+    fields = ('username','email','userFirstName', 'userLastName', 'userFullName', 'userWorkArea', 'userRole', 'userIdentityCard', 'userBirthday', 'userLocalPhone', 'userMobilePhone', 'userCountry', 'userTownship', 'userVillage', 'userNeighbor', 'userStreet', 'userSection', 'userLane', 'userAlley', 'userNumber', 'userFloor', 'userPublicOrPrivate', 'userGender', ) # new
+
 
 
 class CustomUserChangeForm(UserChangeForm):
   class Meta:
     model = CustomUser
-    fields = ('username','email','userFirstName', 'userLastName', 'userFullName', 'userWorkArea', 'userRole', 'userIdentityCard', 'userBirthday', 'userLocalPhone', 'userMobilePhone', 'userCountry', 'userTownship', 'userVillage', 'userNeighbor', 'userStreet', 'userSection', 'userLane', 'userAlley', 'userNumber', 'userFloor', 'userPublicOrPrivate', ) # new
+    fields = ('username','email','userFirstName', 'userLastName', 'userFullName', 'userWorkArea', 'userRole', 'userIdentityCard', 'userBirthday', 'userLocalPhone', 'userMobilePhone', 'userCountry', 'userTownship', 'userVillage', 'userNeighbor', 'userStreet', 'userSection', 'userLane', 'userAlley', 'userNumber', 'userFloor', 'userPublicOrPrivate', 'userGender',) # new

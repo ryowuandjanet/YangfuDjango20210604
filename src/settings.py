@@ -41,6 +41,7 @@ INSTALLED_APPS = [
   'django.contrib.messages',
   'django.contrib.staticfiles',
   'django.contrib.humanize',
+  'fontawesomefree',
   'widget_tweaks',
   'crispy_forms',
   'users',
@@ -152,9 +153,8 @@ STATICFILES_DIRS=[
 # 運行python manage.py collectstatic後會在根目錄下產生一個/static_cdn
 STATIC_ROOT=os.path.join(BASE_DIR, "static_cdn")
 
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

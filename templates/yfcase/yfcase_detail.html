@@ -61,14 +61,13 @@
 
 {% block content %}
 
-
   <!-- 標頭 -->
   <div class="col">
     <div class="yfcase__detail__caption">
       {{object.yfcaseCaseNumber}}
     </div>
   </div>
-  
+  {{ object.selfBuildPublicHP }} 
   <div class="col">
 
     <!--測試樣版-->
@@ -96,7 +95,7 @@
         <div class="yfcase__detail__subtitle">
           <label>土地</label>
           {% if request.user == object.user %}
-            <a href="{% url 'yfcase:land_create' object.id %}" class="btn__icon__create">新增</a>
+            <a href="{% url 'yfcase:land_create' object.id %}"><i class="fas fa-circle-plus"></i></a>
           {% endif %}
         </div>
         <div class="yfcase__detail__subtitle">
@@ -117,7 +116,7 @@
         <div class="yfcase__detail__subtitle">
           <label>建物</label>
           {% if request.user == object.user %}
-            <a href="{% url 'yfcase:build_create' object.id %}" class="btn__icon__create">新增</a>
+            <a href="{% url 'yfcase:build_create' object.id %}"><i class="fas fa-circle-plus"></i></a>
           {% endif %}
         </div>
         <div class="yfcase__detail__subtitle">
