@@ -16,34 +16,44 @@
     </span>
   </div>
 </div>
-
 {% if object.lands.all %}
   {% for land in object.lands.all %}
-    <div class="py-1">
-      <div class="card" style="width: 100%; background-color:AntiqueWhite;">
-        <div class="card-body">
-          <h5 class="card-title">
-            {% if land.landNumber %}
-              {% if land.landUrl != None %}
-                <a href="{{ land.landUrl }}" target="_blank">{{ object.yfcaseBigSection }}段{{ land.landNumber }}</a>
-              {% else %}
-                {{ object.yfcaseBigSection }}段{{ land.landNumber }}
+    <div class="card" style="width: 100%; background-color:AntiqueWhite;">
+      <div class="card-body pb-0">
+        <div class="row justify-content-between">
+          <div class="col-8">
+            <h5 class="card-title">
+              {% if land.landNumber %}
+                {% if land.landUrl != None %}
+                  <a href="{{ land.landUrl }}" target="_blank">{{ object.yfcaseBigSection }}段{{ land.landNumber }}</a>
+                {% else %}
+                  {{ object.yfcaseBigSection }}段{{ land.landNumber }}
+                {% endif %}
               {% endif %}
+            </h5>
+          </div>
+          <div class="col-4">
+            {% if request.user == object.user %}
+              <a href="{% url 'yfcase:land_update' object.id land.id %}" class="px-4 text-success"><i class="fa-solid fa-pencil"></i></a>
+              <a href="{% url 'yfcase:land_delete' object.id land.id %}" class="text-danger"><i class="fa-solid fa-trash-can"></i></a>
             {% endif %}
-          </h5>
-          <hr class="mt-1">
-          <p class="card-text fw-bold">
-            {% if land.landArea != 0 %}
-              {{ land.landArea }}m<sup>2</sup> * 持分({{ land.landHoldingPointPersonal }}/{{ land.landHoldingPointAll}}) <br>
-              = {{ land.get_land_holding_point_area|floatformat:"2" }}m<sup>2</sup>(<span style="background-color: Cyan;">{{ land.get_land_holding_point_area|m2toping|floatformat:"2" }}坪</span>)
-            {% endif %}
-          </p>
-          {% if request.user == object.user %}
-            <hr>
-            <a href="{% url 'yfcase:land_update' object.id land.id %}" class="btn btn-success btn-sm fs-6">變更</a>
-            <a href="{% url 'yfcase:land_delete' object.id land.id %}" class="btn btn-danger btn-sm fs-6">刪除</a>
-          {% endif %}
+          </div>
         </div>
+        <hr class="m-0">
+        <p class="card-text">
+          <div class="row">
+            <div class="col text-center mx-2 border-bottom fw-bold">地坪(m<sup>2</sup>)</div>
+            <div class="col text-center mx-2 border-bottom fw-bold">持分</div>
+            <div class="col text-center mx-2 border-bottom fw-bold">合計</div>
+          </div>
+          {% if land.landArea != 0 %}
+            <div class="row">
+              <div class="col text-center mx-2">{{ land.landArea }}</div>
+              <div class="col text-center mx-2">{{ land.landHoldingPointPersonal }}/{{ land.landHoldingPointAll}}</div>
+              <div class="col text-center mx-2">{{ land.get_land_holding_point_area|floatformat:"2" }}</div>
+            </div>
+          {% endif %}
+        </p>    
       </div>
     </div>
   {% endfor %}

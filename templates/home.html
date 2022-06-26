@@ -339,14 +339,14 @@
               <div class="col">{{yfcase.yfcaseCaseNumber}}</div>
               
             </div>
-            <div class="row">
+            <div class="row fs-6">
               <div style="width:13%;padding-right:0px;">
                 &emsp;&#10149;
               </div>
               <div style="width:87%;padding-left:0px;">
                 {{yfcase.fullAddress}}   <br>
               </div>
-            </div>        
+            </div>
           </button>
 
           <div class="panel border-start border-secondary border-3">
@@ -428,6 +428,35 @@
                 <a href="{% url 'yfcase:yfcase_detail' yfcase.id %}" class="btn btn-secondary btn-lg btn-block w-100 fs-5 px-0">查看(編輯)明細</a>
               </div>
             </div>
+            <div class="row">
+              <table class="table">
+                <thead class="table-secondary fs-4">
+                  <tr>
+                    <th style="width:20%;">契</th>
+                    <th style="width:20%;">動</th>
+                    <th style="width:20%;">訴</th>
+                    <th style="width:20%;">函</th>
+                    <th>共</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-center"><a href="{% url 'yfcase:deedtax_edit' yfcase.pk %}">表單</a></td>
+                    <td class="text-center"><a href="{% url 'yfcase:realestateregistration_edit' yfcase.pk %}">表單</a></td>
+                    <td class="text-center"><a href="{% url 'yfcase:complaint_edit' yfcase.pk %}">表單</a></td>
+                    <td class="text-center"><a href="{% url 'yfcase:letter_edit' yfcase.pk %}">表單</a></td>
+                    <td class="text-center"><a href="{% url 'yfcase:coowner_edit' yfcase.pk %}">表單</a></td>
+                  </tr>
+                  <tr>
+                    <td class="text-center"><a href="{% url 'yfcase:deedtax_pdf_view' yfcase.pk %}?inline=">PDF</a></td>
+                    <td class="text-center"><a href="{% url 'yfcase:realestateregistrationPDF_View' yfcase.pk %}?inline=">PDF</a></td>
+                    <td class="text-center"><a href="{% url 'yfcase:complaintPDF_View' yfcase.pk %}?inline=">PDF</a></td>
+                    <td class="text-center"><a href="{% url 'yfcase:letterPDF_View' yfcase.pk %}?inline=">PDF</a></td>
+                    <td class="text-center"><a href="{% url 'yfcase:coownerPDF_View' yfcase.pk %}?inline=">PDF</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>    
           </div>
         {% endfor %}
     </div>

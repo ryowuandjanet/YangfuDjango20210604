@@ -67,7 +67,6 @@
       {{object.yfcaseCaseNumber}}
     </div>
   </div>
-  {{ object.selfBuildPublicHP }} 
   <div class="col">
 
     <!--測試樣版-->
@@ -116,7 +115,7 @@
         <div class="yfcase__detail__subtitle">
           <label>建物</label>
           {% if request.user == object.user %}
-            <a href="{% url 'yfcase:build_create' object.id %}"><i class="fas fa-circle-plus"></i></a>
+            <a href="{% url 'yfcase:build_create' object.id %}"><i class="fas fa-circle-plus fa-lg"></i></a>
           {% endif %}
         </div>
         <div class="yfcase__detail__subtitle">

@@ -53,7 +53,7 @@
     /* 文字平均分散 
     text-align:justify;
     text-justify:distribute-all-lines;
-    text-align-last:justify; */
+    text-align-last:justify;*/
   }
 
   .sm-label {
@@ -118,31 +118,41 @@
   .h25 {
     height: 25px;
   }
+
+  .nav-tabs .nav-link {
+    color: DimGrey;
+    background-color: LightGoldenRodYellow;
+  }
+  .nav-tabs .nav-link.active {
+    background-color: Khaki;
+    color: black;
+  }
 </style>
+
 
 <table class="build__table">
   <nav>
     <div class="nav nav-tabs fs-6" id="nav-tab" role="tablist" style="border-bottom: 2px double black;">
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1 active" id="nav-basedata-tab" data-bs-toggle="tab"
+      <button class="nav-link border border-secondary fw-bold mt-1 w-25" id="nav-basedata-tab" data-bs-toggle="tab"
         data-bs-target="#nav-basedata" type="button" role="tab" aria-controls="nav-basedata"
         aria-selected="true">基本資料</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-land-tab" data-bs-toggle="tab"
-        data-bs-target="#nav-land" type="button" role="tab" aria-controls="nav-land" aria-selected="false">土地</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-build-tab" data-bs-toggle="tab"
-        data-bs-target="#nav-build" type="button" role="tab" aria-controls="nav-build" aria-selected="false">建物</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-auction-tab" data-bs-toggle="tab"
+      <button class="nav-link border border-secondary fw-bold mt-1 w-25" id="nav-land-tab" data-bs-toggle="tab"
+        data-bs-target="#nav-land" type="button" role="tab" aria-controls="nav-land" aria-selected="false">土&emsp;&emsp;地</button>
+      <button class="nav-link border border-secondary fw-bold mt-1 w-25 active" id="nav-build-tab" data-bs-toggle="tab"
+        data-bs-target="#nav-build" type="button" role="tab" aria-controls="nav-build" aria-selected="false">建&emsp;&emsp;物</button>
+      <button class="nav-link border border-secondary fw-bold mt-1 w-25" id="nav-auction-tab" data-bs-toggle="tab"
         data-bs-target="#nav-auction" type="button" role="tab" aria-controls="nav-auction"
         aria-selected="false">拍賣資訊</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-survey-tab" data-bs-toggle="tab"
+      <button class="nav-link border border-secondary fw-bold mt-1 w-25" id="nav-survey-tab" data-bs-toggle="tab"
         data-bs-target="#nav-survey" type="button" role="tab" aria-controls="nav-survey"
         aria-selected="false">勘查記錄</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-objectbuild-tab" data-bs-toggle="tab"
+      <button class="nav-link border border-secondary fw-bold mt-1 w-25" id="nav-objectbuild-tab" data-bs-toggle="tab"
         data-bs-target="#nav-objectbuild" type="button" role="tab" aria-controls="nav-objectbuild"
         aria-selected="false">參考物件</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-finaldecision-tab" data-bs-toggle="tab"
+      <button class="nav-link border border-secondary fw-bold mt-1 w-25" id="nav-finaldecision-tab" data-bs-toggle="tab"
         data-bs-target="#nav-finaldecision" type="button" role="tab" aria-controls="nav-finaldecision"
         aria-selected="false">最終判定</button>
-      <button class="nav-link border-dark fw-bold px-1 py-2 mx-1" id="nav-result-tab" data-bs-toggle="tab"
+      <button class="nav-link border border-secondary fw-bold mt-1 w-25" id="nav-result-tab" data-bs-toggle="tab"
         data-bs-target="#nav-result" type="button" role="tab" aria-controls="nav-result"
         aria-selected="false">執行結果</button>
     </div>
@@ -151,7 +161,7 @@
 
 
     <!-- ========= 基本資料 ===========-->
-    <div class="tab-pane fade show active" id="nav-basedata" role="tabpanel" aria-labelledby="nav-basedata-tab">
+    <div class="tab-pane fade" id="nav-basedata" role="tabpanel" aria-labelledby="nav-basedata-tab">
       {% include "./sm/baseData_sm.html" %}
     </div>
 
@@ -161,7 +171,7 @@
     </div>
 
     <!-- ========= 建號 ===========-->
-    <div class="tab-pane fade" id="nav-build" role="tabpanel" aria-labelledby="nav-build-tab">
+    <div class="tab-pane fade show active" id="nav-build" role="tabpanel" aria-labelledby="nav-build-tab">
       {% include "./sm/build_sm.html" %}
     </div>
 
