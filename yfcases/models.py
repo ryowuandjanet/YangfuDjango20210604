@@ -4,6 +4,7 @@ from django.urls import reverse
 from datetime import datetime
 import math
 import datetime
+import fractions
 from django.utils import timezone
 
 # ======= 縣市 =======
@@ -557,6 +558,58 @@ class Yfcase(models.Model):
         return buildNormalHP
     else:
       return 1
+
+  #算出共有人存活的地號持分總計
+  def coownerLife(self):
+    newlist=[]
+    try:
+      count = 0
+      for coownerHPTotal in self.coownerinfos.exclude(coOwnerLifeOrDie ="殁"):
+        count += fractions.Fraction(str(coownerHPTotal.coOwnerLandHPPersonnal / coownerHPTotal.coOwnerLandHPAll))
+      return count
+    except:
+      newlist.append(0)
+
+  #算出繼承人存活的地號持分總計
+  def coownerHeirLife(self):
+    newlist=[]
+    try:
+      count = 0
+      for coownerheirHPTotal in self.coownerinfos.filter(coOwnerLifeOrDie ="殁"):
+        for j in coownerheirHPTotal.coownerheirs.exclude(coOwnerHeirLifeOrDie ="殁"):
+          count += fractions.Fraction(str(j.coOwnerHeirLandHPPersonnal / j.coOwnerHeirLandHPAll))
+        return count
+    except:
+      newlist.append(0)
+
+  #算出訴訟人存活的地號持分總計
+  def coownerLitigationLife(self):
+    newlist=[]
+    try:
+      count = 0
+      for i in self.coownerinfos.filter(coOwnerLifeOrDie ="殁"):
+        for j in i.coownerheirs.filter(coOwnerHeirLifeOrDie ="殁"):
+          for k in j.coownerlitigations.exclude(coOwnerLitigationLifeOrDie ="殁"):
+            count += fractions.Fraction(str(k.coOwnerLitigationLanddHPPersonnal / k.coOwnerLitigationLandHPAll))
+          return count
+    except:
+      newlist.append(0)
+
+  #算出共有人+繼承人+訴訟人存活的地號持分總計
+  def cownerLandTotal(self):
+    if self.coownerLife():
+      a=self.coownerLife()
+    else:
+      a=0
+    if self.coownerHeirLife():
+      b=self.coownerHeirLife()
+    else:
+      b=0
+    if self.coownerLitigationLife():
+      c=self.coownerLitigationLife()
+    else:
+      c=0
+    return a+b+c
 
 # ======= Land =======
 class Land(models.Model):

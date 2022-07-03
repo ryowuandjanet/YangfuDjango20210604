@@ -729,16 +729,10 @@
           {% endif %}
         </th>
         <th style="border: 1px solid black;">
-          {% if yfcase.get_coownerinfo_build_holding_point_total == 1 %}
-            <span class="bluefont">一分之一</span>
-          {% else %}
-            <span style="color:red;">持分比例有誤({{ yfcase.get_coownerinfo_build_holding_point_total|floatformat:"2" }})</span>
-          {% endif %}
+          {{ yfcase.cownerLandTotal }}
         </th>
       </tr>
     </table>
-
-    {% gdcValue yfcase.get_all_coowner_land_HP yfcase.get_coownerinfo_land_holding_point_total %}
   </div>
     
 </body>

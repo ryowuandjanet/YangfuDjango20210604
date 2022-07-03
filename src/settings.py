@@ -72,7 +72,7 @@ LOGOUT_REDIRECT_URL = 'yfcase:home'
 
 # 設定WKHTMLTOPDF的路徑
 # WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
-# WKHTMLTOPDF_CMD ="D:\\Program\\RyowuTestCode\\djangotest\\YangfuDjango20210604\\yfcases\\wkhtmltox\\bin\\wkhtmltopdf.exe"
+WKHTMLTOPDF_CMD ="D:\\Program\\RyowuTestCode\\djangotest\\YangfuDjango20210604\\yfcases\\wkhtmltox\\bin\\wkhtmltopdf.exe"
 
 
 TEMPLATES = [
