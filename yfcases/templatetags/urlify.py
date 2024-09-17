@@ -216,7 +216,7 @@ def closeCasePrice(auctionFloorPrice, nowPrice, pingPrice, closeCaseCount):
   newlist=[]
   try:
     if auctionFloorPrice != 0 and nowPrice != 0 and pingPrice != 0 and closeCaseCount != 0:
-      a = int(auctionFloorPrice) * ( 1 + (int(closeCaseCount) / 6 / 100 ))
+      a = int(auctionFloorPrice) * ( 1 + (int(closeCaseCount) / 4.5 / 100 ))
       b = int(auctionFloorPrice) * ( ( int(nowPrice) / int(pingPrice) ) / 1.6 )
       if a > b:
         return '{:20,.0f}'.format(float(b))
